@@ -132,7 +132,9 @@ export class CaseObject extends DurableObject<Env> {
 
     const out = await pipe(
       program,
-      Effect.provide(liveAiLayer(env.AI, caseData, env.SMALLTALK_MODEL)),
+      Effect.provide(
+        liveAiLayer(env.AI, caseData, env.SMALLTALK_MODEL, env.REPLY_MODEL),
+      ),
       Effect.runPromise,
     )
 

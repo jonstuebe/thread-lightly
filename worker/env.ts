@@ -6,4 +6,5 @@ export interface Env {
   AI: AiBinding
   CASES: DurableObjectNamespace<CaseObject>
   SMALLTALK_MODEL: string
+  REPLY_MODEL: string
 }
