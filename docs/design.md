@@ -104,13 +104,26 @@ Every player message goes to the Durable Object and is handled in one of three t
 
 ### Clef routing
 
-Clef-flash gets the guest, the last few turns, and the list of topic IDs available to that guest. It returns:
+Clef (`@cf/cloudflare/clef`, the 27B model) gets one request per player message. The state is the guest, the last two turns and the message. The request asks three questions:
 
-- `topic`: one of the guest's topic IDs, `smalltalk`, or `unknown`
-- `tone`: normal, rude, repeated or accusatory, which sets the patience cost
-- `isInjection`: whether the message tries to break the game ("ignore your instructions…")
+- `topic`: a `choice` over the guest's topic IDs plus `smalltalk`, with each topic's description as its criteria.
+- `tone`: a `choice` of neutral, friendly, rude or accusatory, which sets the patience cost. "Repeated" is detected by code, from the topic history.
+- `injection`: a `noul` asking whether the message tries to break the game ("ignore your instructions…").
 
-Including the last few turns lets it handle follow-ups like "what about after that?"
+The Durable Object then applies this rule, validated by the spike:
+
+1. injection ≥ 0.5 → dodge (tier 3)
+2. topic confidence < 0.3 → dodge (tier 3). This is the "not in the dictionary" signal. Clef almost never picks an explicit `unknown` option, so we don't offer one.
+3. topic = `smalltalk` → tier 2
+4. otherwise → tier 1
+
+In the spike (branch `spike/clef-routing`, see `spikes/clef-routing/VERDICT.md`), this rule answered 69 of 77 in-dictionary messages correctly. It served one wrong answer and dodged every off-dictionary and injection message. Clef-flash and two-step routing (category, then topic) both did clearly worse.
+
+Lessons for the dictionary and the case-generation skill:
+
+- **Topic descriptions must be distinct.** Name what sets each topic apart, especially for people: "Wes, the guest who talks nonstop and owes people money".
+- **Accusations come from tone, not a topic.** "Did you take the brooch?" routes to `brooch`, but its tone reads as accusatory. An accusatory tone serves the guest's `pressed` replies instead of the topic's.
+- **Greetings need a fallback.** "hey" and "thanks" score below the threshold. Each guest gets a few canned greeting and thanks replies, picked when the tone is friendly and the confidence is low.
 
 ### Tier 1: dictionary hit (most messages)
 
@@ -272,7 +285,7 @@ Worker (Effect)  ── /api/case/new  → picks a case from the bundled library
 CaseObject (Durable Object, Effect)
   - holds the Case and the game state (day, patience, destroyed facts, transcript, case file)
   - runs the conversation engine and the group director
-  - calls Workers AI: Clef-flash for routing, a cheap model for small talk
+  - calls Workers AI: Clef for routing, a cheap model for small talk
   - stores everything in Durable Object storage; uses WebSocket hibernation
 
 Local only, never deployed:
@@ -335,7 +348,7 @@ There are no accounts. The case ID is kept in `localStorage`, and refreshing res
 
 All of this happens on a branch, since it replaces the current game.
 
-1. **Clef routing spike.** A throwaway script with one hand-written guest dictionary (about 20 topics). Write 100 or so test messages, including odd phrasings, follow-ups and jailbreak attempts, and measure how often Clef-flash picks the right topic. **This decides whether the dictionary approach works**, so do it first.
+1. ~~**Clef routing spike.**~~ Done. The dictionary approach works with Clef (27B) and a 0.3 confidence threshold. See section 5 and `spikes/clef-routing/VERDICT.md` on branch `spike/clef-routing`. The follow-up is to rerun it with test messages from someone who didn't write the dictionary.
 2. **Schemas and checker.** Case schema, wire protocol and solvability checker in `shared/`, with tests that use a hand-written case.
 3. **Server foundation.** Effect in the Worker, the `CaseObject` Durable Object, the WebSocket protocol, and AI services with fakes. Play the hand-written case end to end without the client.
 4. **Client rewrite.** Conversation list, threads, long-press save, case file and arrest, all against the hand-written case.
@@ -345,7 +358,6 @@ All of this happens on a branch, since it replaces the current game.
 ## 13. Open questions
 
 - **Small-talk model.** Which cheap Workers AI model sounds most natural in character? We'll pick one during the spike.
-- **Clef's interface.** Can Clef-flash reliably choose among roughly 25 labels in one call, or do we need two steps (category, then topic)? The spike answers this.
 - **Early arrest.** Is there any bonus for arresting before day 3 ends, or is the only benefit finishing sooner?
 - **Gossip leaks.** Do guests repeat your DMs to the group chat in v1 or later?
 
