@@ -17,6 +17,7 @@ import {
   type TopicId,
 } from '../../shared/case'
 import {
+  type CaseResult,
   type ChatMessage,
   ClientMessage,
   type Ending,
@@ -280,6 +281,15 @@ const endDay = (caseData: Case, state: GameState): Step => {
 
 // SNAPSHOT
 
+const caseResult = (caseData: Case, ending: Ending): CaseResult => ({
+  ending,
+  thief: caseData.thief,
+  timeline: Array.map(caseData.timeline, event => ({
+    time: event.time,
+    text: event.text,
+  })),
+})
+
 export const snapshot = (caseData: Case, state: GameState): ServerMessage =>
   ServerMessage.cases.Snapshot.make({
     intro: {
@@ -297,6 +307,9 @@ export const snapshot = (caseData: Case, state: GameState): ServerMessage =>
     caseFile: state.caseFile,
     day: state.day,
     phase: state.phase,
+    ...(state.ending === undefined
+      ? {}
+      : { result: caseResult(caseData, state.ending) }),
   })
 
 // CASE FILE
@@ -372,12 +385,7 @@ const makeArrest = (
           state: { ...state, phase: 'arrest', ending },
           out: [
             ServerMessage.cases.ArrestResult.make({
-              ending,
-              thief: caseData.thief,
-              timeline: Array.map(caseData.timeline, event => ({
-                time: event.time,
-                text: event.text,
-              })),
+              result: caseResult(caseData, ending),
             }),
           ],
         }

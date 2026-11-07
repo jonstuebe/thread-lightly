@@ -1,2 +1,0 @@
-# Copy to .dev.vars to enable live guest texts during `pnpm dev`.
-ANTHROPIC_API_KEY=

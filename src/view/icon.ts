@@ -109,6 +109,47 @@ export const chatBubble = (): Html =>
     ],
   )
 
+export const folder = (): Html =>
+  svg('24', '24', '0 0 24 24', stroked('1.8'), [
+    ih.path([
+      ih.D(
+        'M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z',
+      ),
+    ]),
+  ])
+
+export const wifi = (): Html =>
+  svg('20', '20', '0 0 24 24', stroked('2'), [
+    ih.path([
+      ih.D(
+        'M2.5 9a14 14 0 0 1 19 0M5.5 12.5a9.5 9.5 0 0 1 13 0M8.6 16a5 5 0 0 1 6.8 0',
+      ),
+    ]),
+    ih.circle([ih.Cx('12'), ih.Cy('19.2'), ih.R('1'), ih.Fill('currentColor')]),
+  ])
+
+export const pin = (): Html =>
+  svg(
+    '12',
+    '12',
+    '0 0 24 24',
+    [ih.Fill('currentColor')],
+    [
+      ih.path([
+        ih.D('M16 3l5 5-3 1-4 4 1 5-2 2-4-4-5 5-1-1 5-5-4-4 2-2 5 1 4-4z'),
+      ]),
+    ],
+  )
+
+export const moon = (): Html =>
+  svg(
+    '14',
+    '14',
+    '0 0 24 24',
+    [ih.Fill('currentColor')],
+    [ih.path([ih.D('M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z')])],
+  )
+
 export const lodgeScene = (): Html =>
   ih.svg(
     [

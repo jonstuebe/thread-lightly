@@ -1,10 +1,11 @@
-import { Array } from 'effect'
+import { Option } from 'effect'
 import {
   Command,
   click,
   expect,
   given,
-  label,
+  inside,
+  pointerDown,
   role,
   scene,
   text,
@@ -12,97 +13,123 @@ import {
 } from 'foldkit/scene'
 import { describe, test } from 'vitest'
 
-import { DealNewCase, ScrollToLatest, WaitForBeat } from './command'
-import { eveningModel, lockedModel, votingModel } from './fixture'
+import { ClientMessage } from '../shared/protocol'
+import {
+  BlurComposer,
+  ScrollToLatest,
+  SendToServer,
+  StartCase,
+  WaitForLongPress,
+} from './command'
+import { board, dmDale, lockedModel, playingModel } from './fixture'
 import { Message } from './message'
 import { update } from './update'
 import { view } from './view'
 
 describe('lock screen', () => {
-  test('tapping the notification opens the invite, and joining starts a case', () => {
+  test('tapping the notification starts a case', () => {
     scene(
       { update, view },
       given(lockedModel),
-      expect(text('Tap the message to join the group chat')).toExist(),
-      click(role('button', { name: 'Open the Pine Hollow Lodge group chat' })),
-      expect(text('You’re invited to Pine Hollow Lodge')).toExist(),
-      type(label('What should the group call you?'), 'Jon'),
-      click(role('button', { name: 'Join the chat' })),
-      Command.expectExact(DealNewCase),
-      Command.resolve(
-        DealNewCase,
-        Message.CompletedDealNewCase({
-          caseNumber: 1,
-          thief: 'Gus',
-          seating: ['Wes', 'Gus', 'Margot', 'Theo', 'Lena', 'Priya'],
-        }),
-      ),
-      expect(role('textbox', { name: 'Message' })).toBeEnabled(),
-      Command.resolveAll(
-        ...Array.makeBy(
-          30,
-          () =>
-            [
-              WaitForBeat,
-              Message.CompletedWaitForBeat({ caseNumber: 1 }),
-            ] as const,
-        ),
-        ...Array.makeBy(
-          30,
-          () => [ScrollToLatest, Message.CompletedScrollToLatest()] as const,
-        ),
-      ),
-      expect(text('You’re the detective')).toExist(),
-      expect(text('Jon, you got in late, did you see anything? 🙏')).toExist(),
+      click(role('button', { name: /Pine Hollow/ })),
+      Command.expectExact(StartCase),
+      Command.resolve(StartCase, Message.FailedStartCase()),
+      expect(role('button', { name: /Pine Hollow/ })).toBeEnabled(),
     )
   })
 })
 
-describe('chat', () => {
-  test('the header counts the player with the guests', () => {
+describe('conversations', () => {
+  test('the list shows the Wi-Fi log, the group and each guest', () => {
     scene(
       { update, view },
-      given(eveningModel),
-      expect(text('· 7 people ›')).toExist(),
-      expect(role('button', { name: 'Go to bed' })).toBeEnabled(),
+      given(playingModel),
+      expect(role('button', { name: 'Lodge Wi-Fi log' })).toExist(),
+      expect(role('button', { name: 'Pine Hollow guests' })).toExist(),
+      expect(role('button', { name: 'Margot Hale' })).toExist(),
+      expect(role('button', { name: 'Dale Pruitt' })).toExist(),
+      expect(role('button', { name: 'Case file, 0 saved' })).toExist(),
     )
   })
 
-  test('tapping the group name lists who is in the chat and who left', () => {
+  test('opening a guest thread lets you message them', () => {
     scene(
       { update, view },
-      given(votingModel(1)),
-      click(role('button', { name: /Pine Hollow Lodge/ })),
-      expect(role('dialog', { name: 'Pine Hollow Lodge 🌲' })).toExist(),
-      expect(text('Riley (you)')).toExist(),
-      expect(text('Retired fishing guide in his 70s')).toExist(),
-      expect(role('list', { name: 'Left the chat' })).toExist(),
-      expect(text('Owns the lodge')).toExist(),
-      click(role('button', { name: 'Close' })),
-      expect(role('dialog')).not.toExist(),
+      given(playingModel),
+      click(role('button', { name: 'Dale Pruitt' })),
+      Command.resolveAll([ScrollToLatest, Message.CompletedScrollToLatest()]),
+      expect(
+        text('I was asleep by eleven fifteen, out like a light.'),
+      ).toExist(),
+      type(role('textbox', { name: 'Message' }), 'Which room?'),
+      click(role('button', { name: 'Send' })),
+      Command.expectHas(
+        SendToServer({
+          message: ClientMessage.cases.SendMessage.make({
+            thread: { _tag: 'Direct', guest: 'dale' },
+            text: 'Which room?',
+          }),
+        }),
+      ),
+      Command.resolveAll(
+        [SendToServer, Message.CompletedSendToServer()],
+        [ScrollToLatest, Message.CompletedScrollToLatest()],
+      ),
+      expect(text('Which room?')).toExist(),
+    )
+  })
+})
+
+describe('case file', () => {
+  test('holding a message saves it to the case file', () => {
+    scene(
+      { update, view },
+      given({ ...playingModel, maybeOpenThread: Option.some(dmDale) }),
+      pointerDown(
+        role('button', { name: /out like a light\. Press and hold/ }),
+      ),
+      Command.resolve(
+        WaitForLongPress,
+        Message.CompletedWaitForLongPress({ pressId: 0 }),
+      ),
+      Command.resolveAll([BlurComposer, Message.CompletedBlurComposer()]),
+      click(role('button', { name: 'Add to case file' })),
+      Command.resolveAll([SendToServer, Message.CompletedSendToServer()]),
+      expect(role('button', { name: 'Case file, 1 saved' })).toExist(),
+      expect(role('img', { name: 'In your case file' })).toExist(),
     )
   })
 
-  test('the composer is paused at night', () => {
+  test('the arrest picks a suspect, their lie and the proof', () => {
     scene(
       { update, view },
       given({
-        ...eveningModel,
-        phase: { _tag: 'Night', maybePending: { _tag: 'None' } },
+        ...playingModel,
+        maybeBoard: Option.some({ ...board, caseFile: ['m1', 'm2'] }),
       }),
-      expect(role('textbox', { name: 'Message' })).toBeDisabled(),
-      expect(role('button', { name: 'Skip to morning' })).toBeDisabled(),
-    )
-  })
-
-  test('the poll lists every guest still in the chat', () => {
-    scene(
-      { update, view },
-      given(votingModel(1)),
-      expect(text('Who should we turn in to the lodge manager?')).toExist(),
-      expect(role('button', { name: 'Lena, 0 votes' })).toBeEnabled(),
-      expect(role('button', { name: 'Wes, 0 votes' })).toBeEnabled(),
-      expect(role('button', { name: 'Gus, 0 votes' })).toBeEnabled(),
+      click(role('button', { name: 'Case file, 2 saved' })),
+      Command.resolveAll([BlurComposer, Message.CompletedBlurComposer()]),
+      inside(
+        role('dialog'),
+        click(role('button', { name: 'Make an arrest' })),
+        expect(text('Who are you arresting?')).toExist(),
+        click(role('button', { name: /Dale Pruitt/ })),
+        expect(text('What did Dale lie about?')).toExist(),
+        click(role('button', { name: /eleven fifteen/ })),
+        expect(text('What proves it’s a lie?')).toExist(),
+        click(role('button', { name: /kitchen/ })),
+        click(role('button', { name: 'Arrest Dale' })),
+      ),
+      Command.expectExact(
+        SendToServer({
+          message: ClientMessage.cases.MakeArrest.make({
+            suspect: 'dale',
+            claimMessageId: 'm2',
+            proofMessageId: 'm1',
+          }),
+        }),
+      ),
+      Command.resolve(SendToServer, Message.CompletedSendToServer()),
     )
   })
 })

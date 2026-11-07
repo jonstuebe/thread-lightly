@@ -2,344 +2,495 @@ import { Array, Option } from 'effect'
 import { Command, given, message, model, story } from 'foldkit/story'
 import { describe, expect, test } from 'vitest'
 
+import { ClientMessage, ServerMessage } from '../shared/protocol'
+import { MAX_RECONNECT_FAILURES, NIGHT_MILLIS, typingMillis } from './chat'
 import {
-  CastGuestVotes,
-  DealNewCase,
-  FetchGuestTexts,
-  PickFallbackLines,
-  RollMorning,
+  BlurComposer,
+  SaveGame,
   ScrollToLatest,
+  SendToServer,
+  StartCase,
   WaitForBeat,
+  WaitForLongPress,
+  WaitToReconnect,
 } from './command'
-import { eveningModel, lockedModel, votingModel } from './fixture'
+import {
+  GAME_ID,
+  board,
+  daleClaim,
+  detectiveSays,
+  dmDale,
+  dmMargot,
+  fromServer,
+  guestSays,
+  lockedModel,
+  playingModel,
+  wifiEntry,
+} from './fixture'
 import { Message } from './message'
-import { FeedItem, Line, Vote, Voter } from './model'
-import { update } from './update'
+import { ArrestStep, Connection, Playback, Sheet } from './model'
+import { init, update } from './update'
 
-const playOut = (caseNumber: number) =>
+const boardOf = (target: typeof playingModel) =>
+  Option.getOrThrow(target.maybeBoard)
+
+const settle = Command.resolveAll(
+  ...Array.makeBy(
+    20,
+    () => [ScrollToLatest, Message.CompletedScrollToLatest()] as const,
+  ),
+  ...Array.makeBy(
+    20,
+    () => [SendToServer, Message.CompletedSendToServer()] as const,
+  ),
+  ...Array.makeBy(
+    5,
+    () => [BlurComposer, Message.CompletedBlurComposer()] as const,
+  ),
+  ...Array.makeBy(5, () => [SaveGame, Message.CompletedSaveGame()] as const),
+)
+
+const playOut = (epoch: number) =>
   Command.resolveAll(
     ...Array.makeBy(
-      60,
-      () =>
-        [WaitForBeat, Message.CompletedWaitForBeat({ caseNumber })] as const,
-    ),
-    ...Array.makeBy(
-      60,
-      () => [ScrollToLatest, Message.CompletedScrollToLatest()] as const,
+      20,
+      () => [WaitForBeat, Message.CompletedWaitForBeat({ epoch })] as const,
     ),
   )
 
-const titles = (feed: ReadonlyArray<FeedItem>) =>
-  Array.flatMap(feed, item =>
-    item._tag === 'Notice' || item._tag === 'Ending' ? [item.title] : [],
-  )
+describe('starting', () => {
+  test('a saved game reconnects on load, and a fresh visit waits', () => {
+    expect(init({ gameId: GAME_ID, played: ['x'] }).model.connection).toEqual(
+      Connection.Connecting({ gameId: GAME_ID, attempt: 0, failures: 0 }),
+    )
+    expect(lockedModel.connection).toEqual(Connection.NoCase())
+  })
 
-describe('joining', () => {
-  test('joining deals a new case and plays the intro', () => {
+  test('tapping the notification starts a case and remembers it', () => {
     story(
       update,
-      given(lockedModel),
+      given({ ...lockedModel, played: ['old', 'silver-brooch'] }),
       message(Message.ClickedNotification()),
-      message(Message.UpdatedNameInput({ value: '  Jon ' })),
-      message(Message.SubmittedJoin()),
-      model(model => {
-        expect(model.screen._tag).toBe('InChat')
-        expect(model.playerName).toBe('Jon')
-        expect(model.playback._tag).toBe('Preparing')
-      }),
+      Command.expectExact(StartCase),
       Command.resolve(
-        DealNewCase,
-        Message.CompletedDealNewCase({
-          caseNumber: 1,
-          thief: 'Gus',
-          seating: ['Wes', 'Gus', 'Margot', 'Theo', 'Lena', 'Priya'],
-        }),
+        StartCase,
+        Message.SucceededStartCase({ gameId: GAME_ID, caseId: 'old' }),
       ),
-      model(model => {
-        expect(model.thief).toBe('Gus')
-        expect(model.alive[0]).toBe('Wes')
-        expect(model.playback._tag).toBe('Typing')
+      Command.expectExact(SaveGame),
+      model(next => {
+        expect(next.connection._tag).toBe('Connecting')
+        expect(next.played).toEqual(['silver-brooch', 'old'])
+        expect(next.sheet).toEqual(Sheet.Intro())
       }),
-      playOut(1),
-      model(model => {
-        expect(model.playback._tag).toBe('Idle')
-        expect(model.script).toHaveLength(0)
-        expect(titles(model.feed)).toEqual(['You’re the detective'])
-        expect(
-          Array.some(
-            model.feed,
-            item =>
-              item._tag === 'GuestText' &&
-              item.text === 'Jon, you got in late, did you see anything? 🙏',
-          ),
-        ).toBe(true)
-      }),
+      settle,
     )
   })
 
-  test('a blank name keeps the default', () => {
+  test('the snapshot fills the board', () => {
     story(
       update,
-      given(lockedModel),
-      message(Message.UpdatedNameInput({ value: '   ' })),
-      message(Message.SubmittedJoin()),
-      model(model => {
-        expect(model.playerName).toBe('Riley')
+      given({
+        ...lockedModel,
+        connection: Connection.Open({ gameId: GAME_ID, attempt: 0 }),
       }),
-      Command.resolve(
-        DealNewCase,
-        Message.CompletedDealNewCase({
-          caseNumber: 1,
-          thief: 'Gus',
-          seating: ['Wes', 'Gus', 'Margot', 'Theo', 'Lena', 'Priya'],
+      message(
+        fromServer(
+          ServerMessage.cases.Snapshot.make({
+            intro: board.intro,
+            guests: board.guests,
+            messages: board.messages,
+            caseFile: ['m2'],
+            day: 2,
+            phase: 'day',
+          }),
+        ),
+      ),
+      model(next => {
+        const filled = boardOf(next)
+        expect(filled.day).toBe(2)
+        expect(filled.caseFile).toEqual(['m2'])
+        expect(filled.maybeResult).toEqual(Option.none())
+      }),
+      settle,
+    )
+  })
+
+  test('a frame from an old socket is ignored', () => {
+    story(
+      update,
+      given(playingModel),
+      message(
+        Message.ReceivedServerMessage({
+          gameId: GAME_ID,
+          attempt: 7,
+          message: ServerMessage.cases.CaseFileChanged.make({
+            caseFile: ['m1'],
+          }),
         }),
       ),
-      playOut(1),
+      Command.expectNone(),
+      model(next => {
+        expect(boardOf(next).caseFile).toEqual([])
+      }),
     )
   })
 })
 
-describe('playback', () => {
-  test('a timer from an earlier case is ignored', () => {
+describe('reconnecting', () => {
+  test('a closed socket waits, then reconnects with a new attempt', () => {
     story(
       update,
-      given({ ...eveningModel, caseNumber: 2 }),
-      message(Message.CompletedWaitForBeat({ caseNumber: 1 })),
-      Command.expectNone(),
-      model(model => {
-        expect(model.feed).toEqual(eveningModel.feed)
+      given(playingModel),
+      message(Message.ClosedCaseSocket({ gameId: GAME_ID, attempt: 0 })),
+      model(next => {
+        expect(next.connection).toEqual(
+          Connection.Lost({ gameId: GAME_ID, attempt: 0, failures: 0 }),
+        )
+      }),
+      Command.resolve(
+        WaitToReconnect,
+        Message.CompletedWaitToReconnect({ attempt: 0 }),
+      ),
+      model(next => {
+        expect(next.connection).toEqual(
+          Connection.Connecting({ gameId: GAME_ID, attempt: 1, failures: 0 }),
+        )
       }),
     )
   })
 
-  test('the player cannot text while guests are mid-conversation', () => {
+  test('a case that keeps failing is dropped', () => {
     story(
       update,
       given({
-        ...eveningModel,
-        playback: { _tag: 'Holding' },
-        messageInput: 'hello',
+        ...playingModel,
+        connection: Connection.Connecting({
+          gameId: GAME_ID,
+          attempt: 4,
+          failures: MAX_RECONNECT_FAILURES - 1,
+        }),
+      }),
+      message(Message.FailedAcquireCaseSocket()),
+      Command.expectExact(SaveGame),
+      model(next => {
+        expect(next.connection).toEqual(Connection.NoCase())
+        expect(next.maybeBoard).toEqual(Option.none())
+        expect(Option.isSome(next.maybeNotice)).toBe(true)
+      }),
+      settle,
+    )
+  })
+})
+
+describe('pacing', () => {
+  test('a guest reply shows typing, then posts, then holds', () => {
+    const text = 'I went up at ten.'
+    const reply = guestSays('m3', dmMargot, 'margot', text)
+    story(
+      update,
+      given({ ...playingModel, maybeOpenThread: Option.some(dmMargot) }),
+      message(
+        fromServer(ServerMessage.cases.MessagePosted.make({ message: reply })),
+      ),
+      model(next => {
+        expect(next.playback._tag).toBe('Typing')
+        expect(boardOf(next).messages).not.toContainEqual(reply)
+      }),
+      Command.expectExact(WaitForBeat),
+      Command.resolve(
+        WaitForBeat({ epoch: 0, millis: typingMillis(text) }),
+        Message.CompletedWaitForBeat({ epoch: 0 }),
+      ),
+      model(next => {
+        expect(next.playback._tag).toBe('Holding')
+        expect(boardOf(next).messages).toContainEqual(reply)
+      }),
+      playOut(0),
+      model(next => {
+        expect(next.playback._tag).toBe('Idle')
+      }),
+      settle,
+    )
+  })
+
+  test('a reply in another thread marks it unread until opened', () => {
+    const reply = guestSays('m3', dmMargot, 'margot', 'Morning!')
+    story(
+      update,
+      given({ ...playingModel, maybeOpenThread: Option.some(dmDale) }),
+      message(
+        fromServer(ServerMessage.cases.MessagePosted.make({ message: reply })),
+      ),
+      playOut(0),
+      model(next => {
+        expect(next.unread).toEqual(['dm-margot'])
+      }),
+      message(Message.ClickedThreadRow({ thread: dmMargot })),
+      model(next => {
+        expect(next.unread).toEqual([])
+      }),
+      settle,
+    )
+  })
+
+  test('a timer from before a snapshot is ignored', () => {
+    story(
+      update,
+      given({
+        ...playingModel,
+        playbackEpoch: 3,
+        playback: Playback.Holding(),
+      }),
+      message(Message.CompletedWaitForBeat({ epoch: 2 })),
+      Command.expectNone(),
+      model(next => {
+        expect(next.playback._tag).toBe('Holding')
+      }),
+    )
+  })
+})
+
+describe('sending', () => {
+  test('a sent message shows as pending until the server posts it', () => {
+    story(
+      update,
+      given({ ...playingModel, maybeOpenThread: Option.some(dmDale) }),
+      message(Message.UpdatedMessageInput({ value: '  where were you?  ' })),
+      message(Message.SubmittedMessage()),
+      Command.expectHas(
+        SendToServer({
+          message: ClientMessage.cases.SendMessage.make({
+            thread: dmDale,
+            text: 'where were you?',
+          }),
+        }),
+      ),
+      model(next => {
+        expect(next.messageInput).toBe('')
+        expect(Array.map(next.pendingSends, send => send.text)).toEqual([
+          'where were you?',
+        ])
+      }),
+      settle,
+      message(
+        fromServer(
+          ServerMessage.cases.MessagePosted.make({
+            message: detectiveSays('m9', dmDale, 'where were you?'),
+          }),
+        ),
+      ),
+      model(next => {
+        expect(next.pendingSends).toEqual([])
+        expect(Array.last(boardOf(next).messages)).toEqual(
+          Option.some(detectiveSays('m9', dmDale, 'where were you?')),
+        )
+      }),
+      settle,
+    )
+  })
+
+  test('a rejected message comes back to the composer with a notice', () => {
+    story(
+      update,
+      given({
+        ...playingModel,
+        maybeOpenThread: Option.some(dmDale),
+        pendingSends: [{ id: 0, thread: dmDale, text: 'hello?' }],
+      }),
+      message(
+        fromServer(ServerMessage.cases.Rejected.make({ reason: 'asleep' })),
+      ),
+      model(next => {
+        expect(next.pendingSends).toEqual([])
+        expect(next.messageInput).toBe('hello?')
+        expect(Option.isSome(next.maybeNotice)).toBe(true)
+      }),
+    )
+  })
+
+  test('the Wi-Fi log has no composer to send from', () => {
+    story(
+      update,
+      given({
+        ...playingModel,
+        maybeOpenThread: Option.some(wifiEntry.thread),
+        messageInput: 'hi',
       }),
       message(Message.SubmittedMessage()),
       Command.expectNone(),
-      model(model => {
-        expect(model.messageInput).toBe('hello')
-      }),
     )
   })
 })
 
-describe('nights and mornings', () => {
-  test('looking into the thief reveals them, and texts fall back to built-in lines when Claude is off', () => {
+describe('case file', () => {
+  test('a long press opens the message menu', () => {
     story(
       update,
-      given(eveningModel),
-      message(Message.ClickedGoToBed()),
-      Command.resolve(ScrollToLatest, Message.CompletedScrollToLatest()),
-      model(model => {
-        expect(model.phase._tag).toBe('Night')
-      }),
-      message(Message.ClickedNightCandidate({ feedId: 3, name: 'Lena' })),
-      model(model => {
-        expect(model.phase).toEqual({
-          _tag: 'Night',
-          maybePending: Option.some('Lena'),
-        })
-      }),
-      message(Message.ClickedSkipToMorning()),
+      given(playingModel),
+      message(Message.PressedMessage({ messageId: 'm2' })),
       Command.resolve(
-        RollMorning,
-        Message.CompletedRollMorning({
-          caseNumber: 1,
-          maybeVictim: Option.none(),
-          wifiLog: ['Lena', 'Wes'],
-          minute: 45,
+        WaitForLongPress,
+        Message.CompletedWaitForLongPress({ pressId: 0 }),
+      ),
+      model(next => {
+        expect(next.sheet).toEqual(Sheet.MessageActions({ messageId: 'm2' }))
+      }),
+      settle,
+      message(Message.ClickedSaveMessage({ messageId: 'm2' })),
+      Command.expectHas(
+        SendToServer({
+          message: ClientMessage.cases.SaveToCaseFile.make({ messageId: 'm2' }),
         }),
       ),
-      model(model => {
-        expect(model.day).toBe(1)
-        expect(model.phase._tag).toBe('Day')
-        expect(model.checks).toEqual([{ name: 'Lena', isGuilty: true }])
+      model(next => {
+        expect(boardOf(next).caseFile).toEqual(['m2'])
+        expect(next.sheet).toEqual(Sheet.Closed())
       }),
-      Command.resolveAll(
-        ...Array.makeBy(
-          30,
-          () =>
-            [
-              WaitForBeat,
-              Message.CompletedWaitForBeat({ caseNumber: 1 }),
-            ] as const,
-        ),
-        ...Array.makeBy(
-          30,
-          () => [ScrollToLatest, Message.CompletedScrollToLatest()] as const,
-        ),
-        [
-          FetchGuestTexts,
-          Message.FailedFetchGuestTexts({ caseNumber: 1, isUnavailable: true }),
-        ],
-        [
-          PickFallbackLines,
-          Message.CompletedPickFallbackLines({
-            caseNumber: 1,
-            lines: [Line.make({ from: 'Wes', text: 'Sorry, I was asleep.' })],
-            usedLines: ['Sorry, I was asleep.'],
-          }),
-        ],
-      ),
-      model(model => {
-        expect(model.liveTexts._tag).toBe('Unavailable')
-        expect(model.usedLines).toEqual(['Sorry, I was asleep.'])
-        expect(titles(model.feed)).toContain('Lena has the brooch.')
-        expect(Array.last(model.feed)).toEqual(
-          Option.some(
-            FeedItem.GuestText({
-              id: model.nextFeedId - 1,
-              from: 'Wes',
-              text: 'Sorry, I was asleep.',
-            }),
-          ),
-        )
-        expect(model.playback._tag).toBe('Idle')
-      }),
+      settle,
     )
   })
 
-  test('a phone stolen overnight removes that guest from the chat', () => {
+  test('letting go early is just a tap', () => {
     story(
       update,
       given({
-        ...eveningModel,
-        day: 1,
-        phase: { _tag: 'Night', maybePending: Option.some('Gus') },
-        liveTexts: { _tag: 'Unavailable' },
+        ...playingModel,
+        maybePress: Option.some({ messageId: 'm2', pressId: 0 }),
       }),
-      message(Message.ClickedSkipToMorning()),
-      Command.resolve(
-        RollMorning,
-        Message.CompletedRollMorning({
-          caseNumber: 1,
-          maybeVictim: Option.some('Theo'),
-          wifiLog: ['Wes', 'Lena'],
-          minute: 50,
-        }),
-      ),
-      Command.resolveAll(
-        ...Array.makeBy(
-          30,
-          () =>
-            [
-              WaitForBeat,
-              Message.CompletedWaitForBeat({ caseNumber: 1 }),
-            ] as const,
-        ),
-        ...Array.makeBy(
-          30,
-          () => [ScrollToLatest, Message.CompletedScrollToLatest()] as const,
-        ),
-        [
-          PickFallbackLines,
-          Message.CompletedPickFallbackLines({
-            caseNumber: 1,
-            lines: [],
-            usedLines: [],
-          }),
-        ],
-      ),
-      model(model => {
-        expect(model.day).toBe(2)
-        expect(model.alive).not.toContain('Theo')
-        expect(model.gone).toEqual(['Theo'])
-        expect(titles(model.feed)).toContain('Gus is clean.')
+      message(Message.ReleasedMessage()),
+      message(Message.CompletedWaitForLongPress({ pressId: 0 })),
+      Command.expectNone(),
+      model(next => {
+        expect(next.sheet).toEqual(Sheet.Closed())
       }),
     )
   })
 })
 
-describe('voting', () => {
-  const guestVote = (
-    voter: 'Lena' | 'Wes' | 'Gus',
-    choice: 'Lena' | 'Wes' | 'Gus',
-  ) => Vote.make({ voter: Voter.Guest({ name: voter }), choice })
-
-  test('turning in the thief closes the case', () => {
+describe('days and the arrest', () => {
+  test('ending the day asks first, then tells the server', () => {
     story(
       update,
-      given(votingModel(1)),
-      message(Message.ClickedPollOption({ feedId: 0, name: 'Lena' })),
-      model(model => {
-        expect(model.playback._tag).toBe('Preparing')
+      given(playingModel),
+      message(Message.ClickedEndDay()),
+      Command.expectNone(),
+      message(Message.ClickedConfirmEndDay()),
+      Command.expectExact(
+        SendToServer({ message: ClientMessage.cases.EndDay.make({}) }),
+      ),
+      settle,
+    )
+  })
+
+  test('night holds before the morning messages play', () => {
+    story(
+      update,
+      given(playingModel),
+      message(
+        fromServer(
+          ServerMessage.cases.PhaseChanged.make({ day: 1, phase: 'night' }),
+        ),
+      ),
+      Command.expectExact(WaitForBeat({ epoch: 0, millis: NIGHT_MILLIS })),
+      model(next => {
+        expect(boardOf(next).phase).toBe('night')
       }),
-      Command.resolve(
-        CastGuestVotes,
-        Message.CompletedCastGuestVotes({
-          caseNumber: 1,
-          votes: [
-            guestVote('Wes', 'Lena'),
-            guestVote('Gus', 'Lena'),
-            guestVote('Lena', 'Wes'),
-          ],
-          turnedIn: 'Lena',
-          maybeReaction: Option.none(),
-          usedLines: [],
+      playOut(0),
+    )
+    story(
+      update,
+      given({
+        ...playingModel,
+        maybeBoard: Option.some({ ...board, phase: 'night' as const }),
+        playback: Playback.Holding(),
+      }),
+      message(
+        fromServer(
+          ServerMessage.cases.PhaseChanged.make({ day: 2, phase: 'day' }),
+        ),
+      ),
+      Command.expectNone(),
+      model(next => {
+        expect(boardOf(next).phase).toBe('night')
+      }),
+      message(Message.CompletedWaitForBeat({ epoch: 0 })),
+      model(next => {
+        expect(boardOf(next).day).toBe(2)
+        expect(boardOf(next).phase).toBe('day')
+      }),
+      playOut(0),
+    )
+  })
+
+  test('the arrest walks suspect, claim, proof, then confirm', () => {
+    const saved = {
+      ...playingModel,
+      maybeBoard: Option.some({ ...board, caseFile: ['m1', 'm2'] }),
+    }
+    story(
+      update,
+      given(saved),
+      message(Message.ClickedStartArrest()),
+      message(Message.ClickedSuspect({ suspect: 'dale' })),
+      message(Message.ClickedClaim({ messageId: daleClaim.id })),
+      message(Message.ClickedProof({ messageId: wifiEntry.id })),
+      model(next => {
+        expect(next.sheet).toEqual(
+          Sheet.Arrest({
+            step: ArrestStep.Confirm({
+              suspect: 'dale',
+              claim: 'm2',
+              proof: 'm1',
+            }),
+          }),
+        )
+      }),
+      message(Message.ClickedArrestBack()),
+      message(Message.ClickedProof({ messageId: wifiEntry.id })),
+      message(Message.ClickedConfirmArrest()),
+      Command.expectExact(
+        SendToServer({
+          message: ClientMessage.cases.MakeArrest.make({
+            suspect: 'dale',
+            claimMessageId: 'm2',
+            proofMessageId: 'm1',
+          }),
         }),
       ),
-      playOut(1),
-      model(model => {
-        expect(model.phase._tag).toBe('Over')
-        expect(titles(model.feed)).toEqual(['Case closed 🎉'])
-        const poll = Array.findFirst(model.feed, item => item._tag === 'Poll')
+      settle,
+      message(
+        fromServer(
+          ServerMessage.cases.ArrestResult.make({
+            result: {
+              ending: 'caseClosed',
+              thief: 'dale',
+              timeline: [{ time: '01:10', text: 'Dale takes the brooch.' }],
+            },
+          }),
+        ),
+      ),
+      model(next => {
+        expect(next.sheet).toEqual(Sheet.Result())
         expect(
-          Option.map(poll, item =>
-            item._tag === 'Poll' ? item.votes.length : 0,
-          ),
-        ).toEqual(Option.some(4))
+          Option.map(boardOf(next).maybeResult, result => result.ending),
+        ).toEqual(Option.some('caseClosed'))
       }),
     )
   })
 
-  test('a wrong vote before Monday leads to another night', () => {
+  test('day 3 ending opens the arrest', () => {
     story(
       update,
-      given(votingModel(1)),
-      message(Message.ClickedPollOption({ feedId: 0, name: 'Wes' })),
-      Command.resolve(
-        CastGuestVotes,
-        Message.CompletedCastGuestVotes({
-          caseNumber: 1,
-          votes: [guestVote('Lena', 'Wes'), guestVote('Gus', 'Wes')],
-          turnedIn: 'Wes',
-          maybeReaction: Option.some(Line.make({ from: 'Gus', text: 'Hm.' })),
-          usedLines: ['Hm.'],
-        }),
+      given(playingModel),
+      message(
+        fromServer(
+          ServerMessage.cases.PhaseChanged.make({ day: 3, phase: 'arrest' }),
+        ),
       ),
-      playOut(1),
-      model(model => {
-        expect(model.phase._tag).toBe('Night')
-        expect(model.alive).toEqual(['Lena', 'Gus'])
-      }),
-    )
-  })
-
-  test('a wrong vote on Monday lets the thief get away', () => {
-    story(
-      update,
-      given(votingModel(3)),
-      message(Message.ClickedPollOption({ feedId: 0, name: 'Wes' })),
-      Command.resolve(
-        CastGuestVotes,
-        Message.CompletedCastGuestVotes({
-          caseNumber: 1,
-          votes: [guestVote('Lena', 'Wes'), guestVote('Gus', 'Wes')],
-          turnedIn: 'Wes',
-          maybeReaction: Option.none(),
-          usedLines: [],
-        }),
-      ),
-      playOut(1),
-      model(model => {
-        expect(model.phase._tag).toBe('Over')
-        expect(titles(model.feed)).toEqual(['The thief got away'])
+      model(next => {
+        expect(next.sheet).toEqual(
+          Sheet.Arrest({ step: ArrestStep.PickSuspect() }),
+        )
       }),
     )
   })

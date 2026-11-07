@@ -393,10 +393,15 @@ describe('the case file and the arrest', () => {
     const step = arrest(saved, 'dale', claimId, proofId)
     expect(step.out[0]).toMatchObject({
       _tag: 'ArrestResult',
-      ending: 'caseClosed',
-      thief: 'dale',
+      result: { ending: 'caseClosed', thief: 'dale' },
     })
     expect(step.state.phase).toBe('arrest')
+    expect(
+      play(step.state, ClientMessage.cases.Resume.make({})).out[0],
+    ).toMatchObject({
+      _tag: 'Snapshot',
+      result: { ending: 'caseClosed' },
+    })
     expect(play(step.state, dm('dale', 'hi')).out).toEqual([
       { _tag: 'Rejected', reason: 'notNow' },
     ])
@@ -407,12 +412,12 @@ describe('the case file and the arrest', () => {
       textOf(message).startsWith('Probably fell'),
     )
     const step = arrest(save(saved, beatId), 'dale', beatId, proofId)
-    expect(step.out[0]).toMatchObject({ ending: 'theyWalk' })
+    expect(step.out[0]).toMatchObject({ result: { ending: 'theyWalk' } })
   })
 
   test('arresting an innocent is the wrong person', () => {
     expect(arrest(saved, 'wes', claimId, proofId).out[0]).toMatchObject({
-      ending: 'wrongPerson',
+      result: { ending: 'wrongPerson' },
     })
   })
 
@@ -424,9 +429,9 @@ describe('the case file and the arrest', () => {
 
   test('the arrest reveals the timeline', () => {
     const result = arrest(saved, 'dale', claimId, proofId).out[0]
-    expect(result?._tag === 'ArrestResult' && result.timeline.length).toBe(
-      caseData.timeline.length,
-    )
+    expect(
+      result?._tag === 'ArrestResult' && result.result.timeline.length,
+    ).toBe(caseData.timeline.length)
   })
 })
 

@@ -1,14 +1,15 @@
 # Thread Lightly
 
-**Pine Hollow** is a cozy murder-free mystery played inside a fake group chat. Someone at the lodge took Margot’s grandmother’s silver brooch. You’re secretly the detective: look into one guest each night, read the Wi‑Fi log each morning, and get the group to vote the thief out before everyone checks out on Monday.
+**Pine Hollow** is a cozy, murder-free mystery played over text messages. Something has gone missing at the lodge. You're the detective: DM the guests, ask the group chat, read the lodge Wi-Fi log each morning, and save messages to your case file. By the end of day 3, arrest the thief with two saved messages: a lie they told and the proof that it's a lie.
 
-It will live at **threadlightly.jonstuebe.com**.
+It will live at **threadlightly.jonstuebe.com**. The design is in [`docs/design.md`](./docs/design.md).
 
 ## Stack
 
 - **Client:** [Foldkit](https://foldkit.dev) (Elm architecture on [Effect](https://effect.website)), built with Vite.
-- **Server:** a Cloudflare Worker that serves the built client as static assets and answers `POST /api/guest-texts`, which asks Claude to write the guests’ texts in character.
-- **Fallback:** without an Anthropic API key the endpoint returns 503 and the guests use built-in lines, so the game is fully playable offline.
+- **Server:** a Cloudflare Worker. It serves the built client, starts cases at `POST /api/case/new`, and runs each case in a Durable Object that the client talks to over a WebSocket.
+- **Guests:** the case file holds what each guest knows and says. Workers AI routes your message to the right topic (Clef) and writes small talk in character. There's no Anthropic API at runtime.
+- **Cases:** hand-written or generated locally by a Claude Code skill, then committed to `cases/`. The Worker never generates cases.
 
 ## Getting started
 
@@ -17,10 +18,10 @@ pnpm install
 pnpm dev          # Vite + the Worker together, via @cloudflare/vite-plugin
 ```
 
-To get live guest texts locally, copy `.dev.vars.example` to `.dev.vars` and set `ANTHROPIC_API_KEY`.
+The Workers AI binding always calls Cloudflare, even in local dev, so `pnpm dev` needs `wrangler login`.
 
 ```bash
-pnpm test         # Story (update) and Scene (view) tests
+pnpm test         # client Story/Scene tests, engine and checker tests
 pnpm lint         # oxlint with the Foldkit and Effect rule sets
 pnpm typecheck    # client and Worker
 pnpm format
@@ -31,23 +32,34 @@ pnpm format
 ```
 src/                Foldkit client
   entry.ts          boots the runtime (the only file that calls Runtime.run)
-  model.ts          Model and the domain unions (Phase, FeedItem, Beat, ...)
+  model.ts          Model, Connection, Board, the playback queue and sheets
   message.ts        every Message
-  update.ts         init + update: the game's state machine and script playback
-  command.ts        side effects: timers, dice rolls, the guest-texts fetch, DOM
-  game.ts           pure scripts, pacing, and the Random-driven rolls
-  subscription.ts   visual viewport tracking for the on-screen keyboard
-  view/             header, thread and cards, composer, lock screen, sheets
-shared/             plain TypeScript used by both sides (cast, API contract)
+  update.ts         init + update: connection, pacing, sends, case file, arrest
+  command.ts        side effects: start a case, socket sends, timers, storage, DOM
+  socket.ts         the case WebSocket as a ManagedResource
+  subscription.ts   socket messages, and viewport tracking for the keyboard
+  chat.ts           pure helpers: threads, names, pacing constants
+  view/             lock screen, conversation list, threads, sheets
+shared/             used by both sides; depends only on effect
+  protocol.ts       the WebSocket protocol (the only shared module the client imports)
+  case.ts           the case schema (holds the answer; server only)
+  checker.ts        proves a case is solvable
 worker/             the Cloudflare Worker
-wrangler.jsonc      Worker, assets and custom domain config
+  game/             the rules as a pure function, plus the AI services
+  case-object.ts    the Durable Object for one case
+cases/              case files, one JSON per case
+wrangler.jsonc      Worker, assets, Durable Object, AI and custom domain config
 ```
 
 ### How the chat is paced
 
-Guests don’t text all at once. `update` keeps a queue of **beats** (`Model.script`). Each beat shows typing, posts a text, or shows an event, then a `WaitForBeat` Command sleeps for a reading-speed delay (about 170 words per minute) before the next one plays. Every timer carries the case number, so starting a new case mid-script makes stale timers harmless.
+The server sends each reply as soon as it has one. The client queues what arrives and plays it back like a real chat. A guest's reply shows a typing bubble for a time based on its length, posts, then holds briefly before the next one. Wi-Fi entries post quickly, and night holds longer before the morning messages. A timer carries the playback epoch, so a fresh snapshot makes any pending timers harmless.
 
-All randomness (who the thief is, whose phone vanishes, how guests vote) runs inside Commands using Effect’s `Random`, so `update` stays pure and the tests can feed in exact outcomes.
+Your own messages show immediately as pending and settle when the server echoes them back. If the server rejects one, the text goes back into the composer with a note.
+
+### Reconnecting
+
+The game ID is kept in `localStorage`, so a reload rejoins the same case. If the socket drops, the client waits and reconnects. After three failures in a row it drops the case and shows the lock screen again.
 
 ## Deploying
 
@@ -55,8 +67,7 @@ Not wired up yet, but the config is ready:
 
 ```bash
 pnpm wrangler login
-pnpm wrangler secret put ANTHROPIC_API_KEY   # optional; enables live texts
 pnpm deploy
 ```
 
-`wrangler.jsonc` routes the Worker to the `threadlightly.jonstuebe.com` custom domain, which needs `jonstuebe.com` to be a zone on the same Cloudflare account. The model is set by the `CLAUDE_MODEL` var.
+`wrangler.jsonc` routes the Worker to the `threadlightly.jonstuebe.com` custom domain, which needs `jonstuebe.com` to be a zone on the same Cloudflare account.

@@ -6,6 +6,10 @@ import { Schema } from 'effect'
 
 import { Day, GuestId } from './case'
 
+// NOTE: the client imports this module only, never ./case, so the ID and day
+// types it needs are re-exported here.
+export { Day, GuestId, LAST_DAY } from './case'
+
 export const MAX_MESSAGE_LENGTH = 280
 
 // THREADS AND MESSAGES
@@ -84,6 +88,13 @@ export const RevealedEvent = Schema.Struct({
 })
 export type RevealedEvent = typeof RevealedEvent.Type
 
+export const CaseResult = Schema.Struct({
+  ending: Ending,
+  thief: GuestId,
+  timeline: Schema.Array(RevealedEvent),
+})
+export type CaseResult = typeof CaseResult.Type
+
 // CLIENT TO SERVER
 
 export const ClientMessage = Schema.TaggedUnion({
@@ -123,17 +134,14 @@ export const ServerMessage = Schema.TaggedUnion({
     caseFile: Schema.Array(MessageId),
     day: Day,
     phase: Phase,
+    result: Schema.optionalKey(CaseResult),
   },
   Typing: { thread: Thread, guest: GuestId },
   MessagePosted: { message: ChatMessage },
   GuestStatusChanged: { guest: GuestId, status: GuestStatus },
   PhaseChanged: { day: Day, phase: Phase },
   CaseFileChanged: { caseFile: Schema.Array(MessageId) },
-  ArrestResult: {
-    ending: Ending,
-    thief: GuestId,
-    timeline: Schema.Array(RevealedEvent),
-  },
+  ArrestResult: { result: CaseResult },
   Rejected: { reason: RejectionReason },
 })
 export type ServerMessage = typeof ServerMessage.Type

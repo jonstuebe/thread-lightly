@@ -1,22 +1,28 @@
 import { Schema } from 'effect'
 import { defineMessageUnion } from 'foldkit/message'
 
-import { GuestName } from './cast'
-import { Line, Vote } from './model'
+import { GuestId, MessageId, ServerMessage, Thread } from '../shared/protocol'
 
 export const Message = defineMessageUnion({
   ClickedNotification: {},
-  UpdatedNameInput: { value: Schema.String },
-  SubmittedJoin: {},
-  ClickedMenu: {},
-  ClickedGroupName: {},
-  ClickedCloseMenu: {},
   ClickedNewCase: {},
-  CompletedDealNewCase: {
-    caseNumber: Schema.Number,
-    thief: GuestName,
-    seating: Schema.Array(GuestName),
+  SucceededStartCase: { gameId: Schema.String, caseId: Schema.String },
+  FailedStartCase: {},
+  CompletedSaveGame: {},
+  AcquiredCaseSocket: {},
+  FailedAcquireCaseSocket: {},
+  ReleasedCaseSocket: {},
+  ReceivedServerMessage: {
+    gameId: Schema.String,
+    attempt: Schema.Number,
+    message: ServerMessage,
   },
+  ClosedCaseSocket: { gameId: Schema.String, attempt: Schema.Number },
+  CompletedWaitToReconnect: { attempt: Schema.Number },
+  CompletedSendToServer: {},
+  CompletedWaitForBeat: { epoch: Schema.Number },
+  ClickedThreadRow: { thread: Thread },
+  ClickedBack: {},
   UpdatedMessageInput: { value: Schema.String },
   SubmittedMessage: {},
   FocusedComposer: {},
@@ -25,37 +31,23 @@ export const Message = defineMessageUnion({
   CompletedBlurComposer: {},
   CompletedScrollToLatest: {},
   ChangedViewport: { height: Schema.Number, offsetTop: Schema.Number },
-  ClickedGoToBed: {},
-  ClickedNightCandidate: { feedId: Schema.Number, name: GuestName },
-  ClickedSkipToMorning: {},
-  ClickedCallVote: {},
-  ClickedPollOption: { feedId: Schema.Number, name: GuestName },
-  CompletedWaitForBeat: { caseNumber: Schema.Number },
-  CompletedRollMorning: {
-    caseNumber: Schema.Number,
-    maybeVictim: Schema.Option(GuestName),
-    wifiLog: Schema.Array(GuestName),
-    minute: Schema.Number,
-  },
-  CompletedCastGuestVotes: {
-    caseNumber: Schema.Number,
-    votes: Schema.Array(Vote),
-    turnedIn: GuestName,
-    maybeReaction: Schema.Option(Line),
-    usedLines: Schema.Array(Schema.String),
-  },
-  SucceededFetchGuestTexts: {
-    caseNumber: Schema.Number,
-    lines: Schema.Array(Line),
-  },
-  FailedFetchGuestTexts: {
-    caseNumber: Schema.Number,
-    isUnavailable: Schema.Boolean,
-  },
-  CompletedPickFallbackLines: {
-    caseNumber: Schema.Number,
-    lines: Schema.Array(Line),
-    usedLines: Schema.Array(Schema.String),
-  },
+  PressedMessage: { messageId: MessageId },
+  ReleasedMessage: {},
+  CompletedWaitForLongPress: { pressId: Schema.Number },
+  RequestedMessageActions: { messageId: MessageId },
+  ClickedSaveMessage: { messageId: MessageId },
+  ClickedRemoveMessage: { messageId: MessageId },
+  ClickedCaseInfo: {},
+  ClickedCaseFile: {},
+  ClickedCloseSheet: {},
+  ClickedEndDay: {},
+  ClickedConfirmEndDay: {},
+  ClickedStartArrest: {},
+  ClickedSuspect: { suspect: GuestId },
+  ClickedClaim: { messageId: MessageId },
+  ClickedProof: { messageId: MessageId },
+  ClickedArrestBack: {},
+  ClickedConfirmArrest: {},
+  ClickedShowResult: {},
 })
 export type Message = typeof Message.Type

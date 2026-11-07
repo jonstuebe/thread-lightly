@@ -333,13 +333,13 @@ Threads are `Group`, `Direct(guest)` and `WifiLog`. Every chat message, Wi-Fi en
 
 Server to client:
 
-- `Snapshot { threads, caseFile, day, phase, guestStatus }`, sent on connect or resume.
+- `Snapshot { intro, guests, messages, caseFile, day, phase, result? }`, sent on connect or resume. `result` is there once the case is over, so a reload still shows the ending.
 - `Typing { thread, guest }`
 - `MessagePosted { thread, message }`
 - `GuestStatusChanged { guest, status }`, where status is `available`, `annoyed`, `leftOnRead` or `asleep`.
 - `PhaseChanged { day, phase }`
 - `CaseFileChanged { caseFile }`
-- `ArrestResult { ending, thief, timeline }`
+- `ArrestResult { result: { ending, thief, timeline } }`
 - `Rejected { reason }`, such as asleep, too fast or an unknown message ID.
 
 Messages to the client carry text and IDs only, never fact IDs or truth values.
@@ -384,7 +384,7 @@ All of this happens on a branch, since it replaces the current game.
 1. ~~**Clef routing spike.**~~ Done. The dictionary approach works with Clef (27B) and a 0.3 confidence threshold. See section 5 and `spikes/clef-routing/VERDICT.md` on branch `spike/clef-routing`. The follow-up is to rerun it with test messages from someone who didn't write the dictionary.
 2. ~~**Schemas and checker.**~~ Done. `shared/case.ts`, `shared/replies.ts`, `shared/checker.ts` and `shared/protocol.ts`, tested against `cases/silver-brooch.json`.
 3. ~~**Server foundation.**~~ Done. `worker/game/engine.ts` holds the rules as a pure Effect function (state and client message in, state and server messages out), with Clef and small talk behind the `Router` and `SmallTalk` services (`worker/game/ai.ts`, live versions in `worker/ai-live.ts`). `worker/case-object.ts` is the Durable Object shell. The engine tests play the silver brooch case end to end with a scripted fake, and a manual WebSocket run against live Clef closed the case.
-4. **Client rewrite.** Conversation list, threads, long-press save, case file and arrest, all against the hand-written case.
+4. ~~**Client rewrite.**~~ Done. The Foldkit client in `src/` plays the silver brooch case over the WebSocket: the conversation list, DM, group and Wi-Fi log threads, long-press (or right-click, or Enter) to save, the case file, the arrest steps and the result with its timeline. The socket is a `ManagedResource` (`src/socket.ts`). The client paces replies itself; see "How the chat is paced" in the README. `/api/guest-texts`, the Anthropic SDK and the Mafia flow are gone.
 5. **Case generation.** Write the local skill, add `pnpm cases:check`, and generate the first batch of cases into `cases/`.
 6. **Make the guests feel alive.** Group chat director, idle chatter, night moves, patience tuning, endings and the timeline reveal.
 

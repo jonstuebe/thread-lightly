@@ -1,637 +1,716 @@
-import { Array, Match, Option, String } from 'effect'
-import { type Runtime, type Update } from 'foldkit'
+import { Array, Option, String, pipe } from 'effect'
+import { type Update } from 'foldkit'
 import { modifyFields } from 'foldkit/struct'
 
-import { GUEST_NAMES, type GuestName, dayName } from './cast'
+import {
+  type CaseResult,
+  type ChatMessage,
+  ClientMessage,
+  MAX_MESSAGE_LENGTH,
+  type RejectionReason,
+  ServerMessage,
+} from '../shared/protocol'
+import {
+  AFTER_POST_MILLIS,
+  LONG_PRESS_MILLIS,
+  MAX_RECONNECT_FAILURES,
+  NIGHT_MILLIS,
+  RECONNECT_MILLIS,
+  WIFI_ENTRY_MILLIS,
+  isSameThread,
+  threadKey,
+  typingMillis,
+} from './chat'
 import {
   BlurComposer,
-  CastGuestVotes,
-  DealNewCase,
-  FetchGuestTexts,
-  PickFallbackLines,
-  RollMorning,
+  SaveGame,
   ScrollToLatest,
+  SendToServer,
+  StartCase,
   WaitForBeat,
+  WaitForLongPress,
+  WaitToReconnect,
 } from './command'
-import {
-  FINAL_DAY,
-  introScript,
-  mentionedGuest,
-  morningScript,
-  readMillis,
-  typingMillis,
-  voteOutcomeScript,
-} from './game'
 import { Message } from './message'
 import {
-  Beat,
-  Check,
-  FeedItem,
-  LiveTexts,
-  Menu,
+  ArrestStep,
+  type Board,
+  Connection,
+  type Flags,
+  Incoming,
   type Model,
-  NightCandidate,
-  Phase,
   Playback,
-  Screen,
-  Situation,
-  Vote,
-  Voter,
+  Sheet,
 } from './model'
+import type { CaseSocketService } from './socket'
 
-type UpdateReturn = Update.Return<Model, Message>
-
-const DEFAULT_PLAYER_NAME = 'Riley'
+type UpdateReturn = Update.Return<Model, Message, CaseSocketService>
 
 // INIT
 
-export const init: Runtime.ApplicationInit<Model, Message> = () => ({
+export const init = (flags: Flags): UpdateReturn => ({
   model: {
-    screen: Screen.Locked(),
-    menu: Menu.Closed(),
-    nameInput: DEFAULT_PLAYER_NAME,
-    playerName: DEFAULT_PLAYER_NAME,
+    connection:
+      flags.gameId === null
+        ? Connection.NoCase()
+        : Connection.Connecting({
+            gameId: flags.gameId,
+            attempt: 0,
+            failures: 0,
+          }),
+    played: flags.played,
+    maybeBoard: Option.none(),
+    incoming: [],
+    playback: Playback.Idle(),
+    playbackEpoch: 0,
+    pendingSends: [],
+    maybeOpenThread: Option.none(),
+    unread: [],
     messageInput: '',
     isComposerFocused: false,
     maybeViewport: Option.none(),
-    caseNumber: 0,
-    thief: 'Margot',
-    alive: GUEST_NAMES,
-    gone: [],
-    day: 0,
-    phase: Phase.Evening(),
-    checks: [],
-    wifiLog: [],
-    feed: [],
-    nextFeedId: 0,
-    script: [],
-    playback: Playback.Idle(),
-    usedLines: [],
-    liveTexts: LiveTexts.Untried(),
+    maybeNotice: Option.none(),
+    sheet: Sheet.Closed(),
+    maybePress: Option.none(),
+    nextLocalId: 0,
   },
 })
 
 // HELPERS
 
-export const isBusy = (model: Model): boolean =>
-  model.playback._tag !== 'Idle' || Array.isReadonlyArrayNonEmpty(model.script)
+const andThen = (
+  first: UpdateReturn,
+  next: (model: Model) => UpdateReturn,
+): UpdateReturn => {
+  const second = next(first.model)
+  return {
+    model: second.model,
+    commands: [...(first.commands ?? []), ...(second.commands ?? [])],
+  }
+}
 
-export const canChat = (model: Model): boolean =>
-  model.phase._tag === 'Evening' || model.phase._tag === 'Day'
-
-const appendFeed = (model: Model, make: (id: number) => FeedItem): Model =>
+const withBoard = (model: Model, change: (board: Board) => Board): Model =>
   modifyFields(model, {
-    feed: feed => [...feed, make(model.nextFeedId)],
-    nextFeedId: id => id + 1,
+    maybeBoard: maybeBoard => Option.map(maybeBoard, change),
   })
 
-const withScroll = (result: UpdateReturn): UpdateReturn => ({
-  model: result.model,
-  commands: [...(result.commands ?? []), ScrollToLatest()],
+const sendToServer = (model: Model, message: ClientMessage): UpdateReturn => ({
+  model,
+  commands: [SendToServer({ message })],
 })
 
-const hold = (model: Model, millis: number): UpdateReturn => ({
-  model: modifyFields(model, { playback: () => Playback.Holding() }),
-  commands: [WaitForBeat({ caseNumber: model.caseNumber, millis })],
-})
+export const isPlaying = (model: Model): boolean =>
+  Option.exists(
+    model.maybeBoard,
+    board => board.phase === 'day' && Option.isNone(board.maybeResult),
+  )
 
-const updatePoll = (
+const isViewing = (model: Model, message: ChatMessage): boolean =>
+  Option.exists(model.maybeOpenThread, thread =>
+    isSameThread(thread, message.thread),
+  )
+
+// NOTE: the socket stream for a superseded connection can still deliver a
+// frame or two while it's being torn down. Only the current one counts.
+const isCurrentSocket = (
   model: Model,
-  feedId: number,
-  change: (poll: typeof FeedItem.Poll.Type) => FeedItem,
-): Model =>
-  modifyFields(model, {
-    feed: feed =>
-      Array.map(feed, item =>
-        item._tag === 'Poll' && item.id === feedId ? change(item) : item,
-      ),
-  })
+  gameId: string,
+  attempt: number,
+): boolean =>
+  model.connection._tag === 'Open' &&
+  model.connection.gameId === gameId &&
+  model.connection.attempt === attempt
 
-const latestPollId = (model: Model): Option.Option<number> =>
-  Option.map(
-    Array.findLast(model.feed, item => item._tag === 'Poll'),
-    item => item.id,
-  )
+// CONNECTION
 
-const isStale = (model: Model, caseNumber: number): boolean =>
-  caseNumber !== model.caseNumber
+const startCase = (model: Model): UpdateReturn =>
+  model.connection._tag === 'Starting'
+    ? { model }
+    : {
+        model: modifyFields(model, {
+          connection: () => Connection.Starting(),
+          sheet: () => Sheet.Closed(),
+          maybeNotice: () => Option.none(),
+        }),
+        commands: [StartCase({ played: model.played })],
+      }
 
-const checkFor = (model: Model, name: GuestName): Option.Option<Check> =>
-  Array.findLast(model.checks, check => check.name === name)
+const dropCase = (model: Model): UpdateReturn => ({
+  model: modifyFields(model, {
+    connection: () => Connection.NoCase(),
+    maybeBoard: () => Option.none(),
+    incoming: () => [],
+    playback: () => Playback.Idle(),
+    playbackEpoch: epoch => epoch + 1,
+    pendingSends: () => [],
+    maybeOpenThread: () => Option.none(),
+    sheet: () => Sheet.Closed(),
+    maybeNotice: () =>
+      Option.some('We couldn’t reach that case. Start a new one?'),
+  }),
+  commands: [SaveGame({ flags: { gameId: null, played: model.played } })],
+})
 
-// PHASES
-
-const enterNight = (model: Model): Model => {
-  const withTimestamp = appendFeed(model, id =>
-    FeedItem.Timestamp({ id, label: dayName(model.day), time: '11:48 PM' }),
-  )
-  const withEvent = appendFeed(withTimestamp, id =>
-    FeedItem.Event({ id, text: 'Everyone went to bed. The lodge is quiet.' }),
-  )
-  const withPick = appendFeed(withEvent, id =>
-    FeedItem.NightPick({
-      id,
-      candidates: Array.map(model.alive, name =>
-        NightCandidate.make({ name, maybeCheck: checkFor(model, name) }),
-      ),
-      maybePick: Option.none(),
-    }),
-  )
-  return modifyFields(withPick, {
-    phase: () => Phase.Night({ maybePending: Option.none() }),
-  })
-}
-
-const endingCard = (model: Model, isWin: boolean): Model => {
-  const checks = Array.match(model.checks, {
-    onEmpty: () => 'You didn’t check anyone this time.',
-    onNonEmpty: checks =>
-      `Your night checks: ${Array.join(
-        Array.map(
-          checks,
-          check => `${check.name} (${check.isGuilty ? 'guilty' : 'clean'})`,
-        ),
-        ', ',
-      )}.`,
-  })
-  const withEnding = appendFeed(model, id =>
-    FeedItem.Ending({
-      id,
-      title: isWin ? 'Case closed 🎉' : 'The thief got away',
-      body: isWin
-        ? `${model.thief} took the brooch, and you caught them on ${dayName(model.day)}. Margot is thrilled.`
-        : `It was ${model.thief} all along. By Monday night, nobody was left to back you up.`,
-      small: checks,
-    }),
-  )
-  return modifyFields(withEnding, { phase: () => Phase.Over() })
-}
-
-const startNewCase = (model: Model): UpdateReturn => {
-  const caseNumber = model.caseNumber + 1
+const loseConnection = (model: Model): UpdateReturn => {
+  const connection = model.connection
+  if (connection._tag !== 'Connecting' && connection._tag !== 'Open') {
+    return { model }
+  }
+  const failures =
+    connection._tag === 'Connecting' ? connection.failures + 1 : 0
+  if (failures >= MAX_RECONNECT_FAILURES) {
+    return dropCase(model)
+  }
   return {
     model: modifyFields(model, {
-      caseNumber: () => caseNumber,
-      screen: () => Screen.InChat(),
-      menu: () => Menu.Closed(),
-      phase: () => Phase.Evening(),
-      feed: () => [],
-      script: () => [],
-      playback: () => Playback.Preparing(),
-      usedLines: () => [],
+      connection: () =>
+        Connection.Lost({
+          gameId: connection.gameId,
+          attempt: connection.attempt,
+          failures,
+        }),
     }),
-    commands: [DealNewCase({ caseNumber })],
+    commands: [
+      WaitToReconnect({
+        attempt: connection.attempt,
+        millis: RECONNECT_MILLIS * (failures + 1),
+      }),
+    ],
   }
 }
 
 // PLAYBACK
 
-const advance = (model: Model): UpdateReturn => {
-  if (model.playback._tag !== 'Idle') {
-    return { model }
-  }
-  return Array.match(model.script, {
-    onEmpty: () => ({ model }),
-    onNonEmpty: ([beat, ...rest]) =>
-      playBeat(modifyFields(model, { script: () => rest }), beat),
+const takePending = (model: Model, message: ChatMessage): Model => {
+  const body = message.body
+  const text = body._tag === 'Text' ? body.text : ''
+  const sameThread = (index: number) =>
+    Option.exists(Array.get(model.pendingSends, index), pending =>
+      isSameThread(pending.thread, message.thread),
+    )
+  const maybeIndex = pipe(
+    Array.findFirstIndex(
+      model.pendingSends,
+      pending =>
+        isSameThread(pending.thread, message.thread) && pending.text === text,
+    ),
+    Option.orElse(() =>
+      Array.findFirstIndex(model.pendingSends, (_, index) => sameThread(index)),
+    ),
+  )
+  return Option.match(maybeIndex, {
+    onNone: () => model,
+    onSome: index =>
+      modifyFields(model, {
+        pendingSends: pending => Array.remove(pending, index),
+      }),
   })
 }
 
-const playBeat = (model: Model, beat: Beat): UpdateReturn =>
-  Beat.match(beat, {
-    GuestSays: ({ line }) =>
-      Array.contains(model.alive, line.from)
-        ? withScroll({
-            model: modifyFields(model, {
-              playback: () => Playback.Typing({ line }),
+const applyPost = (model: Model, message: ChatMessage): UpdateReturn => {
+  const posted = withBoard(model, board =>
+    Array.some(board.messages, existing => existing.id === message.id)
+      ? board
+      : { ...board, messages: [...board.messages, message] },
+  )
+  if (message.sender._tag === 'Detective') {
+    return { model: takePending(posted, message), commands: [ScrollToLatest()] }
+  }
+  if (isViewing(model, message)) {
+    return { model: posted, commands: [ScrollToLatest()] }
+  }
+  const key = threadKey(message.thread)
+  return {
+    model: modifyFields(posted, {
+      unread: unread => (unread.includes(key) ? unread : [...unread, key]),
+    }),
+  }
+}
+
+const hold = (model: Model, millis: number): UpdateReturn => ({
+  model: modifyFields(model, { playback: () => Playback.Holding() }),
+  commands: [WaitForBeat({ epoch: model.playbackEpoch, millis })],
+})
+
+const applyResult = (model: Model, result: CaseResult): Model =>
+  modifyFields(
+    withBoard(model, board => ({
+      ...board,
+      phase: 'arrest',
+      maybeResult: Option.some(result),
+    })),
+    { sheet: () => Sheet.Result() },
+  )
+
+const play = (model: Model, next: Incoming): UpdateReturn =>
+  Incoming.match(next, {
+    Post: ({ message }) => {
+      const body = message.body
+      if (message.sender._tag === 'Guest' && body._tag === 'Text') {
+        return {
+          model: modifyFields(model, {
+            playback: () => Playback.Typing({ message }),
+          }),
+          commands: [
+            WaitForBeat({
+              epoch: model.playbackEpoch,
+              millis: typingMillis(body.text),
             }),
-            commands: [
-              WaitForBeat({
-                caseNumber: model.caseNumber,
-                millis: typingMillis(line.text),
-              }),
-            ],
-          })
-        : advance(model),
-
-    ShowEvent: ({ text, holdMillis }) =>
-      withScroll(
-        hold(
-          appendFeed(model, id => FeedItem.Event({ id, text })),
-          holdMillis,
-        ),
-      ),
-
-    ShowTimestamp: ({ label, time }) =>
-      withScroll(
-        advance(
-          appendFeed(model, id => FeedItem.Timestamp({ id, label, time })),
-        ),
-      ),
-
-    ShowNotice: ({ isPrivate, title, body, maybeSmall, holdMillis }) => {
-      const withNotice = appendFeed(model, id =>
-        FeedItem.Notice({ id, isPrivate, title, body, maybeSmall }),
-      )
-      return withScroll(
-        holdMillis > 0 ? hold(withNotice, holdMillis) : advance(withNotice),
-      )
+          ],
+        }
+      }
+      if (message.sender._tag === 'Lodge') {
+        return andThen(applyPost(model, message), posted =>
+          hold(posted, WIFI_ENTRY_MILLIS),
+        )
+      }
+      return andThen(applyPost(model, message), advance)
     },
-
-    Pause: ({ millis }) => hold(model, millis),
-
-    DepartGuest: ({ name }) =>
+    StatusChange: ({ guest, status }) =>
       advance(
-        modifyFields(model, {
-          alive: alive => Array.filter(alive, guest => guest !== name),
-          gone: gone => [...gone, name],
-        }),
-      ),
-
-    AskGuests: ({ situation, count, maybeHint }) =>
-      Array.match(model.alive, {
-        onEmpty: () => advance(model),
-        onNonEmpty: alive => {
-          const typist = Option.getOrElse(
-            Option.filter(maybeHint, hint => Array.contains(alive, hint)),
-            () => alive[model.feed.length % alive.length] ?? alive[0],
-          )
-          const awaiting = modifyFields(model, {
-            playback: () => Playback.AwaitingGuests({ typist, situation }),
-          })
-          return withScroll({
-            model: awaiting,
-            commands: [
-              model.liveTexts._tag === 'Unavailable'
-                ? PickFallbackLines({
-                    caseNumber: model.caseNumber,
-                    situation,
-                    alive: model.alive,
-                    playerName: model.playerName,
-                    usedLines: model.usedLines,
-                  })
-                : FetchGuestTexts({
-                    caseNumber: model.caseNumber,
-                    situation,
-                    count,
-                    playerName: model.playerName,
-                    alive: model.alive,
-                    gone: model.gone,
-                    thief: model.thief,
-                    wifiLog: model.wifiLog,
-                    feed: model.feed,
-                  }),
-            ],
-          })
-        },
-      }),
-
-    RevealVote: ({ vote, holdMillis }) =>
-      Option.match(latestPollId(model), {
-        onNone: () => advance(model),
-        onSome: pollId =>
-          hold(
-            updatePoll(model, pollId, poll =>
-              FeedItem.Poll({ ...poll, votes: [...poll.votes, vote] }),
-            ),
-            holdMillis,
+        withBoard(model, board => ({
+          ...board,
+          guests: Array.map(board.guests, profile =>
+            profile.id === guest ? { ...profile, status } : profile,
           ),
-      }),
-
-    BeginNight: () => withScroll(advance(enterNight(model))),
-
-    ShowEnding: ({ isWin }) => withScroll(advance(endingCard(model, isWin))),
+        })),
+      ),
+    PhaseChange: ({ day, phase }) => {
+      const changed = withBoard(model, board => ({ ...board, day, phase }))
+      if (phase === 'night') {
+        return hold(changed, NIGHT_MILLIS)
+      }
+      if (phase === 'arrest' && model.sheet._tag === 'Closed') {
+        return advance(
+          modifyFields(changed, {
+            sheet: () => Sheet.Arrest({ step: ArrestStep.PickSuspect() }),
+          }),
+        )
+      }
+      return advance(changed)
+    },
+    Result: ({ result }) => advance(applyResult(model, result)),
   })
 
-const playLines = (
-  model: Model,
-  lines: ReadonlyArray<{ readonly from: GuestName; readonly text: string }>,
-): UpdateReturn =>
-  advance(
-    modifyFields(model, {
-      playback: () => Playback.Idle(),
-      script: script => [
-        ...Array.map(lines, line => Beat.GuestSays({ line })),
-        ...script,
-      ],
+const advance = (model: Model): UpdateReturn =>
+  model.playback._tag !== 'Idle'
+    ? { model }
+    : Array.match(model.incoming, {
+        onEmpty: () => ({ model }),
+        onNonEmpty: ([next, ...rest]) =>
+          play(modifyFields(model, { incoming: () => rest }), next),
+      })
+
+const enqueue = (model: Model, next: Incoming): UpdateReturn =>
+  advance(modifyFields(model, { incoming: incoming => [...incoming, next] }))
+
+const continuePlayback = (model: Model): UpdateReturn =>
+  Playback.match(model.playback, {
+    Idle: () => advance(model),
+    Typing: ({ message }) =>
+      andThen(applyPost(model, message), posted =>
+        hold(posted, AFTER_POST_MILLIS),
+      ),
+    Holding: () =>
+      advance(modifyFields(model, { playback: () => Playback.Idle() })),
+  })
+
+// SERVER MESSAGES
+
+const NOTICES: Readonly<Record<RejectionReason, string>> = {
+  asleep: 'They’re asleep. Try again tomorrow.',
+  leftOnRead: 'They’ve stopped answering you for today.',
+  notNow: 'That can’t happen right now.',
+  tooFast: 'Slow down a little.',
+  unknownMessage: 'That message isn’t in the case anymore.',
+  invalid: 'That didn’t go through.',
+}
+
+const reject = (model: Model, reason: RejectionReason): UpdateReturn => {
+  const restored = Array.match(model.pendingSends, {
+    onEmpty: () => model,
+    onNonEmpty: ([first, ...rest]) =>
+      reason === 'unknownMessage'
+        ? model
+        : modifyFields(model, {
+            pendingSends: () => rest,
+            messageInput: input => (input === '' ? first.text : input),
+          }),
+  })
+  return {
+    model: modifyFields(restored, {
+      maybeNotice: () => Option.some(NOTICES[reason]),
+      sheet: sheet =>
+        sheet._tag === 'Arrest' && sheet.step._tag === 'Submitted'
+          ? Sheet.Arrest({ step: ArrestStep.PickSuspect() })
+          : sheet,
     }),
+  }
+}
+
+const receive = (model: Model, message: ServerMessage): UpdateReturn =>
+  ServerMessage.match(message, {
+    Snapshot: snapshot => {
+      const maybeResult = Option.fromUndefinedOr(snapshot.result)
+      const board: Board = {
+        intro: snapshot.intro,
+        guests: snapshot.guests,
+        messages: snapshot.messages,
+        caseFile: snapshot.caseFile,
+        day: snapshot.day,
+        phase: snapshot.phase,
+        maybeResult,
+      }
+      return {
+        model: modifyFields(model, {
+          maybeBoard: () => Option.some(board),
+          incoming: () => [],
+          playback: () => Playback.Idle(),
+          playbackEpoch: epoch => epoch + 1,
+          pendingSends: () => [],
+          sheet: sheet =>
+            Option.isSome(maybeResult) && sheet._tag === 'Arrest'
+              ? Sheet.Result()
+              : sheet,
+        }),
+        commands: [ScrollToLatest()],
+      }
+    },
+    Typing: () => ({ model }),
+    MessagePosted: ({ message: posted }) =>
+      enqueue(model, Incoming.Post({ message: posted })),
+    GuestStatusChanged: ({ guest, status }) =>
+      enqueue(model, Incoming.StatusChange({ guest, status })),
+    PhaseChanged: ({ day, phase }) =>
+      enqueue(model, Incoming.PhaseChange({ day, phase })),
+    CaseFileChanged: ({ caseFile }) => ({
+      model: withBoard(model, board => ({ ...board, caseFile })),
+    }),
+    ArrestResult: ({ result }) => enqueue(model, Incoming.Result({ result })),
+    Rejected: ({ reason }) => reject(model, reason),
+  })
+
+// CASE FILE
+
+const saveMessage = (model: Model, messageId: string): UpdateReturn =>
+  sendToServer(
+    modifyFields(
+      withBoard(model, board =>
+        board.caseFile.includes(messageId)
+          ? board
+          : { ...board, caseFile: [...board.caseFile, messageId] },
+      ),
+      { sheet: () => Sheet.Closed() },
+    ),
+    ClientMessage.cases.SaveToCaseFile.make({ messageId }),
   )
+
+const removeMessage = (model: Model, messageId: string): UpdateReturn =>
+  sendToServer(
+    modifyFields(
+      withBoard(model, board => ({
+        ...board,
+        caseFile: Array.filter(board.caseFile, id => id !== messageId),
+      })),
+      {
+        sheet: sheet =>
+          sheet._tag === 'MessageActions' ? Sheet.Closed() : sheet,
+      },
+    ),
+    ClientMessage.cases.RemoveFromCaseFile.make({ messageId }),
+  )
+
+// ARREST
+
+const arrestStep = (model: Model): Option.Option<ArrestStep> =>
+  model.sheet._tag === 'Arrest' ? Option.some(model.sheet.step) : Option.none()
+
+const toArrestStep = (model: Model, step: ArrestStep): UpdateReturn => ({
+  model: modifyFields(model, { sheet: () => Sheet.Arrest({ step }) }),
+})
+
+const arrestBack = (model: Model, step: ArrestStep): UpdateReturn =>
+  ArrestStep.match(step, {
+    PickSuspect: () => ({
+      model: modifyFields(model, { sheet: () => Sheet.CaseFile() }),
+    }),
+    PickClaim: () => toArrestStep(model, ArrestStep.PickSuspect()),
+    PickProof: ({ suspect }) =>
+      toArrestStep(model, ArrestStep.PickClaim({ suspect })),
+    Confirm: ({ suspect, claim }) =>
+      toArrestStep(model, ArrestStep.PickProof({ suspect, claim })),
+    Submitted: () => ({ model }),
+  })
 
 // UPDATE
 
-export const update = (model: Model, message: Message) =>
+export const update = (model: Model, message: Message): UpdateReturn =>
   Message.match<UpdateReturn>(message, {
-    ClickedNotification: () => ({
-      model: modifyFields(model, { screen: () => Screen.Joining() }),
-    }),
-
-    UpdatedNameInput: ({ value }) => ({
-      model: modifyFields(model, { nameInput: () => value }),
-    }),
-
-    SubmittedJoin: () => {
-      const name = model.nameInput.trim()
-      return startNewCase(
-        modifyFields(model, {
-          playerName: current => (String.isEmpty(name) ? current : name),
-        }),
-      )
-    },
-
-    ClickedMenu: () => ({
-      model: modifyFields(model, { menu: () => Menu.Game() }),
-    }),
-
-    ClickedGroupName: () => ({
-      model: modifyFields(model, { menu: () => Menu.People() }),
-    }),
-
-    ClickedCloseMenu: () => ({
-      model: modifyFields(model, { menu: () => Menu.Closed() }),
-    }),
-
-    ClickedNewCase: () => startNewCase(model),
-
-    CompletedDealNewCase: ({ caseNumber, thief, seating }) => {
-      if (isStale(model, caseNumber)) {
-        return { model }
-      }
-      return advance(
-        modifyFields(model, {
-          thief: () => thief,
-          alive: () => seating,
-          gone: () => [],
-          day: () => 0,
-          phase: () => Phase.Evening(),
-          checks: () => [],
-          wifiLog: () => [],
-          script: () => introScript(model.playerName),
+    ClickedNotification: () => startCase(model),
+    ClickedNewCase: () => startCase(model),
+    SucceededStartCase: ({ gameId, caseId }) => {
+      const played = [
+        ...Array.filter(model.played, id => id !== caseId),
+        caseId,
+      ]
+      return {
+        model: modifyFields(model, {
+          connection: () =>
+            Connection.Connecting({ gameId, attempt: 0, failures: 0 }),
+          played: () => played,
+          maybeBoard: () => Option.none(),
+          incoming: () => [],
           playback: () => Playback.Idle(),
+          playbackEpoch: epoch => epoch + 1,
+          pendingSends: () => [],
+          maybeOpenThread: () => Option.none(),
+          unread: () => [],
+          messageInput: () => '',
+          maybeNotice: () => Option.none(),
+          sheet: () => Sheet.Intro(),
         }),
-      )
+        commands: [SaveGame({ flags: { gameId, played } })],
+      }
     },
+    FailedStartCase: () => ({
+      model: modifyFields(model, {
+        connection: () => Connection.FailedStart(),
+      }),
+    }),
+    CompletedSaveGame: () => ({ model }),
 
+    AcquiredCaseSocket: () => {
+      const connection = model.connection
+      return connection._tag === 'Connecting'
+        ? {
+            model: modifyFields(model, {
+              connection: () =>
+                Connection.Open({
+                  gameId: connection.gameId,
+                  attempt: connection.attempt,
+                }),
+            }),
+          }
+        : { model }
+    },
+    FailedAcquireCaseSocket: () => loseConnection(model),
+    ReleasedCaseSocket: () => ({ model }),
+    ReceivedServerMessage: ({ gameId, attempt, message: received }) =>
+      isCurrentSocket(model, gameId, attempt)
+        ? receive(model, received)
+        : { model },
+    ClosedCaseSocket: ({ gameId, attempt }) =>
+      isCurrentSocket(model, gameId, attempt)
+        ? loseConnection(model)
+        : { model },
+    CompletedWaitToReconnect: ({ attempt }) => {
+      const connection = model.connection
+      return connection._tag === 'Lost' && connection.attempt === attempt
+        ? {
+            model: modifyFields(model, {
+              connection: () =>
+                Connection.Connecting({
+                  gameId: connection.gameId,
+                  attempt: attempt + 1,
+                  failures: connection.failures,
+                }),
+            }),
+          }
+        : { model }
+    },
+    CompletedSendToServer: () => ({ model }),
+    CompletedWaitForBeat: ({ epoch }) =>
+      epoch === model.playbackEpoch ? continuePlayback(model) : { model },
+
+    ClickedThreadRow: ({ thread }) => {
+      const isSame = Option.exists(model.maybeOpenThread, open =>
+        isSameThread(open, thread),
+      )
+      const key = threadKey(thread)
+      return {
+        model: modifyFields(model, {
+          maybeOpenThread: () => Option.some(thread),
+          unread: unread => Array.filter(unread, other => other !== key),
+          messageInput: input => (isSame ? input : ''),
+          maybeNotice: () => Option.none(),
+        }),
+        commands: [ScrollToLatest()],
+      }
+    },
+    ClickedBack: () => ({
+      model: modifyFields(model, {
+        maybeOpenThread: () => Option.none(),
+        maybeNotice: () => Option.none(),
+      }),
+      commands: [BlurComposer()],
+    }),
     UpdatedMessageInput: ({ value }) => ({
       model: modifyFields(model, { messageInput: () => value }),
     }),
-
     SubmittedMessage: () => {
-      const text = model.messageInput.trim()
-      if (String.isEmpty(text) || isBusy(model) || !canChat(model)) {
-        return { model }
-      }
-      const withText = appendFeed(
-        modifyFields(model, {
-          messageInput: () => '',
-          script: () => [
-            Beat.AskGuests({
-              situation: Situation.Reply({ text }),
-              count: 3,
-              maybeHint: mentionedGuest(text, model.alive),
-            }),
-          ],
-        }),
-        id => FeedItem.PlayerText({ id, text }),
-      )
-      return withScroll(advance(withText))
+      const text = String.trim(model.messageInput).slice(0, MAX_MESSAGE_LENGTH)
+      return Option.match(model.maybeOpenThread, {
+        onNone: () => ({ model }),
+        onSome: thread =>
+          !isPlaying(model) || thread._tag === 'WifiLog' || text === ''
+            ? { model }
+            : {
+                model: modifyFields(model, {
+                  pendingSends: pending => [
+                    ...pending,
+                    { id: model.nextLocalId, thread, text },
+                  ],
+                  nextLocalId: id => id + 1,
+                  messageInput: () => '',
+                  maybeNotice: () => Option.none(),
+                }),
+                commands: [
+                  SendToServer({
+                    message: ClientMessage.cases.SendMessage.make({
+                      thread,
+                      text,
+                    }),
+                  }),
+                  ScrollToLatest(),
+                ],
+              },
+      })
     },
-
     FocusedComposer: () => ({
       model: modifyFields(model, { isComposerFocused: () => true }),
+      commands: [ScrollToLatest()],
     }),
-
     BlurredComposer: () => ({
       model: modifyFields(model, { isComposerFocused: () => false }),
     }),
-
-    ClickedThread: () => ({ model, commands: [BlurComposer()] }),
-
+    ClickedThread: () =>
+      model.isComposerFocused
+        ? { model, commands: [BlurComposer()] }
+        : { model },
     CompletedBlurComposer: () => ({ model }),
-
     CompletedScrollToLatest: () => ({ model }),
-
     ChangedViewport: ({ height, offsetTop }) => ({
       model: modifyFields(model, {
         maybeViewport: () => Option.some({ height, offsetTop }),
       }),
-      commands: [ScrollToLatest()],
     }),
 
-    ClickedGoToBed: () =>
-      model.phase._tag === 'Evening' && !isBusy(model)
-        ? withScroll({ model: enterNight(model) })
-        : { model },
-
-    ClickedNightCandidate: ({ feedId, name }) =>
-      Match.value(model.phase).pipe(
-        Match.withReturnType<UpdateReturn>(),
-        Match.tag('Night', ({ maybePending }) =>
-          Option.isNone(maybePending) && Array.contains(model.alive, name)
+    PressedMessage: ({ messageId }) => ({
+      model: modifyFields(model, {
+        maybePress: () =>
+          Option.some({ messageId, pressId: model.nextLocalId }),
+        nextLocalId: id => id + 1,
+      }),
+      commands: [
+        WaitForLongPress({
+          pressId: model.nextLocalId,
+          millis: LONG_PRESS_MILLIS,
+        }),
+      ],
+    }),
+    ReleasedMessage: () => ({
+      model: modifyFields(model, { maybePress: () => Option.none() }),
+    }),
+    CompletedWaitForLongPress: ({ pressId }) =>
+      Option.match(model.maybePress, {
+        onNone: () => ({ model }),
+        onSome: press =>
+          press.pressId === pressId
             ? {
                 model: modifyFields(model, {
-                  phase: () => Phase.Night({ maybePending: Option.some(name) }),
-                  feed: feed =>
-                    Array.map(feed, item =>
-                      item._tag === 'NightPick' && item.id === feedId
-                        ? FeedItem.NightPick({
-                            ...item,
-                            maybePick: Option.some(name),
-                          })
-                        : item,
-                    ),
+                  maybePress: () => Option.none(),
+                  sheet: () =>
+                    Sheet.MessageActions({ messageId: press.messageId }),
                 }),
+                commands: [BlurComposer()],
               }
             : { model },
-        ),
-        Match.orElse(() => ({ model })),
-      ),
+      }),
+    RequestedMessageActions: ({ messageId }) => ({
+      model: modifyFields(model, {
+        maybePress: () => Option.none(),
+        sheet: () => Sheet.MessageActions({ messageId }),
+      }),
+    }),
+    ClickedSaveMessage: ({ messageId }) => saveMessage(model, messageId),
+    ClickedRemoveMessage: ({ messageId }) => removeMessage(model, messageId),
 
-    ClickedSkipToMorning: () =>
-      model.phase._tag === 'Night' &&
-      Option.isSome(model.phase.maybePending) &&
-      !isBusy(model)
+    ClickedCaseInfo: () => ({
+      model: modifyFields(model, { sheet: () => Sheet.Intro() }),
+    }),
+    ClickedCaseFile: () => ({
+      model: modifyFields(model, { sheet: () => Sheet.CaseFile() }),
+      commands: [BlurComposer()],
+    }),
+    ClickedCloseSheet: () => ({
+      model: modifyFields(model, { sheet: () => Sheet.Closed() }),
+    }),
+    ClickedEndDay: () =>
+      isPlaying(model)
         ? {
-            model: modifyFields(model, {
-              playback: () => Playback.Preparing(),
-            }),
-            commands: [
-              RollMorning({
-                caseNumber: model.caseNumber,
-                day: model.day + 1,
-                alive: model.alive,
-                thief: model.thief,
-              }),
-            ],
+            model: modifyFields(model, { sheet: () => Sheet.ConfirmEndDay() }),
           }
         : { model },
-
-    CompletedRollMorning: ({ caseNumber, maybeVictim, wifiLog, minute }) => {
-      if (isStale(model, caseNumber) || model.phase._tag !== 'Night') {
-        return { model }
-      }
-      const maybePending = model.phase.maybePending
-      const day = model.day + 1
-      return advance(
-        modifyFields(model, {
-          day: () => day,
-          phase: () => Phase.Day(),
-          wifiLog: () => wifiLog,
-          checks: checks => [
-            ...checks,
-            ...Option.toArray(
-              Option.map(maybePending, name =>
-                Check.make({ name, isGuilty: name === model.thief }),
-              ),
-            ),
-          ],
-          playback: () => Playback.Idle(),
-          script: () =>
-            morningScript({
-              day,
-              minute,
-              maybeVictim,
-              maybePending,
-              thief: model.thief,
-              wifiLog,
-            }),
-        }),
-      )
-    },
-
-    ClickedCallVote: () =>
-      model.phase._tag === 'Day' && !isBusy(model)
-        ? withScroll({
-            model: modifyFields(
-              appendFeed(model, id =>
-                FeedItem.Poll({
-                  id,
-                  candidates: model.alive,
-                  votes: [],
-                  maybeChoice: Option.none(),
+    ClickedConfirmEndDay: () =>
+      sendToServer(
+        modifyFields(model, { sheet: () => Sheet.Closed() }),
+        ClientMessage.cases.EndDay.make({}),
+      ),
+    ClickedStartArrest: () => toArrestStep(model, ArrestStep.PickSuspect()),
+    ClickedSuspect: ({ suspect }) =>
+      toArrestStep(model, ArrestStep.PickClaim({ suspect })),
+    ClickedClaim: ({ messageId }) =>
+      Option.match(arrestStep(model), {
+        onNone: () => ({ model }),
+        onSome: step =>
+          step._tag === 'PickClaim'
+            ? toArrestStep(
+                model,
+                ArrestStep.PickProof({
+                  suspect: step.suspect,
+                  claim: messageId,
                 }),
-              ),
-              { phase: () => Phase.Vote() },
-            ),
-          })
-        : { model },
-
-    ClickedPollOption: ({ feedId, name }) => {
-      const isOpenPoll = Option.contains(latestPollId(model), feedId)
-      if (model.phase._tag !== 'Vote' || !isOpenPoll || isBusy(model)) {
-        return { model }
-      }
-      return {
-        model: modifyFields(
-          updatePoll(model, feedId, poll =>
-            FeedItem.Poll({
-              ...poll,
-              maybeChoice: Option.some(name),
-              votes: [
-                ...poll.votes,
-                Vote.make({ voter: Voter.Player(), choice: name }),
-              ],
-            }),
-          ),
-          { playback: () => Playback.Preparing() },
-        ),
-        commands: [
-          CastGuestVotes({
-            caseNumber: model.caseNumber,
-            choice: name,
-            thief: model.thief,
-            alive: model.alive,
-            wifiLog: model.wifiLog,
-            playerName: model.playerName,
-            usedLines: model.usedLines,
-            isFinalVote: model.day >= FINAL_DAY,
-          }),
-        ],
-      }
-    },
-
-    CompletedCastGuestVotes: ({
-      caseNumber,
-      votes,
-      turnedIn,
-      maybeReaction,
-      usedLines,
-    }) => {
-      if (isStale(model, caseNumber)) {
-        return { model }
-      }
-      return advance(
-        modifyFields(model, {
-          usedLines: () => usedLines,
-          playback: () => Playback.Idle(),
-          script: () =>
-            voteOutcomeScript({
-              votes,
-              turnedIn,
-              thief: model.thief,
-              aliveAfter: Array.filter(model.alive, name => name !== turnedIn),
-              maybeReaction,
-              isFinalVote: model.day >= FINAL_DAY,
-            }),
-        }),
-      )
-    },
-
-    CompletedWaitForBeat: ({ caseNumber }) => {
-      if (isStale(model, caseNumber)) {
-        return { model }
-      }
-      return Playback.match(model.playback, {
-        Typing: ({ line }) =>
-          withScroll(
-            hold(
-              appendFeed(model, id =>
-                FeedItem.GuestText({ id, from: line.from, text: line.text }),
-              ),
-              readMillis(line.text),
-            ),
-          ),
-        Holding: () =>
-          advance(modifyFields(model, { playback: () => Playback.Idle() })),
-        Idle: () => ({ model }),
-        Preparing: () => ({ model }),
-        AwaitingGuests: () => ({ model }),
-      })
-    },
-
-    SucceededFetchGuestTexts: ({ caseNumber, lines }) =>
-      isStale(model, caseNumber) || model.playback._tag !== 'AwaitingGuests'
-        ? { model }
-        : playLines(
-            modifyFields(model, { liveTexts: () => LiveTexts.Available() }),
-            lines,
-          ),
-
-    FailedFetchGuestTexts: ({ caseNumber, isUnavailable }) => {
-      if (
-        isStale(model, caseNumber) ||
-        model.playback._tag !== 'AwaitingGuests'
-      ) {
-        return { model }
-      }
-      return {
-        model: modifyFields(model, {
-          liveTexts: liveTexts =>
-            isUnavailable ? LiveTexts.Unavailable() : liveTexts,
-        }),
-        commands: [
-          PickFallbackLines({
-            caseNumber: model.caseNumber,
-            situation: model.playback.situation,
-            alive: model.alive,
-            playerName: model.playerName,
-            usedLines: model.usedLines,
-          }),
-        ],
-      }
-    },
-
-    CompletedPickFallbackLines: ({ caseNumber, lines, usedLines }) =>
-      isStale(model, caseNumber) || model.playback._tag !== 'AwaitingGuests'
-        ? { model }
-        : playLines(modifyFields(model, { usedLines: () => usedLines }), lines),
+              )
+            : { model },
+      }),
+    ClickedProof: ({ messageId }) =>
+      Option.match(arrestStep(model), {
+        onNone: () => ({ model }),
+        onSome: step =>
+          step._tag === 'PickProof'
+            ? toArrestStep(
+                model,
+                ArrestStep.Confirm({
+                  suspect: step.suspect,
+                  claim: step.claim,
+                  proof: messageId,
+                }),
+              )
+            : { model },
+      }),
+    ClickedArrestBack: () =>
+      Option.match(arrestStep(model), {
+        onNone: () => ({ model }),
+        onSome: step => arrestBack(model, step),
+      }),
+    ClickedConfirmArrest: () =>
+      Option.match(arrestStep(model), {
+        onNone: () => ({ model }),
+        onSome: step =>
+          step._tag === 'Confirm'
+            ? sendToServer(
+                modifyFields(model, {
+                  sheet: () => Sheet.Arrest({ step: ArrestStep.Submitted() }),
+                }),
+                ClientMessage.cases.MakeArrest.make({
+                  suspect: step.suspect,
+                  claimMessageId: step.claim,
+                  proofMessageId: step.proof,
+                }),
+              )
+            : { model },
+      }),
+    ClickedShowResult: () => ({
+      model: modifyFields(model, { sheet: () => Sheet.Result() }),
+    }),
   })

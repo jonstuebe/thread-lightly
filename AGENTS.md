@@ -12,15 +12,16 @@ subtree_prompted: false
 
 See `README.md` for the layout and how chat pacing works.
 
-- **Vocabulary.** A _case_ is one playthrough (`caseNumber` increments on every new case). The _feed_ is what's rendered in the thread. A _beat_ is one scripted step of the conversation waiting in `Model.script`. The _thief_ is secret game state; the player is the _detective_.
-- **Randomness and time live in Commands.** `game.ts` holds the `Random`-based rolls; `command.ts` wraps them. `update` never rolls dice or reads the clock.
-- **Every async result carries `caseNumber`.** Ignore results whose number doesn't match the Model.
-- **The Worker owns the prompt.** The client sends game state to `POST /api/guest-texts`, never prompt text, so the endpoint can't be used as a general Claude proxy. The wire contract is `shared/api.ts`.
+- **Vocabulary.** A _case_ is one mystery (`cases/*.json`); a _game_ is one playthrough of it, named by `gameId`. The _board_ is the client's copy of what the detective can see. The _case file_ is the messages the detective saved. The _thief_ is secret server state; the player is the _detective_.
+- **Time lives in Commands.** Timers (`WaitForBeat`, `WaitToReconnect`, `WaitForLongPress`) are Commands. `update` never reads the clock.
+- **Stale results are ignored.** Socket messages carry `gameId` and `attempt`; pacing timers carry `playbackEpoch`; long-press timers carry `pressId`. Drop anything that doesn't match the Model.
+- **The socket is a ManagedResource.** `src/socket.ts` opens it while `Connection` is `Connecting` or `Open`; the `caseSocket` subscription reads it. Send with the `SendToServer` Command.
+- **No Anthropic API at runtime.** Guests run on Workers AI. Cases are generated locally by a Claude Code skill, never by the Worker.
 - **`shared/` depends only on `effect`**, because the Worker imports it too. It holds the case schema, the reply rules, the solvability checker and the WebSocket protocol for the detective redesign (`docs/design.md`).
 - **The detective game's server** lives in `worker/game/` (pure rules plus AI services) and `worker/case-object.ts` (the Durable Object shell). Test rules through `handle` in `worker/game/engine.test.ts` with the fake `Router` and `SmallTalk`; never call Workers AI from tests.
 - **Cases hold the answer.** `cases/*.json` and `shared/case.ts` data must never reach the client bundle. The client imports `shared/protocol.ts` only.
 - **Vite plugin order matters.** `cloudflare()` must come before `foldkit()` in `vite.config.ts`; the other way round, the dev server fails to serve the devtools script injected into `index.html`.
-- **Deploy target:** Cloudflare Workers, custom domain `threadlightly.jonstuebe.com` (see `wrangler.jsonc`). Secret: `ANTHROPIC_API_KEY`. Var: `CLAUDE_MODEL`.
+- **Deploy target:** Cloudflare Workers, custom domain `threadlightly.jonstuebe.com` (see `wrangler.jsonc`). No secrets.
 
 ## Agent skills
 

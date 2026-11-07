@@ -1,8 +1,9 @@
-import { Effect, Queue, Schema, Stream } from 'effect'
+import { Effect, Option, Queue, Schema, Stream } from 'effect'
 import { Subscription } from 'foldkit'
 
 import { Message } from './message'
 import type { Model } from './model'
+import { CaseSocket, type CaseSocketService, socketMessages } from './socket'
 
 // NOTE: when the on-screen keyboard opens, iOS shrinks the visual viewport but
 // not the layout viewport. Tracking it keeps the header pinned and the
@@ -37,15 +38,57 @@ const streamVisualViewport = Stream.callback<
   ).pipe(Effect.flatMap(() => Effect.never)),
 )
 
-export const subscriptions = Subscription.make<Model, Message>()(entry => ({
+const OpenSocket = Schema.Option(
+  Schema.Struct({ gameId: Schema.String, attempt: Schema.Number }),
+)
+
+export const subscriptions = Subscription.make<
+  Model,
+  Message,
+  CaseSocketService
+>()(entry => ({
   visualViewport: entry(
-    { isInChat: Schema.Boolean },
+    { hasCase: Schema.Boolean },
     {
       modelToDependencies: model => ({
-        isInChat: model.screen._tag === 'InChat',
+        hasCase: Option.isSome(model.maybeBoard),
       }),
-      dependenciesToStream: ({ isInChat }) =>
-        isInChat ? streamVisualViewport : Stream.empty,
+      dependenciesToStream: ({ hasCase }) =>
+        hasCase ? streamVisualViewport : Stream.empty,
+    },
+  ),
+  caseSocket: entry(
+    { maybeOpen: OpenSocket },
+    {
+      modelToDependencies: model => ({
+        maybeOpen:
+          model.connection._tag === 'Open'
+            ? Option.some({
+                gameId: model.connection.gameId,
+                attempt: model.connection.attempt,
+              })
+            : Option.none(),
+      }),
+      dependenciesToStream: ({ maybeOpen }) =>
+        Option.match(maybeOpen, {
+          onNone: () => Stream.empty,
+          onSome: ({ gameId, attempt }) =>
+            Stream.unwrap(
+              CaseSocket.get.pipe(
+                Effect.map(({ events }) =>
+                  socketMessages(events, gameId, attempt),
+                ),
+                // NOTE: no socket to read (a hot reload can restore an Open
+                // Model before the resource exists). Report it closed so the
+                // usual reconnect runs, rather than going quiet.
+                Effect.catch(() =>
+                  Effect.succeed(
+                    Stream.make(Message.ClosedCaseSocket({ gameId, attempt })),
+                  ),
+                ),
+              ),
+            ),
+        }),
     },
   ),
 }))

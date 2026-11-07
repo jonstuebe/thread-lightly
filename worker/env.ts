@@ -6,6 +6,4 @@ export interface Env {
   AI: AiBinding
   CASES: DurableObjectNamespace<CaseObject>
   SMALLTALK_MODEL: string
-  ANTHROPIC_API_KEY?: string
-  CLAUDE_MODEL: string
 }

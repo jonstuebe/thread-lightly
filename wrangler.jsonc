@@ -19,7 +19,6 @@
   ],
 
   "vars": {
-    "CLAUDE_MODEL": "claude-opus-5-5",
     // The cheap model for in-character small talk (docs/design.md, tier 2).
     "SMALLTALK_MODEL": "@cf/meta/llama-3.1-8b-instruct-fast",
   },
@@ -33,10 +32,6 @@
     "bindings": [{ "name": "CASES", "class_name": "CaseObject" }],
   },
   "migrations": [{ "tag": "v1", "new_sqlite_classes": ["CaseObject"] }],
-
-  // Secrets (set with `wrangler secret put`, or .dev.vars locally):
-  //   ANTHROPIC_API_KEY - enables live guest texts. Without it the game uses
-  //   the built-in lines.
 
   "observability": { "enabled": true },
 }
