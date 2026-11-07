@@ -278,6 +278,7 @@ The checker is pure Effect code in `shared/`. A generated case is used only if e
 6. **No leaks.** Every fact a guest says is in their `knows` or `claims`, `knows` holds only true facts, secrets don't concern the theft, and the theft fact appears only in the timeline.
 7. **Traits aren't a tell.** The thief shares a temperament with an innocent, and their patience is within the innocents' range.
 8. **Coverage.** Every guest has whereabouts for nights 0–2, the item, each other guest, their secret if they have one, at least one public topic and at least five dodges. Each day has a morning beat.
+9. **Variants agree.** Every reply in a group (a topic's `variants`, each `afterNight`, `ifFactDestroyed`, `lowPatience`, and the same for `pressed`) carries the same facts. The engine rotates through a group and the first ask gets the first reply, so a fact in only some replies would hide behind repeated questions.
 
 "Can be found" means: some guest's active reply that day carries it, or it's in a published Wi-Fi entry or morning beat. Idle beats don't count, because they aren't guaranteed to play.
 
@@ -385,7 +386,7 @@ All of this happens on a branch, since it replaces the current game.
 2. ~~**Schemas and checker.**~~ Done. `shared/case.ts`, `shared/replies.ts`, `shared/checker.ts` and `shared/protocol.ts`, tested against `cases/silver-brooch.json`.
 3. ~~**Server foundation.**~~ Done. `worker/game/engine.ts` holds the rules as a pure Effect function (state and client message in, state and server messages out), with Clef and small talk behind the `Router` and `SmallTalk` services (`worker/game/ai.ts`, live versions in `worker/ai-live.ts`). `worker/case-object.ts` is the Durable Object shell. The engine tests play the silver brooch case end to end with a scripted fake, and a manual WebSocket run against live Clef closed the case.
 4. ~~**Client rewrite.**~~ Done. The Foldkit client in `src/` plays the silver brooch case over the WebSocket: the conversation list, DM, group and Wi-Fi log threads, long-press (or right-click, or Enter) to save, the case file, the arrest steps and the result with its timeline. The socket is a `ManagedResource` (`src/socket.ts`). The client paces replies itself; see "How the chat is paced" in the README. `/api/guest-texts`, the Anthropic SDK and the Mafia flow are gone.
-5. **Case generation.** Write the local skill, add `pnpm cases:check`, and generate the first batch of cases into `cases/`.
+5. ~~**Case generation.**~~ Done. The `generate-case` skill (`.agents/skills/generate-case`) writes a case and checks it with `pnpm cases:check` (`scripts/check-cases.ts`). The checker gained rule 9, variants agree. The first batch is `the-recipe-tin`, `the-regatta-cup` and `the-last-exposure`. `src/no-case-data.test.ts` keeps the client's imports away from case data, and the wire protocol's primitives moved to `shared/ids.ts` so the client no longer bundles the case schema.
 6. **Make the guests feel alive.** Group chat director, idle chatter, night moves, patience tuning, endings and the timeline reveal.
 
 ## 13. Open questions

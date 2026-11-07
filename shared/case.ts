@@ -3,12 +3,11 @@
 
 import { Schema } from 'effect'
 
+import { Day, GuestId, Slug } from './ids'
+
+export { DAYS, Day, GuestId, LAST_DAY } from './ids'
+
 // IDS
-
-const Slug = Schema.String.check(Schema.isPattern(/^[a-z0-9][a-z0-9-]*$/))
-
-export const GuestId = Slug
-export type GuestId = typeof GuestId.Type
 
 export const FactId = Slug
 export type FactId = typeof FactId.Type
@@ -26,13 +25,8 @@ export type Night = typeof Night.Type
 export const MoveNight = Schema.Literals([1, 2])
 export type MoveNight = typeof MoveNight.Type
 
-export const Day = Schema.Literals([1, 2, 3])
-export type Day = typeof Day.Type
-
-export const DAYS: ReadonlyArray<Day> = [1, 2, 3]
 export const NIGHTS: ReadonlyArray<Night> = [0, 1, 2]
 export const MOVE_NIGHTS: ReadonlyArray<MoveNight> = [1, 2]
-export const LAST_DAY: Day = 3
 
 export const ClockTime = Schema.String.check(
   Schema.isPattern(/^([01]\d|2[0-3]):[0-5]\d$/),

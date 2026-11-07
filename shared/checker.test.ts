@@ -401,3 +401,20 @@ describe('coverage', () => {
     })
   })
 })
+
+describe('variants', () => {
+  test('catches a fact only some variants carry', () => {
+    const broken = withTopic(base, 'priya', 'whereabouts-friday', topic => ({
+      ...topic,
+      variants: [
+        topic.variants[0],
+        { text: 'Out on the dock, if you must know.', factIds: [] },
+      ],
+    }))
+    expect(findProblems(broken)).toContainEqual({
+      check: 'variants',
+      message:
+        "priya's whereabouts-friday variants carry different facts; every reply in a group must carry the same ones",
+    })
+  })
+})

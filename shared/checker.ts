@@ -1,7 +1,7 @@
 // NOTE: the solvability checker (docs/design.md, section 9). A case is used
 // only when `findProblems` returns nothing.
 
-import { Array, Data, Effect, Option, pipe } from 'effect'
+import { Array, Data, Effect, Option, Order, pipe } from 'effect'
 
 import {
   type Case,
@@ -17,6 +17,7 @@ import {
   NIGHTS,
   NightMove,
   type Reply,
+  type ReplySet,
   decodeCase,
 } from './case'
 import { type Sighting, allReplies, isSpokenBy, sightingsOn } from './replies'
@@ -31,6 +32,7 @@ export type Check =
   | 'noLeaks'
   | 'traits'
   | 'coverage'
+  | 'variants'
 
 export type Problem = Readonly<{ check: Check; message: string }>
 
@@ -681,6 +683,51 @@ const checkCoverage = (lookups: Lookups): ReadonlyArray<Problem> => {
   return [...perGuest, ...mornings]
 }
 
+// VARIANTS
+
+const factKey = (reply: Reply): string =>
+  Array.join(Array.sort(Array.dedupe(reply.factIds), Order.String), ',')
+
+// NOTE: the engine rotates through a reply group, so the first ask always gets
+// the first reply. A fact carried by only some replies would need repeated
+// questions to find, so every reply in a group carries the same facts.
+const replyGroups = (
+  replySet: ReplySet,
+): ReadonlyArray<readonly [string, ReadonlyArray<Reply>]> => [
+  ['variants', replySet.variants],
+  ...Array.map(
+    replySet.afterNight ?? [],
+    override => [`afterNight ${override.night}`, override.variants] as const,
+  ),
+  ...(replySet.ifFactDestroyed === undefined
+    ? []
+    : [['ifFactDestroyed', replySet.ifFactDestroyed] as const]),
+  ...(replySet.lowPatience === undefined
+    ? []
+    : [['lowPatience', replySet.lowPatience] as const]),
+]
+
+const checkVariants = (caseData: Case): ReadonlyArray<Problem> =>
+  Array.flatMap(caseData.guests, guest =>
+    Array.flatMap(
+      [
+        ...Array.map(
+          guest.dictionary.topics,
+          topic => [topic.id, topic as ReplySet] as const,
+        ),
+        ['pressed', guest.dictionary.pressed] as const,
+      ],
+      ([name, replySet]) =>
+        Array.flatMap(replyGroups(replySet), ([group, replies]) =>
+          problemIf(
+            Array.dedupe(Array.map(replies, factKey)).length > 1,
+            'variants',
+            `${guest.id}'s ${name} ${group} carry different facts; every reply in a group must carry the same ones`,
+          ),
+        ),
+    ),
+  )
+
 // CHECK
 
 export const findProblems = (caseData: Case): ReadonlyArray<Problem> => {
@@ -705,6 +752,7 @@ export const findProblems = (caseData: Case): ReadonlyArray<Problem> => {
     ...checkNoLeaks(lookups),
     ...checkTraits(lookups),
     ...checkCoverage(lookups),
+    ...checkVariants(caseData),
   ]
 }
 

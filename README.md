@@ -25,7 +25,12 @@ pnpm test         # client Story/Scene tests, engine and checker tests
 pnpm lint         # oxlint with the Foldkit and Effect rule sets
 pnpm typecheck    # client and Worker
 pnpm format
+pnpm cases:check  # run the solvability checker on cases/ (or on files you name)
 ```
+
+### Adding a case
+
+Run the `/generate-case` skill in Claude Code. It plots a mystery, writes it as JSON, checks it with `pnpm cases:check` until it passes, and saves it to `cases/`. Commit the file and the Worker bundles it on the next build.
 
 ## Layout
 
@@ -48,6 +53,7 @@ worker/             the Cloudflare Worker
   game/             the rules as a pure function, plus the AI services
   case-object.ts    the Durable Object for one case
 cases/              case files, one JSON per case
+scripts/            local tooling (check-cases.ts behind pnpm cases:check)
 wrangler.jsonc      Worker, assets, Durable Object, AI and custom domain config
 ```
 

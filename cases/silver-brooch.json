@@ -627,8 +627,8 @@
                 "factIds": ["brooch-seen-at-toast"]
               },
               {
-                "text": "Everyone saw it at the toast at ten. And at seven the case was open and it was gone.",
-                "factIds": ["brooch-seen-at-toast", "case-found-open"]
+                "text": "Everyone saw it at the toast at ten. It was right there in the case.",
+                "factIds": ["brooch-seen-at-toast"]
               }
             ]
           },
@@ -739,8 +739,8 @@
             "visibility": "public",
             "variants": [
               {
-                "text": "out like a light by quarter past eleven. never came downstairs",
-                "factIds": ["dale-asleep-by-1115"]
+                "text": "out like a light by quarter past eleven. never came down, never went out",
+                "factIds": ["dale-asleep-by-1115", "dale-stayed-inside"]
               },
               {
                 "text": "asleep by 11:15, didn't set foot outside all night",

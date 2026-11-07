@@ -169,9 +169,12 @@ describe('direct messages', () => {
     })
     expect(tags(step)).toEqual(['MessagePosted', 'Typing', 'MessagePosted'])
     expect(guestReplies(step)).toEqual([
-      'out like a light by quarter past eleven. never came downstairs',
+      'out like a light by quarter past eleven. never came down, never went out',
     ])
-    expect(step.state.messages.at(-1)?.factIds).toEqual(['dale-asleep-by-1115'])
+    expect(step.state.messages.at(-1)?.factIds).toEqual([
+      'dale-asleep-by-1115',
+      'dale-stayed-inside',
+    ])
     expect(step.state.patience['dale']).toBe(7)
   })
 

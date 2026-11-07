@@ -4,11 +4,11 @@
 
 import { Schema } from 'effect'
 
-import { Day, GuestId } from './case'
+import { Day, GuestId } from './ids'
 
 // NOTE: the client imports this module only, never ./case, so the ID and day
 // types it needs are re-exported here.
-export { Day, GuestId, LAST_DAY } from './case'
+export { Day, GuestId, LAST_DAY } from './ids'
 
 export const MAX_MESSAGE_LENGTH = 280
 

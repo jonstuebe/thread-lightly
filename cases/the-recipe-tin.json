@@ -1,0 +1,3997 @@
+{
+  "id": "the-recipe-tin",
+  "setting": {
+    "title": "The Recipe Tin",
+    "premise": "Hattie Lund invited five guests to Pine Hollow for a long weekend and a friendly bake-off on Saturday. On Saturday morning her late grandmother's recipe tin, a dented tin of handwritten index cards, is gone from the great room mantel, and the bake-off is put off until Monday.",
+    "missingItem": "Hattie's late grandmother's dented recipe tin of handwritten index cards",
+    "accessPoints": ["lodge", "kitchen", "bunkhouse", "woodshed"]
+  },
+  "thief": "colette",
+  "theftFact": "colette-took-tin",
+  "facts": [
+    {
+      "id": "tin-seen-at-dessert",
+      "text": "Hattie read cards from Nana Ingrid's recipe tin at dessert at 9:30pm on Friday, then set the tin on the great room mantel",
+      "isTrue": true,
+      "about": ["hattie"],
+      "concernsTheft": true
+    },
+    {
+      "id": "hattie-planned-reading",
+      "text": "At dessert on Friday, Hattie said she would open the bake-off by reading Nana Ingrid's plum kuchen card aloud",
+      "isTrue": true,
+      "about": ["hattie"],
+      "concernsTheft": true
+    },
+    {
+      "id": "colette-went-pale",
+      "text": "Colette went pale when Hattie mentioned the plum kuchen card at dessert on Friday",
+      "isTrue": true,
+      "about": ["colette"],
+      "concernsTheft": true
+    },
+    {
+      "id": "tin-on-mantel-1130",
+      "text": "The tin was on the mantel when Hattie banked the fire at 11:30pm on Friday",
+      "isTrue": true,
+      "about": ["hattie"],
+      "concernsTheft": true
+    },
+    {
+      "id": "tin-gone-0700",
+      "text": "Hattie found the mantel empty when she came down at 7am on Saturday",
+      "isTrue": true,
+      "about": ["hattie"],
+      "concernsTheft": true
+    },
+    {
+      "id": "colette-took-tin",
+      "text": "Colette took the recipe tin from the mantel at 1:40am on Friday night and hid it in the woodshed kindling bin",
+      "isTrue": true,
+      "about": ["colette"],
+      "concernsTheft": true
+    },
+    {
+      "id": "plum-card-missing",
+      "text": "When the tin turned up on Monday, every card was in it except Nana Ingrid's plum kuchen card",
+      "isTrue": true,
+      "about": ["hattie"],
+      "concernsTheft": true
+    },
+    {
+      "id": "tin-found-woodshed",
+      "text": "Walt found the tin on the woodshed chopping block at 6:40am on Monday, wrapped in Theo's red scarf",
+      "isTrue": true,
+      "about": ["walt"],
+      "concernsTheft": true
+    },
+    {
+      "id": "colette-plum-cake-wins",
+      "text": "Colette has won the lodge bake-off three years running with her plum cake",
+      "isTrue": true,
+      "about": ["colette"],
+      "concernsTheft": false
+    },
+    {
+      "id": "colette-own-recipe",
+      "text": "Colette's prize plum cake is her late mother's recipe",
+      "isTrue": false,
+      "about": ["colette"],
+      "concernsTheft": false
+    },
+    {
+      "id": "walt-nana-gave-colette-card",
+      "text": "Years ago Walt watched Nana Ingrid copy out her plum kuchen card for Colette, on Colette's promise to keep it private",
+      "isTrue": true,
+      "about": ["walt", "colette"],
+      "concernsTheft": false
+    },
+    {
+      "id": "colette-milk-trip",
+      "text": "Colette was in bed in the bunkhouse by 11:30pm on Friday, got up only to fetch warm milk from the lodge kitchen at about 1:30am, and went straight back to bed",
+      "isTrue": false,
+      "about": ["colette"],
+      "concernsTheft": true
+    },
+    {
+      "id": "colette-never-at-woodshed",
+      "text": "Colette has not set foot in the woodshed all weekend",
+      "isTrue": false,
+      "about": ["colette"],
+      "concernsTheft": true
+    },
+    {
+      "id": "colette-in-bed-sunday",
+      "text": "Colette was asleep in the bunkhouse by 10:30pm on Sunday and did not stir until morning",
+      "isTrue": false,
+      "about": ["colette"],
+      "concernsTheft": true
+    },
+    {
+      "id": "colette-saw-theo-scarf-sunday",
+      "text": "Theo was wearing his red scarf at dinner on Sunday",
+      "isTrue": false,
+      "about": ["colette", "theo"],
+      "concernsTheft": true
+    },
+    {
+      "id": "wifi-theo-kitchen-0018",
+      "text": "Theo's phone joined the kitchen access point at 12:18am on Friday night",
+      "isTrue": true,
+      "about": ["theo"],
+      "concernsTheft": false
+    },
+    {
+      "id": "wifi-theo-woodshed-0110",
+      "text": "Theo's phone joined the woodshed access point at 1:10am on Friday night",
+      "isTrue": true,
+      "about": ["theo"],
+      "concernsTheft": false
+    },
+    {
+      "id": "wifi-colette-woodshed-0144",
+      "text": "Colette's phone joined the woodshed access point at 1:44am on Friday night",
+      "isTrue": true,
+      "about": ["colette"],
+      "concernsTheft": true
+    },
+    {
+      "id": "wifi-nell-woodshed-2340",
+      "text": "Nell's phone joined the woodshed access point at 11:40pm on Saturday night",
+      "isTrue": true,
+      "about": ["nell"],
+      "concernsTheft": false
+    },
+    {
+      "id": "wifi-theo-kitchen-2320",
+      "text": "Theo's phone joined the kitchen access point at 11:20pm on Sunday night",
+      "isTrue": true,
+      "about": ["theo"],
+      "concernsTheft": true
+    },
+    {
+      "id": "wifi-colette-woodshed-2352",
+      "text": "Colette's phone joined the woodshed access point at 11:52pm on Sunday night",
+      "isTrue": true,
+      "about": ["colette"],
+      "concernsTheft": true
+    },
+    {
+      "id": "theo-straight-to-bed",
+      "text": "Theo went straight to bed at 11:45pm on Friday and slept through the night",
+      "isTrue": false,
+      "about": ["theo"],
+      "concernsTheft": false
+    },
+    {
+      "id": "theo-practiced-at-night",
+      "text": "Theo secretly practiced pie crust in the kitchen after midnight on Friday, because he can't bake and didn't want anyone to see him fail",
+      "isTrue": true,
+      "about": ["theo"],
+      "concernsTheft": false
+    },
+    {
+      "id": "theo-dumped-dough",
+      "text": "Theo threw his failed pie dough in the compost bin beside the woodshed at about 1:10am on Friday night",
+      "isTrue": true,
+      "about": ["theo"],
+      "concernsTheft": false
+    },
+    {
+      "id": "theo-saw-tin-0120",
+      "text": "The tin was still on the mantel when Theo went upstairs at about 1:20am on Friday night",
+      "isTrue": true,
+      "about": ["theo"],
+      "concernsTheft": true
+    },
+    {
+      "id": "theo-lost-scarf-saturday",
+      "text": "Theo lost his red scarf at the bonfire on Saturday evening",
+      "isTrue": true,
+      "about": ["theo"],
+      "concernsTheft": true
+    },
+    {
+      "id": "theo-kitchen-sunday",
+      "text": "Theo was making pie crust in the kitchen from 11:20pm to midnight on Sunday",
+      "isTrue": true,
+      "about": ["theo"],
+      "concernsTheft": true
+    },
+    {
+      "id": "walt-saw-light-0140",
+      "text": "Walt saw a small light cross the great room toward the back door at about 1:40am on Friday night",
+      "isTrue": true,
+      "about": ["walt"],
+      "concernsTheft": true
+    },
+    {
+      "id": "walt-thought-theo",
+      "text": "Walt took the light he saw at 1:40am on Friday for Theo's",
+      "isTrue": true,
+      "about": ["walt", "theo"],
+      "concernsTheft": true
+    },
+    {
+      "id": "walt-heard-pans",
+      "text": "Walt heard pans clattering in the kitchen after midnight on Friday",
+      "isTrue": true,
+      "about": ["walt"],
+      "concernsTheft": false
+    },
+    {
+      "id": "walt-heard-porch-voices",
+      "text": "Walt heard two women talking low on the bunkhouse porch at about 10:30pm on Saturday",
+      "isTrue": true,
+      "about": ["walt"],
+      "concernsTheft": true
+    },
+    {
+      "id": "nell-in-room-friday",
+      "text": "Nell was up in her room editing photos until about 2am on Friday night",
+      "isTrue": true,
+      "about": ["nell"],
+      "concernsTheft": false
+    },
+    {
+      "id": "nell-heard-theo-door",
+      "text": "Nell heard Theo's door open around 12:15am and close again around 1:20am on Friday night",
+      "isTrue": true,
+      "about": ["nell", "theo"],
+      "concernsTheft": false
+    },
+    {
+      "id": "nell-broke-cake-stand",
+      "text": "Nell broke Hattie's milk-glass cake stand on Saturday afternoon and hid the pieces under the tarp in the woodshed",
+      "isTrue": true,
+      "about": ["nell"],
+      "concernsTheft": false
+    },
+    {
+      "id": "nell-stayed-in-saturday",
+      "text": "Nell never left the lodge on Saturday night",
+      "isTrue": false,
+      "about": ["nell"],
+      "concernsTheft": false
+    },
+    {
+      "id": "cake-stand-missing",
+      "text": "Hattie's milk-glass cake stand went missing from the hutch on Saturday",
+      "isTrue": true,
+      "about": ["hattie"],
+      "concernsTheft": false
+    },
+    {
+      "id": "hattie-saw-woodshed-light",
+      "text": "Hattie saw a light going out to the woodshed at about 11:40pm on Saturday night",
+      "isTrue": true,
+      "about": ["hattie"],
+      "concernsTheft": false
+    },
+    {
+      "id": "theo-scarfless-at-dinner",
+      "text": "Theo had no scarf at Sunday dinner and grumbled all through it that he had lost it",
+      "isTrue": true,
+      "about": ["theo", "hattie"],
+      "concernsTheft": true
+    },
+    {
+      "id": "pip-slept-headphones",
+      "text": "Pip slept with noise-cancelling headphones on all Friday night and saw and heard nothing",
+      "isTrue": true,
+      "about": ["pip"],
+      "concernsTheft": true
+    },
+    {
+      "id": "pip-saw-milk-mug",
+      "text": "Pip saw Colette come back into the bunkhouse with a mug of warm milk on Friday night, only a few minutes after she left",
+      "isTrue": false,
+      "about": ["pip", "colette"],
+      "concernsTheft": true
+    },
+    {
+      "id": "colette-asked-pip-to-vouch",
+      "text": "On Saturday night Colette asked Pip to tell everyone she had seen her come back with warm milk on Friday",
+      "isTrue": true,
+      "about": ["colette", "pip"],
+      "concernsTheft": true
+    },
+    {
+      "id": "pip-porch-with-colette",
+      "text": "Pip and Colette talked on the bunkhouse porch at about 10:30pm on Saturday",
+      "isTrue": true,
+      "about": ["pip", "colette"],
+      "concernsTheft": true
+    },
+    {
+      "id": "scarf-on-hook-saturday",
+      "text": "Theo's red scarf was hanging on the bunkhouse coat hook on Saturday night",
+      "isTrue": true,
+      "about": ["theo"],
+      "concernsTheft": true
+    },
+    {
+      "id": "scarf-on-bunkhouse-hook",
+      "text": "Theo's red scarf hung on the bunkhouse coat hook from Saturday night until at least 9pm on Sunday",
+      "isTrue": true,
+      "about": ["theo"],
+      "concernsTheft": true
+    },
+    {
+      "id": "theo-hid-tin-in-scarf",
+      "text": "Theo wrapped the recipe tin in his red scarf and hid it in the woodshed",
+      "isTrue": false,
+      "about": ["theo"],
+      "concernsTheft": true
+    }
+  ],
+  "timeline": [
+    {
+      "night": 0,
+      "time": "9:30pm",
+      "text": "Dessert in the great room. Hattie reads a few of Nana Ingrid's cards aloud and promises to open the bake-off with the plum kuchen card. Colette goes pale; Nell notices. The tin goes on the mantel.",
+      "factIds": [
+        "tin-seen-at-dessert",
+        "hattie-planned-reading",
+        "colette-went-pale"
+      ]
+    },
+    {
+      "night": 0,
+      "time": "10:30pm",
+      "text": "Walt turns in, in the little room off the great room.",
+      "factIds": []
+    },
+    {
+      "night": 0,
+      "time": "11:02pm",
+      "text": "Colette and Pip walk out to the bunkhouse. Pip puts on her headphones and is asleep by midnight.",
+      "factIds": ["pip-slept-headphones"]
+    },
+    {
+      "night": 0,
+      "time": "11:30pm",
+      "text": "Hattie banks the fire, says goodnight to the tin on the mantel and goes up to bed.",
+      "factIds": ["tin-on-mantel-1130"]
+    },
+    {
+      "night": 0,
+      "time": "11:45pm",
+      "text": "Theo goes upstairs. Nell is still up in her room editing photos.",
+      "factIds": ["nell-in-room-friday"]
+    },
+    {
+      "night": 0,
+      "time": "12:18am",
+      "text": "Theo creeps down to the kitchen to practice his pie crust in secret. Walt hears the pans; Nell hears Theo's door.",
+      "factIds": [
+        "theo-practiced-at-night",
+        "wifi-theo-kitchen-0018",
+        "walt-heard-pans",
+        "nell-heard-theo-door"
+      ]
+    },
+    {
+      "night": 0,
+      "time": "1:10am",
+      "text": "Theo gives up and dumps his third ruined crust in the compost bin beside the woodshed.",
+      "factIds": ["theo-dumped-dough", "wifi-theo-woodshed-0110"]
+    },
+    {
+      "night": 0,
+      "time": "1:20am",
+      "text": "Theo walks past the mantel, where the tin still sits, and goes up to bed.",
+      "factIds": ["theo-saw-tin-0120"]
+    },
+    {
+      "night": 0,
+      "time": "1:36am",
+      "text": "Colette slips into the lodge by the back door, lighting her way with her phone.",
+      "factIds": []
+    },
+    {
+      "night": 0,
+      "time": "1:40am",
+      "text": "Colette lifts the tin from the mantel. Walt, awake with his knees, sees a small light cross toward the back door and takes it for Theo.",
+      "factIds": [
+        "colette-took-tin",
+        "walt-saw-light-0140",
+        "walt-thought-theo"
+      ]
+    },
+    {
+      "night": 0,
+      "time": "1:44am",
+      "text": "Colette buries the tin in the woodshed kindling bin. She can't bring herself to burn Ingrid's card, and there was no time to find it in the dark.",
+      "factIds": ["wifi-colette-woodshed-0144"]
+    },
+    {
+      "night": 0,
+      "time": "1:53am",
+      "text": "Colette is back in the bunkhouse. Pip sleeps through it.",
+      "factIds": []
+    },
+    {
+      "night": 1,
+      "time": "4:00pm",
+      "text": "During practice baking, Nell knocks Hattie's milk-glass cake stand off the counter and hides the pieces in her tote.",
+      "factIds": ["nell-broke-cake-stand", "cake-stand-missing"]
+    },
+    {
+      "night": 1,
+      "time": "8:00pm",
+      "text": "Bonfire by the lake. Theo leaves his red scarf on the bench.",
+      "factIds": ["theo-lost-scarf-saturday"]
+    },
+    {
+      "night": 1,
+      "time": "10:15pm",
+      "text": "Colette carries Theo's scarf back and hangs it on the bunkhouse coat hook.",
+      "factIds": ["scarf-on-hook-saturday"]
+    },
+    {
+      "night": 1,
+      "time": "10:30pm",
+      "text": "On the bunkhouse porch, Colette asks Pip to say she saw her come back with warm milk on Friday, \"so Hattie can stop fretting\". Walt hears two women talking low.",
+      "factIds": [
+        "colette-asked-pip-to-vouch",
+        "pip-porch-with-colette",
+        "walt-heard-porch-voices"
+      ]
+    },
+    {
+      "night": 1,
+      "time": "11:40pm",
+      "text": "Nell carries the cake stand pieces out to the woodshed and hides them under the tarp. Hattie sees her light from an upstairs window.",
+      "factIds": ["wifi-nell-woodshed-2340", "hattie-saw-woodshed-light"]
+    },
+    {
+      "night": 2,
+      "time": "7:00pm",
+      "text": "Sunday dinner. Theo, scarfless, grumbles that he has lost it. Pip sees it on the bunkhouse hook at nine.",
+      "factIds": ["theo-scarfless-at-dinner", "scarf-on-bunkhouse-hook"]
+    },
+    {
+      "night": 2,
+      "time": "10:30pm",
+      "text": "Colette says goodnight.",
+      "factIds": []
+    },
+    {
+      "night": 2,
+      "time": "11:20pm",
+      "text": "Theo sneaks back to the kitchen for one last try at pie crust.",
+      "factIds": ["theo-kitchen-sunday", "wifi-theo-kitchen-2320"]
+    },
+    {
+      "night": 2,
+      "time": "11:52pm",
+      "text": "Colette takes the scarf off the hook, digs the tin out of the kindling, pockets the plum kuchen card, wraps the tin in Theo's scarf and leaves it on the chopping block.",
+      "factIds": ["wifi-colette-woodshed-2352"]
+    },
+    {
+      "night": 2,
+      "time": "6:40am",
+      "text": "Walt goes out to split kindling and finds the tin on the chopping block. Every card is there but one.",
+      "factIds": ["tin-found-woodshed", "plum-card-missing"]
+    }
+  ],
+  "wifiLog": [
+    {
+      "id": "n0-colette-bunkhouse-2302",
+      "night": 0,
+      "time": "11:02pm",
+      "guest": "colette",
+      "event": "joined",
+      "accessPoint": "bunkhouse",
+      "factIds": []
+    },
+    {
+      "id": "n0-pip-bunkhouse-2303",
+      "night": 0,
+      "time": "11:03pm",
+      "guest": "pip",
+      "event": "joined",
+      "accessPoint": "bunkhouse",
+      "factIds": []
+    },
+    {
+      "id": "n0-theo-kitchen",
+      "night": 0,
+      "time": "12:18am",
+      "guest": "theo",
+      "event": "joined",
+      "accessPoint": "kitchen",
+      "factIds": ["wifi-theo-kitchen-0018"]
+    },
+    {
+      "id": "n0-theo-woodshed",
+      "night": 0,
+      "time": "1:10am",
+      "guest": "theo",
+      "event": "joined",
+      "accessPoint": "woodshed",
+      "factIds": ["wifi-theo-woodshed-0110"]
+    },
+    {
+      "id": "n0-theo-lodge",
+      "night": 0,
+      "time": "1:18am",
+      "guest": "theo",
+      "event": "joined",
+      "accessPoint": "lodge",
+      "factIds": []
+    },
+    {
+      "id": "n0-colette-lodge",
+      "night": 0,
+      "time": "1:36am",
+      "guest": "colette",
+      "event": "joined",
+      "accessPoint": "lodge",
+      "factIds": []
+    },
+    {
+      "id": "n0-colette-woodshed",
+      "night": 0,
+      "time": "1:44am",
+      "guest": "colette",
+      "event": "joined",
+      "accessPoint": "woodshed",
+      "factIds": ["wifi-colette-woodshed-0144"]
+    },
+    {
+      "id": "n0-colette-bunkhouse-0153",
+      "night": 0,
+      "time": "1:53am",
+      "guest": "colette",
+      "event": "joined",
+      "accessPoint": "bunkhouse",
+      "factIds": []
+    },
+    {
+      "id": "n1-colette-bunkhouse",
+      "night": 1,
+      "time": "10:12pm",
+      "guest": "colette",
+      "event": "joined",
+      "accessPoint": "bunkhouse",
+      "factIds": []
+    },
+    {
+      "id": "n1-pip-bunkhouse",
+      "night": 1,
+      "time": "10:24pm",
+      "guest": "pip",
+      "event": "joined",
+      "accessPoint": "bunkhouse",
+      "factIds": []
+    },
+    {
+      "id": "n1-nell-woodshed",
+      "night": 1,
+      "time": "11:40pm",
+      "guest": "nell",
+      "event": "joined",
+      "accessPoint": "woodshed",
+      "factIds": ["wifi-nell-woodshed-2340"]
+    },
+    {
+      "id": "n1-nell-lodge",
+      "night": 1,
+      "time": "11:51pm",
+      "guest": "nell",
+      "event": "joined",
+      "accessPoint": "lodge",
+      "factIds": []
+    },
+    {
+      "id": "n2-theo-kitchen",
+      "night": 2,
+      "time": "11:20pm",
+      "guest": "theo",
+      "event": "joined",
+      "accessPoint": "kitchen",
+      "factIds": ["wifi-theo-kitchen-2320"]
+    },
+    {
+      "id": "n2-colette-woodshed",
+      "night": 2,
+      "time": "11:52pm",
+      "guest": "colette",
+      "event": "joined",
+      "accessPoint": "woodshed",
+      "factIds": ["wifi-colette-woodshed-2352"]
+    },
+    {
+      "id": "n2-theo-lodge",
+      "night": 2,
+      "time": "11:58pm",
+      "guest": "theo",
+      "event": "joined",
+      "accessPoint": "lodge",
+      "factIds": []
+    },
+    {
+      "id": "n2-colette-bunkhouse",
+      "night": 2,
+      "time": "12:04am",
+      "guest": "colette",
+      "event": "joined",
+      "accessPoint": "bunkhouse",
+      "factIds": []
+    }
+  ],
+  "nightMoves": [
+    {
+      "_tag": "Coach",
+      "night": 1,
+      "guest": "pip",
+      "fact": "pip-saw-milk-mug",
+      "tellFact": "colette-asked-pip-to-vouch",
+      "disprovedBy": "wifi-colette-woodshed-0144"
+    },
+    {
+      "_tag": "Plant",
+      "night": 2,
+      "fact": "theo-hid-tin-in-scarf",
+      "disprovedBy": "scarf-on-bunkhouse-hook"
+    }
+  ],
+  "contradictions": [
+    {
+      "suspect": "colette",
+      "claimFact": "colette-milk-trip",
+      "proofFact": "wifi-colette-woodshed-0144",
+      "concernsTheft": true
+    },
+    {
+      "suspect": "colette",
+      "claimFact": "colette-never-at-woodshed",
+      "proofFact": "wifi-colette-woodshed-0144",
+      "concernsTheft": true
+    },
+    {
+      "suspect": "colette",
+      "claimFact": "colette-never-at-woodshed",
+      "proofFact": "wifi-colette-woodshed-2352",
+      "concernsTheft": true
+    },
+    {
+      "suspect": "colette",
+      "claimFact": "colette-in-bed-sunday",
+      "proofFact": "wifi-colette-woodshed-2352",
+      "concernsTheft": true
+    },
+    {
+      "suspect": "colette",
+      "claimFact": "colette-saw-theo-scarf-sunday",
+      "proofFact": "theo-scarfless-at-dinner",
+      "concernsTheft": true
+    },
+    {
+      "suspect": "colette",
+      "claimFact": "colette-saw-theo-scarf-sunday",
+      "proofFact": "scarf-on-bunkhouse-hook",
+      "concernsTheft": true
+    },
+    {
+      "suspect": "colette",
+      "claimFact": "colette-own-recipe",
+      "proofFact": "walt-nana-gave-colette-card",
+      "concernsTheft": false
+    },
+    {
+      "suspect": "pip",
+      "claimFact": "pip-saw-milk-mug",
+      "proofFact": "pip-slept-headphones",
+      "concernsTheft": true
+    },
+    {
+      "suspect": "pip",
+      "claimFact": "pip-saw-milk-mug",
+      "proofFact": "wifi-colette-woodshed-0144",
+      "concernsTheft": true
+    },
+    {
+      "suspect": "theo",
+      "claimFact": "theo-straight-to-bed",
+      "proofFact": "wifi-theo-kitchen-0018",
+      "concernsTheft": false
+    },
+    {
+      "suspect": "theo",
+      "claimFact": "theo-straight-to-bed",
+      "proofFact": "wifi-theo-woodshed-0110",
+      "concernsTheft": false
+    },
+    {
+      "suspect": "theo",
+      "claimFact": "theo-straight-to-bed",
+      "proofFact": "nell-heard-theo-door",
+      "concernsTheft": false
+    },
+    {
+      "suspect": "theo",
+      "claimFact": "theo-straight-to-bed",
+      "proofFact": "theo-dumped-dough",
+      "concernsTheft": false
+    },
+    {
+      "suspect": "nell",
+      "claimFact": "nell-stayed-in-saturday",
+      "proofFact": "wifi-nell-woodshed-2340",
+      "concernsTheft": false
+    }
+  ],
+  "groupBeats": [
+    {
+      "trigger": {
+        "_tag": "Morning",
+        "day": 1
+      },
+      "lines": [
+        {
+          "guest": "hattie",
+          "text": "Everyone... Nana's recipe tin is gone. It was on the mantel when I banked the fire at 11:30, and when I came down at seven the mantel was just empty.",
+          "factIds": ["tin-on-mantel-1130", "tin-gone-0700"]
+        },
+        {
+          "guest": "pip",
+          "text": "omg no 😭😭",
+          "factIds": []
+        },
+        {
+          "guest": "colette",
+          "text": "Oh, sweetheart. We'll turn this lodge upside down for you. x",
+          "factIds": []
+        },
+        {
+          "guest": "theo",
+          "text": "before anyone asks i went to bed at 11:45",
+          "factIds": ["theo-straight-to-bed"]
+        },
+        {
+          "guest": "hattie",
+          "text": "I'm moving the bake-off to Monday morning. I just can't, not without Nana's cards.",
+          "factIds": []
+        },
+        {
+          "guest": "nell",
+          "text": "who would *do* that",
+          "factIds": []
+        },
+        {
+          "guest": "walt",
+          "text": "Ingrid's tin. Well.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "trigger": {
+        "_tag": "Idle",
+        "day": 1
+      },
+      "lines": [
+        {
+          "guest": "pip",
+          "text": "is it weird to practice snickerdoodles if the bake-off is postponed lol",
+          "factIds": []
+        },
+        {
+          "guest": "colette",
+          "text": "Never weird, darling. Butter is always the answer. x",
+          "factIds": []
+        },
+        {
+          "guest": "theo",
+          "text": "it's a little weird",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "trigger": {
+        "_tag": "Idle",
+        "day": 1
+      },
+      "lines": [
+        {
+          "guest": "nell",
+          "text": "ok who left the oven mitts in the fridge",
+          "factIds": []
+        },
+        {
+          "guest": "walt",
+          "text": "Not I.",
+          "factIds": []
+        },
+        {
+          "guest": "hattie",
+          "text": "Oh gosh, that might have been me... sorry everyone.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "trigger": {
+        "_tag": "Morning",
+        "day": 2
+      },
+      "lines": [
+        {
+          "guest": "hattie",
+          "text": "Now Nana's milk-glass cake stand is gone from the hutch too!! And somebody's light went out to the woodshed around 11:40 last night, I saw it from my window...",
+          "factIds": ["cake-stand-missing", "hattie-saw-woodshed-light"]
+        },
+        {
+          "guest": "walt",
+          "text": "I heard two women talking low on the bunkhouse porch. Half past ten, or near it.",
+          "factIds": ["walt-heard-porch-voices"]
+        },
+        {
+          "guest": "theo",
+          "text": "also i lost my red scarf at the bonfire. anyone seen it",
+          "factIds": ["theo-lost-scarf-saturday"]
+        },
+        {
+          "guest": "nell",
+          "text": "this lodge is *haunted* ☕",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "trigger": {
+        "_tag": "Idle",
+        "day": 2
+      },
+      "lines": [
+        {
+          "guest": "nell",
+          "text": "who's making coffee",
+          "factIds": []
+        },
+        {
+          "guest": "pip",
+          "text": "me!! ✨",
+          "factIds": []
+        },
+        {
+          "guest": "walt",
+          "text": "Not too strong, young lady.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "trigger": {
+        "_tag": "Morning",
+        "day": 3
+      },
+      "lines": [
+        {
+          "guest": "walt",
+          "text": "I found Ingrid's tin on the woodshed chopping block at twenty to seven. Wrapped in Theo's red scarf.",
+          "factIds": ["tin-found-woodshed", "theo-hid-tin-in-scarf"]
+        },
+        {
+          "guest": "hattie",
+          "text": "It's back... but every card is here except Nana's plum kuchen card. Just that one.",
+          "factIds": ["plum-card-missing"]
+        },
+        {
+          "guest": "theo",
+          "text": "i LOST that scarf at the bonfire saturday",
+          "factIds": ["theo-lost-scarf-saturday"]
+        },
+        {
+          "guest": "pip",
+          "text": "wait what 😭",
+          "factIds": []
+        },
+        {
+          "guest": "colette",
+          "text": "Well. Thank heavens it's home, at least.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "trigger": {
+        "_tag": "Idle",
+        "day": 3
+      },
+      "lines": [
+        {
+          "guest": "colette",
+          "text": "Is the bake-off still on this morning, sweethearts? I've brought my plum cake. x",
+          "factIds": []
+        },
+        {
+          "guest": "hattie",
+          "text": "I suppose it is.",
+          "factIds": []
+        },
+        {
+          "guest": "theo",
+          "text": "my pie is going to be terrible",
+          "factIds": []
+        }
+      ]
+    }
+  ],
+  "guests": [
+    {
+      "id": "hattie",
+      "name": "Hattie Lund",
+      "role": "Your host, and Nana Ingrid's granddaughter",
+      "voice": "Warm and flustered. Long run-on sentences with \"oh gosh\" and trailing ellipses, doubles her exclamation marks when upset, the odd 💛.",
+      "temperament": "anxious",
+      "patience": {
+        "perDay": 8,
+        "costs": {
+          "neutral": 1,
+          "friendly": 0,
+          "rude": 3,
+          "accusatory": 3,
+          "repeated": 2
+        }
+      },
+      "bedtime": "23:00",
+      "knows": [
+        "tin-seen-at-dessert",
+        "hattie-planned-reading",
+        "tin-on-mantel-1130",
+        "tin-gone-0700",
+        "colette-plum-cake-wins",
+        "cake-stand-missing",
+        "hattie-saw-woodshed-light",
+        "theo-scarfless-at-dinner",
+        "plum-card-missing",
+        "tin-found-woodshed"
+      ],
+      "claims": [],
+      "dictionary": {
+        "topics": [
+          {
+            "id": "whereabouts-friday",
+            "description": "where Hattie was on Friday night, the night the tin went missing, and when she went to bed",
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 0
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "I banked the fire at 11:30, and the tin was right there on the mantel, I always look at it... then up to bed and I slept straight through until seven. Oh gosh, I slept right through it.",
+                "factIds": ["tin-on-mantel-1130"]
+              },
+              {
+                "text": "Bed at 11:30, after the fire. I said goodnight to Nana's tin on the mantel, silly I know, and didn't wake until seven.",
+                "factIds": ["tin-on-mantel-1130"]
+              }
+            ]
+          },
+          {
+            "id": "whereabouts-saturday",
+            "description": "where Hattie was on Saturday night and what she saw from her bedroom window",
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 1
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Tonight? In bed early, I hope, if my nerves will let me.",
+                "factIds": []
+              },
+              {
+                "text": "Oh, I'll be in bed, detective. Ask me tomorrow.",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 1,
+                "variants": [
+                  {
+                    "text": "I couldn't sleep at all... and around 11:40 I saw a light bobbing out to the woodshed from my window. I told myself it was nothing.",
+                    "factIds": ["hattie-saw-woodshed-light"]
+                  },
+                  {
+                    "text": "Awake half the night. Somebody's light went out to the woodshed at about twenty to twelve, I watched it from my window!!",
+                    "factIds": ["hattie-saw-woodshed-light"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "whereabouts-sunday",
+            "description": "where Hattie was on Sunday night, the last night before the bake-off",
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 2
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Sunday night? Oh, ask me on Monday, detective.",
+                "factIds": []
+              },
+              {
+                "text": "Hasn't happened yet! Ask me tomorrow.",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "Dinner, dishes, bed by eleven. And then this morning Walt finds Nana's tin on the chopping block in Theo's scarf... I don't know what to think.",
+                    "factIds": ["tin-found-woodshed"]
+                  },
+                  {
+                    "text": "Asleep by eleven. And at twenty to seven Walt walks in from the woodshed with the tin wrapped in Theo's red scarf!!",
+                    "factIds": ["tin-found-woodshed"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "the-tin",
+            "description": "the missing recipe tin itself: Nana Ingrid's dented tin of index cards, and when it was last seen",
+            "subject": {
+              "_tag": "Item"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "It's Nana Ingrid's recipe tin, dented, the lid sticks, full of her cards in her own handwriting... I read a few out at dessert on Friday and set it on the mantel. It was still there at 11:30, and at seven it was gone.",
+                "factIds": [
+                  "tin-seen-at-dessert",
+                  "tin-on-mantel-1130",
+                  "tin-gone-0700"
+                ]
+              },
+              {
+                "text": "I had it out at dessert reading cards, then it went on the mantel. It was there at 11:30 when I banked the fire. At seven the mantel was empty. Just empty.",
+                "factIds": [
+                  "tin-seen-at-dessert",
+                  "tin-on-mantel-1130",
+                  "tin-gone-0700"
+                ]
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "It's back!! Walt found it in the woodshed this morning, wrapped in Theo's scarf. But every card is there except the plum kuchen card. Who would want just that one?",
+                    "factIds": ["tin-found-woodshed", "plum-card-missing"]
+                  },
+                  {
+                    "text": "Walt found it on the woodshed chopping block, in Theo's red scarf of all things... and the plum kuchen card is the only card missing.",
+                    "factIds": ["tin-found-woodshed", "plum-card-missing"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "plum-kuchen-card",
+            "description": "Nana Ingrid's plum kuchen card, and Hattie's plan to read it aloud to open the bake-off",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Nana's plum kuchen was her famous one. I told everyone at dessert I'd read the card aloud to open the bake-off 💛",
+                "factIds": ["hattie-planned-reading"]
+              },
+              {
+                "text": "At dessert I said I'd start the bake-off by reading Nana's plum kuchen card out loud. It felt right, you know?",
+                "factIds": ["hattie-planned-reading"]
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "And now it's the ONE card missing from the tin!! I'd told everyone at dessert I was going to read it to open the bake-off.",
+                    "factIds": ["plum-card-missing", "hattie-planned-reading"]
+                  },
+                  {
+                    "text": "The plum kuchen card is gone, only that one... the very card I said at dessert I'd read aloud to open the bake-off.",
+                    "factIds": ["plum-card-missing", "hattie-planned-reading"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "the-bake-off",
+            "description": "the friendly lodge bake-off, why Hattie postponed it to Monday, and who usually wins it",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Colette's won three years running with her plum cake. I've moved it all to Monday morning, I just couldn't, not without Nana's tin.",
+                "factIds": ["colette-plum-cake-wins"]
+              },
+              {
+                "text": "It's on Monday now. Colette will win again with her plum cake, she's won three years straight, everyone says it's nearly as good as Nana's.",
+                "factIds": ["colette-plum-cake-wins"]
+              }
+            ]
+          },
+          {
+            "id": "cake-stand",
+            "description": "Hattie's milk-glass cake stand that went missing from the hutch on Saturday",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "The milk-glass stand? It's on the hutch, waiting for Monday. It was Nana's too.",
+                "factIds": []
+              },
+              {
+                "text": "Oh, it's on the hutch. I'm saving it for the winner's cake.",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 1,
+                "variants": [
+                  {
+                    "text": "It's GONE. Nana's milk-glass cake stand, right off the hutch, sometime on Saturday. First the tin and now this...",
+                    "factIds": ["cake-stand-missing"]
+                  },
+                  {
+                    "text": "Missing!! The milk-glass cake stand vanished from the hutch on Saturday. Who takes a cake stand?",
+                    "factIds": ["cake-stand-missing"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "the-woodshed",
+            "description": "the woodshed out past the bunkhouse, and the light Hattie saw going out to it",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "The woodshed's out past the bunkhouse. Walt splits kindling there every morning, he insists on it.",
+                "factIds": []
+              },
+              {
+                "text": "It's just the woodshed, detective. Kindling and spiders and Walt's axe.",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 1,
+                "variants": [
+                  {
+                    "text": "Someone went out there late Saturday, I saw a light heading to the woodshed at about 11:40...",
+                    "factIds": ["hattie-saw-woodshed-light"]
+                  },
+                  {
+                    "text": "There was a light going out to the woodshed around twenty to twelve on Saturday night. I saw it from upstairs.",
+                    "factIds": ["hattie-saw-woodshed-light"]
+                  }
+                ]
+              },
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "A light out there on Saturday night around 11:40, and then Walt finds Nana's tin on the chopping block in Theo's scarf on Monday!!",
+                    "factIds": [
+                      "hattie-saw-woodshed-light",
+                      "tin-found-woodshed"
+                    ]
+                  },
+                  {
+                    "text": "I saw a light go out there at 11:40 on Saturday... and this morning that's where Walt found the tin, wrapped in Theo's scarf.",
+                    "factIds": [
+                      "hattie-saw-woodshed-light",
+                      "tin-found-woodshed"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "theos-scarf",
+            "description": "Theo's red scarf, the one the tin was found wrapped in, and whether he had it at Sunday dinner",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "Theo's red scarf? He's always losing it, ever since he was ten.",
+                "factIds": []
+              },
+              {
+                "text": "That old red scarf of his? Why do you ask?",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "He didn't have it at dinner on Sunday, I know because he grumbled about losing it all through the roast. So how did it end up around Nana's tin?",
+                    "factIds": ["theo-scarfless-at-dinner"]
+                  },
+                  {
+                    "text": "Theo had no scarf at Sunday dinner, detective, he moaned the whole meal that he'd lost it!!",
+                    "factIds": ["theo-scarfless-at-dinner"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "about-theo",
+            "description": "Theo, Hattie's grumpy younger brother who can't bake",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "theo"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "My little brother. Grumpy, sweet underneath, and he cannot bake at all. He entered the bake-off anyway, bless him.",
+                "factIds": []
+              },
+              {
+                "text": "Theo's all prickles on the outside 💛 Nana adored him.",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "Theo didn't even have his scarf at Sunday dinner, he complained the whole time that he'd lost it. He wouldn't do this.",
+                    "factIds": ["theo-scarfless-at-dinner"]
+                  },
+                  {
+                    "text": "My brother sat through Sunday dinner with no scarf, grumbling that he'd lost it. I don't believe it was him, I won't.",
+                    "factIds": ["theo-scarfless-at-dinner"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "about-colette",
+            "description": "Colette, Hattie's next-door neighbor of twenty years and the reigning bake-off champion",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "colette"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Colette's been my neighbor for twenty years. She's won the bake-off three years running with her plum cake, it's wonderful.",
+                "factIds": ["colette-plum-cake-wins"]
+              },
+              {
+                "text": "Oh, Colette's a dear. Three years champion with that plum cake of hers!",
+                "factIds": ["colette-plum-cake-wins"]
+              }
+            ]
+          },
+          {
+            "id": "about-pip",
+            "description": "Pip, Hattie's young coworker from the library who is bunking with Colette",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "pip"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Pip works with me at the library. She's never baked a thing in her life and she's having the best time 💛",
+                "factIds": []
+              },
+              {
+                "text": "Pip's a sweetheart. She's out in the bunkhouse with Colette.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "about-walt",
+            "description": "Walt, Nana Ingrid's old friend who sleeps downstairs",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "walt"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Walt was Nana's dearest friend for fifty years. He sleeps downstairs now, his knees can't manage the stairs.",
+                "factIds": []
+              },
+              {
+                "text": "Walt's practically family. He knew Nana longer than anyone.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "about-nell",
+            "description": "Nell, Hattie's friend from culinary school who writes a baking blog",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "nell"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Nell and I go way back to culinary school. She writes that baking blog, so if anything happens here, half the county reads about it by lunch...",
+                "factIds": []
+              },
+              {
+                "text": "Nell's lovely, honestly. Just don't tell her anything you don't want online.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "night-saturday",
+            "description": "what happened around the lodge on Saturday night, the second night",
+            "subject": {
+              "_tag": "NightEvent",
+              "night": 1
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Saturday night hasn't happened yet, detective!",
+                "factIds": []
+              },
+              {
+                "text": "Ask me tomorrow, I'm dreading it already.",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 1,
+                "variants": [
+                  {
+                    "text": "The cake stand vanished and someone's light went out to the woodshed around 11:40!! What is going ON in this lodge?",
+                    "factIds": [
+                      "cake-stand-missing",
+                      "hattie-saw-woodshed-light"
+                    ]
+                  },
+                  {
+                    "text": "First the cake stand goes missing, then a light heading for the woodshed at twenty to twelve... I barely slept.",
+                    "factIds": [
+                      "cake-stand-missing",
+                      "hattie-saw-woodshed-light"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "night-sunday",
+            "description": "what happened on Sunday night, the last night, and what turned up on Monday morning",
+            "subject": {
+              "_tag": "NightEvent",
+              "night": 2
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Sunday night? Ask me on Monday.",
+                "factIds": []
+              },
+              {
+                "text": "Oh, I can't think that far ahead...",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "Walt found Nana's tin on the chopping block this morning, wrapped in Theo's red scarf. Everything there but the plum kuchen card.",
+                    "factIds": ["tin-found-woodshed", "plum-card-missing"]
+                  },
+                  {
+                    "text": "The tin turned up in the woodshed in Theo's scarf!! And the plum kuchen card is the only one gone.",
+                    "factIds": ["tin-found-woodshed", "plum-card-missing"]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "pressed": {
+          "variants": [
+            {
+              "text": "Me?? Detective, it's NANA'S tin. I'd sooner lose my own hand.",
+              "factIds": []
+            },
+            {
+              "text": "Why on earth would I steal my own grandmother's recipes? Oh gosh, you can't mean that.",
+              "factIds": []
+            }
+          ]
+        },
+        "dodges": [
+          "Oh gosh, I really couldn't say...",
+          "I don't know, maybe ask Walt?",
+          "Sorry, my head is all in a muddle today.",
+          "I wish I knew, detective.",
+          "Hmm, I'm not sure about that.",
+          "Oh, I wasn't paying attention, I'm sorry..."
+        ],
+        "greetings": [
+          "Hello, detective. Thank you so much for coming 💛",
+          "Oh, hello! Any news?"
+        ],
+        "thanks": ["Anything to help. Truly.", "Thank YOU, detective."],
+        "goodnight": "I'm off to bed, detective. Ask me tomorrow 💛"
+      }
+    },
+    {
+      "id": "theo",
+      "name": "Theo Lund",
+      "role": "Hattie's younger brother",
+      "voice": "Terse and sarcastic. All lowercase, almost no punctuation, one-line answers, a flat \"k.\" when annoyed.",
+      "temperament": "prickly",
+      "patience": {
+        "perDay": 6,
+        "costs": {
+          "neutral": 1,
+          "friendly": 1,
+          "rude": 3,
+          "accusatory": 3,
+          "repeated": 2
+        }
+      },
+      "bedtime": "00:30",
+      "knows": [
+        "tin-seen-at-dessert",
+        "colette-plum-cake-wins",
+        "theo-practiced-at-night",
+        "theo-dumped-dough",
+        "theo-saw-tin-0120",
+        "theo-lost-scarf-saturday",
+        "theo-kitchen-sunday",
+        "tin-found-woodshed"
+      ],
+      "claims": ["theo-straight-to-bed"],
+      "secret": "theo-practiced-at-night",
+      "dictionary": {
+        "topics": [
+          {
+            "id": "whereabouts-friday",
+            "description": "where Theo was on Friday night, the night the tin went missing, and when he went to bed",
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 0
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "bed at 11:45. slept. riveting stuff",
+                "factIds": ["theo-straight-to-bed"]
+              },
+              {
+                "text": "went straight up at quarter to twelve and slept till eight. next question",
+                "factIds": ["theo-straight-to-bed"]
+              }
+            ]
+          },
+          {
+            "id": "whereabouts-saturday",
+            "description": "where Theo was on Saturday night, after the bonfire",
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 1
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "it's saturday. ask me sunday",
+                "factIds": []
+              },
+              {
+                "text": "bonfire then bed probably. thrilling",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 1,
+                "variants": [
+                  {
+                    "text": "bonfire then bed. asleep by midnight. nothing to report",
+                    "factIds": []
+                  },
+                  {
+                    "text": "slept. that's it. that's the story",
+                    "factIds": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "whereabouts-sunday",
+            "description": "where Theo was on Sunday night, the last night",
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 2
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "ask me monday",
+                "factIds": []
+              },
+              {
+                "text": "haven't done it yet. ask tomorrow",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "kitchen from like 11:20 till midnight making pie crust. NOT the woodshed. read your log",
+                    "factIds": ["theo-kitchen-sunday"]
+                  },
+                  {
+                    "text": "fine. i was in the kitchen 11:20 to midnight doing pie crust again. never went near the woodshed",
+                    "factIds": ["theo-kitchen-sunday"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "the-tin",
+            "description": "the missing recipe tin and when Theo last saw it at dessert",
+            "subject": {
+              "_tag": "Item"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "grandma's recipe tin. hattie read cards out of it at dessert like scripture then put it on the mantel",
+                "factIds": ["tin-seen-at-dessert"]
+              },
+              {
+                "text": "saw it at dessert friday. hattie reading cards. then it went on the mantel",
+                "factIds": ["tin-seen-at-dessert"]
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "it turned up in the woodshed wrapped in MY scarf which i lost saturday. so someone's having fun",
+                    "factIds": [
+                      "tin-found-woodshed",
+                      "theo-lost-scarf-saturday"
+                    ]
+                  },
+                  {
+                    "text": "walt found it in the woodshed in my scarf. i lost that scarf saturday at the bonfire. k.",
+                    "factIds": [
+                      "tin-found-woodshed",
+                      "theo-lost-scarf-saturday"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "kitchen-at-night",
+            "description": "Theo secretly practicing pie crust in the kitchen after midnight: flour, pans, baking in secret",
+            "subject": {
+              "_tag": "Secret"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "...fine. yes. i was in the kitchen friday after midnight making pie crust. i can't bake and i wasn't letting anyone watch me fail. and the tin was still on the mantel when i went up at like 1:20",
+                "factIds": ["theo-practiced-at-night", "theo-saw-tin-0120"]
+              },
+              {
+                "text": "ok. kitchen, past midnight friday, pie crust, three tries, all garbage. walked past the mantel at 1:20 going up and the tin was still there. happy",
+                "factIds": ["theo-practiced-at-night", "theo-saw-tin-0120"]
+              }
+            ]
+          },
+          {
+            "id": "the-woodshed",
+            "description": "Theo and the woodshed and compost bin, and the Wi-Fi log putting his phone at the woodshed on Friday",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "the woodshed? i dumped a bowl of dead pie dough in the compost next to it around 1:10. it's a compost bin not a crime scene",
+                "factIds": ["theo-dumped-dough"]
+              },
+              {
+                "text": "compost bin's by the woodshed. threw out my failed dough there about 1:10 friday. that's all",
+                "factIds": ["theo-dumped-dough"]
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "friday i dumped dough in the compost by it at 1:10. sunday i never went near it, i was in the kitchen 11:20 to midnight",
+                    "factIds": ["theo-dumped-dough", "theo-kitchen-sunday"]
+                  },
+                  {
+                    "text": "once, friday, 1:10, compost bin, dead pie dough. sunday night i was in the kitchen till midnight",
+                    "factIds": ["theo-dumped-dough", "theo-kitchen-sunday"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "his-phone",
+            "description": "Theo's phone and what the Wi-Fi log shows about him in general",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "my phone does whatever it wants. i went to bed at 11:45",
+                "factIds": ["theo-straight-to-bed"]
+              },
+              {
+                "text": "don't care what the router says. bed, 11:45",
+                "factIds": ["theo-straight-to-bed"]
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "sunday the log has me in the kitchen at 11:20 because i was in the kitchen. friday i went to bed at 11:45",
+                    "factIds": ["theo-kitchen-sunday", "theo-straight-to-bed"]
+                  },
+                  {
+                    "text": "sunday night: kitchen, 11:20 to midnight. friday: bed at 11:45. done",
+                    "factIds": ["theo-kitchen-sunday", "theo-straight-to-bed"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "his-scarf",
+            "description": "Theo's own red scarf and losing it at the Saturday bonfire",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "it's a scarf. it's red. riveting",
+                "factIds": []
+              },
+              {
+                "text": "my scarf? why",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 1,
+                "variants": [
+                  {
+                    "text": "lost it at the bonfire saturday. if you see a red scarf it's mine",
+                    "factIds": ["theo-lost-scarf-saturday"]
+                  },
+                  {
+                    "text": "left it at the bonfire saturday and now it's gone. great",
+                    "factIds": ["theo-lost-scarf-saturday"]
+                  }
+                ]
+              },
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "i LOST it at the bonfire saturday. haven't seen it since. whoever wrapped the tin in it wasn't me",
+                    "factIds": ["theo-lost-scarf-saturday"]
+                  },
+                  {
+                    "text": "lost. at the bonfire. saturday. i've said this like nine times",
+                    "factIds": ["theo-lost-scarf-saturday"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "the-bake-off",
+            "description": "the lodge bake-off, Theo's pie entry, and who wins every year",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "i entered a pie. it'll be bad. colette'll win with her plum cake like the last three years",
+                "factIds": ["colette-plum-cake-wins"]
+              },
+              {
+                "text": "colette wins every year with that plum cake. three in a row. i'm just here to lose",
+                "factIds": ["colette-plum-cake-wins"]
+              }
+            ]
+          },
+          {
+            "id": "about-hattie",
+            "description": "Hattie, Theo's older sister and the host",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "hattie"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "my sister. she's taking this hard. it's grandma's tin",
+                "factIds": []
+              },
+              {
+                "text": "hattie worries about everything. this time it's fair",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "about-colette",
+            "description": "Colette, the neighbor and three-time bake-off champion",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "colette"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "colette. three ribbons for the plum cake, never lets you forget it",
+                "factIds": ["colette-plum-cake-wins"]
+              },
+              {
+                "text": "she's won three years running with that plum cake. tells everyone",
+                "factIds": ["colette-plum-cake-wins"]
+              }
+            ]
+          },
+          {
+            "id": "about-pip",
+            "description": "Pip, the chatty young guest from the library",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "pip"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "pip's fine. talks a lot. bunks with colette",
+                "factIds": []
+              },
+              {
+                "text": "pip uses a lot of emoji. that's all i got",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "about-walt",
+            "description": "Walt, Grandma Ingrid's old friend",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "walt"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "walt was grandma's friend. doesn't say much. i respect that",
+                "factIds": []
+              },
+              {
+                "text": "walt's ok. splits kindling at dawn like it's 1950",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "about-nell",
+            "description": "Nell, the baking blogger",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "nell"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "nell writes a baking blog. she'll put all this online. can't wait",
+                "factIds": []
+              },
+              {
+                "text": "nell's nosy. professionally",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "night-saturday",
+            "description": "what happened around the lodge on Saturday night: the cake stand, lights, voices",
+            "subject": {
+              "_tag": "NightEvent",
+              "night": 1
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "hasn't happened yet",
+                "factIds": []
+              },
+              {
+                "text": "ask me tomorrow",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 1,
+                "variants": [
+                  {
+                    "text": "slept through whatever happened. ask someone who was up",
+                    "factIds": []
+                  },
+                  {
+                    "text": "no idea. i was asleep for once",
+                    "factIds": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "night-sunday",
+            "description": "what happened on Sunday night and the tin turning up on Monday morning",
+            "subject": {
+              "_tag": "NightEvent",
+              "night": 2
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "ask me monday",
+                "factIds": []
+              },
+              {
+                "text": "haven't got there yet",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "walt found the tin in the woodshed wrapped in my scarf. i lost that scarf saturday. somebody's setting me up",
+                    "factIds": [
+                      "tin-found-woodshed",
+                      "theo-lost-scarf-saturday"
+                    ]
+                  },
+                  {
+                    "text": "tin in the woodshed, in my scarf, which i lost at the bonfire saturday. funny that",
+                    "factIds": [
+                      "tin-found-woodshed",
+                      "theo-lost-scarf-saturday"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "pressed": {
+          "variants": [
+            {
+              "text": "wow. no. i didn't take grandma's tin",
+              "factIds": []
+            },
+            {
+              "text": "seriously? it's my grandmother's. k.",
+              "factIds": []
+            }
+          ],
+          "afterNight": [
+            {
+              "night": 2,
+              "variants": [
+                {
+                  "text": "it's my SCARF because i LOST it saturday. i was in the kitchen sunday night, check the log",
+                  "factIds": ["theo-lost-scarf-saturday", "theo-kitchen-sunday"]
+                },
+                {
+                  "text": "i lost that scarf at the bonfire. sunday night i was in the kitchen till midnight. not the woodshed",
+                  "factIds": ["theo-lost-scarf-saturday", "theo-kitchen-sunday"]
+                }
+              ]
+            }
+          ]
+        },
+        "dodges": [
+          "no idea",
+          "ask hattie",
+          "dunno",
+          "why would i know that",
+          "pass",
+          "not my problem"
+        ],
+        "greetings": ["what", "hey"],
+        "thanks": ["sure", "k"],
+        "goodnight": "going to bed. tomorrow"
+      }
+    },
+    {
+      "id": "colette",
+      "name": "Colette Varga",
+      "role": "Hattie's next-door neighbor, three-time bake-off champion",
+      "voice": "Warm and theatrical. Calls everyone \"darling\" or \"sweetheart\", full sentences, baking metaphors, signs off with an x.",
+      "temperament": "chatty",
+      "patience": {
+        "perDay": 9,
+        "costs": {
+          "neutral": 1,
+          "friendly": -1,
+          "rude": 2,
+          "accusatory": 3,
+          "repeated": 1
+        }
+      },
+      "bedtime": "22:30",
+      "knows": [
+        "tin-seen-at-dessert",
+        "hattie-planned-reading",
+        "colette-plum-cake-wins",
+        "tin-found-woodshed",
+        "plum-card-missing"
+      ],
+      "claims": [
+        "colette-milk-trip",
+        "colette-never-at-woodshed",
+        "colette-in-bed-sunday",
+        "colette-saw-theo-scarf-sunday",
+        "colette-own-recipe"
+      ],
+      "dictionary": {
+        "topics": [
+          {
+            "id": "whereabouts-friday",
+            "description": "where Colette was on Friday night, the night the tin went missing, and when she went to bed",
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 0
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Tucked up in the bunkhouse by half eleven, darling. I did pop over to the lodge kitchen about half one for a glass of warm milk, then straight back to bed.",
+                "factIds": ["colette-milk-trip"]
+              },
+              {
+                "text": "Couldn't settle, so I nipped to the lodge kitchen around half one for warm milk and went straight back to the bunkhouse. Slept like a proved loaf after that. x",
+                "factIds": ["colette-milk-trip"]
+              }
+            ]
+          },
+          {
+            "id": "whereabouts-saturday",
+            "description": "where Colette was on Saturday night, after the bonfire",
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 1
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Tonight, sweetheart? An early one, I should think.",
+                "factIds": []
+              },
+              {
+                "text": "Oh, bunkhouse and a good book, I expect. x",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 1,
+                "variants": [
+                  {
+                    "text": "Bunkhouse, a chapter of my book, lights out. Thrilling, I know. x",
+                    "factIds": []
+                  },
+                  {
+                    "text": "Back from the bonfire and into bed, darling. Nothing to tell.",
+                    "factIds": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "whereabouts-sunday",
+            "description": "where Colette was on Sunday night, the last night",
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 2
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Ask me tomorrow, darling.",
+                "factIds": []
+              },
+              {
+                "text": "Sunday hasn't happened yet, sweetheart!",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "Asleep by half ten, darling, and didn't stir till the birds.",
+                    "factIds": ["colette-in-bed-sunday"]
+                  },
+                  {
+                    "text": "Lights out at half past ten and out like a candle till morning, sweetheart. x",
+                    "factIds": ["colette-in-bed-sunday"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "the-tin",
+            "description": "the missing recipe tin and when Colette last saw it",
+            "subject": {
+              "_tag": "Item"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Ingrid's tin! Hattie had it out at dessert reading us cards, then up it went on the mantel. Dreadful business.",
+                "factIds": ["tin-seen-at-dessert"]
+              },
+              {
+                "text": "Last I saw it, darling, Hattie was reading from it at dessert and then it went on the mantel.",
+                "factIds": ["tin-seen-at-dessert"]
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "And now it's home, thank heavens. Found in the woodshed in Theo's scarf, I hear, and only the plum card gone.",
+                    "factIds": ["tin-found-woodshed", "plum-card-missing"]
+                  },
+                  {
+                    "text": "Walt found it in the woodshed, darling, wrapped in Theo's scarf. Every card but the plum one, apparently.",
+                    "factIds": ["tin-found-woodshed", "plum-card-missing"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "warm-milk",
+            "description": "Colette's late-night trip to the lodge kitchen for warm milk on Friday",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "Warm milk, darling, with a grating of nutmeg. Lodge kitchen, half one, then straight back to the bunkhouse. Hardly the stuff of crime.",
+                "factIds": ["colette-milk-trip"]
+              },
+              {
+                "text": "A glass of warm milk at half one in the lodge kitchen, sweetheart, then back to bed. I'm sixty-one, I don't sleep.",
+                "factIds": ["colette-milk-trip"]
+              }
+            ]
+          },
+          {
+            "id": "the-woodshed",
+            "description": "Colette and the woodshed out back: whether she has ever been in it this weekend",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "The woodshed? I haven't set foot in it all weekend, sweetheart. Spiders.",
+                "factIds": ["colette-never-at-woodshed"]
+              },
+              {
+                "text": "Never been near it, darling. That's Walt's kingdom.",
+                "factIds": ["colette-never-at-woodshed"]
+              }
+            ]
+          },
+          {
+            "id": "wifi-log",
+            "description": "the Wi-Fi log and what it shows about Colette's phone",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "Oh, I don't understand routers, darling. My phone came with me for the milk at half one, I suppose, and then straight back to bed.",
+                "factIds": ["colette-milk-trip"]
+              },
+              {
+                "text": "That log? Sweetheart, I went to the lodge kitchen for warm milk and straight back to the bunkhouse. Whatever the box says.",
+                "factIds": ["colette-milk-trip"]
+              }
+            ]
+          },
+          {
+            "id": "plum-cake",
+            "description": "Colette's own prize-winning plum cake and where her recipe came from",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "My plum cake? My late mother's recipe, darling. Three ribbons on the trot.",
+                "factIds": ["colette-own-recipe", "colette-plum-cake-wins"]
+              },
+              {
+                "text": "Mother's recipe, sweetheart, God rest her. It's won the bake-off three years running. x",
+                "factIds": ["colette-own-recipe", "colette-plum-cake-wins"]
+              }
+            ]
+          },
+          {
+            "id": "plum-kuchen-card",
+            "description": "Nana Ingrid's plum kuchen card, the one Hattie meant to read aloud and the one missing from the tin",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "Hattie said she'd read it to open the bake-off, yes. Lovely idea. Mine's quite different, of course. My mother's.",
+                "factIds": ["hattie-planned-reading", "colette-own-recipe"]
+              },
+              {
+                "text": "Ingrid's card? Hattie mentioned reading it aloud at the bake-off. Nothing to do with my cake, darling, that's my mother's recipe.",
+                "factIds": ["hattie-planned-reading", "colette-own-recipe"]
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "The plum card's the one missing? How very odd. Nothing to do with my cake, sweetheart, that's my mother's.",
+                    "factIds": ["plum-card-missing", "colette-own-recipe"]
+                  },
+                  {
+                    "text": "Only the plum card gone? Strange. My plum cake is my mother's recipe, darling, before you ask.",
+                    "factIds": ["plum-card-missing", "colette-own-recipe"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "the-bake-off",
+            "description": "the lodge bake-off, postponed to Monday, and Colette's title as champion",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Postponed till Monday, poor Hattie. I'll bring my plum cake, of course. Three years champion, darling!",
+                "factIds": ["colette-plum-cake-wins"]
+              },
+              {
+                "text": "Monday now. I'm defending my title, sweetheart. Three in a row with the plum cake. x",
+                "factIds": ["colette-plum-cake-wins"]
+              }
+            ]
+          },
+          {
+            "id": "theos-scarf",
+            "description": "Theo's red scarf, the one the tin was found wrapped in, and whether Colette saw him wearing it",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "Theo's scarf? I couldn't tell you a thing about it, darling.",
+                "factIds": []
+              },
+              {
+                "text": "Do I look like I keep track of Theo's knitwear, sweetheart?",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "He had it on at dinner last night, sweetheart. Red plaid. I remember thinking it clashed with the soup.",
+                    "factIds": ["colette-saw-theo-scarf-sunday"]
+                  },
+                  {
+                    "text": "Theo wore that red scarf right through Sunday dinner, darling. I noticed it.",
+                    "factIds": ["colette-saw-theo-scarf-sunday"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "about-hattie",
+            "description": "Hattie, the host and Colette's neighbor of twenty years",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "hattie"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Hattie's my neighbor of twenty years. Heart of gold, nerves of tissue paper.",
+                "factIds": []
+              },
+              {
+                "text": "Darling Hattie. I'd do anything for that girl. x",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "about-theo",
+            "description": "Theo, Hattie's grumpy younger brother, and what Colette thinks of him",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "theo"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Theo? A dear old grump. Can't bake for toffee, but he tries.",
+                "factIds": []
+              },
+              {
+                "text": "Theo's pastry could sole a boot, darling. Bless him.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "about-pip",
+            "description": "Pip, Colette's young bunkmate from the library",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "pip"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Pip's a lamb, sweetheart. I'm teaching her laminated dough.",
+                "factIds": []
+              },
+              {
+                "text": "My bunkmate! Sweet as a sugared almond. Ask her anything you like.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "about-walt",
+            "description": "Walt, Ingrid's old friend",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "walt"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Walt was Ingrid's dearest friend. Sweet man. In bed before the dessert plates are cleared.",
+                "factIds": []
+              },
+              {
+                "text": "Walt? Quiet as a cooling rack, darling.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "about-nell",
+            "description": "Nell, the baking blogger",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "nell"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Nell? She writes that blog. Lovely girl, but mind what you say near her.",
+                "factIds": []
+              },
+              {
+                "text": "Nell would put her own grandmother on the internet, sweetheart.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "night-saturday",
+            "description": "what happened around the lodge on Saturday night: the cake stand, a light, voices on the porch",
+            "subject": {
+              "_tag": "NightEvent",
+              "night": 1
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Ask me tomorrow, darling.",
+                "factIds": []
+              },
+              {
+                "text": "Saturday hasn't happened yet, sweetheart.",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 1,
+                "variants": [
+                  {
+                    "text": "Whatever went on, I slept through it, darling.",
+                    "factIds": []
+                  },
+                  {
+                    "text": "A night of mysteries! I missed every one, sweetheart. x",
+                    "factIds": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "night-sunday",
+            "description": "what happened on Sunday night and the tin turning up on Monday morning",
+            "subject": {
+              "_tag": "NightEvent",
+              "night": 2
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Ask me Monday, darling.",
+                "factIds": []
+              },
+              {
+                "text": "Who knows what tomorrow brings, sweetheart?",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "Walt found the tin in the woodshed in Theo's scarf, I hear. Well. I'm not one to point fingers, darling.",
+                    "factIds": ["tin-found-woodshed"]
+                  },
+                  {
+                    "text": "In the woodshed, wrapped in Theo's scarf! I shan't say a word, sweetheart.",
+                    "factIds": ["tin-found-woodshed"]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "pressed": {
+          "variants": [
+            {
+              "text": "Me?! Darling, I've three ribbons of my own. I hardly need anyone else's recipes.",
+              "factIds": ["colette-plum-cake-wins"]
+            },
+            {
+              "text": "Sweetheart, I've won that bake-off three years running. Why would I want a tin of old cards?",
+              "factIds": ["colette-plum-cake-wins"]
+            }
+          ],
+          "afterNight": [
+            {
+              "night": 2,
+              "variants": [
+                {
+                  "text": "Darling, I was asleep by half ten. It was Theo's scarf, not mine.",
+                  "factIds": ["colette-in-bed-sunday"]
+                },
+                {
+                  "text": "I was fast asleep by half past ten last night, sweetheart. Ask about the scarf, not me.",
+                  "factIds": ["colette-in-bed-sunday"]
+                }
+              ]
+            }
+          ]
+        },
+        "dodges": [
+          "Oh, I couldn't say, darling.",
+          "Ask Hattie, sweetheart.",
+          "Haven't the foggiest.",
+          "You'd have to ask someone cleverer than me, darling.",
+          "Goodness, no idea. x",
+          "That's one for Walt, sweetheart."
+        ],
+        "greetings": [
+          "Hello, darling detective!",
+          "Sweetheart! Come in, come in."
+        ],
+        "thanks": ["Any time, darling. x", "Oh, my pleasure, sweetheart."],
+        "goodnight": "Off to my bunk, darling. Tomorrow! x"
+      }
+    },
+    {
+      "id": "pip",
+      "name": "Pip Arden",
+      "role": "Hattie's coworker from the library, bunking with Colette",
+      "voice": "Bubbly and young. All lowercase, \"omg\", \"lol\", \"like\", lots of 😭 and ✨, crams two thoughts into one message.",
+      "temperament": "chatty",
+      "patience": {
+        "perDay": 10,
+        "costs": {
+          "neutral": 1,
+          "friendly": -1,
+          "rude": 2,
+          "accusatory": 3,
+          "repeated": 1
+        }
+      },
+      "bedtime": "23:30",
+      "knows": [
+        "tin-seen-at-dessert",
+        "pip-slept-headphones",
+        "colette-asked-pip-to-vouch",
+        "pip-porch-with-colette",
+        "scarf-on-hook-saturday",
+        "scarf-on-bunkhouse-hook",
+        "tin-found-woodshed"
+      ],
+      "claims": ["pip-saw-milk-mug"],
+      "dictionary": {
+        "topics": [
+          {
+            "id": "whereabouts-friday",
+            "description": "where Pip was on Friday night, the night the tin went missing, out in the bunkhouse",
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 0
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "omg i was OUT. noise cancelling headphones + rain sounds, didn't hear a thing all night lol",
+                "factIds": ["pip-slept-headphones"]
+              },
+              {
+                "text": "asleep in the bunkhouse by like midnight w my headphones in, i literally heard nothing 😭",
+                "factIds": ["pip-slept-headphones"]
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 1,
+                "variants": [
+                  {
+                    "text": "ok so colette did get up for warm milk friday but she was back in like five minutes, i saw the mug!! ✨",
+                    "factIds": ["pip-saw-milk-mug"]
+                  },
+                  {
+                    "text": "colette popped out for milk and came right back, i saw her w the mug so it wasn't her lol",
+                    "factIds": ["pip-saw-milk-mug"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "whereabouts-saturday",
+            "description": "where Pip was on Saturday night after the bonfire",
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 1
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "tonight?? prob bonfire then bed lol",
+                "factIds": []
+              },
+              {
+                "text": "bonfire!! then bunkhouse ✨",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 1,
+                "variants": [
+                  {
+                    "text": "bonfire then bunkhouse! colette and i sat out on the porch around 10:30 chatting and then i crashed",
+                    "factIds": ["pip-porch-with-colette"]
+                  },
+                  {
+                    "text": "me and colette were on the bunkhouse porch like 10:30 talking, then bed!! headphones on obv",
+                    "factIds": ["pip-porch-with-colette"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "whereabouts-sunday",
+            "description": "where Pip was on Sunday night, the last night",
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 2
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "ask me tomorrow!!",
+                "factIds": []
+              },
+              {
+                "text": "idk yet lol it's sunday",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "asleep by like 11, headphones in, dead to the world 😴",
+                    "factIds": []
+                  },
+                  {
+                    "text": "bunkhouse, rain sounds, out cold lol same as always",
+                    "factIds": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "the-tin",
+            "description": "the missing recipe tin and when Pip last saw it",
+            "subject": {
+              "_tag": "Item"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "hattie's nana's tin!! she read us the cutest cards at dessert and then put it on the mantel 😭",
+                "factIds": ["tin-seen-at-dessert"]
+              },
+              {
+                "text": "last time i saw it was dessert friday, hattie reading cards, then it went on the mantel",
+                "factIds": ["tin-seen-at-dessert"]
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "it came BACK?? walt found it in the woodshed in theo's scarf?? wild",
+                    "factIds": ["tin-found-woodshed"]
+                  },
+                  {
+                    "text": "omg walt found it in the woodshed wrapped in theo's scarf 😭",
+                    "factIds": ["tin-found-woodshed"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "the-bunkhouse",
+            "description": "the bunkhouse Pip shares with Colette, its squeaky door and its coat hook",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "the bunkhouse is so cute!! colette's my bunkmate. the door squeaks like a goose but i sleep w headphones so 🤷",
+                "factIds": ["pip-slept-headphones"]
+              },
+              {
+                "text": "it's me and colette out there! i wear headphones to sleep so i never hear the door lol",
+                "factIds": ["pip-slept-headphones"]
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 1,
+                "variants": [
+                  {
+                    "text": "it's so cozy!! also theo's red scarf is on our coat hook since last night?? idk who brought it in",
+                    "factIds": ["scarf-on-hook-saturday"]
+                  },
+                  {
+                    "text": "fun fact theo's red scarf has been on our bunkhouse coat hook since saturday night lol",
+                    "factIds": ["scarf-on-hook-saturday"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "theos-scarf",
+            "description": "Theo's red scarf and where Pip saw it hanging",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "theo's scarf? the red one? cute. why",
+                "factIds": []
+              },
+              {
+                "text": "the red one?? lol what about it",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 1,
+                "variants": [
+                  {
+                    "text": "omg it's on the coat hook in our bunkhouse?? been there since last night, idk who brought it in",
+                    "factIds": ["scarf-on-hook-saturday"]
+                  },
+                  {
+                    "text": "it's hanging on our bunkhouse hook!! since saturday night. should i give it back lol",
+                    "factIds": ["scarf-on-hook-saturday"]
+                  }
+                ]
+              },
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "it was on our bunkhouse hook from saturday night and STILL there when i came in at like 9 on sunday!! so how was it in the woodshed??",
+                    "factIds": ["scarf-on-bunkhouse-hook"]
+                  },
+                  {
+                    "text": "wait that scarf was on our coat hook saturday night thru at least 9pm sunday 😭 i saw it",
+                    "factIds": ["scarf-on-bunkhouse-hook"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "headphones",
+            "description": "how Pip sleeps: noise-cancelling headphones and rain sounds",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "noise cancelling headphones + rain sounds, i was out all friday night and heard NOTHING lol",
+                "factIds": ["pip-slept-headphones"]
+              },
+              {
+                "text": "i sleep w headphones in!! friday night i didn't hear or see a thing 😴",
+                "factIds": ["pip-slept-headphones"]
+              }
+            ]
+          },
+          {
+            "id": "about-colette",
+            "description": "Colette, Pip's bunkmate and baking teacher",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "colette"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "colette is literally the best, she's teaching me laminated dough ✨",
+                "factIds": []
+              },
+              {
+                "text": "colette!! she calls me sweetheart and gives me butter tips 😭",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 1,
+                "variants": [
+                  {
+                    "text": "colette's the best!! and she def didn't do it, she just got up for warm milk friday, i saw the mug",
+                    "factIds": ["pip-saw-milk-mug"]
+                  },
+                  {
+                    "text": "it wasn't colette!! she came back w her warm milk like five min after she left friday, i saw",
+                    "factIds": ["pip-saw-milk-mug"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "about-hattie",
+            "description": "Hattie, the host, Pip's coworker at the library",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "hattie"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "hattie's my work bestie from the library!! she's so sad about the tin 😭",
+                "factIds": []
+              },
+              {
+                "text": "hattie is the sweetest, she invited me even tho i can't bake lol",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "about-theo",
+            "description": "Theo, Hattie's grumpy brother",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "theo"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "theo is SO grumpy lol but kinda funny",
+                "factIds": []
+              },
+              {
+                "text": "theo told me snickerdoodles are \"a cry for help\" 😭",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "about-walt",
+            "description": "Walt, the old family friend",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "walt"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "walt is a sweetheart, he calls me \"young lady\" 😭",
+                "factIds": []
+              },
+              {
+                "text": "walt!! he doesn't talk much but he's so nice",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "about-nell",
+            "description": "Nell, the baking blogger",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "nell"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "nell has a baking blog w like 40k followers?? iconic",
+                "factIds": []
+              },
+              {
+                "text": "nell knows EVERYTHING about everyone lol",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "the-bake-off",
+            "description": "the lodge bake-off and Pip's first ever entry",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "it's my first bake-off ever!! i'm making snickerdoodles bc colette says start simple lol",
+                "factIds": []
+              },
+              {
+                "text": "snickerdoodles!! i will not win but i will have fun ✨",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "night-saturday",
+            "description": "what happened around the lodge on Saturday night: voices on the bunkhouse porch, a light, the cake stand",
+            "subject": {
+              "_tag": "NightEvent",
+              "night": 1
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "hasn't happened yet lol",
+                "factIds": []
+              },
+              {
+                "text": "ask me tomorrow!!",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 1,
+                "variants": [
+                  {
+                    "text": "colette and i were chatting on the porch around 10:30! that's prob the voices walt heard lol",
+                    "factIds": ["pip-porch-with-colette"]
+                  },
+                  {
+                    "text": "oh the voices on the porch were me and colette, like 10:30!! nothing spooky",
+                    "factIds": ["pip-porch-with-colette"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "night-sunday",
+            "description": "what happened on Sunday night and the tin turning up on Monday morning",
+            "subject": {
+              "_tag": "NightEvent",
+              "night": 2
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "ask me monday!!",
+                "factIds": []
+              },
+              {
+                "text": "idk yet lol",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "the tin turned up in the woodshed in theo's scarf?? but that scarf was on OUR hook saturday night till at least 9 sunday 😭",
+                    "factIds": ["tin-found-woodshed", "scarf-on-bunkhouse-hook"]
+                  },
+                  {
+                    "text": "walt found it in the woodshed wrapped in theo's scarf but like. that scarf was on our bunkhouse hook til 9pm sunday at least??",
+                    "factIds": ["tin-found-woodshed", "scarf-on-bunkhouse-hook"]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "pressed": {
+          "variants": [
+            {
+              "text": "me?? i was asleep w headphones in i swear 😭",
+              "factIds": ["pip-slept-headphones"]
+            },
+            {
+              "text": "noooo i was asleep all friday night, headphones on, i didn't see anything!!",
+              "factIds": ["pip-slept-headphones"]
+            }
+          ],
+          "afterNight": [
+            {
+              "night": 1,
+              "variants": [
+                {
+                  "text": "ok ok ok. colette asked me last night to say i saw her come back with the milk. i was asleep w my headphones, i didn't see anything 😭 she said it'd help hattie stop worrying??",
+                  "factIds": [
+                    "colette-asked-pip-to-vouch",
+                    "pip-slept-headphones"
+                  ]
+                },
+                {
+                  "text": "fine!! colette asked me saturday night to tell everyone i saw her come back w warm milk. i was asleep w headphones on, i never saw a mug 😭",
+                  "factIds": [
+                    "colette-asked-pip-to-vouch",
+                    "pip-slept-headphones"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "dodges": [
+          "omg idk 😭",
+          "no clue lol ask hattie",
+          "i literally have no idea",
+          "hmm idk!!",
+          "that's above my pay grade lol",
+          "ask colette, she knows everything"
+        ],
+        "greetings": ["hiii detective!! ✨", "omg hi"],
+        "thanks": ["ofc!! ✨", "np lol"],
+        "goodnight": "headphones on, goodnight!! ask me tomorrow ✨"
+      }
+    },
+    {
+      "id": "walt",
+      "name": "Walt Kessler",
+      "role": "Nana Ingrid's friend of fifty years",
+      "voice": "Old-fashioned and sparing. Complete sentences, proper punctuation, no emoji, never more than two sentences.",
+      "temperament": "guarded",
+      "patience": {
+        "perDay": 5,
+        "costs": {
+          "neutral": 1,
+          "friendly": 0,
+          "rude": 3,
+          "accusatory": 3,
+          "repeated": 2
+        }
+      },
+      "bedtime": "21:30",
+      "knows": [
+        "tin-seen-at-dessert",
+        "colette-plum-cake-wins",
+        "walt-saw-light-0140",
+        "walt-thought-theo",
+        "walt-heard-pans",
+        "walt-heard-porch-voices",
+        "walt-nana-gave-colette-card",
+        "tin-found-woodshed"
+      ],
+      "claims": [],
+      "dictionary": {
+        "topics": [
+          {
+            "id": "whereabouts-friday",
+            "description": "where Walt was on Friday night, the night the tin went missing, in his room off the great room",
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 0
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "In bed by half past ten, in the little room off the great room. Around twenty to two I saw a small light cross toward the back door.",
+                "factIds": ["walt-saw-light-0140"]
+              },
+              {
+                "text": "Abed at half past ten, downstairs. I woke near twenty to two and saw a small light going toward the back door.",
+                "factIds": ["walt-saw-light-0140"]
+              }
+            ]
+          },
+          {
+            "id": "the-light",
+            "description": "the small light Walt saw crossing the great room at 1:40am on Friday, and who he took it for",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "A small light, about twenty to two, heading for the back door. I took it for Theo; I had heard him at the pans earlier.",
+                "factIds": [
+                  "walt-saw-light-0140",
+                  "walt-thought-theo",
+                  "walt-heard-pans"
+                ]
+              },
+              {
+                "text": "Twenty to two, a little light crossing to the back door. I assumed it was Theo, after all that clatter in the kitchen.",
+                "factIds": [
+                  "walt-saw-light-0140",
+                  "walt-thought-theo",
+                  "walt-heard-pans"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "kitchen-noise",
+            "description": "the pans Walt heard clattering in the kitchen after midnight on Friday",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "Pans, after midnight. Somebody was making a poor job of something in the kitchen.",
+                "factIds": ["walt-heard-pans"]
+              },
+              {
+                "text": "I heard pans clattering in the kitchen past midnight. I did not get up to look.",
+                "factIds": ["walt-heard-pans"]
+              }
+            ]
+          },
+          {
+            "id": "whereabouts-saturday",
+            "description": "where Walt was on Saturday night and what he heard from his window",
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 1
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Tonight I shall be asleep by half past nine, God willing.",
+                "factIds": []
+              },
+              {
+                "text": "In bed early, detective. Ask me in the morning.",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 1,
+                "variants": [
+                  {
+                    "text": "Abed, but awake; my knees. Around half past ten I heard two women talking low on the bunkhouse porch.",
+                    "factIds": ["walt-heard-porch-voices"]
+                  },
+                  {
+                    "text": "I lay awake. Two women were talking quietly on the bunkhouse porch, half past ten or near it.",
+                    "factIds": ["walt-heard-porch-voices"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "whereabouts-sunday",
+            "description": "where Walt was on Sunday night and his early walk to the woodshed on Monday",
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 2
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Ask me tomorrow, detective.",
+                "factIds": []
+              },
+              {
+                "text": "I shall be asleep. Ask me in the morning.",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "Asleep by half past nine. Up at half six to split kindling, and that is when I found the tin.",
+                    "factIds": ["tin-found-woodshed"]
+                  },
+                  {
+                    "text": "In bed early. At twenty to seven I found Ingrid's tin on the chopping block, wrapped in Theo's scarf.",
+                    "factIds": ["tin-found-woodshed"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "the-tin",
+            "description": "the missing recipe tin, Ingrid's tin, and when Walt last saw it",
+            "subject": {
+              "_tag": "Item"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Ingrid kept that tin for sixty years. Hattie had it out at dessert, then on the mantel.",
+                "factIds": ["tin-seen-at-dessert"]
+              },
+              {
+                "text": "I last saw it at dessert on Friday, in Hattie's hands. Then it went on the mantel.",
+                "factIds": ["tin-seen-at-dessert"]
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "I found it on the woodshed chopping block at twenty to seven this morning. It was wrapped in Theo's red scarf.",
+                    "factIds": ["tin-found-woodshed"]
+                  },
+                  {
+                    "text": "It was on the chopping block when I went out for kindling, wrapped in Theo's scarf. I put it in Hattie's hands.",
+                    "factIds": ["tin-found-woodshed"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "ingrid",
+            "description": "Nana Ingrid herself, Walt's late friend of fifty years",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Ingrid and I were friends for fifty years. Best baker in three counties.",
+                "factIds": []
+              },
+              {
+                "text": "I miss her every day, detective. That is all I will say.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "plum-kuchen",
+            "description": "Ingrid's plum kuchen recipe and who she ever gave a copy to",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "Ingrid copied that plum kuchen card out for Colette, years ago, at her kitchen table. I watched her do it, and Colette promised to keep it private.",
+                "factIds": ["walt-nana-gave-colette-card"]
+              },
+              {
+                "text": "She gave one copy of the plum kuchen, to Colette, on a promise to keep it to herself. I was sitting right there.",
+                "factIds": ["walt-nana-gave-colette-card"]
+              }
+            ]
+          },
+          {
+            "id": "the-bake-off",
+            "description": "the lodge bake-off and who wins it every year",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Colette wins it every year with her plum cake. Three years now.",
+                "factIds": ["colette-plum-cake-wins"]
+              },
+              {
+                "text": "I do not judge, I eat. Colette has taken it three years running with that plum cake.",
+                "factIds": ["colette-plum-cake-wins"]
+              }
+            ]
+          },
+          {
+            "id": "the-woodshed",
+            "description": "the woodshed where Walt splits kindling every morning",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "I split kindling there every morning at half six. Nobody else bothers.",
+                "factIds": []
+              },
+              {
+                "text": "It is a woodshed, detective. I keep my axe there.",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "I found Ingrid's tin there this morning, on the chopping block, wrapped in Theo's scarf.",
+                    "factIds": ["tin-found-woodshed"]
+                  },
+                  {
+                    "text": "At twenty to seven, on the chopping block: the tin, in Theo's red scarf.",
+                    "factIds": ["tin-found-woodshed"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "his-phone",
+            "description": "Walt's old flip phone that never joins the Wi-Fi",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "It is a flip phone. It does not do the Wi-Fi.",
+                "factIds": []
+              },
+              {
+                "text": "My telephone is older than your log, detective. You will not find me in it.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "about-hattie",
+            "description": "Hattie, Ingrid's granddaughter and the host",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "hattie"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Ingrid's granddaughter. She has Ingrid's hands, and her worrying.",
+                "factIds": []
+              },
+              {
+                "text": "Hattie is a good girl. This has hit her hard.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "about-theo",
+            "description": "Theo, Hattie's restless younger brother",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "theo"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Theo is restless. Ingrid thought the world of him.",
+                "factIds": []
+              },
+              {
+                "text": "A sharp tongue, but a decent young man.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "about-colette",
+            "description": "Colette, Hattie's neighbor and the bake-off champion",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "colette"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Colette lives next door to Hattie. Ingrid was fond of her.",
+                "factIds": []
+              },
+              {
+                "text": "Colette and Ingrid baked together, years back.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "about-pip",
+            "description": "Pip, the cheerful young lady from the library",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "pip"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "The young lady from the library. Cheerful.",
+                "factIds": []
+              },
+              {
+                "text": "Pip makes the coffee too weak. Otherwise, a delight.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "about-nell",
+            "description": "Nell, the blogger",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "nell"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Miss Brannigan writes things on the internet. I say little near her.",
+                "factIds": []
+              },
+              {
+                "text": "She asks a great many questions, that one.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "night-saturday",
+            "description": "what happened around the lodge on Saturday night: voices on the bunkhouse porch",
+            "subject": {
+              "_tag": "NightEvent",
+              "night": 1
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "It has not happened yet, detective.",
+                "factIds": []
+              },
+              {
+                "text": "Ask me in the morning.",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 1,
+                "variants": [
+                  {
+                    "text": "Two women talking low on the bunkhouse porch, half past ten or so.",
+                    "factIds": ["walt-heard-porch-voices"]
+                  },
+                  {
+                    "text": "I heard voices on the bunkhouse porch around half past ten. Two women, quietly.",
+                    "factIds": ["walt-heard-porch-voices"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "night-sunday",
+            "description": "what happened on Sunday night and the tin Walt found on Monday morning",
+            "subject": {
+              "_tag": "NightEvent",
+              "night": 2
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Ask me in the morning.",
+                "factIds": []
+              },
+              {
+                "text": "It has not happened yet.",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "I found the tin on the chopping block, wrapped in Theo's scarf. I put it in Hattie's hands.",
+                    "factIds": ["tin-found-woodshed"]
+                  },
+                  {
+                    "text": "Twenty to seven, the woodshed, the tin in Theo's red scarf. That is what I know.",
+                    "factIds": ["tin-found-woodshed"]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "pressed": {
+          "variants": [
+            {
+              "text": "I have known that tin longer than you have been alive, detective.",
+              "factIds": []
+            },
+            {
+              "text": "I would not take a teaspoon from Ingrid's kitchen.",
+              "factIds": []
+            }
+          ]
+        },
+        "dodges": [
+          "I could not say.",
+          "Ask Hattie.",
+          "That is not my business.",
+          "I did not see.",
+          "I have nothing to add."
+        ],
+        "greetings": ["Good day, detective."],
+        "thanks": ["You are welcome."],
+        "goodnight": "I am going to bed. Ask me in the morning."
+      }
+    },
+    {
+      "id": "nell",
+      "name": "Nell Brannigan",
+      "role": "Hattie's friend from culinary school, a baking blogger",
+      "voice": "Breathless gossip. Opens with \"ok so\", loves dashes and *asterisks* for emphasis, drops a ☕ when she has tea to spill.",
+      "temperament": "gossip",
+      "patience": {
+        "perDay": 9,
+        "costs": {
+          "neutral": 1,
+          "friendly": 0,
+          "rude": 2,
+          "accusatory": 2,
+          "repeated": 1
+        }
+      },
+      "bedtime": "01:00",
+      "knows": [
+        "tin-seen-at-dessert",
+        "hattie-planned-reading",
+        "colette-went-pale",
+        "colette-plum-cake-wins",
+        "nell-in-room-friday",
+        "nell-heard-theo-door",
+        "nell-broke-cake-stand",
+        "tin-found-woodshed"
+      ],
+      "claims": ["nell-stayed-in-saturday"],
+      "secret": "nell-broke-cake-stand",
+      "dictionary": {
+        "topics": [
+          {
+            "id": "whereabouts-friday",
+            "description": "where Nell was on Friday night, the night the tin went missing, up in her room",
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 0
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "up in my room till like 2 editing photos for the blog — totally normal night for me",
+                "factIds": ["nell-in-room-friday"]
+              },
+              {
+                "text": "ok so I was in my room editing photos until about 2. glamorous, I know",
+                "factIds": ["nell-in-room-friday"]
+              }
+            ]
+          },
+          {
+            "id": "theos-door",
+            "description": "the doors Nell heard upstairs on Friday night: Theo's door opening after midnight and closing later",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "ok so *don't* quote me but Theo's door opened around 12:15 and didn't close again till about 1:20 ☕",
+                "factIds": ["nell-heard-theo-door"]
+              },
+              {
+                "text": "Theo's door — open at quarter past twelve, shut again around 1:20. my room's right next to his, I hear *everything*",
+                "factIds": ["nell-heard-theo-door"]
+              }
+            ]
+          },
+          {
+            "id": "whereabouts-saturday",
+            "description": "where Nell was on Saturday night",
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 1
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "tonight? blogging, obviously",
+                "factIds": []
+              },
+              {
+                "text": "in my room with my laptop, where else",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 1,
+                "variants": [
+                  {
+                    "text": "in my room all night, didn't leave the lodge once — why, what did you hear?",
+                    "factIds": ["nell-stayed-in-saturday"]
+                  },
+                  {
+                    "text": "ok so I never left the lodge Saturday night. room, laptop, face mask. the end",
+                    "factIds": ["nell-stayed-in-saturday"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "whereabouts-sunday",
+            "description": "where Nell was on Sunday night, the last night",
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 2
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "ask me tomorrow, I'll have *so* much tea",
+                "factIds": []
+              },
+              {
+                "text": "Sunday? hasn't happened yet babe",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "in my room editing. I heard nothing, which is honestly the most annoying part",
+                    "factIds": []
+                  },
+                  {
+                    "text": "ok so I slept through the *one* night something actually happened",
+                    "factIds": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "the-tin",
+            "description": "the missing recipe tin and when Nell last saw it",
+            "subject": {
+              "_tag": "Item"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Hattie read cards out of it at dessert — *so* cute — then put it on the mantel",
+                "factIds": ["tin-seen-at-dessert"]
+              },
+              {
+                "text": "last saw it at dessert Friday, Hattie reading cards, then up on the mantel",
+                "factIds": ["tin-seen-at-dessert"]
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "and it turned up in the woodshed! in *Theo's* scarf! I mean ☕☕",
+                    "factIds": ["tin-found-woodshed"]
+                  },
+                  {
+                    "text": "ok so Walt found it on the chopping block wrapped in Theo's scarf. you can't make this up",
+                    "factIds": ["tin-found-woodshed"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "dessert-friday",
+            "description": "what happened at dessert on Friday when Hattie mentioned the plum kuchen card, and who reacted",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "ok so when Hattie said she'd read the plum kuchen card to open the bake-off, Colette went *white*. like, sheet white ☕",
+                "factIds": ["hattie-planned-reading", "colette-went-pale"]
+              },
+              {
+                "text": "Hattie announced she'd read Nana's plum kuchen card at the bake-off and Colette went pale as pastry. I *noticed*",
+                "factIds": ["hattie-planned-reading", "colette-went-pale"]
+              }
+            ]
+          },
+          {
+            "id": "cake-stand",
+            "description": "Hattie's milk-glass cake stand that went missing on Saturday",
+            "subject": {
+              "_tag": "Secret"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "the milk-glass one? gorgeous. why do you ask",
+                "factIds": []
+              },
+              {
+                "text": "Hattie's cake stand? I mean — it's a cake stand?",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 1,
+                "variants": [
+                  {
+                    "text": "ok. *please* don't tell Hattie. I knocked it off the counter Saturday afternoon and it shattered. I hid the pieces under the tarp in the woodshed. I already ordered her a new one!!",
+                    "factIds": ["nell-broke-cake-stand"]
+                  },
+                  {
+                    "text": "fine — I broke it. Saturday afternoon, elbow, counter, *smash*. the pieces are under the tarp in the woodshed. I'm replacing it, I swear",
+                    "factIds": ["nell-broke-cake-stand"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "the-woodshed",
+            "description": "Nell and the woodshed: whether she went out to it at night",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "never been, it's full of spiders apparently",
+                "factIds": []
+              },
+              {
+                "text": "the woodshed? that's Walt's domain",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 1,
+                "variants": [
+                  {
+                    "text": "the woodshed? at night? in *these* shoes? I never left the lodge Saturday night",
+                    "factIds": ["nell-stayed-in-saturday"]
+                  },
+                  {
+                    "text": "ok so no — I didn't leave the lodge at all Saturday night, so not the woodshed",
+                    "factIds": ["nell-stayed-in-saturday"]
+                  }
+                ]
+              },
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "I never left the lodge Saturday night, so don't look at me — and now the tin turned up out there?",
+                    "factIds": ["nell-stayed-in-saturday", "tin-found-woodshed"]
+                  },
+                  {
+                    "text": "I was inside all Saturday night. but Walt finding the tin out there in Theo's scarf — *chef's kiss* for drama",
+                    "factIds": ["nell-stayed-in-saturday", "tin-found-woodshed"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "the-bake-off",
+            "description": "the lodge bake-off and Colette's winning streak",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Colette's won three years straight with that plum cake — I've *begged* her for the recipe for the blog",
+                "factIds": ["colette-plum-cake-wins"]
+              },
+              {
+                "text": "ok so the plum cake has won three years in a row and Colette will *not* share the recipe ☕",
+                "factIds": ["colette-plum-cake-wins"]
+              }
+            ]
+          },
+          {
+            "id": "her-blog",
+            "description": "Nell's baking blog and whether she will write about the weekend",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "the blog's *Crumb & Gossip* — 40k followers — and no, I won't post about the tin. probably.",
+                "factIds": []
+              },
+              {
+                "text": "I'm not writing about this. ok I'm *drafting*. that's different",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "about-hattie",
+            "description": "Hattie, the host, Nell's friend from culinary school",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "hattie"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Hattie and I go back to culinary school — she was the only one who never burned the roux",
+                "factIds": []
+              },
+              {
+                "text": "Hattie is an *angel* and she does not deserve this",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "about-theo",
+            "description": "Theo, Hattie's grumpy brother",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "theo"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Theo? grumpy, cute, can't bake. that's the whole profile",
+                "factIds": []
+              },
+              {
+                "text": "ok so Theo is a mystery wrapped in a scowl",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "about-colette",
+            "description": "Colette, the neighbor and three-time champion",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "colette"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Colette's the reigning champ. three ribbons. *very* protective of that plum cake",
+                "factIds": ["colette-plum-cake-wins"]
+              },
+              {
+                "text": "three years running with the plum cake and she guards that recipe like the crown jewels ☕",
+                "factIds": ["colette-plum-cake-wins"]
+              }
+            ]
+          },
+          {
+            "id": "about-pip",
+            "description": "Pip, the young guest from the library",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "pip"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Pip's adorable, she asked me if \"fold in\" means literally fold",
+                "factIds": []
+              },
+              {
+                "text": "Pip is a golden retriever in a cardigan",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "about-walt",
+            "description": "Walt, Nana Ingrid's old friend",
+            "subject": {
+              "_tag": "Guest",
+              "guest": "walt"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Walt was Nana Ingrid's best friend — honestly I think he was a *little* in love with her ☕",
+                "factIds": []
+              },
+              {
+                "text": "Walt says about four words a day and I hang on every one",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "night-saturday",
+            "description": "what happened around the lodge on Saturday night",
+            "subject": {
+              "_tag": "NightEvent",
+              "night": 1
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "ask me tomorrow!",
+                "factIds": []
+              },
+              {
+                "text": "hasn't happened yet — but I'll be listening",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 1,
+                "variants": [
+                  {
+                    "text": "I was in my room the whole time, I missed *everything*",
+                    "factIds": ["nell-stayed-in-saturday"]
+                  },
+                  {
+                    "text": "ok so I never left the lodge last night and *still* missed all the drama",
+                    "factIds": ["nell-stayed-in-saturday"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "night-sunday",
+            "description": "what happened on Sunday night and the tin turning up on Monday morning",
+            "subject": {
+              "_tag": "NightEvent",
+              "night": 2
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "ask me Monday",
+                "factIds": []
+              },
+              {
+                "text": "stay tuned ☕",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "Walt found the tin in the woodshed wrapped in *Theo's* scarf. the blog post writes itself ☕",
+                    "factIds": ["tin-found-woodshed"]
+                  },
+                  {
+                    "text": "ok so: tin, woodshed, Theo's scarf. I'm speechless. almost",
+                    "factIds": ["tin-found-woodshed"]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "pressed": {
+          "variants": [
+            {
+              "text": "me?? I was in my room editing photos all Friday night. I'd never steal from Hattie — I'd just *write* about it",
+              "factIds": ["nell-in-room-friday"]
+            },
+            {
+              "text": "ok rude. I was in my room all Friday night editing photos",
+              "factIds": ["nell-in-room-friday"]
+            }
+          ],
+          "afterNight": [
+            {
+              "night": 1,
+              "variants": [
+                {
+                  "text": "ok fine, if this is about the cake stand — I broke it. it was an accident. that's ALL I did",
+                  "factIds": ["nell-broke-cake-stand"]
+                },
+                {
+                  "text": "fine! I broke the cake stand and hid the pieces in the woodshed. I did *not* take the tin",
+                  "factIds": ["nell-broke-cake-stand"]
+                }
+              ]
+            }
+          ]
+        },
+        "dodges": [
+          "ok so — no idea",
+          "ask Hattie, babe",
+          "I wish I knew, honestly",
+          "hmm, not my tea to spill",
+          "no clue — and I *always* have a clue",
+          "pass ☕"
+        ],
+        "greetings": ["ok so hi!!", "detective! tell me everything"],
+        "thanks": ["anytime babe", "you owe me a scoop"],
+        "goodnight": "ok so I'm going to bed — ask me tomorrow ☕"
+      }
+    }
+  ]
+}

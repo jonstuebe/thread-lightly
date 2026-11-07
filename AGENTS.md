@@ -16,7 +16,7 @@ See `README.md` for the layout and how chat pacing works.
 - **Time lives in Commands.** Timers (`WaitForBeat`, `WaitToReconnect`, `WaitForLongPress`) are Commands. `update` never reads the clock.
 - **Stale results are ignored.** Socket messages carry `gameId` and `attempt`; pacing timers carry `playbackEpoch`; long-press timers carry `pressId`. Drop anything that doesn't match the Model.
 - **The socket is a ManagedResource.** `src/socket.ts` opens it while `Connection` is `Connecting` or `Open`; the `caseSocket` subscription reads it. Send with the `SendToServer` Command.
-- **No Anthropic API at runtime.** Guests run on Workers AI. Cases are generated locally by a Claude Code skill, never by the Worker.
+- **No Anthropic API at runtime.** Guests run on Workers AI. Cases are generated locally by the `generate-case` skill (`.agents/skills/generate-case`), never by the Worker. Check a case with `pnpm cases:check`.
 - **`shared/` depends only on `effect`**, because the Worker imports it too. It holds the case schema, the reply rules, the solvability checker and the WebSocket protocol for the detective redesign (`docs/design.md`).
 - **The detective game's server** lives in `worker/game/` (pure rules plus AI services) and `worker/case-object.ts` (the Durable Object shell). Test rules through `handle` in `worker/game/engine.test.ts` with the fake `Router` and `SmallTalk`; never call Workers AI from tests.
 - **Cases hold the answer.** `cases/*.json` and `shared/case.ts` data must never reach the client bundle. The client imports `shared/protocol.ts` only.

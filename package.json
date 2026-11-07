@@ -7,10 +7,11 @@
     "build": "vite build",
     "preview": "vite build && vite preview",
     "deploy": "vite build && wrangler deploy",
-    "typecheck": "tsc --noEmit && tsc --noEmit -p worker",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p worker && tsc --noEmit -p scripts",
     "format": "oxfmt",
     "test": "vitest run",
-    "lint": "oxlint src && effect-tsgo patch --no-typescript --oxlint && oxlint --config .oxlintrc.effect.json --deny-warnings src"
+    "lint": "oxlint src && effect-tsgo patch --no-typescript --oxlint && oxlint --config .oxlintrc.effect.json --deny-warnings src",
+    "cases:check": "tsx scripts/check-cases.ts"
   },
   "dependencies": {
     "@effect/platform-browser": "4.1.0",
@@ -27,11 +28,13 @@
     "@foldkit/oxlint-plugin": "0.15.4",
     "@foldkit/vite-plugin": "0.29.0",
     "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^26.6.6",
     "happy-dom": "^20.14.5",
     "oxfmt": "^0.66.0",
     "oxlint": "1.85.0",
     "oxlint-tsgolint": "7.0.2003",
     "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.15",
     "typescript": "^7.0.2",
     "vite": "^8.3.1",
     "vitest": "^5.0.2",
