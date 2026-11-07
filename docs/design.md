@@ -40,50 +40,49 @@ The lodge's Wi-Fi log stays as the one source of hard evidence. It's a pinned th
 
 ## 3. Case schema
 
-A case is one JSON document, validated with an Effect Schema. It lives only in the Durable Object. Sketch:
+A case is one JSON document in `cases/`, decoded with the Effect Schema in `shared/case.ts` (the source of truth; this is a summary). It lives only in the Worker and the Durable Object.
 
 ```ts
 Case {
   id
-  setting: { title, premise, missingItem }           // "Margot's grandmother's silver brooch"
-  guests: Guest[]                                    // 6
+  setting: { title, premise, missingItem, accessPoints }
+  guests: Guest[]                  // 4–8; generation aims for 6
   thief: GuestId
-  timeline: Event[]                                  // what really happened, minute by minute
-  facts: Fact[]                                      // every checkable statement in the case
-  dictionaries: Record<GuestId, TopicEntry[]>        // DM replies (section 5)
-  groupBeats: GroupBeat[]                            // group chat lines (section 6)
-  nightMoves: NightMove[]                            // what the thief can do each night (section 7)
-  contradictions: Contradiction[]                    // the ways the case can be proved (section 8)
-  wifiLog: Record<1|2|3, WifiEntry[]>                // published each morning (section 2)
+  theftFact: FactId                // "Dale took the brooch". Only the timeline may carry it.
+  timeline: TimelineEvent[]        // what really happened, revealed at the end
+  facts: Fact[]                    // every checkable statement in the case
+  groupBeats: GroupBeat[]          // section 6
+  nightMoves: NightMove[]          // section 7
+  contradictions: Contradiction[]  // section 8
+  wifiLog: WifiEntry[]             // section 2
 }
 
-WifiEntry { id, time, guest, event: 'joined' | 'left', accessPoint, factIds }
-
-Fact {
-  id
-  text                       // "Dale's phone was online at 11:40pm"
-  isTrue: boolean            // a lie is a Fact with isTrue = false
-  about: GuestId[]
-  concernsTheft: boolean     // true = it bears on the theft timeline
-  destroyableOnNight?: 1 | 2 | 3
-}
+Fact { id, text, isTrue, about: GuestId[], concernsTheft }
 
 Guest {
-  id, name, role             // "Dale, Margot's brother-in-law"
-  traits: Trait[]            // drives tone and patience (section 4)
-  patience: { perDay, costs }
-  bedtime                    // "10:30pm"
-  knows: FactId[]            // what they can truthfully say
-  claims: FactId[]           // what they'll say even if it's false: alibis, cover stories
-  secret?: FactId            // innocents' unrelated secret (affair, debt, smoking)
+  id, name, role, voice
+  temperament                      // section 4
+  patience: { perDay, costs: { neutral, friendly, rude, accusatory, repeated } }
+  bedtime                          // "22:30"
+  knows: FactId[]                  // true facts they can say
+  claims: FactId[]                 // what they say even if it's false
+  secret?: FactId                  // innocents only
+  dictionary: { topics, pressed, dodges, greetings, thanks, goodnight }   // section 5
 }
+
+WifiEntry { id, night, time, guest, event: 'joined' | 'left', accessPoint, factIds }
+TimelineEvent { night, time, text, factIds }
 ```
+
+**Nights and days.** Night 0 is the night of the theft, before day 1. The thief moves on nights 1 and 2. Day 3 ends with the arrest, so there is no night 3. The Wi-Fi log for night N is published on the morning of day N+1.
 
 Rules:
 
 - **Guests know only their own facts.** No guest's data holds the full timeline.
 - **The thief has a cover story.** It's a set of false `claims`, with at least one flaw a true fact can expose.
 - **Innocents can lie too, about their secret.** Their lies have `concernsTheft: false`. So "find the liar" isn't enough; you have to find the person lying about the theft.
+
+The hand-written case `cases/silver-brooch.json` (four guests) is the reference case for tests and for building the server and client.
 
 ## 4. Guests
 
@@ -128,24 +127,32 @@ Lessons for the dictionary and the case-generation skill:
 ### Tier 1: dictionary hit (most messages)
 
 ```ts
-TopicEntry {
-  topic                       // "whereabouts-night-1", "the-display-case", "relationship-with-margot"
+Topic {
+  id                          // "whereabouts-friday", "the-display-case", "about-margot"
+  description                 // Clef's criteria for this topic
+  subject                     // Whereabouts(night) | Item | Guest(guest) | NightEvent(night) | Secret | Other
+  visibility                  // 'public' | 'dmOnly'
   variants: Reply[]           // 2-3, so a repeated question gets a different wording
-  byState?: {                 // optional overrides
-    lowPatience?: Reply[]
-    afterNight?: Record<1|2|3, Reply[]>
-    ifFactDestroyed?: Reply[]
-  }
+  afterNight?: { night, variants }[]
+  ifFactDestroyed?: Reply[]
+  lowPatience?: Reply[]
 }
 
 Reply { text, factIds: FactId[] }
 ```
 
+Which replies a topic gives on a given day is decided by `activeReplies` in `shared/replies.ts`, which the Durable Object and the checker share:
+
+1. Use the latest `afterNight` override whose night has passed, or else `variants`. A topic about a night that hasn't happened yet answers from `variants` ("ask me tomorrow").
+2. If those replies carry a destroyed fact, use `ifFactDestroyed`, or else drop the replies that carry it. No replies left means a dodge.
+
+The guest's `pressed` replies follow the same rules.
+
 Every reply carries its fact IDs from generation time. The Durable Object always knows exactly what a message revealed, with no model involved.
 
 Each guest gets roughly 15–25 topics. They cover:
 
-- where they were and when
+- where they were on each night
 - each other guest
 - the missing item
 - each night's events
@@ -172,12 +179,12 @@ The group chat is AI-driven, but most of it is known when the case is generated:
 
 ```ts
 GroupBeat {
-  trigger: { kind: 'morning', day } | { kind: 'nightEvent', moveId } | { kind: 'idle', day }
+  trigger: Morning(day) | Idle(day)
   lines: { guest, text, factIds }[]
 }
 ```
 
-- **Morning and night-event beats** play from the script, with typing indicators and reading-speed pacing as today.
+- **Morning beats** play from the script and announce the night's events, with typing indicators and reading-speed pacing as today.
 - **Idle chatter** plays occasionally while you're in other threads, so the group chat feels alive.
 - **When you post in the group chat**, Clef picks zero to two guests who would plausibly answer, from their traits and mood. Then each one goes through the section 5 engine using that guest's **public** topic list.
 
@@ -187,13 +194,20 @@ We could also have guests repeat what you DMed them. That would make DMs a socia
 
 ## 7. Thief night moves
 
-Each night the thief makes one move, chosen at generation time (so the checker can verify it) or picked by the Durable Object from a pre-validated set:
+On nights 1 and 2 the thief makes exactly one move, fixed when the case is generated so the checker can verify it. Letting the Durable Object pick from a pre-validated set is a possible later change.
 
-- **Destroy.** One fact becomes unavailable. Replies that would reveal it switch to their `ifFactDestroyed` variant. If you already saved a message containing that fact, the evidence stays good. Asking early pays off.
+```ts
+NightMove =
+  | Destroy { night, fact }
+  | Plant   { night, fact, disprovedBy }
+  | Coach   { night, guest, fact, tellFact, disprovedBy }
+```
+
+- **Destroy.** One fact becomes unavailable. It has to be physical evidence, not a Wi-Fi log entry. Replies that would reveal it switch to their `ifFactDestroyed` variant. If you already saved a message containing that fact, the evidence stays good. Asking early pays off.
 - **Plant.** A false fact pointing at an innocent appears, such as "Priya's coat pocket had a velvet pouch". There's always a true fact that disproves it.
 - **Coach.** The thief gets another guest to back up their alibi. That guest's dictionary gains a false claim. The coached guest has a tell: a reply under pressure in which they admit "Dale asked me to say that".
 
-Each move is announced vaguely in the morning beat ("someone was in the kitchen at 2am"), so you know something happened without knowing what.
+The coached guest's new claim lives in their topics' `afterNight` replies, and the tell in their `pressed` replies' `afterNight`. Each move is announced vaguely in the morning beat ("someone was in the kitchen at 2am"), so you know something happened without knowing what.
 
 ## 8. Evidence and arrest
 
@@ -222,11 +236,11 @@ Contradiction {
 
 ### Endings
 
-| Arrested | Evidence | Ending |
-| --- | --- | --- |
-| The thief | A contradiction about the theft | **Case closed.** Full reveal of the timeline. |
-| The thief | A contradiction about something else, or none | **They walk.** Right person, the case doesn't hold. |
-| An innocent | Anything | **Wrong person.** The thief leaves Monday with the item. |
+| Arrested    | Evidence                                      | Ending                                                   |
+| ----------- | --------------------------------------------- | -------------------------------------------------------- |
+| The thief   | A contradiction about the theft               | **Case closed.** Full reveal of the timeline.            |
+| The thief   | A contradiction about something else, or none | **They walk.** Right person, the case doesn't hold.      |
+| An innocent | Anything                                      | **Wrong person.** The thief leaves Monday with the item. |
 
 Every ending reveals the true timeline, so you learn what you missed.
 
@@ -256,12 +270,16 @@ The prompt may borrow tropes from classic mysteries, such as the alibi with a ga
 
 The checker is pure Effect code in `shared/`. A generated case is used only if every check passes:
 
-1. **Schema valid.** Every ID referenced exists.
-2. **Thief is provable.** At least one contradiction with `concernsTheft: true` stays reachable after every possible night move. Its claim and proof both appear in some reply, and not only in `dmOnly` replies from a guest whose bedtime makes them unreachable.
-3. **No false proof against innocents.** Every planted or coached fact is disproved by a reachable true fact.
-4. **No leaks.** No reply from a non-thief reveals a fact that guest doesn't know, and no reply states the thief's identity.
-5. **Traits aren't a tell.** The thief's traits aren't unique among the guests, and their patience is within the normal range.
-6. **Coverage.** Every guest has a minimum set of topics: whereabouts each night, the item, and each other guest.
+1. **Schema and references.** The JSON decodes, every ID referenced exists, and no ID is defined twice.
+2. **Contradictions are sound.** Each claim is false and one of the suspect's claims, each proof is true, and both can actually be found.
+3. **Thief is provable on day 3.** At least one theft contradiction against the thief can still be found on the last day, after both night moves: the thief still says the claim that day, and the proof is in a reply that day, the Wi-Fi log or a morning beat. Earlier contradictions can be destroyed, so asking early pays off, but a slow player can still win.
+4. **Night moves are sound.** One move per night. Destroyed facts are true, findable before the move and not in the Wi-Fi log. Planted facts are false, point at an innocent, and appear only after the night. Coached claims appear only after the night, and the coached guest gives a true tell when pressed.
+5. **No false proof against innocents.** Every planted or coached fact is disproved by a true fact that can be found on day 3.
+6. **No leaks.** Every fact a guest says is in their `knows` or `claims`, `knows` holds only true facts, secrets don't concern the theft, and the theft fact appears only in the timeline.
+7. **Traits aren't a tell.** The thief shares a temperament with an innocent, and their patience is within the innocents' range.
+8. **Coverage.** Every guest has whereabouts for nights 0–2, the item, each other guest, their secret if they have one, at least one public topic and at least five dodges. Each day has a morning beat.
+
+"Can be found" means: some guest's active reply that day carries it, or it's in a published Wi-Fi entry or morning beat. Idle beats don't count, because they aren't guaranteed to play.
 
 The skill runs the checker itself. The build and CI run it on every file in `cases/` too, so a broken case can't ship.
 
@@ -304,6 +322,8 @@ These are tagged unions defined with Effect Schema.
 
 Client to server:
 
+Threads are `Group`, `Direct(guest)` and `WifiLog`. Every chat message, Wi-Fi entries included, has a message ID, so any of them can be saved to the case file.
+
 - `SendMessage { thread, text }`
 - `SaveToCaseFile { messageId }`
 - `RemoveFromCaseFile { messageId }`
@@ -316,9 +336,11 @@ Server to client:
 - `Snapshot { threads, caseFile, day, phase, guestStatus }`, sent on connect or resume.
 - `Typing { thread, guest }`
 - `MessagePosted { thread, message }`
-- `GuestStatusChanged { guest, status }`, where status is `available`, `annoyed`, `left you on read` or `asleep`.
+- `GuestStatusChanged { guest, status }`, where status is `available`, `annoyed`, `leftOnRead` or `asleep`.
 - `PhaseChanged { day, phase }`
-- `ArrestResult { ending, timeline }`
+- `CaseFileChanged { caseFile }`
+- `ArrestResult { ending, thief, timeline }`
+- `Rejected { reason }`, such as asleep, too fast or an unknown message ID.
 
 Messages to the client carry text and IDs only, never fact IDs or truth values.
 
@@ -349,7 +371,7 @@ There are no accounts. The case ID is kept in `localStorage`, and refreshing res
 All of this happens on a branch, since it replaces the current game.
 
 1. ~~**Clef routing spike.**~~ Done. The dictionary approach works with Clef (27B) and a 0.3 confidence threshold. See section 5 and `spikes/clef-routing/VERDICT.md` on branch `spike/clef-routing`. The follow-up is to rerun it with test messages from someone who didn't write the dictionary.
-2. **Schemas and checker.** Case schema, wire protocol and solvability checker in `shared/`, with tests that use a hand-written case.
+2. ~~**Schemas and checker.**~~ Done. `shared/case.ts`, `shared/replies.ts`, `shared/checker.ts` and `shared/protocol.ts`, tested against `cases/silver-brooch.json`.
 3. **Server foundation.** Effect in the Worker, the `CaseObject` Durable Object, the WebSocket protocol, and AI services with fakes. Play the hand-written case end to end without the client.
 4. **Client rewrite.** Conversation list, threads, long-press save, case file and arrest, all against the hand-written case.
 5. **Case generation.** Write the local skill, add `pnpm cases:check`, and generate the first batch of cases into `cases/`.
@@ -367,3 +389,4 @@ All of this happens on a branch, since it replaces the current game.
 - The Worker doesn't use the Anthropic API at all. `ANTHROPIC_API_KEY`, `CLAUDE_MODEL`, `@anthropic-ai/sdk` and `/api/guest-texts` all go away.
 - The Wi-Fi log stays, as the source of hard evidence.
 - There's no offline play. The built-in fallback lines and the 503 path go away.
+- Night moves are fixed when the case is generated, one each on nights 1 and 2. The theft happens on night 0.
