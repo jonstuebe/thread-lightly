@@ -348,6 +348,17 @@ Messages to the client carry text and IDs only, never fact IDs or truth values.
 
 There are no accounts. The case ID is kept in `localStorage`, and refreshing resumes the case by reconnecting to the same Durable Object. Losing the ID means losing the case, and that's acceptable.
 
+### Server rules, as built
+
+- **Clock.** Each day starts at 9:00 and every message the detective sends moves it 20 minutes. A guest whose bedtime has passed says their `goodnight` line once and stops replying.
+- **Patience.** Each message costs the tone's cost, plus the `repeated` cost when the topic was already asked that day. A friendly message can cost less than nothing, up to the daily budget. At a third of the budget a guest is `annoyed` (and uses `lowPatience` replies when a topic has them); at zero they leave you on read.
+- **Wording.** Repeated questions rotate through a topic's variants, and dodges rotate too, so there's no randomness to fake in tests.
+- **Greetings.** A friendly message below the confidence threshold gets a greeting if it's the first message to that guest today, or a thanks line after that.
+- **Group chat.** Clef asks one yes/no question per awake guest; up to two guests with ≥ 0.5 answer, or the single most likely one if nobody clears it. They answer from public topics only.
+- **Small talk.** The small-talk model (`SMALLTALK_MODEL`) gets the guest's name, role, voice and temperament and no facts. Clef then checks its line for times, whereabouts or anything about the item; a flagged line becomes a dodge. Any model failure also becomes a dodge.
+- **Pacing.** The server sends `Typing` and the reply together. The client paces them at reading speed.
+- **Arrest.** Both messages must be in the case file. The claim must be the suspect's own message, and the pair must match a theft contradiction for `caseClosed`. After the arrest everything but `Resume` is rejected.
+
 ### Cost controls
 
 - Patience budgets cap model calls per case.
@@ -372,7 +383,7 @@ All of this happens on a branch, since it replaces the current game.
 
 1. ~~**Clef routing spike.**~~ Done. The dictionary approach works with Clef (27B) and a 0.3 confidence threshold. See section 5 and `spikes/clef-routing/VERDICT.md` on branch `spike/clef-routing`. The follow-up is to rerun it with test messages from someone who didn't write the dictionary.
 2. ~~**Schemas and checker.**~~ Done. `shared/case.ts`, `shared/replies.ts`, `shared/checker.ts` and `shared/protocol.ts`, tested against `cases/silver-brooch.json`.
-3. **Server foundation.** Effect in the Worker, the `CaseObject` Durable Object, the WebSocket protocol, and AI services with fakes. Play the hand-written case end to end without the client.
+3. ~~**Server foundation.**~~ Done. `worker/game/engine.ts` holds the rules as a pure Effect function (state and client message in, state and server messages out), with Clef and small talk behind the `Router` and `SmallTalk` services (`worker/game/ai.ts`, live versions in `worker/ai-live.ts`). `worker/case-object.ts` is the Durable Object shell. The engine tests play the silver brooch case end to end with a scripted fake, and a manual WebSocket run against live Clef closed the case.
 4. **Client rewrite.** Conversation list, threads, long-press save, case file and arrest, all against the hand-written case.
 5. **Case generation.** Write the local skill, add `pnpm cases:check`, and generate the first batch of cases into `cases/`.
 6. **Make the guests feel alive.** Group chat director, idle chatter, night moves, patience tuning, endings and the timeline reveal.

@@ -17,6 +17,7 @@ See `README.md` for the layout and how chat pacing works.
 - **Every async result carries `caseNumber`.** Ignore results whose number doesn't match the Model.
 - **The Worker owns the prompt.** The client sends game state to `POST /api/guest-texts`, never prompt text, so the endpoint can't be used as a general Claude proxy. The wire contract is `shared/api.ts`.
 - **`shared/` depends only on `effect`**, because the Worker imports it too. It holds the case schema, the reply rules, the solvability checker and the WebSocket protocol for the detective redesign (`docs/design.md`).
+- **The detective game's server** lives in `worker/game/` (pure rules plus AI services) and `worker/case-object.ts` (the Durable Object shell). Test rules through `handle` in `worker/game/engine.test.ts` with the fake `Router` and `SmallTalk`; never call Workers AI from tests.
 - **Cases hold the answer.** `cases/*.json` and `shared/case.ts` data must never reach the client bundle. The client imports `shared/protocol.ts` only.
 - **Vite plugin order matters.** `cloudflare()` must come before `foldkit()` in `vite.config.ts`; the other way round, the dev server fails to serve the devtools script injected into `index.html`.
 - **Deploy target:** Cloudflare Workers, custom domain `threadlightly.jonstuebe.com` (see `wrangler.jsonc`). Secret: `ANTHROPIC_API_KEY`. Var: `CLAUDE_MODEL`.

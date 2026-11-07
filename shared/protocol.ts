@@ -140,3 +140,20 @@ export type ServerMessage = typeof ServerMessage.Type
 
 export const ClientMessageJson = Schema.fromJsonString(ClientMessage)
 export const ServerMessageJson = Schema.fromJsonString(ServerMessage)
+
+// HTTP
+
+export const NEW_CASE_PATH = '/api/case/new'
+export const caseSocketPath = (gameId: string): string =>
+  `/api/case/${gameId}/ws`
+
+export const NewCaseRequest = Schema.Struct({
+  played: Schema.Array(Schema.String),
+})
+export type NewCaseRequest = typeof NewCaseRequest.Type
+
+export const NewCaseResponse = Schema.Struct({
+  gameId: Schema.String,
+  caseId: Schema.String,
+})
+export type NewCaseResponse = typeof NewCaseResponse.Type

@@ -2,7 +2,11 @@ import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
   test: {
-    include: ['src/**/*.{test,spec}.ts', 'shared/**/*.{test,spec}.ts'],
+    include: [
+      'src/**/*.{test,spec}.ts',
+      'shared/**/*.{test,spec}.ts',
+      'worker/**/*.{test,spec}.ts',
+    ],
     environment: 'happy-dom',
     setupFiles: ['./src/vitest-setup.ts'],
     server: {
