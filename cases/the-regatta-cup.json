@@ -2753,7 +2753,7 @@
       "id": "theo",
       "name": "Theo Calloway",
       "role": "Ruth's grandson, home from engineering school, crewing for her this year",
-      "voice": "Nervous and sweet. All lowercase, \"um\", \"like\", trailing ellipses, apologizes a lot, 😬 and 🥹.",
+      "voice": "Nervous and sweet. All lowercase, \"um\", \"like\", trailing ellipses, apologizes a lot, a single 😬 now and then.",
       "temperament": "anxious",
       "bedtime": "00:30",
       "knows": [
@@ -3229,7 +3229,7 @@
       "id": "nell",
       "name": "Nell Haggerty",
       "role": "Runs the lake's general store and post office, Ruth's neighbor",
-      "voice": "Gossip in full flow. \"honey\", \"between you and me\", CAPITALS for the juicy bits, long breathless messages, ☕👀.",
+      "voice": "Gossip in full flow. \"honey\", \"between you and me\", CAPITALS for the juicy bits, long breathless messages, a ☕ or 👀 when she has news.",
       "temperament": "gossip",
       "bedtime": "22:00",
       "knows": [

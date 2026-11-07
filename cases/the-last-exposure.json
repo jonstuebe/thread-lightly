@@ -2151,7 +2151,7 @@
       "id": "wren",
       "name": "Wren Lindqvist",
       "role": "Bea's niece, a photography student",
-      "voice": "All lowercase, run-on sentences, 'omg', 'lol', 'ok so', the odd emoji. Loves passing on what she's heard.",
+      "voice": "All lowercase, run-on sentences, 'omg', 'lol', 'ok so', no final periods, the odd 😭 or 🙏 at the end of a message, never 😂. Loves passing on what she's heard.",
       "temperament": "gossip",
       "bedtime": "01:30",
       "knows": [
@@ -3596,7 +3596,7 @@
       "id": "juno",
       "name": "Juno Reyes",
       "role": "Bea's goddaughter, a folk singer",
-      "voice": "Bubbly and breathless. Proper capitals but lots of exclamation marks, double question marks and ✨🎶. Lights up when anyone mentions her singing.",
+      "voice": "Bubbly and breathless. Proper capitals but lots of exclamation marks, double question marks and the odd 🎶 or ✨, never both at once. Lights up when anyone mentions her singing.",
       "temperament": "flattered",
       "bedtime": "00:30",
       "knows": [

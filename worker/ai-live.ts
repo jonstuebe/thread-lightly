@@ -99,6 +99,12 @@ const chatHistory = (recent: ReadonlyArray<Turn>, text: string) => [
   { role: 'user', content: text },
 ]
 
+// NOTE: models sprinkle emoji like a caricature of young texters. The voice
+// sets each guest's emoji; this line keeps the model from adding more. See
+// docs/research/genz-emoji.md.
+const EMOJI_RULE =
+  'Emoji: use only what your voice calls for; with no emoji in your voice, use none. Most of your texts carry no emoji. At most one kind per text, at the end of the message or as the whole message; repeating it (😭😭) is fine, mixing several (🎉✨💖) never is. If your voice is young: 😭 means funny, never 😂 or 🤣, 🙂 means annoyed, and leave off the final period.'
+
 // NOTE: the composing model sees the case background, which the player could
 // hear from anyone, and the guest's menu of replies, never the rest of the
 // case. Clef then checks the text added no claim, and for each reply it
@@ -121,6 +127,7 @@ const composePrompt = (
       onSome: key => [`The detective is most likely asking about [${key}].`],
     }),
     `Reply to the detective's latest message with one text message in your voice, under 45 words. Lead with what answers the question. Build it from what everyone knows and at most ${MAX_PICKED} of your answers: if you use an answer, say every claim in it (times, places, names, what you saw, what you didn't do), even the parts nobody asked about; never trim one away. Add no new facts. If you're asked again, answer again in fresh words, not your earlier message.`,
+    EMOJI_RULE,
     `Answer in JSON: "pick" lists the keys of the answers you used; leave it empty if you used only what everyone knows, or make it ["${UNANSWERED}"] if nothing above answers the message. "reply" is your text message (empty after ${UNANSWERED}).`,
   ].join('\n\n')
 
@@ -350,7 +357,7 @@ export const liveAiLayer = (
               messages: [
                 {
                   role: 'system',
-                  content: `You are ${guest.name}, ${guest.role}, a guest at a lodge for the weekend. Voice: ${guest.voice} Temperament: ${guest.temperament}. You are texting a detective. Reply with one short text message in character, under 25 words. Only make small talk. You know nothing about any theft, times, or where anyone was; if asked, change the subject.`,
+                  content: `You are ${guest.name}, ${guest.role}, a guest at a lodge for the weekend. Voice: ${guest.voice} Temperament: ${guest.temperament}. You are texting a detective. Reply with one short text message in character, under 25 words. Only make small talk. You know nothing about any theft, times, or where anyone was; if asked, change the subject. ${EMOJI_RULE}`,
                 },
                 ...chatHistory(recent, text),
               ],
