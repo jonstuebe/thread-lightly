@@ -48,7 +48,7 @@ const dayAction = (board: Board): DayAction =>
             }),
           }
         : board.phase === 'night'
-          ? { label: 'Night falls on the lodge…', maybeButton: Option.none() }
+          ? { label: 'Night falls…', maybeButton: Option.none() }
           : {
               label: `Day ${board.day} of ${LAST_DAY}`,
               maybeButton: Option.some({
@@ -192,7 +192,7 @@ export const listView = (
             model,
             WIFI_LOG,
             wifiAvatar(h),
-            'Lodge Wi-Fi log',
+            'Wi-Fi log',
             previewOf(model, board, WIFI_LOG, 'Nothing logged yet'),
             h.empty,
             h,
@@ -201,8 +201,8 @@ export const listView = (
             model,
             GROUP,
             groupAvatar(board, h),
-            'Pine Hollow guests',
-            previewOf(model, board, GROUP, 'Everyone at the lodge'),
+            'Guests',
+            previewOf(model, board, GROUP, 'Everyone’s in here'),
             h.empty,
             h,
           ),

@@ -35,12 +35,12 @@ const heading = (
   Thread.match(thread, {
     Group: () => ({
       avatarView: groupAvatar(board, h),
-      title: 'Pine Hollow guests',
+      title: 'Guests',
       subtitle: `${board.guests.length} guests and you`,
     }),
     WifiLog: () => ({
       avatarView: wifiAvatar(h),
-      title: 'Lodge Wi-Fi log',
+      title: 'Wi-Fi log',
       subtitle: 'Posted every morning',
     }),
     Direct: ({ guest }) =>
@@ -328,9 +328,7 @@ const emptyThreadView = (
     Group: () =>
       h.p(
         [h.Class('empty')],
-        [
-          'Everyone at the lodge is in here. Guests are more careful in public.',
-        ],
+        ['Everyone’s in here. Guests are more careful in public.'],
       ),
     WifiLog: () => h.empty,
     Direct: ({ guest }) =>
@@ -398,7 +396,7 @@ const wifiLogView = (
         h.div(
           [h.Class('router-head')],
           [
-            h.b([], ['PineHollow-Guest']),
+            h.b([], ['Guest-WiFi']),
             h.span([], ['Device connection log · read only']),
           ],
         ),

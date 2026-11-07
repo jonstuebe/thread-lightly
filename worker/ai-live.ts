@@ -23,7 +23,7 @@ export type AiBinding = Readonly<{
 
 const CLEF_MODEL = '@cf/cloudflare/clef'
 const SMALLTALK_CRITERIA =
-  'Casual chat with nothing to do with the theft: weather, food, the lodge, jokes, flirting'
+  'Casual chat with nothing to do with the theft: weather, food, where they’re staying, jokes, flirting'
 const LEAK_THRESHOLD = 0.5
 const RESPONDER_THRESHOLD = 0.5
 const MAX_SMALLTALK_LENGTH = 200
@@ -118,7 +118,7 @@ const composePrompt = (
   hint: Option.Option<string>,
 ): string =>
   [
-    `You are ${guest.name}, ${guest.role}, a guest at Pine Hollow lodge for the weekend. Voice: ${guest.voice} Temperament: ${guest.temperament}.`,
+    `You are ${guest.name}, ${guest.role}. Voice: ${guest.voice} Temperament: ${guest.temperament}.`,
     `A detective is texting you about ${caseData.setting.missingItem}.`,
     `What everyone knows:\n${caseData.setting.premise} ${caseData.setting.background}`,
     `What you'd say, by subject (these are your answers, true or not):\n${menu.map(item => `[${item.key}] ${item.text}`).join('\n')}`,
@@ -357,7 +357,7 @@ export const liveAiLayer = (
               messages: [
                 {
                   role: 'system',
-                  content: `You are ${guest.name}, ${guest.role}, a guest at a lodge for the weekend. Voice: ${guest.voice} Temperament: ${guest.temperament}. You are texting a detective. Reply with one short text message in character, under 25 words. Only make small talk. You know nothing about any theft, times, or where anyone was; if asked, change the subject. ${EMOJI_RULE}`,
+                  content: `You are ${guest.name}, ${guest.role}. Voice: ${guest.voice} Temperament: ${guest.temperament}. Where you are: ${caseData.setting.premise} You are texting a detective. Reply with one short text message in character, under 25 words. Only make small talk. Beyond that, you know nothing about the theft, any times, or where anyone was; if asked, change the subject. ${EMOJI_RULE}`,
                 },
                 ...chatHistory(recent, text),
               ],

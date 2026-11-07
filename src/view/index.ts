@@ -11,7 +11,7 @@ import { threadPaneView, welcomePaneView } from './thread'
 // NOTE: phones show either the conversation list or one thread, like
 // Messages. From 768px up, CSS shows both side by side.
 export const view = (model: Model, h: HtmlBuilder<Message>): Document => ({
-  title: 'Pine Hollow: a group chat mystery',
+  title: 'Thread Lightly',
   body: Option.match(model.maybeBoard, {
     onNone: () => lockScreenView(model, h),
     onSome: board =>
