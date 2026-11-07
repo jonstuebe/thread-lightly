@@ -19,3 +19,17 @@ See `README.md` for the layout and how chat pacing works.
 - **`shared/` is plain TypeScript** with no runtime dependencies, because the Worker imports it too.
 - **Vite plugin order matters.** `cloudflare()` must come before `foldkit()` in `vite.config.ts`; the other way round, the dev server fails to serve the devtools script injected into `index.html`.
 - **Deploy target:** Cloudflare Workers, custom domain `threadlightly.jonstuebe.com` (see `wrangler.jsonc`). Secret: `ANTHROPIC_API_KEY`. Var: `CLAUDE_MODEL`.
+
+## Agent skills
+
+### Issue tracker
+
+Issues are tracked in GitHub Issues on `jonstuebe/thread-lightly` via the `gh` CLI. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Uses the five default triage labels (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: one `GLOSSARY.md` and `docs/adr/` at the repo root. See `docs/agents/domain.md`.
