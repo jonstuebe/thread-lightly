@@ -23,6 +23,7 @@ import {
 } from './command'
 import { board, dmDale, lockedModel, playingModel } from './fixture'
 import { Message } from './message'
+import { Sheet } from './model'
 import { update } from './update'
 import { view } from './view'
 
@@ -160,6 +161,57 @@ describe('case file', () => {
         }),
       ),
       Command.resolve(SendToServer, Message.CompletedSendToServer()),
+    )
+  })
+})
+
+describe('the ending', () => {
+  test('shows the solution and what the detective found, night by night', () => {
+    scene(
+      { update, view },
+      given({
+        ...playingModel,
+        sheet: Sheet.Result(),
+        maybeBoard: Option.some({
+          ...board,
+          maybeResult: Option.some({
+            ending: 'wrongPerson' as const,
+            thief: 'dale',
+            solution: {
+              claim: 'Dale was asleep from 11:15pm',
+              proof: 'Dale joined the kitchen Wi-Fi at 1:12am',
+            },
+            timeline: [
+              {
+                night: 0 as const,
+                time: '1:12am',
+                text: 'Dale sneaks into the kitchen.',
+                evidence: 'saved' as const,
+              },
+              {
+                night: 0 as const,
+                time: '1:15am',
+                text: 'Dale takes the brooch.',
+                evidence: 'none' as const,
+              },
+              {
+                night: 2 as const,
+                time: '11:48pm',
+                text: 'Dale slips out to the boathouse.',
+                evidence: 'missed' as const,
+              },
+            ],
+          }),
+        }),
+      }),
+      expect(text('What would have held up')).toExist(),
+      expect(text('Dale’s lie')).toExist(),
+      expect(text('Dale joined the kitchen Wi-Fi at 1:12am')).toExist(),
+      expect(text('You found 1 of 2 clues and saved 1.')).toExist(),
+      expect(text('Friday night')).toExist(),
+      expect(text('Sunday')).toExist(),
+      expect(text('In your case file')).toExist(),
+      expect(text('Missed')).toExist(),
     )
   })
 })

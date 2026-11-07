@@ -4,11 +4,11 @@
 
 import { Schema } from 'effect'
 
-import { Day, GuestId } from './ids'
+import { Day, GuestId, Night } from './ids'
 
 // NOTE: the client imports this module only, never ./case, so the ID and day
 // types it needs are re-exported here.
-export { Day, GuestId, LAST_DAY } from './ids'
+export { Day, GuestId, LAST_DAY, Night } from './ids'
 
 export const MAX_MESSAGE_LENGTH = 280
 
@@ -82,15 +82,32 @@ export type CaseIntro = typeof CaseIntro.Type
 export const Ending = Schema.Literals(['caseClosed', 'theyWalk', 'wrongPerson'])
 export type Ending = typeof Ending.Type
 
+// NOTE: how a timeline event's evidence reached the detective. `saved` means a
+// message carrying it is in the case file, `seen` that one was posted but not
+// saved, `missed` that none was, and `none` that the event had no evidence.
+export const Evidence = Schema.Literals(['saved', 'seen', 'missed', 'none'])
+export type Evidence = typeof Evidence.Type
+
 export const RevealedEvent = Schema.Struct({
+  night: Night,
   time: Schema.String,
   text: Schema.String,
+  evidence: Evidence,
 })
 export type RevealedEvent = typeof RevealedEvent.Type
+
+// NOTE: a lie of the thief's about the theft and the fact that breaks it: the
+// pair the detective used to close the case, or one that would have.
+export const Solution = Schema.Struct({
+  claim: Schema.String,
+  proof: Schema.String,
+})
+export type Solution = typeof Solution.Type
 
 export const CaseResult = Schema.Struct({
   ending: Ending,
   thief: GuestId,
+  solution: Schema.optionalKey(Solution),
   timeline: Schema.Array(RevealedEvent),
 })
 export type CaseResult = typeof CaseResult.Type

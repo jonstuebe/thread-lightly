@@ -7,6 +7,7 @@ import { Array, Effect, Option, pipe } from 'effect'
 
 import {
   type Case,
+  type Contradiction,
   DAYS,
   type Day,
   type FactId,
@@ -21,15 +22,21 @@ import {
   type ChatMessage,
   ClientMessage,
   type Ending,
+  type Evidence,
   type GuestStatus,
   type MessageBody,
   type MessageId,
   type RejectionReason,
   type Sender,
   ServerMessage,
+  type Solution,
   type Thread,
 } from '../../shared/protocol'
-import { activeReplies, destroyedFacts } from '../../shared/replies'
+import {
+  activeReplies,
+  destroyedFacts,
+  sightingsOn,
+} from '../../shared/replies'
 import {
   CONFIDENCE_THRESHOLD,
   INJECTION_THRESHOLD,
@@ -45,6 +52,15 @@ export const DAY_START_MINUTES = 9 * 60
 export const MINUTES_PER_MESSAGE = 20
 export const MIN_SEND_INTERVAL_MS = 750
 const RECENT_MESSAGES = 4
+
+// NOTE: a day's idle beats play in order as the clock passes these times
+// (11:20am, 2pm, 4:40pm), so the group chat stirs while the detective is busy
+// in DMs. A day can have at most three.
+export const IDLE_BEAT_MINUTES: ReadonlyArray<number> = [
+  11 * 60 + 20,
+  14 * 60,
+  16 * 60 + 40,
+]
 
 export type Step = Readonly<{
   state: GameState
@@ -220,6 +236,44 @@ const beginDay = (caseData: Case, step: Step, day: Day): Step => {
   )
 }
 
+const playIdleBeats = (
+  caseData: Case,
+  step: Step,
+  fromMinutes: number,
+): Step => {
+  const toMinutes = step.state.minutes
+  return pipe(
+    caseData.groupBeats,
+    Array.filter(
+      beat =>
+        beat.trigger._tag === 'Idle' && beat.trigger.day === step.state.day,
+    ),
+    Array.filter((_, index) => {
+      const slot = IDLE_BEAT_MINUTES[index]
+      return slot !== undefined && fromMinutes < slot && slot <= toMinutes
+    }),
+    Array.flatMap(beat => beat.lines),
+    Array.reduce(step, (current, line) =>
+      pipe(
+        caseData.guests,
+        Array.findFirst(guest => guest.id === line.guest),
+        Option.filter(guest => statusOf(current.state, guest) !== 'asleep'),
+        Option.match({
+          onNone: () => current,
+          onSome: guest =>
+            post(
+              current,
+              GROUP,
+              { _tag: 'Guest', guest: guest.id },
+              text(line.text),
+              line.factIds,
+            ),
+        }),
+      ),
+    ),
+  )
+}
+
 export const startGame = (caseData: Case): GameState =>
   beginDay(
     caseData,
@@ -281,14 +335,98 @@ const endDay = (caseData: Case, state: GameState): Step => {
 
 // SNAPSHOT
 
-const caseResult = (caseData: Case, ending: Ending): CaseResult => ({
-  ending,
-  thief: caseData.thief,
-  timeline: Array.map(caseData.timeline, event => ({
-    time: event.time,
-    text: event.text,
-  })),
-})
+// NOTE: facts some message could carry on some day. The theft itself and
+// anything only in the timeline aren't evidence, so they never count as missed.
+const findableFacts = (caseData: Case): ReadonlySet<FactId> =>
+  new Set(
+    Array.flatMap(DAYS, day =>
+      Array.map(sightingsOn(caseData, day), sighting => sighting.fact),
+    ),
+  )
+
+const factsIn = (messages: ReadonlyArray<StoredMessage>): ReadonlySet<FactId> =>
+  new Set(Array.flatMap(messages, stored => stored.factIds))
+
+const evidenceFor = (
+  facts: ReadonlyArray<FactId>,
+  findable: ReadonlySet<FactId>,
+  seen: ReadonlySet<FactId>,
+  saved: ReadonlySet<FactId>,
+): Evidence => {
+  const clues = Array.filter(facts, fact => findable.has(fact))
+  if (Array.isReadonlyArrayEmpty(clues)) {
+    return 'none'
+  }
+  if (Array.some(clues, fact => saved.has(fact))) {
+    return 'saved'
+  }
+  return Array.some(clues, fact => seen.has(fact)) ? 'seen' : 'missed'
+}
+
+const factText = (caseData: Case, id: FactId): string =>
+  pipe(
+    caseData.facts,
+    Array.findFirst(fact => fact.id === id),
+    Option.match({ onNone: () => id, onSome: fact => fact.text }),
+  )
+
+// NOTE: the pair the detective used, or else the thief's theft contradiction
+// they came closest to: both halves seen beats one, and case order breaks ties.
+const pickSolution = (
+  caseData: Case,
+  seen: ReadonlySet<FactId>,
+  maybeUsed: Option.Option<Contradiction>,
+): Option.Option<Solution> => {
+  const closeness = (contradiction: Contradiction): number =>
+    (seen.has(contradiction.claimFact) ? 1 : 0) +
+    (seen.has(contradiction.proofFact) ? 1 : 0)
+  const candidates = Array.filter(
+    caseData.contradictions,
+    contradiction =>
+      contradiction.suspect === caseData.thief && contradiction.concernsTheft,
+  )
+  return pipe(
+    maybeUsed,
+    Option.orElse(() =>
+      Array.reduce(candidates, Option.none<Contradiction>(), (best, next) =>
+        Option.isSome(best) && closeness(best.value) >= closeness(next)
+          ? best
+          : Option.some(next),
+      ),
+    ),
+    Option.map(contradiction => ({
+      claim: factText(caseData, contradiction.claimFact),
+      proof: factText(caseData, contradiction.proofFact),
+    })),
+  )
+}
+
+const caseResult = (
+  caseData: Case,
+  state: GameState,
+  ending: Ending,
+  maybeUsed: Option.Option<Contradiction>,
+): CaseResult => {
+  const findable = findableFacts(caseData)
+  const seen = factsIn(state.messages)
+  const saved = factsIn(
+    Array.filter(state.messages, stored =>
+      state.caseFile.includes(stored.message.id),
+    ),
+  )
+  const maybeSolution = pickSolution(caseData, seen, maybeUsed)
+  return {
+    ending,
+    thief: caseData.thief,
+    ...(Option.isSome(maybeSolution) ? { solution: maybeSolution.value } : {}),
+    timeline: Array.map(caseData.timeline, event => ({
+      night: event.night,
+      time: event.time,
+      text: event.text,
+      evidence: evidenceFor(event.factIds, findable, seen, saved),
+    })),
+  }
+}
 
 export const snapshot = (caseData: Case, state: GameState): ServerMessage =>
   ServerMessage.cases.Snapshot.make({
@@ -309,7 +447,14 @@ export const snapshot = (caseData: Case, state: GameState): ServerMessage =>
     phase: state.phase,
     ...(state.ending === undefined
       ? {}
-      : { result: caseResult(caseData, state.ending) }),
+      : {
+          result: caseResult(
+            caseData,
+            state,
+            state.ending,
+            Option.fromUndefinedOr(state.solvedBy),
+          ),
+        }),
   })
 
 // CASE FILE
@@ -338,27 +483,38 @@ const updateCaseFile = (
 
 // ARREST
 
+export type Verdict = Readonly<{
+  ending: Ending
+  maybeUsed: Option.Option<Contradiction>
+}>
+
 export const judgeArrest = (
   caseData: Case,
   suspect: GuestId,
   claim: StoredMessage,
   proof: StoredMessage,
-): Ending => {
+): Verdict => {
   if (suspect !== caseData.thief) {
-    return 'wrongPerson'
+    return { ending: 'wrongPerson', maybeUsed: Option.none() }
   }
   const saidBySuspect =
     claim.message.sender._tag === 'Guest' &&
     claim.message.sender.guest === suspect
-  const provesTheft = Array.some(
+  const maybeUsed = pipe(
     caseData.contradictions,
-    contradiction =>
-      contradiction.suspect === suspect &&
-      contradiction.concernsTheft &&
-      claim.factIds.includes(contradiction.claimFact) &&
-      proof.factIds.includes(contradiction.proofFact),
+    Array.findFirst(
+      contradiction =>
+        contradiction.suspect === suspect &&
+        contradiction.concernsTheft &&
+        claim.factIds.includes(contradiction.claimFact) &&
+        proof.factIds.includes(contradiction.proofFact),
+    ),
+    Option.filter(() => saidBySuspect),
   )
-  return saidBySuspect && provesTheft ? 'caseClosed' : 'theyWalk'
+  return {
+    ending: Option.isSome(maybeUsed) ? 'caseClosed' : 'theyWalk',
+    maybeUsed,
+  }
 }
 
 const makeArrest = (
@@ -380,12 +536,23 @@ const makeArrest = (
     Option.match({
       onNone: () => reject(state, 'invalid'),
       onSome: ({ claim, proof }) => {
-        const ending = judgeArrest(caseData, suspect, claim, proof)
+        const { ending, maybeUsed } = judgeArrest(
+          caseData,
+          suspect,
+          claim,
+          proof,
+        )
+        const closed: GameState = {
+          ...state,
+          phase: 'arrest',
+          ending,
+          ...(Option.isSome(maybeUsed) ? { solvedBy: maybeUsed.value } : {}),
+        }
         return {
-          state: { ...state, phase: 'arrest', ending },
+          state: closed,
           out: [
             ServerMessage.cases.ArrestResult.make({
-              result: caseResult(caseData, ending),
+              result: caseResult(caseData, closed, ending, maybeUsed),
             }),
           ],
         }
@@ -670,10 +837,12 @@ const sendMessage = (
       ),
     )
 
-    const afterReplies = Array.reduce(
-      answers,
-      sent,
-      (current, { guest, given }) => applyAnswer(current, guest, thread, given),
+    const afterReplies = playIdleBeats(
+      caseData,
+      Array.reduce(answers, sent, (current, { guest, given }) =>
+        applyAnswer(current, guest, thread, given),
+      ),
+      state.minutes,
     )
     return announceStatusChanges(
       caseData,

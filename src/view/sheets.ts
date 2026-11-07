@@ -5,9 +5,13 @@ import {
   type CaseResult,
   type ChatMessage,
   type Ending,
+  type Evidence,
   type GuestId,
   LAST_DAY,
   type MessageId,
+  type Night,
+  type RevealedEvent,
+  type Solution,
 } from '../../shared/protocol'
 import {
   findMessage,
@@ -482,6 +486,92 @@ const endingCopy = (
   return copy[result.ending]
 }
 
+const NIGHT_NAMES: Readonly<Record<Night, string>> = {
+  0: 'Friday night',
+  1: 'Saturday',
+  2: 'Sunday',
+}
+
+const EVIDENCE_LABELS: Readonly<Record<Evidence, string>> = {
+  saved: 'In your case file',
+  seen: 'You saw this',
+  missed: 'Missed',
+  none: '',
+}
+
+const solutionView = (
+  board: Board,
+  result: CaseResult,
+  solution: Solution,
+  h: HtmlBuilder<Message>,
+): ReadonlyArray<Html> => [
+  h.h3(
+    [h.Class('sheet-section')],
+    [
+      result.ending === 'caseClosed'
+        ? 'How you cracked it'
+        : 'What would have held up',
+    ],
+  ),
+  h.dl(
+    [h.Class('solution')],
+    [
+      h.dt([], [`${firstName(guestName(board, result.thief))}’s lie`]),
+      h.dd([], [solution.claim]),
+      h.dt([], ['The proof']),
+      h.dd([], [solution.proof]),
+    ],
+  ),
+]
+
+const tally = (timeline: ReadonlyArray<RevealedEvent>): string => {
+  const count = (evidence: Evidence) =>
+    Array.filter(timeline, event => event.evidence === evidence).length
+  const clues = timeline.length - count('none')
+  const found = count('saved') + count('seen')
+  return `You found ${found} of ${clues} clues and saved ${count('saved')}.`
+}
+
+const eventView = (event: RevealedEvent, h: HtmlBuilder<Message>): Html =>
+  h.li(
+    [h.Class(`ev-${event.evidence}`)],
+    [
+      h.span([h.Class('t-time')], [event.time]),
+      h.span(
+        [h.Class('t-body')],
+        [
+          h.span([], [event.text]),
+          event.evidence === 'none'
+            ? h.empty
+            : h.span(
+                [h.Class('t-evidence')],
+                [EVIDENCE_LABELS[event.evidence]],
+              ),
+        ],
+      ),
+    ],
+  )
+
+const timelineView = (
+  timeline: ReadonlyArray<RevealedEvent>,
+  h: HtmlBuilder<Message>,
+): ReadonlyArray<Html> => [
+  h.h3([h.Class('sheet-section')], ['What really happened']),
+  h.p([h.Class('tally')], [tally(timeline)]),
+  ...pipe(
+    Array.isReadonlyArrayNonEmpty(timeline)
+      ? Array.groupWith(timeline, (a, b) => a.night === b.night)
+      : [],
+    Array.flatMap(events => [
+      h.h4([h.Class('t-night')], [NIGHT_NAMES[events[0].night]]),
+      h.ol(
+        [h.Class('timeline')],
+        Array.map(events, event => eventView(event, h)),
+      ),
+    ]),
+  ),
+]
+
 const resultView = (
   board: Board,
   result: CaseResult,
@@ -494,19 +584,10 @@ const resultView = (
     [
       h.h2([h.Id('result-title')], [title]),
       h.p([], [body]),
-      h.h3([h.Class('sheet-section')], ['What really happened']),
-      h.ol(
-        [h.Class('timeline')],
-        Array.map(result.timeline, event =>
-          h.li(
-            [],
-            [
-              h.span([h.Class('t-time')], [event.time]),
-              h.span([], [event.text]),
-            ],
-          ),
-        ),
-      ),
+      ...(result.solution === undefined
+        ? []
+        : solutionView(board, result, result.solution, h)),
+      ...timelineView(result.timeline, h),
       primary('Start a new case', Message.ClickedNewCase(), false, h),
     ],
     h,

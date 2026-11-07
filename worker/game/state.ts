@@ -4,7 +4,7 @@
 
 import { Schema } from 'effect'
 
-import { Day, FactId, GuestId, TopicId } from '../../shared/case'
+import { Contradiction, Day, FactId, GuestId, TopicId } from '../../shared/case'
 import { ChatMessage, Ending, MessageId, Phase } from '../../shared/protocol'
 
 export const StoredMessage = Schema.Struct({
@@ -29,6 +29,8 @@ export const GameState = Schema.Struct({
   nextMessageId: Schema.Int,
   lastSentAt: Schema.Number,
   ending: Schema.optionalKey(Ending),
+  // NOTE: the contradiction that closed the case, kept so a reload shows it.
+  solvedBy: Schema.optionalKey(Contradiction),
 })
 export type GameState = typeof GameState.Type
 

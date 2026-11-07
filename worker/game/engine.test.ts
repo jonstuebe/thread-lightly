@@ -13,6 +13,8 @@ import {
 import { pickCase } from '../cases'
 import { AiFailed, Router, type Routing, SMALLTALK, SmallTalk } from './ai'
 import {
+  IDLE_BEAT_MINUTES,
+  MINUTES_PER_MESSAGE,
   MIN_SEND_INTERVAL_MS,
   type Step,
   bedtimeMinutes,
@@ -302,6 +304,34 @@ describe('the group chat', () => {
     ).toBe(true)
   })
 
+  test('idle chatter plays once the clock passes its time', () => {
+    const groupTexts = (state: GameState) =>
+      pipe(
+        state.messages,
+        Array.filter(({ message }) => message.thread._tag === 'Group'),
+        Array.map(({ message }) => textOf(message)),
+      )
+    const sendsToSlot =
+      ((IDLE_BEAT_MINUTES[0] ?? 0) - 9 * 60) / MINUTES_PER_MESSAGE
+    const almost = Array.reduce(
+      Array.range(1, sendsToSlot - 1),
+      startGame(caseData),
+      state => play(state, dm('wes', 'hmm'), { route: () => 'fail' }).state,
+    )
+    expect(groupTexts(almost)).not.toContain('who finished the good coffee')
+    const crossed = play(almost, dm('wes', 'hmm'), { route: () => 'fail' })
+    expect(Array.map(posted(crossed), textOf).slice(-2)).toEqual([
+      'who finished the good coffee',
+      'Not me.',
+    ])
+    const after = play(crossed.state, dm('wes', 'hmm'), {
+      route: () => 'fail',
+    })
+    expect(
+      groupTexts(after.state).filter(text => text === 'Not me.'),
+    ).toHaveLength(1)
+  })
+
   test('the Wi-Fi log thread does not take messages', () => {
     const step = play(startGame(caseData), send({ _tag: 'WifiLog' }, 'hello'))
     expect(step.out).toEqual([{ _tag: 'Rejected', reason: 'invalid' }])
@@ -430,11 +460,41 @@ describe('the case file and the arrest', () => {
     ])
   })
 
-  test('the arrest reveals the timeline', () => {
-    const result = arrest(saved, 'dale', claimId, proofId).out[0]
-    expect(
-      result?._tag === 'ArrestResult' && result.result.timeline.length,
-    ).toBe(caseData.timeline.length)
+  const resultOf = (step: Step) => {
+    const message = step.out[0]
+    return message?._tag === 'ArrestResult'
+      ? message.result
+      : expect.fail('no arrest result')
+  }
+
+  const evidenceAt = (step: Step, time: string) =>
+    Array.findFirst(resultOf(step).timeline, event => event.time === time).pipe(
+      Option.map(event => event.evidence),
+      Option.getOrUndefined,
+    )
+
+  test('the arrest reveals the timeline, marking what the detective found', () => {
+    const step = arrest(saved, 'dale', claimId, proofId)
+    expect(resultOf(step).timeline).toHaveLength(caseData.timeline.length)
+    // NOTE: saved, published but not saved, never published, and the theft
+    // itself, which no message can carry.
+    expect(evidenceAt(step, '1:12am')).toBe('saved')
+    expect(evidenceAt(step, '1:31am')).toBe('seen')
+    expect(evidenceAt(step, '11:48pm')).toBe('missed')
+    expect(evidenceAt(step, '1:15am')).toBe('none')
+  })
+
+  test('the reveal names the lie and proof that closed the case', () => {
+    expect(resultOf(arrest(saved, 'dale', claimId, proofId)).solution).toEqual({
+      claim: 'Dale was asleep from 11:15pm on Friday and never came downstairs',
+      proof:
+        "Dale's phone joined the kitchen access point at 1:12am on Friday night",
+    })
+  })
+
+  test('a failed arrest shows the closest pair the detective could have used', () => {
+    const solution = resultOf(arrest(saved, 'wes', claimId, proofId)).solution
+    expect(solution?.claim).toContain('11:15')
   })
 })
 

@@ -1324,6 +1324,55 @@ html:has(.lock) body {
   font-weight: 600;
   color: var(--text);
 }
+.t-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.t-evidence {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.ev-saved .t-evidence {
+  color: var(--accent);
+}
+.ev-missed .t-evidence {
+  color: var(--danger);
+}
+.t-night {
+  margin: 14px 0 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+}
+.tally {
+  margin: 0;
+  font-size: 14.5px;
+  color: var(--text-2);
+}
+.solution {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: var(--card-r);
+  background: var(--card);
+  font-size: 14.5px;
+  line-height: 1.4;
+}
+.solution dt {
+  font-size: 12.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--muted);
+}
+.solution dd {
+  margin: 2px 0 0;
+  color: var(--text);
+}
+.solution dd + dt {
+  margin-top: 10px;
+}
 
 /* ---------- Split view (tablet and up) ---------- */
 @media (min-width: 768px) {

@@ -3,9 +3,9 @@
 
 import { Schema } from 'effect'
 
-import { Day, GuestId, Slug } from './ids'
+import { Day, GuestId, Night, Slug } from './ids'
 
-export { DAYS, Day, GuestId, LAST_DAY } from './ids'
+export { DAYS, Day, GuestId, LAST_DAY, NIGHTS, Night } from './ids'
 
 // IDS
 
@@ -17,15 +17,9 @@ export type TopicId = typeof TopicId.Type
 
 // TIME
 
-// NOTE: night 0 is the night of the theft, before day 1. The thief makes a
-// move on nights 1 and 2. Day 3 ends with the arrest, so there is no night 3.
-export const Night = Schema.Literals([0, 1, 2])
-export type Night = typeof Night.Type
-
 export const MoveNight = Schema.Literals([1, 2])
 export type MoveNight = typeof MoveNight.Type
 
-export const NIGHTS: ReadonlyArray<Night> = [0, 1, 2]
 export const MOVE_NIGHTS: ReadonlyArray<MoveNight> = [1, 2]
 
 export const ClockTime = Schema.String.check(

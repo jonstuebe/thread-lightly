@@ -185,7 +185,7 @@ GroupBeat {
 ```
 
 - **Morning beats** play from the script and announce the night's events, with typing indicators and reading-speed pacing as today.
-- **Idle chatter** plays occasionally while you're in other threads, so the group chat feels alive.
+- **Idle chatter** plays while you're in other threads, so the group chat feels alive. A day's idle beats play in order as the clock passes 11:20am, 2pm and 4:40pm (`IDLE_BEAT_MINUTES` in `worker/game/engine.ts`), so a day has at most three. Lines from guests who are asleep are skipped. A day that ends early never plays its later beats, which is why the checker never counts idle beat facts as findable.
 - **When you post in the group chat**, Clef picks zero to two guests who would plausibly answer, from their traits and mood. Then each one goes through the section 5 engine using that guest's **public** topic list.
 
 Guests are guarded in public. Each topic entry is flagged `public` or `dmOnly`, and the group chat never serves a `dmOnly` topic.
@@ -242,7 +242,11 @@ Contradiction {
 | The thief   | A contradiction about something else, or none | **They walk.** Right person, the case doesn't hold.      |
 | An innocent | Anything                                      | **Wrong person.** The thief leaves Monday with the item. |
 
-Every ending reveals the true timeline, so you learn what you missed.
+Every ending reveals the true timeline, so you learn what you missed:
+
+- **The solution.** The thief's lie about the theft and its proof, as fact texts: the pair you used if you closed the case, or else the theft contradiction you came closest to (both halves seen, then one).
+- **The timeline, night by night.** Each event is marked by how its evidence reached you: _in your case file_, _you saw this_, or _missed_. Only facts some message could carry count, so the theft itself and timeline-only facts are never "missed".
+- **A tally:** "You found 6 of 12 clues and saved 1."
 
 ## 9. Case generation and solvability
 
@@ -358,6 +362,7 @@ There are no accounts. The case ID is kept in `localStorage`, and refreshing res
 - **Group chat.** Clef asks one yes/no question per awake guest; up to two guests with ≥ 0.5 answer, or the single most likely one if nobody clears it. They answer from public topics only.
 - **Small talk.** The small-talk model (`SMALLTALK_MODEL`) gets the guest's name, role, voice and temperament and no facts. Clef then checks its line for times, whereabouts or anything about the item; a flagged line becomes a dodge. Any model failure also becomes a dodge.
 - **Pacing.** The server sends `Typing` and the reply together. The client paces them at reading speed.
+- **Idle beats.** See section 6.
 - **Arrest.** Both messages must be in the case file. The claim must be the suspect's own message, and the pair must match a theft contradiction for `caseClosed`. After the arrest everything but `Resume` is rejected.
 
 ### Cost controls
@@ -387,7 +392,12 @@ All of this happens on a branch, since it replaces the current game.
 3. ~~**Server foundation.**~~ Done. `worker/game/engine.ts` holds the rules as a pure Effect function (state and client message in, state and server messages out), with Clef and small talk behind the `Router` and `SmallTalk` services (`worker/game/ai.ts`, live versions in `worker/ai-live.ts`). `worker/case-object.ts` is the Durable Object shell. The engine tests play the silver brooch case end to end with a scripted fake, and a manual WebSocket run against live Clef closed the case.
 4. ~~**Client rewrite.**~~ Done. The Foldkit client in `src/` plays the silver brooch case over the WebSocket: the conversation list, DM, group and Wi-Fi log threads, long-press (or right-click, or Enter) to save, the case file, the arrest steps and the result with its timeline. The socket is a `ManagedResource` (`src/socket.ts`). The client paces replies itself; see "How the chat is paced" in the README. `/api/guest-texts`, the Anthropic SDK and the Mafia flow are gone.
 5. ~~**Case generation.**~~ Done. The `generate-case` skill (`.agents/skills/generate-case`) writes a case and checks it with `pnpm cases:check` (`scripts/check-cases.ts`). The checker gained rule 9, variants agree. The first batch is `the-recipe-tin`, `the-regatta-cup` and `the-last-exposure`. `src/no-case-data.test.ts` keeps the client's imports away from case data, and the wire protocol's primitives moved to `shared/ids.ts` so the client no longer bundles the case schema.
-6. **Make the guests feel alive.** Group chat director, idle chatter, night moves, patience tuning, endings and the timeline reveal.
+6. **Make the guests feel alive.** Mostly done:
+   - ~~Group chat director~~: Clef picks up to two responders (built in step 3).
+   - ~~Night moves~~: played from the case data through `afterNight` and `ifFactDestroyed` (built in step 3).
+   - ~~Idle chatter~~: idle beats play on the clock (section 6).
+   - ~~Endings and the timeline reveal~~: the result carries the solution and marks each event saved, seen or missed (section 8).
+   - **Patience tuning** is left for playtesting. The numbers live in each case, so tuning means editing cases and the generate-case skill, not the engine.
 
 ## 13. Open questions
 

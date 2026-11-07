@@ -464,7 +464,14 @@ describe('days and the arrest', () => {
             result: {
               ending: 'caseClosed',
               thief: 'dale',
-              timeline: [{ time: '01:10', text: 'Dale takes the brooch.' }],
+              timeline: [
+                {
+                  night: 0,
+                  time: '01:10',
+                  text: 'Dale takes the brooch.',
+                  evidence: 'none',
+                },
+              ],
             },
           }),
         ),
