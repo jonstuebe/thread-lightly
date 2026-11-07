@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit && tsc --noEmit -p worker",
     "format": "oxfmt",
     "test": "vitest run",
-    "lint": "oxlint src && effect-tsgo patch --no-typescript --oxlint && oxlint --config .oxlintrc.effect.json --deny-warnings src"
+    "lint": "oxlint src && effect-tsgo patch --no-typescript --oxlint && oxlint --config .oxlintrc.effect.json --deny-warnings src",
+    "spike:clef": "node spikes/clef-routing/run.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.6.0",
