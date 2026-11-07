@@ -124,9 +124,9 @@ Clef (`@cf/cloudflare/clef`, the 27B model) gets one request per player message.
 The Durable Object then applies this rule, validated by the spike:
 
 1. injection ≥ 0.5 → dodge (tier 3)
-2. topic confidence < 0.3 → dodge (tier 3). This is the "not in the dictionary" signal. Clef almost never picks an explicit `unknown` option, so we don't offer one.
-3. topic = `smalltalk` → tier 2
-4. otherwise → tier 1
+2. topic = `smalltalk` with confidence ≥ 0.3 → tier 2
+3. accusatory tone with a confident topic → the guest's `pressed` reply, reworded by the composer to fit
+4. otherwise → the composer (tier 1), with Clef's topic as a hint when its confidence is ≥ 0.3. Clef almost never picks an explicit `unknown` option, so low confidence is the "not sure" signal, and the composer decides from what the guest would actually say.
 
 In the spike (branch `spike/clef-routing`, see `spikes/clef-routing/VERDICT.md`), this rule answered 69 of 77 in-dictionary messages correctly. It served one wrong answer and dodged every off-dictionary and injection message. Clef-flash and two-step routing (category, then topic) both did clearly worse.
 
@@ -136,7 +136,19 @@ Lessons for the dictionary and the case-generation skill:
 - **Accusations come from tone, not a topic.** "Did you take the brooch?" routes to `brooch`, but its tone reads as accusatory. An accusatory tone serves the guest's `pressed` replies instead of the topic's.
 - **Greetings need a fallback.** "hey" and "thanks" score below the threshold. Each guest gets a few canned greeting and thanks replies, picked when the tone is friendly and the confidence is low.
 
-### Tier 1: dictionary hit (most messages)
+### Tier 1: the composer (most messages)
+
+Canned replies alone answer the topic, not the question: "which room is the case in?" routed to the brooch topic got "Everyone saw it at the toast at ten." So a bigger model (`REPLY_MODEL`, Llama 3.3 70B) writes the reply. It sees:
+
+- the guest's voice and temperament
+- the case `background`: what every guest knows and nobody disputes (rooms, schedule, who sleeps where, what the item looks like). It carries no facts, so anyone can say it.
+- a **menu**: one reply per topic the guest could answer right now (`activeReplies`, rotated by times asked). `Secret` topics are left out unless Clef picked that topic with confidence, so a vague question can't stumble into a secret.
+- the last few turns and the message
+
+It picks at most two menu replies, or only the background, or `NONE`, and writes one text in voice. Clef then checks the text against the fact text of every fact the picked replies carry, and that it claims nothing beyond the picked replies and the background. A lie must stay a lie, or the case file loses its evidence. The message carries exactly the picked replies' fact IDs, so the Durable Object still knows what was revealed and the checker's proofs hold.
+
+- `NONE` → a greeting if the tone is friendly, otherwise a dodge, with no repeated-question surcharge
+- the composer fails or breaks a fact → Clef's confident topic posts verbatim, or else a greeting or dodge
 
 ```ts
 Topic {
@@ -180,10 +192,6 @@ Clef still checks its output for fact-like claims (times, places, names tied to 
 ### Tier 3: unknown, on topic
 
 The guest deflects in character with a pre-written dodge: "lol what? ask Margot", "why would I know that". Each guest gets 5–8 dodges written with their dictionary. Being cagey reads as personality, not a broken bot.
-
-### Later, maybe: rephrasing
-
-A cheap model could reword a matched tier-1 reply to fit the exact question. The facts would stay fixed, and Clef would check that no fact was added or dropped. We'd add this only if tier 1 feels stiff in testing.
 
 ## 6. Group chat director
 

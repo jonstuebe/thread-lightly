@@ -11,7 +11,16 @@ import {
   type Thread,
 } from '../../shared/protocol'
 import { pickCase } from '../cases'
-import { AiFailed, Router, type Routing, SMALLTALK, SmallTalk } from './ai'
+import {
+  AiFailed,
+  type Composed,
+  Composer,
+  type MenuItem,
+  Router,
+  type Routing,
+  SMALLTALK,
+  SmallTalk,
+} from './ai'
 import {
   IDLE_BEAT_MINUTES,
   MINUTES_PER_MESSAGE,
@@ -32,6 +41,14 @@ type Script = Readonly<{
   route?: (guest: GuestId, text: string) => Routing | 'fail'
   responders?: (text: string) => ReadonlyArray<GuestId>
   smallTalk?: (guest: GuestId, text: string) => string | 'fail'
+  // NOTE: an unscripted composer fails, so the router's confident pick posts
+  // verbatim, as it did before the composer.
+  compose?: (input: {
+    guest: GuestId
+    menu: ReadonlyArray<MenuItem>
+    hint: Option.Option<string>
+    text: string
+  }) => Composed | 'fail'
 }>
 
 const routed = (topic: string, overrides: Partial<Routing> = {}): Routing => ({
@@ -40,6 +57,20 @@ const routed = (topic: string, overrides: Partial<Routing> = {}): Routing => ({
   tone: 'neutral',
   injection: 0,
   ...overrides,
+})
+
+// NOTE: a composed answer that keeps every fact of the replies it picks.
+const answered = (
+  menu: ReadonlyArray<MenuItem>,
+  text: string,
+  picked: ReadonlyArray<string>,
+): Composed => ({
+  _tag: 'Answered',
+  text,
+  picked,
+  kept: menu
+    .filter(item => picked.includes(item.key))
+    .flatMap(item => item.facts.map(fact => fact.id)),
 })
 
 const fakeAi = (script: Script) =>
@@ -57,6 +88,15 @@ const fakeAi = (script: Script) =>
     Layer.succeed(SmallTalk, {
       reply: ({ guest, text }) => {
         const result = script.smallTalk?.(guest.id, text) ?? 'fail'
+        return result === 'fail'
+          ? Effect.fail(new AiFailed({ reason: 'scripted' }))
+          : Effect.succeed(result)
+      },
+    }),
+    Layer.succeed(Composer, {
+      compose: ({ guest, menu, hint, text }) => {
+        const result =
+          script.compose?.({ guest: guest.id, menu, hint, text }) ?? 'fail'
         return result === 'fail'
           ? Effect.fail(new AiFailed({ reason: 'scripted' }))
           : Effect.succeed(result)
@@ -193,6 +233,111 @@ describe('direct messages', () => {
   test('an accusation gets the pressed reply', () => {
     const step = play(start, dm('dale', 'you took it, admit it'), {
       route: () => routed('the-brooch', { tone: 'accusatory' }),
+    })
+    expect(guestReplies(step)).toEqual([
+      "whoa. I'm family here. maybe ask wes where his money comes from",
+    ])
+  })
+
+  test('the composer answers from the replies it picks, with their facts', () => {
+    const canned = play(start, dm('dale', 'where were you friday?'), {
+      route: () => routed('whereabouts-friday'),
+    })
+    const step = play(start, dm('dale', 'where were you friday?'), {
+      route: () => routed('whereabouts-friday'),
+      compose: ({ menu, hint }) => {
+        expect(hint).toEqual(Option.some('whereabouts-friday'))
+        return answered(menu, 'in bed by 11:15, all night', [
+          'whereabouts-friday',
+        ])
+      },
+    })
+    expect(guestReplies(step)).toEqual(['in bed by 11:15, all night'])
+    expect(step.state.messages.at(-1)?.factIds).toEqual(
+      canned.state.messages.at(-1)?.factIds,
+    )
+  })
+
+  test('two picked replies carry both sets of facts', () => {
+    const picks = ['whereabouts-friday', 'his-phone']
+    const step = play(start, dm('dale', 'where were you and your phone?'), {
+      route: () => routed('whereabouts-friday'),
+      compose: ({ menu }) => answered(menu, 'bed, phone charging', picks),
+    })
+    const expected = caseData.guests
+      .find(guest => guest.id === 'dale')!
+      .dictionary.topics.filter(topic => picks.includes(topic.id))
+      .flatMap(topic => topic.variants[0].factIds)
+    expect([...(step.state.messages.at(-1)?.factIds ?? [])].sort()).toEqual(
+      [...new Set(expected)].sort(),
+    )
+  })
+
+  test('a fact the composed text drops is not carried', () => {
+    const step = play(start, dm('margot', 'what does it look like?'), {
+      route: () => routed('the-brooch'),
+      compose: () => ({
+        _tag: 'Answered',
+        text: 'Silver, with a little garnet.',
+        picked: ['the-brooch'],
+        kept: [],
+      }),
+    })
+    expect(guestReplies(step)).toEqual(['Silver, with a little garnet.'])
+    expect(step.state.messages.at(-1)?.factIds).toEqual([])
+  })
+
+  test('a low-confidence question can still be answered from the menu', () => {
+    const step = play(start, dm('margot', 'which room is the case in?'), {
+      route: () => routed('the-brooch', { confidence: 0.1 }),
+      compose: ({ menu, hint }) => {
+        expect(hint).toEqual(Option.none())
+        return answered(menu, 'The great room!', [])
+      },
+    })
+    expect(guestReplies(step)).toEqual(['The great room!'])
+    expect(step.state.messages.at(-1)?.factIds).toEqual([])
+  })
+
+  test('secret topics stay off the menu unless the router is sure', () => {
+    const menus: Array<ReadonlyArray<string>> = []
+    const compose = ({ menu }: { menu: ReadonlyArray<MenuItem> }) => {
+      menus.push(menu.map(item => item.key))
+      return 'fail' as const
+    }
+    play(start, dm('priya', 'anything else?'), {
+      route: () => routed('smoking', { confidence: 0.1 }),
+      compose,
+    })
+    play(start, dm('priya', 'do you smoke?'), {
+      route: () => routed('smoking'),
+      compose,
+    })
+    expect(menus[0]).not.toContain('smoking')
+    expect(menus[1]).toContain('smoking')
+  })
+
+  test('when nothing on the menu fits, the guest dodges without a repeat charge', () => {
+    const script: Script = {
+      route: () => routed('the-brooch'),
+      compose: ({ menu, text }) =>
+        text === 'who took it?'
+          ? { _tag: 'Unanswered' }
+          : answered(menu, 'at the toast', ['the-brooch']),
+    }
+    const first = play(start, dm('priya', 'when did you see it?'), script)
+    const second = play(first.state, dm('priya', 'who took it?'), script)
+    expect(guestReplies(second)).toEqual(['No idea.'])
+    expect(second.state.messages.at(-1)?.factIds).toEqual([])
+    expect(
+      first.state.patience['priya']! - second.state.patience['priya']!,
+    ).toBe(1)
+  })
+
+  test('a pressed reply posts as written when the composer can’t use it', () => {
+    const step = play(start, dm('dale', 'you took it, admit it'), {
+      route: () => routed('the-brooch', { tone: 'accusatory' }),
+      compose: () => ({ _tag: 'Unanswered' }),
     })
     expect(guestReplies(step)).toEqual([
       "whoa. I'm family here. maybe ask wes where his money comes from",

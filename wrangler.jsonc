@@ -21,6 +21,10 @@
   "vars": {
     // The cheap model for in-character small talk (docs/design.md, tier 2).
     "SMALLTALK_MODEL": "@cf/meta/llama-3.1-8b-instruct-fast",
+    // The composer: picks from a guest's dictionary replies and writes one
+    // that answers the exact question (docs/design.md, tier 1). Bigger than the
+    // small-talk model, since it has to keep every claim intact.
+    "REPLY_MODEL": "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
   },
 
   // Clef routing and small talk. The AI binding always runs remotely, even in
@@ -41,6 +45,7 @@
   "previews": {
     "vars": {
       "SMALLTALK_MODEL": "@cf/meta/llama-3.1-8b-instruct-fast",
+      "REPLY_MODEL": "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
     },
     "ai": { "binding": "AI" },
     "durable_objects": {

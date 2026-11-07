@@ -3,6 +3,7 @@
   "setting": {
     "title": "The Recipe Tin",
     "premise": "Hattie Lund invited five guests to Pine Hollow for a long weekend and a friendly bake-off on Saturday. On Saturday morning her late grandmother's recipe tin, a dented tin of handwritten index cards, is gone from the great room mantel, and the bake-off is put off until Monday.",
+    "background": "Pine Hollow is a two-storey log lodge on a lake. Downstairs: the great room with the fireplace and the mantel, with a little bedroom just off it; the kitchen and pantry; and the back door. Upstairs: Hattie's, Theo's and Nell's rooms, Nell's right next to Theo's. A path out the back leads to the bunkhouse, a one-room cabin with its own porch, and on past it to the woodshed, with the compost bin beside it. Hattie is hosting the long weekend, Friday to Monday, with a friendly bake-off planned for Saturday. Friday: everyone arrived in the afternoon, then dinner, and at 9:30 dessert in the great room, where Hattie read a few of Nana Ingrid's cards aloud and set the tin on the mantel. Saturday morning the mantel was empty, and Hattie put the bake-off off until Monday. Hattie, Theo and Nell sleep upstairs; Walt's knees can't manage the stairs, so he has the little room off the great room; Colette and Pip share the bunkhouse. The tin is Nana Ingrid's old recipe tin: dented, with a lid that sticks, full of index cards in her own handwriting.",
     "missingItem": "Hattie's late grandmother's dented recipe tin of handwritten index cards",
     "accessPoints": ["lodge", "kitchen", "bunkhouse", "woodshed"]
   },
@@ -1425,6 +1426,42 @@
                 ]
               }
             ]
+          },
+          {
+            "id": "suspicions",
+            "description": "who Hattie thinks took Nana's tin, and why",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "Oh gosh, I can't... everyone here loves Nana's cards, that's the whole point of the weekend...",
+                "factIds": []
+              },
+              {
+                "text": "I keep thinking it must be someone who wanted the bake-off called off... and then I feel terrible for thinking it 💛",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "heard-friday",
+            "description": "anything Hattie saw or heard during Friday night, the night of the theft: noises, lights, people up and about",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Not a thing... I slept straight through, oh gosh, I'm useless.",
+                "factIds": []
+              },
+              {
+                "text": "Nothing!! I was dead to the world... I keep wishing I'd woken up.",
+                "factIds": []
+              }
+            ]
           }
         ],
         "pressed": {
@@ -1916,6 +1953,42 @@
                     ]
                   }
                 ]
+              }
+            ]
+          },
+          {
+            "id": "suspicions",
+            "description": "who Theo thinks took the tin, and why",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "nell. she's been fishing for blog content all weekend. stolen heirloom is a great post",
+                "factIds": []
+              },
+              {
+                "text": "ask nell. she can't keep her hands off a story",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "heard-friday",
+            "description": "anything Theo saw or heard during Friday night, the night of the theft: noises, lights, people up and about",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "nothing. went to bed, slept",
+                "factIds": ["theo-straight-to-bed"]
+              },
+              {
+                "text": "slept straight through. heard nothing. k.",
+                "factIds": ["theo-straight-to-bed"]
               }
             ]
           }
@@ -2421,6 +2494,42 @@
                 ]
               }
             ]
+          },
+          {
+            "id": "suspicions",
+            "description": "who Colette thinks took the tin, and why",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "Sweetheart, I'd never point a finger. But Theo has been ever so prickly about this bake-off. x",
+                "factIds": []
+              },
+              {
+                "text": "Theo, darling. He's been sulking about his pie crust all weekend. Just a pinch of a thought. x",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "heard-friday",
+            "description": "anything Colette saw or heard during Friday night, the night of the theft: noises, lights, people up and about",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Nothing, sweetheart. I was tucked up in the bunkhouse by half eleven, bar a quick trip for warm milk around half one, and I saw nobody. x",
+                "factIds": ["colette-milk-trip"]
+              },
+              {
+                "text": "Not a peep, darling. Bunkhouse by half eleven, one little warm-milk trip to the lodge kitchen about half one, straight back to bed. x",
+                "factIds": ["colette-milk-trip"]
+              }
+            ]
           }
         ],
         "pressed": {
@@ -2908,6 +3017,57 @@
                   {
                     "text": "walt found it in the woodshed wrapped in theo's scarf but like. that scarf was on our bunkhouse hook til 9pm sunday at least??",
                     "factIds": ["tin-found-woodshed", "scarf-on-bunkhouse-hook"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "suspicions",
+            "description": "who Pip thinks took the tin, and why",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "omg idk!! not colette tho she's literally so sweet ✨",
+                "factIds": []
+              },
+              {
+                "text": "honestly?? theo's been SO grumpy. that's not evidence tho lol 😭",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "heard-friday",
+            "description": "anything Pip saw or heard during Friday night, the night of the theft: noises, lights, people up and about",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "literally nothing, i sleep w noise cancelling headphones 😭",
+                "factIds": ["pip-slept-headphones"]
+              },
+              {
+                "text": "nope!! headphones on, rain sounds, didn't see or hear a thing all night",
+                "factIds": ["pip-slept-headphones"]
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 1,
+                "variants": [
+                  {
+                    "text": "just colette going for warm milk!! she was back in like five minutes w the mug ✨",
+                    "factIds": ["pip-saw-milk-mug"]
+                  },
+                  {
+                    "text": "only colette popping out for milk, and she came right back, i saw the mug lol",
+                    "factIds": ["pip-saw-milk-mug"]
                   }
                 ]
               }
@@ -3411,6 +3571,24 @@
                 ]
               }
             ]
+          },
+          {
+            "id": "suspicions",
+            "description": "who Walt thinks took Ingrid's tin, and why",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "I would rather not guess. Ingrid never cared for guessing.",
+                "factIds": []
+              },
+              {
+                "text": "I will not name anyone without proof. Find the proof.",
+                "factIds": []
+              }
+            ]
           }
         ],
         "pressed": {
@@ -3889,6 +4067,24 @@
                     "factIds": ["tin-found-woodshed"]
                   }
                 ]
+              }
+            ]
+          },
+          {
+            "id": "suspicions",
+            "description": "who Nell thinks took the tin, and why",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "ok so I'm not *saying* anything, but Colette went white as flour at dessert when Hattie mentioned the plum kuchen card ☕",
+                "factIds": ["colette-went-pale"]
+              },
+              {
+                "text": "ok so — Colette. She went *pale* the second Hattie brought up the plum kuchen card at dessert. I notice these things ☕",
+                "factIds": ["colette-went-pale"]
               }
             ]
           }

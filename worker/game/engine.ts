@@ -1,7 +1,7 @@
 // NOTE: the game rules for one case (docs/design.md, sections 2, 4, 5 and 8).
 // `handle` takes the stored state and one client message and returns the next
-// state plus the messages to send. Model calls go through the Router and
-// SmallTalk services; everything else is pure.
+// state plus the messages to send. Model calls go through the Router,
+// SmallTalk and Composer services; everything else is pure.
 
 import { Array, Effect, Option, pipe } from 'effect'
 
@@ -15,6 +15,7 @@ import {
   type GuestId,
   LAST_DAY,
   type Reply,
+  type Topic,
   type TopicId,
 } from '../../shared/case'
 import {
@@ -38,9 +39,11 @@ import {
   sightingsOn,
 } from '../../shared/replies'
 import {
+  type Ai,
   CONFIDENCE_THRESHOLD,
   INJECTION_THRESHOLD,
   MAX_GROUP_RESPONDERS,
+  Composer,
   Router,
   SMALLTALK,
   SmallTalk,
@@ -53,6 +56,7 @@ export const DAY_START_MINUTES = 9 * 60
 export const MINUTES_PER_MESSAGE = 20
 export const MIN_SEND_INTERVAL_MS = 750
 const RECENT_MESSAGES = 4
+const PRESSED_KEY = 'pressed'
 
 // NOTE: a day's idle beats play in order as the clock passes these times
 // (11:20am, 2pm, 4:40pm), so the group chat stirs while the detective is busy
@@ -569,7 +573,7 @@ const makeArrest = (
 type Answer = Readonly<{
   reply: Reply
   cost: number
-  topic: Option.Option<TopicId>
+  topics: ReadonlyArray<TopicId>
   dodged: boolean
 }>
 
@@ -619,7 +623,7 @@ const dodge = (state: GameState, guest: Guest, cost: number): Answer => ({
     factIds: [],
   },
   cost,
-  topic: Option.none(),
+  topics: [],
   dodged: true,
 })
 
@@ -649,9 +653,49 @@ const pleasantry = (
       factIds: [],
     },
     cost,
-    topic: Option.none(),
+    topics: [],
     dodged: false,
   }
+}
+
+const factsOf = (
+  caseData: Case,
+  reply: Reply,
+): ReadonlyArray<Readonly<{ id: FactId; text: string }>> =>
+  Array.filter(caseData.facts, fact => reply.factIds.includes(fact.id)).map(
+    fact => ({ id: fact.id, text: fact.text }),
+  )
+
+type MenuEntry = Readonly<{ topic: TopicId; reply: Reply }>
+
+// NOTE: what the guest could say right now, one reply per topic. Secret topics
+// stay off the menu unless the router picked one with confidence, so a vague
+// question can't stumble into a secret.
+const menuOf = (
+  caseData: Case,
+  state: GameState,
+  guest: Guest,
+  topics: ReadonlyArray<Topic>,
+  confident: Option.Option<TopicId>,
+): ReadonlyArray<MenuEntry> => {
+  const destroyed = destroyedFacts(caseData, state.day)
+  const annoyed = statusOf(state, guest) === 'annoyed'
+  const asks = state.asks[guest.id] ?? []
+  return Array.flatMap(topics, topic => {
+    const isConfident = Option.contains(confident, topic.id)
+    if (topic.subject._tag === 'Secret' && !isConfident) {
+      return []
+    }
+    const replies =
+      annoyed && topic.lowPatience !== undefined
+        ? activeReplies({ variants: topic.lowPatience }, state.day, destroyed)
+        : activeReplies(topic, state.day, destroyed)
+    const timesAsked = Array.filter(asks, ask => ask.topic === topic.id).length
+    return Option.match(pickRotating(replies, timesAsked), {
+      onNone: () => [],
+      onSome: reply => [{ topic: topic.id, reply }],
+    })
+  })
 }
 
 const answer = (
@@ -661,10 +705,12 @@ const answer = (
   thread: Thread,
   message: string,
   recent: ReadonlyArray<Turn>,
-): Effect.Effect<Answer, never, Router | SmallTalk> =>
+): Effect.Effect<Answer, never, Ai> =>
   Effect.gen(function* () {
     const router = yield* Router
     const smallTalk = yield* SmallTalk
+    const composer = yield* Composer
+    const traits = traitsOf(guest)
     const topics = Array.filter(
       guest.dictionary.topics,
       topic => thread._tag !== 'Group' || topic.visibility === 'public',
@@ -673,69 +719,153 @@ const answer = (
       router.route({ guest, topics, recent, text: message }),
     )
     if (Option.isNone(maybeRouting)) {
-      return dodge(state, guest, traitsOf(guest).costs.neutral)
+      return dodge(state, guest, traits.costs.neutral)
     }
     const routing = maybeRouting.value
-    const asks = state.asks[guest.id] ?? []
-    const repeated = Array.some(
-      asks,
-      ask => ask.day === state.day && ask.topic === routing.topic,
-    )
-    const cost =
-      traitsOf(guest).costs[routing.tone] +
-      (repeated ? traitsOf(guest).costs.repeated : 0)
+    const baseCost = traits.costs[routing.tone]
+    const confident = routing.confidence >= CONFIDENCE_THRESHOLD
 
     if (routing.injection >= INJECTION_THRESHOLD) {
-      return dodge(state, guest, cost)
+      return dodge(state, guest, baseCost)
     }
 
-    const maybeTopic = Array.findFirst(
-      topics,
-      topic => topic.id === routing.topic,
-    )
-    if (
-      routing.confidence < CONFIDENCE_THRESHOLD ||
-      (routing.topic !== SMALLTALK && Option.isNone(maybeTopic))
-    ) {
-      return routing.tone === 'friendly'
-        ? pleasantry(state, guest, thread, cost)
-        : dodge(state, guest, cost)
-    }
-
-    if (Option.isNone(maybeTopic)) {
+    if (confident && routing.topic === SMALLTALK) {
       const maybeSmallTalk = yield* Effect.option(
         smallTalk.reply({ guest, recent, text: message }),
       )
       return Option.match(maybeSmallTalk, {
-        onNone: () => dodge(state, guest, cost),
+        onNone: () => dodge(state, guest, baseCost),
         onSome: line => ({
           reply: { text: line, factIds: [] },
-          cost,
-          topic: Option.none(),
+          cost: baseCost,
+          topics: [],
           dodged: false,
         }),
       })
     }
 
-    const topic = maybeTopic.value
-    const destroyed = destroyedFacts(caseData, state.day)
-    const annoyed = statusOf(state, guest) === 'annoyed'
-    const replies =
-      routing.tone === 'accusatory'
-        ? activeReplies(guest.dictionary.pressed, state.day, destroyed)
-        : annoyed && topic.lowPatience !== undefined
-          ? activeReplies({ variants: topic.lowPatience }, state.day, destroyed)
-          : activeReplies(topic, state.day, destroyed)
-    const timesAsked = Array.filter(asks, ask => ask.topic === topic.id).length
-    return Option.match(pickRotating(replies, timesAsked), {
-      onNone: () => dodge(state, guest, cost),
-      onSome: reply => ({
-        reply,
-        cost,
-        topic: Option.some(topic.id),
+    const confidentTopic = Option.filter(
+      Array.findFirst(topics, topic => topic.id === routing.topic),
+      () => confident,
+    )
+    const asks = state.asks[guest.id] ?? []
+    const costFor = (picked: ReadonlyArray<TopicId>): number =>
+      Array.some(
+        asks,
+        ask => ask.day === state.day && picked.includes(ask.topic),
+      )
+        ? baseCost + traits.costs.repeated
+        : baseCost
+    const fallback = (): Answer =>
+      routing.tone === 'friendly'
+        ? pleasantry(state, guest, thread, baseCost)
+        : dodge(state, guest, baseCost)
+
+    // NOTE: an accusation gets the pressed reply, reworded to fit. It answers
+    // any accusation, so it posts as written if the composer can't use it.
+    if (routing.tone === 'accusatory' && Option.isSome(confidentTopic)) {
+      const destroyed = destroyedFacts(caseData, state.day)
+      const maybePressed = pickRotating(
+        activeReplies(guest.dictionary.pressed, state.day, destroyed),
+        Array.filter(asks, ask => ask.topic === confidentTopic.value.id).length,
+      )
+      if (Option.isNone(maybePressed)) {
+        return dodge(state, guest, costFor([confidentTopic.value.id]))
+      }
+      const pressed = maybePressed.value
+      const composed = yield* pipe(
+        composer.compose({
+          guest,
+          menu: [
+            {
+              key: PRESSED_KEY,
+              text: pressed.text,
+              facts: factsOf(caseData, pressed),
+            },
+          ],
+          hint: Option.some(PRESSED_KEY),
+          recent,
+          text: message,
+        }),
+        Effect.option,
+      )
+      return {
+        reply: {
+          text: Option.match(composed, {
+            onNone: () => pressed.text,
+            onSome: result =>
+              result._tag === 'Answered' && result.picked.includes(PRESSED_KEY)
+                ? result.text
+                : pressed.text,
+          }),
+          factIds: pressed.factIds,
+        },
+        cost: costFor([confidentTopic.value.id]),
+        topics: [confidentTopic.value.id],
         dodged: false,
+      }
+    }
+
+    const menu = menuOf(
+      caseData,
+      state,
+      guest,
+      topics,
+      Option.map(confidentTopic, topic => topic.id),
+    )
+    const maybeComposed = yield* Effect.option(
+      composer.compose({
+        guest,
+        menu: Array.map(menu, ({ topic, reply }) => ({
+          key: topic,
+          text: reply.text,
+          facts: factsOf(caseData, reply),
+        })),
+        hint: Option.map(confidentTopic, topic => topic.id),
+        recent,
+        text: message,
       }),
-    })
+    )
+
+    // NOTE: the composer is down or broke the facts, so fall back to the
+    // router's confident pick verbatim, as before the composer existed.
+    if (Option.isNone(maybeComposed)) {
+      return Option.match(
+        Option.flatMap(confidentTopic, topic =>
+          Array.findFirst(menu, item => item.topic === topic.id),
+        ),
+        {
+          onNone: fallback,
+          onSome: ({ topic, reply }) => ({
+            reply,
+            cost: costFor([topic]),
+            topics: [topic],
+            dodged: false,
+          }),
+        },
+      )
+    }
+
+    const composed = maybeComposed.value
+    if (composed._tag === 'Unanswered') {
+      return fallback()
+    }
+    const picked = Array.filter(menu, item =>
+      composed.picked.includes(item.topic),
+    )
+    const pickedTopics = Array.map(picked, item => item.topic)
+    return {
+      reply: {
+        text: composed.text,
+        factIds: Array.filter(
+          Array.dedupe(Array.flatMap(picked, item => item.reply.factIds)),
+          factId => composed.kept.includes(factId),
+        ),
+      },
+      cost: costFor(pickedTopics),
+      topics: pickedTopics,
+      dodged: false,
+    }
   })
 
 const applyAnswer = (
@@ -749,13 +879,10 @@ const applyAnswer = (
     traitsOf(guest).perDay,
     patienceOf(state, guest) - given.cost,
   )
-  const asks = Option.match(given.topic, {
-    onNone: () => state.asks[guest.id] ?? [],
-    onSome: topic => [
-      ...(state.asks[guest.id] ?? []),
-      { day: state.day, topic },
-    ],
-  })
+  const asks = [
+    ...(state.asks[guest.id] ?? []),
+    ...Array.map(given.topics, topic => ({ day: state.day, topic })),
+  ]
   const charged: Step = {
     ...step,
     state: {
@@ -787,7 +914,7 @@ const sendMessage = (
   thread: Thread,
   message: string,
   now: number,
-): Effect.Effect<Step, never, Router | SmallTalk> =>
+): Effect.Effect<Step, never, Ai> =>
   Effect.gen(function* () {
     if (state.phase !== 'day') {
       return reject(state, 'notNow')
@@ -886,7 +1013,7 @@ export const handle = (
   state: GameState,
   message: ClientMessage,
   now: number,
-): Effect.Effect<Step, never, Router | SmallTalk> => {
+): Effect.Effect<Step, never, Ai> => {
   if (state.ending !== undefined && message._tag !== 'Resume') {
     return Effect.succeed(reject(state, 'notNow'))
   }

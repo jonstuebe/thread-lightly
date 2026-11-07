@@ -3,6 +3,7 @@
   "setting": {
     "title": "The Silver Brooch",
     "premise": "Margot Hale invited three guests to Pine Hollow for a long weekend. On Saturday morning her grandmother's silver brooch is gone from the display case in the great room.",
+    "background": "Pine Hollow is a two-storey log lodge on a lake. Downstairs: the great room with the stone fireplace, the big couch and the glass display case; the kitchen, with the back door and mudroom where everyone leaves boots and coats; and the front porch. Upstairs: Margot's room, the guest rooms and the bunk room. A gravel path runs from the back of the lodge down to the boathouse and the dock. Margot is hosting the long weekend, Friday to Monday. Friday: everyone arrived in the afternoon, dinner at 7, then drinks by the fire, and at 10 Margot gave a toast in the great room beside the display case to show off the brooch. Saturday morning she found it gone. Dale and Priya have rooms upstairs; Wes lives in a cabin across the lake and is staying over. The brooch belonged to Margot's grandmother: silver, oval, with a small garnet in the middle, kept on a little velvet stand in the display case, with its velvet box.",
     "missingItem": "Margot's grandmother's silver brooch",
     "accessPoints": ["lodge", "kitchen", "boathouse"]
   },
@@ -599,7 +600,7 @@
           },
           {
             "id": "whereabouts-saturday",
-            "description": "where Margot was and what she heard on Saturday night",
+            "description": "where Margot was on Saturday night",
             "subject": {
               "_tag": "Whereabouts",
               "night": 1
@@ -609,6 +610,10 @@
               {
                 "text": "Tonight? Ask me tomorrow, detective.",
                 "factIds": []
+              },
+              {
+                "text": "Saturday night? I haven't had it yet! Ask me in the morning.",
+                "factIds": []
               }
             ],
             "afterNight": [
@@ -617,6 +622,10 @@
                 "variants": [
                   {
                     "text": "I was in bed, but I heard the back door go around 2. I told myself it was the wind.",
+                    "factIds": ["margot-heard-back-door"]
+                  },
+                  {
+                    "text": "In bed. But around two I heard the back door open, and I nearly went down, and then I didn't. I'm sorry.",
                     "factIds": ["margot-heard-back-door"]
                   }
                 ]
@@ -635,6 +644,10 @@
               {
                 "text": "Sunday night hasn't happened yet!",
                 "factIds": []
+              },
+              {
+                "text": "Ask me on Monday, detective. I'm hoping for a quiet one.",
+                "factIds": []
               }
             ],
             "afterNight": [
@@ -643,6 +656,10 @@
                 "variants": [
                   {
                     "text": "I went down for the oars at 10:30 and dug through Wes's tackle box for a lure. There was NO velvet box in it then. I'd swear to it.",
+                    "factIds": ["margot-tackle-empty"]
+                  },
+                  {
+                    "text": "At half past ten I went down for the oars and rummaged through Wes's tackle box for a lure. There was NO velvet box in it. Then straight back up to bed.",
                     "factIds": ["margot-tackle-empty"]
                   }
                 ]
@@ -664,6 +681,10 @@
               {
                 "text": "Everyone saw it at the toast at ten. It was right there in the case.",
                 "factIds": ["brooch-seen-at-toast"]
+              },
+              {
+                "text": "Grandma wore it every Sunday of her life. Silver, oval, one little garnet. I showed it off at the ten o'clock toast and it was right there in the case.",
+                "factIds": ["brooch-seen-at-toast"]
               }
             ]
           },
@@ -677,6 +698,14 @@
             "variants": [
               {
                 "text": "When I came down at 7 the glass door was open and the little velvet stand was empty.",
+                "factIds": ["case-found-open"]
+              },
+              {
+                "text": "Seven o'clock Saturday morning: the glass door standing open and the velvet stand bare. I just stood there.",
+                "factIds": ["case-found-open"]
+              },
+              {
+                "text": "I came down at 7 and the case was open and EMPTY. Nothing else in the room was touched.",
                 "factIds": ["case-found-open"]
               }
             ]
@@ -712,6 +741,14 @@
               {
                 "text": "Priya and I roomed together in college. She would never.",
                 "factIds": []
+              },
+              {
+                "text": "Priya's my oldest friend. We shared a dorm room for four years. She's quiet, that's all, it isn't sinister.",
+                "factIds": []
+              },
+              {
+                "text": "Priya? She'd sooner die than take something of mine. She just keeps to herself.",
+                "factIds": []
               }
             ]
           },
@@ -727,6 +764,259 @@
               {
                 "text": "Wes is a dear, but he still owes me four thousand dollars from last spring. Please don't tell him I said that.",
                 "factIds": ["wes-owes-margot"]
+              },
+              {
+                "text": "Wes is practically family. He borrowed four thousand dollars from me last spring and hasn't paid it back. PLEASE keep that between us.",
+                "factIds": ["wes-owes-margot"]
+              }
+            ]
+          },
+          {
+            "id": "suspicions",
+            "description": "who Margot thinks took the brooch, and why",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "I don't want to suspect ANYONE. They're all my people. Please tell me it fell behind the radiator.",
+                "factIds": []
+              },
+              {
+                "text": "Honestly? I lie awake going through everyone, and then I feel awful for it. I just want it back.",
+                "factIds": []
+              },
+              {
+                "text": "Everyone keeps looking sideways at Wes and I HATE it. I don't know, detective. That's why you're here.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "the-evening",
+            "description": "Friday evening before bed: dinner, drinks by the fire, Margot's toast, and who went up when",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Dinner at seven, drinks by the fire, my toast at ten. Dale went up a little after eleven and I followed at 11:30. It was a LOVELY night, until it wasn't.",
+                "factIds": ["margot-bed-1130"]
+              },
+              {
+                "text": "We ate at seven and sat by the fire, and I made my silly toast at ten. Dale had already said goodnight when I went up at 11:30.",
+                "factIds": ["margot-bed-1130"]
+              }
+            ]
+          },
+          {
+            "id": "heard-friday",
+            "description": "anything Margot saw or heard during Friday night, the night of the theft, while she slept",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Nothing at all, I'm afraid. I'd taken something to sleep. I didn't even hear my phone buzz.",
+                "factIds": []
+              },
+              {
+                "text": "Not a peep. I slept right through it, which I'll never forgive myself for.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "heard-saturday",
+            "description": "noises Margot noticed late on Saturday night, like the back door, and whether it could have been the wind",
+            "subject": {
+              "_tag": "NightEvent",
+              "night": 1
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Saturday night? It hasn't happened yet. Ask me tomorrow.",
+                "factIds": []
+              },
+              {
+                "text": "Ask me in the morning, detective. Hopefully there'll be nothing to tell.",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 1,
+                "variants": [
+                  {
+                    "text": "The back door, around two. Dale says it's the wind, and it DOES stick, but it sounded like someone to me.",
+                    "factIds": ["margot-heard-back-door"]
+                  },
+                  {
+                    "text": "Around 2 the back door opened and shut. I lay there with my heart pounding. Wind doesn't close a door, does it?",
+                    "factIds": ["margot-heard-back-door"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "heard-sunday",
+            "description": "anything Margot heard late on Sunday night, after she was back upstairs",
+            "subject": {
+              "_tag": "NightEvent",
+              "night": 2
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Sunday night? Ask me on Monday morning.",
+                "factIds": []
+              },
+              {
+                "text": "It hasn't happened yet, detective! Ask me Monday.",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "Not a thing once I was back upstairs. I actually slept, for once.",
+                    "factIds": []
+                  },
+                  {
+                    "text": "Nothing. I was asleep before midnight. I wish I'd stayed up, now.",
+                    "factIds": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "velvet-box",
+            "description": "the brooch's little velvet box: where it was kept and where it turned up",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Its little velvet box sat in the case beside the stand. When I found the case open, that was gone too.",
+                "factIds": ["case-found-open"]
+              },
+              {
+                "text": "The box was in the case with it. Saturday morning the case was open and empty, box and all.",
+                "factIds": ["case-found-open"]
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "Monday morning I found it in Wes's tackle box, down in the boathouse. EMPTY. I don't know what to think.",
+                    "factIds": ["velvet-box-found"]
+                  },
+                  {
+                    "text": "It turned up, empty, in Wes's tackle box on Monday morning. I almost wish it hadn't.",
+                    "factIds": ["velvet-box-found"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "her-phone",
+            "description": "Margot's own phone and the messages she got overnight on Friday, like Dale's text",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "My phone was on silent. In the morning there was a text from Dale, sent at 1:20, asking where the spare ice was. ICE.",
+                "factIds": ["dale-texted-margot"]
+              },
+              {
+                "text": "Just one message overnight: Dale, at twenty past one, wanting the spare ice. I didn't see it until morning.",
+                "factIds": ["dale-texted-margot"]
+              }
+            ]
+          },
+          {
+            "id": "the-boathouse",
+            "description": "the boathouse and dock down the gravel path, and what's kept there, like the oars and Wes's tackle box",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "It's down the gravel path from the back door. Oars, life jackets, the old canoe, and Wes's tackle box, which lives there all summer.",
+                "factIds": []
+              },
+              {
+                "text": "Just the old boathouse. Oars, a canoe, Wes's fishing things. The Wi-Fi reaches it, which the boys love.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "the-lodge",
+            "description": "the lodge itself and the weekend: the rooms, who sleeps where, and Margot's plans",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Dale and Priya have the guest rooms upstairs, I'm at the end of the hall, and Wes was meant to have the bunk room. We had SUCH plans. Canoeing, pie, cards.",
+                "factIds": []
+              },
+              {
+                "text": "Pine Hollow's been in the family forever. Four of us, Friday to Monday. I wanted it to be perfect, detective.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "the-mudroom",
+            "description": "the mudroom by the back door, where everyone leaves their boots and coats",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Everyone kicks their boots off by the back door. I've given up asking them to line them up.",
+                "factIds": []
+              },
+              {
+                "text": "Boots, coats, Wes's fishing hat. I'm sorry, I don't look at it too closely.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "the-wifi",
+            "description": "the lodge Wi-Fi: its three access points and the log of whose phone joined where",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "There's one for the main lodge, one in the kitchen and one down at the boathouse. I had no idea it kept a log until you asked!",
+                "factIds": []
+              },
+              {
+                "text": "Lodge, kitchen, boathouse. Wes made me put the boathouse one in so he could check the fishing report.",
+                "factIds": []
               }
             ]
           }
@@ -735,6 +1025,10 @@
           "variants": [
             {
               "text": "Me? It's MY brooch. Why on earth would I steal my own brooch?",
+              "factIds": []
+            },
+            {
+              "text": "I'm sorry, are you SERIOUS? I've been sick about it since Saturday morning.",
               "factIds": []
             }
           ]
@@ -758,7 +1052,7 @@
       "voice": "Easygoing, jokey, a bit too quick to change the subject. Lowercase, no punctuation when relaxed.",
       "temperament": "chatty",
       "bedtime": "23:30",
-      "knows": ["brooch-seen-at-toast", "case-found-open"],
+      "knows": ["brooch-seen-at-toast", "case-found-open", "velvet-box-found"],
       "claims": [
         "dale-asleep-by-1115",
         "dale-phone-upstairs",
@@ -799,6 +1093,10 @@
               {
                 "text": "tonight? planning on an early one",
                 "factIds": []
+              },
+              {
+                "text": "early night for me. ask me in the morning",
+                "factIds": []
               }
             ],
             "afterNight": [
@@ -807,6 +1105,10 @@
                 "variants": [
                   {
                     "text": "slept straight through. didn't hear a thing",
+                    "factIds": ["dale-slept-saturday"]
+                  },
+                  {
+                    "text": "out cold all night. didn't hear a peep",
                     "factIds": ["dale-slept-saturday"]
                   }
                 ]
@@ -825,6 +1127,10 @@
               {
                 "text": "ha, ask me after",
                 "factIds": []
+              },
+              {
+                "text": "sunday? haven't got there yet lol",
+                "factIds": []
               }
             ],
             "afterNight": [
@@ -833,6 +1139,10 @@
                 "variants": [
                   {
                     "text": "in bed by ten. long weekend",
+                    "factIds": ["dale-bed-early-sunday"]
+                  },
+                  {
+                    "text": "early one. in bed by ten, gone by five past",
                     "factIds": ["dale-bed-early-sunday"]
                   }
                 ]
@@ -849,6 +1159,10 @@
             "variants": [
               {
                 "text": "saw it at the toast like everybody. ten o'clock. pretty thing",
+                "factIds": ["brooch-seen-at-toast"]
+              },
+              {
+                "text": "ten o'clock toast, sitting in the case, shiny. that's the last I saw of it",
                 "factIds": ["brooch-seen-at-toast"]
               }
             ]
@@ -882,6 +1196,10 @@
               {
                 "text": "outside? it was freezing. I never left the lodge friday",
                 "factIds": ["dale-stayed-inside"]
+              },
+              {
+                "text": "nope. cold out, cozy in. didn't leave the lodge friday night",
+                "factIds": ["dale-stayed-inside"]
               }
             ]
           },
@@ -896,6 +1214,14 @@
             "variants": [
               {
                 "text": "margot's great. worries too much",
+                "factIds": []
+              },
+              {
+                "text": "margot's the best. she'll find it under a couch cushion, watch",
+                "factIds": []
+              },
+              {
+                "text": "love her. she's been a wreck since saturday though",
                 "factIds": []
               }
             ]
@@ -912,6 +1238,14 @@
               {
                 "text": "priya? barely said ten words to me all weekend",
                 "factIds": []
+              },
+              {
+                "text": "quiet one. keeps to herself. no idea what she gets up to",
+                "factIds": []
+              },
+              {
+                "text": "nice enough. doesn't laugh at my jokes, which, red flag",
+                "factIds": []
               }
             ]
           },
@@ -927,6 +1261,223 @@
               {
                 "text": "wes? nice guy. owes half the lake money from what I hear",
                 "factIds": []
+              },
+              {
+                "text": "good guy. sleeps anywhere. money's tight for him, everybody knows that",
+                "factIds": []
+              },
+              {
+                "text": "wes is fun. talks your ear off. always a little broke",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "suspicions",
+            "description": "who Dale thinks took the brooch, and why",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "just saying, wes is always broke. and he was the one sleeping downstairs",
+                "factIds": []
+              },
+              {
+                "text": "not saying it's wes. but it's wes. guy owes money all over the lake",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "the-evening",
+            "description": "Friday evening before bed: dinner, drinks by the fire, Margot's toast, and when Dale said goodnight",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "dinner, couple beers by the fire, margot's toast at ten. said night around quarter past eleven",
+                "factIds": []
+              },
+              {
+                "text": "ate too much, had a beer or two, listened to the toast. headed up a bit after eleven",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "heard-friday",
+            "description": "anything Dale saw or heard during Friday night, the night of the theft",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "nothing worth telling. quiet night far as I know",
+                "factIds": []
+              },
+              {
+                "text": "nah. lodge was dead quiet. why, what'd you hear",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "heard-saturday",
+            "description": "noises late on Saturday night, like the back door Margot heard, and what Dale makes of them",
+            "subject": {
+              "_tag": "NightEvent",
+              "night": 1
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "ask me tomorrow lol",
+                "factIds": []
+              },
+              {
+                "text": "night's young, detective",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 1,
+                "variants": [
+                  {
+                    "text": "margot's back door? wind. that door never latches",
+                    "factIds": []
+                  },
+                  {
+                    "text": "heard about the door. it blows open all the time, old lodge",
+                    "factIds": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "heard-sunday",
+            "description": "anything Dale noticed late on Sunday night, and the news on Monday morning",
+            "subject": {
+              "_tag": "NightEvent",
+              "night": 2
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "ask me monday",
+                "factIds": []
+              },
+              {
+                "text": "haven't got there yet",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "slept through it. then margot finds the box in wes's tackle box. called it",
+                    "factIds": ["velvet-box-found"]
+                  },
+                  {
+                    "text": "quiet night, then boom, the velvet box turns up in wes's tackle box. not shocked tbh",
+                    "factIds": ["velvet-box-found"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "velvet-box",
+            "description": "the brooch's little velvet box and where it turned up",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "the box? figured it went wherever the brooch went",
+                "factIds": []
+              },
+              {
+                "text": "no idea. wasn't paying attention to the box",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "in wes's tackle box. empty. pretty sure that answers your question",
+                    "factIds": ["velvet-box-found"]
+                  },
+                  {
+                    "text": "margot found it in wes's tackle box this morning. case closed if you ask me",
+                    "factIds": ["velvet-box-found"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "the-boathouse",
+            "description": "what's kept down at the boathouse: boats, oars, and Wes's fishing gear",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "wes's fishing junk mostly. oars, a canoe. it's his kingdom down there",
+                "factIds": []
+              },
+              {
+                "text": "boats and bait. ask wes, he basically lives there",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "his-room",
+            "description": "Dale's guest room upstairs and how he sleeps",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "room upstairs, nice bed, pillows like rocks. no complaints",
+                "factIds": []
+              },
+              {
+                "text": "upstairs guest room. I sleep like a log, always have",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "the-display-case",
+            "description": "the glass display case in the great room, and Dale asking about it at dinner",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "nice old case. margot showed it off all night, I just asked how old it was",
+                "factIds": []
+              },
+              {
+                "text": "asked a couple questions at dinner, so what. it's a cool case. making conversation",
+                "factIds": []
               }
             ]
           }
@@ -935,6 +1486,10 @@
           "variants": [
             {
               "text": "whoa. I'm family here. maybe ask wes where his money comes from",
+              "factIds": []
+            },
+            {
+              "text": "come on. I'm the guy who brings the beer. go talk to wes",
               "factIds": []
             }
           ]
@@ -962,7 +1517,8 @@
         "brooch-seen-at-toast",
         "priya-smokes",
         "priya-saw-flashlight",
-        "wes-snoring"
+        "wes-snoring",
+        "velvet-box-found"
       ],
       "claims": ["priya-in-bed-by-midnight"],
       "secret": "priya-smokes",
@@ -980,6 +1536,14 @@
               {
                 "text": "I was in bed by midnight.",
                 "factIds": ["priya-in-bed-by-midnight"]
+              },
+              {
+                "text": "Bed. Midnight. That's all.",
+                "factIds": ["priya-in-bed-by-midnight"]
+              },
+              {
+                "text": "In bed by twelve.",
+                "factIds": ["priya-in-bed-by-midnight"]
               }
             ]
           },
@@ -995,6 +1559,10 @@
               {
                 "text": "Tonight? Reading, probably.",
                 "factIds": []
+              },
+              {
+                "text": "Ask tomorrow.",
+                "factIds": []
               }
             ],
             "afterNight": [
@@ -1003,6 +1571,10 @@
                 "variants": [
                   {
                     "text": "Asleep. I wear earplugs.",
+                    "factIds": []
+                  },
+                  {
+                    "text": "Asleep. Earplugs in. Heard nothing.",
                     "factIds": []
                   }
                 ]
@@ -1021,6 +1593,10 @@
               {
                 "text": "We'll see.",
                 "factIds": []
+              },
+              {
+                "text": "Tomorrow.",
+                "factIds": []
               }
             ],
             "afterNight": [
@@ -1029,6 +1605,10 @@
                 "variants": [
                   {
                     "text": "Asleep by eleven.",
+                    "factIds": []
+                  },
+                  {
+                    "text": "In bed by eleven. Slept.",
                     "factIds": []
                   }
                 ]
@@ -1046,6 +1626,10 @@
               {
                 "text": "It was there at the toast. That's all I know.",
                 "factIds": ["brooch-seen-at-toast"]
+              },
+              {
+                "text": "At the toast. In the case. After that, I don't know.",
+                "factIds": ["brooch-seen-at-toast"]
               }
             ]
           },
@@ -1060,6 +1644,10 @@
               {
                 "text": "Fine. Around 1:25 I saw a flashlight going down the path to the boathouse. I assumed it was Wes checking his boat.",
                 "factIds": ["priya-saw-flashlight"]
+              },
+              {
+                "text": "A flashlight. On the boathouse path. About 1:25. I thought it was Wes.",
+                "factIds": ["priya-saw-flashlight"]
               }
             ]
           },
@@ -1073,6 +1661,10 @@
             "variants": [
               {
                 "text": "Okay. Yes. I still smoke. I go down to the dock so Margot won't smell it. Happy?",
+                "factIds": ["priya-smokes"]
+              },
+              {
+                "text": "Yes, I smoke. On the dock, where Margot can't smell it. Don't tell her.",
                 "factIds": ["priya-smokes"]
               }
             ]
@@ -1089,6 +1681,14 @@
               {
                 "text": "Margot has always been good to me.",
                 "factIds": []
+              },
+              {
+                "text": "We roomed together in college. She's the best person I know.",
+                "factIds": []
+              },
+              {
+                "text": "Margot's kind. Too kind, sometimes.",
+                "factIds": []
               }
             ]
           },
@@ -1103,6 +1703,14 @@
             "variants": [
               {
                 "text": "He asked a lot of questions about that display case at dinner.",
+                "factIds": []
+              },
+              {
+                "text": "Too interested in that display case at dinner. That's all.",
+                "factIds": []
+              },
+              {
+                "text": "Dale talks a lot. At dinner it was mostly about the case.",
                 "factIds": []
               }
             ]
@@ -1119,6 +1727,237 @@
               {
                 "text": "Wes snored on the couch all night. Loudly.",
                 "factIds": ["wes-snoring"]
+              },
+              {
+                "text": "Snored on the couch all night. You couldn't miss it.",
+                "factIds": ["wes-snoring"]
+              }
+            ]
+          },
+          {
+            "id": "suspicions",
+            "description": "who Priya thinks took the brooch, and why",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "Dale asked too many questions about that case. Wes was right next to it. Pick one.",
+                "factIds": []
+              },
+              {
+                "text": "Not my job. But Dale was very curious at dinner.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "the-evening",
+            "description": "Friday evening before bed: dinner, drinks, the toast, and when Priya went up",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Dinner. Drinks by the fire. The toast. Then I went up.",
+                "factIds": []
+              },
+              {
+                "text": "Ate. Listened to Margot's toast. Went to my room.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "heard-friday",
+            "description": "whether Priya heard anything inside the lodge during Friday night",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "No. I was in bed by midnight.",
+                "factIds": ["priya-in-bed-by-midnight"]
+              },
+              {
+                "text": "Nothing. I was in bed before twelve.",
+                "factIds": ["priya-in-bed-by-midnight"]
+              }
+            ]
+          },
+          {
+            "id": "heard-saturday",
+            "description": "anything Priya noticed late on Saturday night, like the back door Margot heard",
+            "subject": {
+              "_tag": "NightEvent",
+              "night": 1
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "Ask tomorrow.",
+                "factIds": []
+              },
+              {
+                "text": "It isn't night yet.",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 1,
+                "variants": [
+                  {
+                    "text": "Earplugs. Heard nothing.",
+                    "factIds": []
+                  },
+                  {
+                    "text": "No. Margot heard a door. I didn't.",
+                    "factIds": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "heard-sunday",
+            "description": "anything Priya noticed late on Sunday night",
+            "subject": {
+              "_tag": "NightEvent",
+              "night": 2
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "Tomorrow.",
+                "factIds": []
+              },
+              {
+                "text": "Ask Monday.",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "Nothing. Earplugs again.",
+                    "factIds": []
+                  },
+                  {
+                    "text": "Slept. Ask Margot about the box.",
+                    "factIds": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "velvet-box",
+            "description": "the brooch's velvet box and where it turned up",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Never noticed a box.",
+                "factIds": []
+              },
+              {
+                "text": "No idea.",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "In Wes's tackle box. Apparently. Convenient.",
+                    "factIds": ["velvet-box-found"]
+                  },
+                  {
+                    "text": "Margot found it in Wes's tackle box. Empty. I don't buy it.",
+                    "factIds": ["velvet-box-found"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "the-display-case",
+            "description": "the glass display case in the great room",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Glass case. Margot's pride. I never touched it.",
+                "factIds": []
+              },
+              {
+                "text": "It's a display case. People looked at it. So did I.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "her-phone",
+            "description": "Priya's own phone and what the Wi-Fi log shows about it",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "It was with me. In my room. I was in bed by midnight.",
+                "factIds": ["priya-in-bed-by-midnight"]
+              },
+              {
+                "text": "My phone was where I was. In bed, by midnight.",
+                "factIds": ["priya-in-bed-by-midnight"]
+              }
+            ]
+          },
+          {
+            "id": "her-room",
+            "description": "Priya's guest room upstairs",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Upstairs. End of the hall. Quiet.",
+                "factIds": []
+              },
+              {
+                "text": "Guest room. Small. Fine.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "her-work",
+            "description": "Priya's job and her life since college",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "I teach chemistry. High school. Next question.",
+                "factIds": []
+              },
+              {
+                "text": "Chemistry teacher. Twenty years. It's fine.",
+                "factIds": []
               }
             ]
           }
@@ -1127,6 +1966,10 @@
           "variants": [
             {
               "text": "I don't have to talk to you.",
+              "factIds": []
+            },
+            {
+              "text": "No. Ask someone else.",
               "factIds": []
             }
           ]
@@ -1156,7 +1999,8 @@
         "muddy-boots",
         "wes-in-bunk-saturday",
         "wes-at-cabin-sunday",
-        "wes-owes-margot"
+        "wes-owes-margot",
+        "velvet-box-found"
       ],
       "claims": ["wes-paid-back"],
       "secret": "wes-owes-margot",
@@ -1174,6 +2018,14 @@
               {
                 "text": "Couch! Great room! Out cold by 11:30, ask anyone, apparently I snore!",
                 "factIds": ["wes-snoring"]
+              },
+              {
+                "text": "On the couch in the great room! Asleep by half eleven and snoring till morning, or so everybody keeps telling me!",
+                "factIds": ["wes-snoring"]
+              },
+              {
+                "text": "Great room couch, out cold from 11:30 on! Snoring like a chainsaw, allegedly!",
+                "factIds": ["wes-snoring"]
               }
             ]
           },
@@ -1189,6 +2041,10 @@
               {
                 "text": "Bunk room tonight, Margot's orders, no more couch!",
                 "factIds": []
+              },
+              {
+                "text": "Tonight? Bunk room! Margot says the couch is off limits now, ha!",
+                "factIds": []
               }
             ],
             "afterNight": [
@@ -1197,6 +2053,10 @@
                 "variants": [
                   {
                     "text": "Bunk room, all night, slept like a baby!",
+                    "factIds": ["wes-in-bunk-saturday"]
+                  },
+                  {
+                    "text": "Bunk room! Top bunk! Slept the whole night through, didn't hear a thing!",
                     "factIds": ["wes-in-bunk-saturday"]
                   }
                 ]
@@ -1215,6 +2075,10 @@
               {
                 "text": "Heading back to my cabin tomorrow night, gotta feed the dog!",
                 "factIds": []
+              },
+              {
+                "text": "Sunday I'm heading home to my cabin! Somebody's gotta feed the dog!",
+                "factIds": []
               }
             ],
             "afterNight": [
@@ -1223,6 +2087,10 @@
                 "variants": [
                   {
                     "text": "I wasn't even HERE! Drove back to my cabin around nine!",
+                    "factIds": ["wes-at-cabin-sunday"]
+                  },
+                  {
+                    "text": "My cabin! Across the lake! Drove home around nine and slept in my own bed for once!",
                     "factIds": ["wes-at-cabin-sunday"]
                   }
                 ]
@@ -1240,6 +2108,10 @@
               {
                 "text": "Saw it at the toast! Ten o'clock! Then I was asleep three feet from it, which looks bad, I know!",
                 "factIds": ["brooch-seen-at-toast", "wes-snoring"]
+              },
+              {
+                "text": "Ten o'clock toast! Saw it! Then I fell asleep right next to the thing, which, yeah, I KNOW how it looks!",
+                "factIds": ["brooch-seen-at-toast", "wes-snoring"]
               }
             ]
           },
@@ -1254,11 +2126,19 @@
               {
                 "text": "Funny you ask! Dale's boots are sitting by the kitchen door caked in mud. Who goes hiking at a party?",
                 "factIds": ["muddy-boots"]
+              },
+              {
+                "text": "Dale's boots! By the back door! Mud up to the laces! Where was he hiking, the lake bottom?!",
+                "factIds": ["muddy-boots"]
               }
             ],
             "ifFactDestroyed": [
               {
                 "text": "Boots by the door? All clean! Somebody's tidy!",
+                "factIds": []
+              },
+              {
+                "text": "Boots by the door? Clean as a whistle now! Huh!",
                 "factIds": []
               }
             ]
@@ -1273,6 +2153,10 @@
             "variants": [
               {
                 "text": "I paid Margot back months ago! We're square! Who's saying otherwise?",
+                "factIds": ["wes-paid-back"]
+              },
+              {
+                "text": "Paid her back ages ago! Every cent! Why does everybody keep asking me about money?!",
                 "factIds": ["wes-paid-back"]
               }
             ]
@@ -1289,6 +2173,14 @@
               {
                 "text": "Margot's the best! Throws a great party!",
                 "factIds": []
+              },
+              {
+                "text": "Margot? Best host on the lake! Makes a mean pot roast!",
+                "factIds": []
+              },
+              {
+                "text": "Margot's a sweetheart! Worries too much, but who doesn't!",
+                "factIds": []
               }
             ]
           },
@@ -1303,6 +2195,14 @@
             "variants": [
               {
                 "text": "Dale's alright! Quiet type once the drinks stop!",
+                "factIds": []
+              },
+              {
+                "text": "Dale's a good time! Tells a joke, changes the subject, you know the type!",
+                "factIds": []
+              },
+              {
+                "text": "Dale? Fun guy! Asks a lot of questions though, now that I think about it!",
                 "factIds": []
               }
             ]
@@ -1319,6 +2219,256 @@
               {
                 "text": "Priya's a vault! Never says anything!",
                 "factIds": []
+              },
+              {
+                "text": "Priya? Nice! I think! Hard to tell! She doesn't talk!",
+                "factIds": []
+              },
+              {
+                "text": "Priya's a mystery! I tried telling her about walleye and she just walked away!",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "suspicions",
+            "description": "who Wes thinks took the brooch, and why",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "Not me, that's all I know for sure! Priya never says a word though, that's a little suspicious, right?!",
+                "factIds": []
+              },
+              {
+                "text": "Honestly? Somebody who knew I'd be snoring through it! Which is everybody! Great!",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "the-evening",
+            "description": "Friday evening before bed: dinner, drinks by the fire, the toast, and Wes dozing off on the couch",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Dinner was amazing! Drinks by the fire, Margot's toast, and then I conked out on the couch around half eleven!",
+                "factIds": ["wes-snoring"]
+              },
+              {
+                "text": "Ate too much, had a beer, clapped for the toast, and boom, asleep on the couch by 11:30!",
+                "factIds": ["wes-snoring"]
+              }
+            ]
+          },
+          {
+            "id": "heard-friday",
+            "description": "anything Wes heard or saw during Friday night while he slept on the couch",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Nothing! I was asleep! And snoring, apparently, so I wouldn't have heard a marching band!",
+                "factIds": ["wes-snoring"]
+              },
+              {
+                "text": "Out cold on that couch till morning! Somebody could've tiptoed right past me! Which I guess they did!",
+                "factIds": ["wes-snoring"]
+              }
+            ]
+          },
+          {
+            "id": "heard-saturday",
+            "description": "noises late on Saturday night, like the back door Margot heard",
+            "subject": {
+              "_tag": "NightEvent",
+              "night": 1
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Ask me tomorrow!",
+                "factIds": []
+              },
+              {
+                "text": "Haven't even gone to bed yet!",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 1,
+                "variants": [
+                  {
+                    "text": "The back door? Didn't hear it! I sleep like a rock!",
+                    "factIds": []
+                  },
+                  {
+                    "text": "News to me! Margot hears everything though, she's got bat ears!",
+                    "factIds": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "heard-sunday",
+            "description": "what went on late on Sunday night while Wes was home at his cabin",
+            "subject": {
+              "_tag": "NightEvent",
+              "night": 2
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Ask me Monday!",
+                "factIds": []
+              },
+              {
+                "text": "Sunday night? I'll be home by then anyway!",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "I was at my cabin! Heard loons and my dog snoring! That's it!",
+                    "factIds": ["wes-at-cabin-sunday"]
+                  },
+                  {
+                    "text": "Nothing! I wasn't here! Home at my cabin across the lake!",
+                    "factIds": ["wes-at-cabin-sunday"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "velvet-box",
+            "description": "the brooch's velvet box turning up in Wes's own tackle box",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "What box? The brooch had a box? News to me!",
+                "factIds": []
+              },
+              {
+                "text": "Never noticed a box! I don't look at jewelry stuff!",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "In MY tackle box?! I wasn't even here! Somebody put it there, obviously!",
+                    "factIds": ["velvet-box-found"]
+                  },
+                  {
+                    "text": "I've never seen that box in my life! My tackle box sits in the boathouse, anybody can open it!",
+                    "factIds": ["velvet-box-found"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "fishing",
+            "description": "Wes's fishing, his boat, and the tackle box he keeps in the boathouse",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Bass, mostly! My tackle box lives in the boathouse all summer, best lures on the lake!",
+                "factIds": []
+              },
+              {
+                "text": "Don't get me started on fishing! Okay, I'll start! Walleye! My tackle box is down in the boathouse!",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "his-cabin",
+            "description": "Wes's own cabin across the lake and his dog",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Little cabin right across the lake! You can see it from the dock! Me and Biscuit, my dog!",
+                "factIds": []
+              },
+              {
+                "text": "Across the water! Tiny, leaky roof, perfect! Biscuit holds the fort when I'm over here!",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "the-display-case",
+            "description": "the glass display case in the great room, right by the couch Wes slept on",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Pretty case! Margot dusts it like it's a newborn! I never touched it, honest!",
+                "factIds": []
+              },
+              {
+                "text": "That case? Gorgeous! Glass, little brass hinges! Never laid a finger on it!",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "his-phone",
+            "description": "Wes's own phone and what the Wi-Fi log shows about him",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "My phone? Ancient! Cracked screen! I mostly use it for the fishing report!",
+                "factIds": []
+              },
+              {
+                "text": "It's a brick! Half the time it's not even on the Wi-Fi!",
+                "factIds": []
+              }
+            ],
+            "afterNight": [
+              {
+                "night": 2,
+                "variants": [
+                  {
+                    "text": "Sunday night it was at my cabin with me, where else! I drove home!",
+                    "factIds": ["wes-at-cabin-sunday"]
+                  },
+                  {
+                    "text": "It went home with me Sunday night! Cabin! Across the lake!",
+                    "factIds": ["wes-at-cabin-sunday"]
+                  }
+                ]
               }
             ]
           }
@@ -1327,6 +2477,10 @@
           "variants": [
             {
               "text": "Me?? I was ASLEEP! Snoring! In front of witnesses!",
+              "factIds": ["wes-snoring"]
+            },
+            {
+              "text": "Whoa whoa whoa! I was asleep on the couch, snoring, all night! Everybody heard me!",
               "factIds": ["wes-snoring"]
             }
           ]
