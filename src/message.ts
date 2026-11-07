@@ -2,14 +2,14 @@ import { Schema } from 'effect'
 import { defineMessageUnion } from 'foldkit/message'
 
 import { GuestName } from './cast'
-import { Line, Os, Vote } from './model'
+import { Line, Vote } from './model'
 
 export const Message = defineMessageUnion({
-  CompletedDetectOs: { os: Os },
   ClickedNotification: {},
   UpdatedNameInput: { value: Schema.String },
   SubmittedJoin: {},
   ClickedMenu: {},
+  ClickedGroupName: {},
   ClickedCloseMenu: {},
   ClickedNewCase: {},
   CompletedDealNewCase: {

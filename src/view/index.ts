@@ -2,14 +2,16 @@ import { Option } from 'effect'
 import { type Document, type HtmlBuilder } from 'foldkit/html'
 
 import { type Message } from '../message'
-import { Menu, type Model, Os, Screen } from '../model'
+import { Menu, type Model, Screen } from '../model'
 import {
   composerView,
   headerView,
   joinSheetView,
   lockScreenView,
   menuSheetView,
+  peopleSheetView,
   phaseBarView,
+  sidebarView,
 } from './chrome'
 import { threadView } from './thread'
 
@@ -18,10 +20,6 @@ export const view = (model: Model, h: HtmlBuilder<Message>): Document => ({
   body: h.div(
     [
       h.Class(model.isComposerFocused ? 'app kb' : 'app'),
-      h.DataAttribute(
-        'os',
-        Os.match(model.os, { Ios: () => 'ios', Android: () => 'android' }),
-      ),
       h.Style(
         Option.match(model.maybeViewport, {
           onNone: () => ({}),
@@ -33,10 +31,16 @@ export const view = (model: Model, h: HtmlBuilder<Message>): Document => ({
       ),
     ],
     [
-      headerView(model, h),
-      threadView(model, h),
-      phaseBarView(model, h),
-      composerView(model, h),
+      sidebarView(model, h),
+      h.section(
+        [h.Class('pane')],
+        [
+          headerView(model, h),
+          threadView(model, h),
+          phaseBarView(model, h),
+          composerView(model, h),
+        ],
+      ),
       Screen.match(model.screen, {
         Locked: () => lockScreenView(h),
         Joining: () => lockScreenView(h),
@@ -48,7 +52,8 @@ export const view = (model: Model, h: HtmlBuilder<Message>): Document => ({
         InChat: () =>
           Menu.match(model.menu, {
             Closed: () => h.empty,
-            Open: () => menuSheetView(h),
+            Game: () => menuSheetView(h),
+            People: () => peopleSheetView(model, h),
           }),
       }),
     ],

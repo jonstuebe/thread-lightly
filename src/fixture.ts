@@ -6,14 +6,12 @@ import {
   LiveTexts,
   Menu,
   Model,
-  Os,
   Phase,
   Playback,
   Screen,
 } from './model'
 
 export const lockedModel = Model.make({
-  os: Os.Ios(),
   screen: Screen.Locked(),
   menu: Menu.Closed(),
   nameInput: 'Riley',

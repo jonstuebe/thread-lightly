@@ -7,7 +7,6 @@ import {
   BlurComposer,
   CastGuestVotes,
   DealNewCase,
-  DetectOs,
   FetchGuestTexts,
   PickFallbackLines,
   RollMorning,
@@ -32,7 +31,6 @@ import {
   Menu,
   type Model,
   NightCandidate,
-  Os,
   Phase,
   Playback,
   Screen,
@@ -49,7 +47,6 @@ const DEFAULT_PLAYER_NAME = 'Riley'
 
 export const init: Runtime.ApplicationInit<Model, Message> = () => ({
   model: {
-    os: Os.Ios(),
     screen: Screen.Locked(),
     menu: Menu.Closed(),
     nameInput: DEFAULT_PLAYER_NAME,
@@ -72,7 +69,6 @@ export const init: Runtime.ApplicationInit<Model, Message> = () => ({
     usedLines: [],
     liveTexts: LiveTexts.Untried(),
   },
-  commands: [DetectOs()],
 })
 
 // HELPERS
@@ -325,10 +321,6 @@ const playLines = (
 
 export const update = (model: Model, message: Message) =>
   Message.match<UpdateReturn>(message, {
-    CompletedDetectOs: ({ os }) => ({
-      model: modifyFields(model, { os: () => os }),
-    }),
-
     ClickedNotification: () => ({
       model: modifyFields(model, { screen: () => Screen.Joining() }),
     }),
@@ -347,7 +339,11 @@ export const update = (model: Model, message: Message) =>
     },
 
     ClickedMenu: () => ({
-      model: modifyFields(model, { menu: () => Menu.Open() }),
+      model: modifyFields(model, { menu: () => Menu.Game() }),
+    }),
+
+    ClickedGroupName: () => ({
+      model: modifyFields(model, { menu: () => Menu.People() }),
     }),
 
     ClickedCloseMenu: () => ({

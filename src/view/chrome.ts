@@ -1,11 +1,11 @@
 import { Array, Option } from 'effect'
 import { type Html, type HtmlBuilder } from 'foldkit/html'
 
-import { dayName } from '../cast'
+import { type GuestName, dayName, guestOf } from '../cast'
 import { COMPOSER_INPUT_ID } from '../command'
 import { FINAL_DAY } from '../game'
 import { Message } from '../message'
-import { type Model, Os, Phase } from '../model'
+import { FeedItem, type Model, Phase } from '../model'
 import { canChat, isBusy } from '../update'
 import * as Icon from './icon'
 import { avatar } from './thread'
@@ -17,68 +17,110 @@ const GROUP_NAME = 'Pine Hollow Lodge'
 const peopleCount = (model: Model): number => model.alive.length + 1
 
 export const headerView = (model: Model, h: HtmlBuilder<Message>): Html =>
-  Os.match(model.os, {
-    Ios: () =>
-      h.header(
-        [h.Class('hdr')],
+  h.header(
+    [h.Class('hdr')],
+    [
+      h.span([h.Class('ib back'), h.AriaHidden(true)], [Icon.chevronLeft()]),
+      h.button(
         [
-          h.span([h.Class('ib'), h.AriaHidden(true)], [Icon.chevronLeft()]),
+          h.Type('button'),
+          h.Class('hcenter'),
+          h.AriaHasPopup('dialog'),
+          h.OnClick(Message.ClickedGroupName()),
+        ],
+        [
+          h.span(
+            [h.Class('stack')],
+            Array.map(Array.take(model.alive, 3), name => avatar(name, h)),
+          ),
+          h.span(
+            [h.Class('htitle')],
+            [
+              `${GROUP_NAME} 🌲 `,
+              h.span([], [`· ${peopleCount(model)} people ›`]),
+            ],
+          ),
+        ],
+      ),
+      h.button(
+        [
+          h.Type('button'),
+          h.Class('ib right'),
+          h.AriaLabel('Game menu'),
+          h.OnClick(Message.ClickedMenu()),
+        ],
+        [Icon.info()],
+      ),
+    ],
+  )
+
+// SIDEBAR
+
+const latestPreview = (model: Model): string =>
+  Option.getOrElse(
+    Array.findLast(model.feed, item =>
+      FeedItem.match(item, {
+        GuestText: ({ from, text }) => Option.some(`${from}: ${text}`),
+        PlayerText: ({ text }) => Option.some(`You: ${text}`),
+        Event: ({ text }) => Option.some(text),
+        Timestamp: () => Option.none(),
+        Notice: () => Option.none(),
+        NightPick: () => Option.none(),
+        Poll: () => Option.none(),
+        Ending: () => Option.none(),
+      }),
+    ),
+    () => 'Margot: ok slightly awkward…',
+  )
+
+const latestTime = (model: Model): string =>
+  Option.getOrElse(
+    Array.findLast(model.feed, item =>
+      item._tag === 'Timestamp' ? Option.some(item.time) : Option.none(),
+    ),
+    () => 'now',
+  )
+
+export const sidebarView = (model: Model, h: HtmlBuilder<Message>): Html =>
+  h.aside(
+    [h.Class('sidebar'), h.AriaLabel('Conversations')],
+    [
+      h.div(
+        [h.Class('sb-bar')],
+        [
+          h.span([h.Class('sb-edit'), h.AriaHidden(true)], ['Edit']),
+          h.span([h.Class('ib'), h.AriaHidden(true)], [Icon.compose()]),
+        ],
+      ),
+      h.h1([h.Class('sb-title')], ['Messages']),
+      h.div(
+        [h.Class('sb-search'), h.AriaHidden(true)],
+        [Icon.search(), h.span([], ['Search'])],
+      ),
+      h.div(
+        [h.Class('convo'), h.AriaCurrent('page')],
+        [
           h.div(
-            [h.Class('hcenter')],
+            [h.Class('convo-av')],
+            Array.map(Array.take(model.alive, 2), name => avatar(name, h)),
+          ),
+          h.div(
+            [h.Class('convo-body')],
             [
               h.div(
-                [h.Class('stack')],
-                Array.map(Array.take(model.alive, 3), name => avatar(name, h)),
-              ),
-              h.button(
+                [h.Class('convo-top')],
                 [
-                  h.Type('button'),
-                  h.Class('htitle-ios'),
-                  h.OnClick(Message.ClickedMenu()),
-                ],
-                [
-                  `${GROUP_NAME} 🌲 `,
-                  h.span([], [`· ${peopleCount(model)} people ›`]),
+                  h.b([], [GROUP_NAME]),
+                  h.span([h.Class('convo-time')], [latestTime(model)]),
                 ],
               ),
+              h.div([h.Class('convo-preview')], [latestPreview(model)]),
             ],
-          ),
-          h.button(
-            [
-              h.Type('button'),
-              h.Class('ib right'),
-              h.AriaLabel('Game menu'),
-              h.OnClick(Message.ClickedMenu()),
-            ],
-            [Icon.info()],
           ),
         ],
       ),
-    Android: () =>
-      h.header(
-        [h.Class('hdr')],
-        [
-          h.span([h.Class('ib'), h.AriaHidden(true)], [Icon.arrowBack()]),
-          h.div([h.Class('gav'), h.AriaHidden(true)], ['🌲']),
-          h.div(
-            [h.Class('htext')],
-            [
-              h.div([h.Class('htitle')], [GROUP_NAME]),
-              h.div([h.Class('hsub')], [`${peopleCount(model)} people`]),
-            ],
-          ),
-          h.button(
-            [
-              h.Type('button'),
-              h.Class('ib'),
-              h.AriaLabel('Game menu'),
-              h.OnClick(Message.ClickedMenu()),
-            ],
-            [Icon.more()],
-          ),
-        ],
-      ),
-  })
+    ],
+  )
 
 // PHASE BAR
 
@@ -158,10 +200,7 @@ export const phaseBarView = (model: Model, h: HtmlBuilder<Message>): Html => {
 
 const placeholder = (model: Model): string =>
   canChat(model)
-    ? Os.match(model.os, {
-        Ios: () => 'Message',
-        Android: () => 'Text message',
-      })
+    ? 'Message'
     : model.phase._tag === 'Night'
       ? 'Everyone’s asleep'
       : 'Chat is paused'
@@ -170,51 +209,39 @@ export const composerView = (model: Model, h: HtmlBuilder<Message>): Html => {
   const isChatOpen = canChat(model)
   const canSend =
     isChatOpen && !isBusy(model) && model.messageInput.trim().length > 0
-  const input = h.input([
-    h.Id(COMPOSER_INPUT_ID),
-    h.Type('text'),
-    h.Autocomplete('off'),
-    h.Maxlength(200),
-    h.EnterKeyHint('send'),
-    h.AriaLabel(
-      Os.match(model.os, {
-        Ios: () => 'Message',
-        Android: () => 'Text message',
-      }),
-    ),
-    h.Placeholder(placeholder(model)),
-    h.Disabled(!isChatOpen),
-    h.Value(model.messageInput),
-    h.OnInput(value => Message.UpdatedMessageInput({ value })),
-    h.OnFocus(Message.FocusedComposer()),
-    h.OnBlur(Message.BlurredComposer()),
-  ])
-  const sendButton = (icon: Html) =>
-    h.button(
-      [
-        h.Type('submit'),
-        h.Class('send'),
-        h.AriaLabel('Send'),
-        h.Disabled(!canSend),
-      ],
-      [icon],
-    )
   return h.form(
     [h.Class('composer'), h.OnSubmit(Message.SubmittedMessage())],
-    Os.match(model.os, {
-      Ios: () => [
-        h.span([h.Class('plus'), h.AriaHidden(true)], [Icon.plus()]),
-        h.div([h.Class('field')], [input, sendButton(Icon.arrowUp())]),
-      ],
-      Android: () => [
-        h.span([h.Class('plus'), h.AriaHidden(true)], [Icon.plusCircle()]),
-        h.div(
-          [h.Class('field')],
-          [input, h.span([h.Class('emo'), h.AriaHidden(true)], [Icon.emoji()])],
-        ),
-        sendButton(Icon.send()),
-      ],
-    }),
+    [
+      h.span([h.Class('plus'), h.AriaHidden(true)], [Icon.plus()]),
+      h.div(
+        [h.Class('field')],
+        [
+          h.input([
+            h.Id(COMPOSER_INPUT_ID),
+            h.Type('text'),
+            h.Autocomplete('off'),
+            h.Maxlength(200),
+            h.EnterKeyHint('send'),
+            h.AriaLabel('Message'),
+            h.Placeholder(placeholder(model)),
+            h.Disabled(!isChatOpen),
+            h.Value(model.messageInput),
+            h.OnInput(value => Message.UpdatedMessageInput({ value })),
+            h.OnFocus(Message.FocusedComposer()),
+            h.OnBlur(Message.BlurredComposer()),
+          ]),
+          h.button(
+            [
+              h.Type('submit'),
+              h.Class('send'),
+              h.AriaLabel('Send'),
+              h.Disabled(!canSend),
+            ],
+            [Icon.arrowUp()],
+          ),
+        ],
+      ),
+    ],
   )
 }
 
@@ -283,7 +310,23 @@ const sheet = (
           h.AriaModal(true),
           h.AriaLabelledBy(labelId),
         ],
-        children,
+        [
+          h.div([h.Class('grabber'), h.AriaHidden(true)]),
+          Option.match(maybeOnDismiss, {
+            onNone: () => h.empty,
+            onSome: message =>
+              h.button(
+                [
+                  h.Type('button'),
+                  h.Class('sheet-close'),
+                  h.AriaLabel('Close'),
+                  h.OnClick(message),
+                ],
+                [Icon.close()],
+              ),
+          }),
+          ...children,
+        ],
       ),
     ],
   )
@@ -342,14 +385,88 @@ export const menuSheetView = (h: HtmlBuilder<Message>): Html =>
         [h.Type('button'), h.Class('btn'), h.OnClick(Message.ClickedNewCase())],
         ['Start a new case'],
       ),
-      h.button(
+    ],
+    h,
+  )
+
+// PEOPLE
+
+const roleOf = (name: GuestName): string => {
+  const role = guestOf(name).bio.split(';')[0] ?? ''
+  return role.charAt(0).toUpperCase() + role.slice(1)
+}
+
+const personRow = (
+  key: string,
+  avatarView: Html,
+  name: string,
+  role: string,
+  h: HtmlBuilder<Message>,
+): Html =>
+  h.keyed('li')(
+    key,
+    [h.Class('person')],
+    [
+      avatarView,
+      h.span(
+        [h.Class('person-text')],
         [
-          h.Type('button'),
-          h.Class('btn ghost'),
-          h.OnClick(Message.ClickedCloseMenu()),
+          h.span([h.Class('person-name')], [name]),
+          h.span([h.Class('person-role')], [role]),
         ],
-        ['Close'],
       ),
+    ],
+  )
+
+const guestRow = (name: GuestName, h: HtmlBuilder<Message>): Html =>
+  personRow(name, avatar(name, h), name, roleOf(name), h)
+
+export const peopleSheetView = (model: Model, h: HtmlBuilder<Message>): Html =>
+  sheet(
+    'people-title',
+    Option.some(Message.ClickedCloseMenu()),
+    [
+      h.div(
+        [h.Class('people-head')],
+        [
+          h.div(
+            [h.Class('stack big')],
+            Array.map(Array.take(model.alive, 3), name => avatar(name, h)),
+          ),
+          h.h2([h.Id('people-title')], [`${GROUP_NAME} 🌲`]),
+          h.p([], [`${peopleCount(model)} people`]),
+        ],
+      ),
+      h.ul(
+        [h.Class('people'), h.AriaLabel('In the chat')],
+        [
+          personRow(
+            'player',
+            h.span(
+              [h.Class('avatar you'), h.AriaHidden(true)],
+              [model.playerName.slice(0, 1) || 'Y'],
+            ),
+            `${model.playerName} (you)`,
+            'The detective, secretly',
+            h,
+          ),
+          ...Array.map(model.alive, name => guestRow(name, h)),
+        ],
+      ),
+      Array.match(model.gone, {
+        onEmpty: () => h.empty,
+        onNonEmpty: gone =>
+          h.div(
+            [],
+            [
+              h.h3([h.Class('people-section')], ['Left the chat']),
+              h.ul(
+                [h.Class('people gone'), h.AriaLabel('Left the chat')],
+                Array.map(gone, name => guestRow(name, h)),
+              ),
+            ],
+          ),
+      }),
     ],
     h,
   )

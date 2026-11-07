@@ -3,11 +3,6 @@ import { defineTaggedUnion } from 'foldkit/schema'
 
 import { GuestName } from './cast'
 
-// PHONE STYLE
-
-export const Os = defineTaggedUnion({ Ios: {}, Android: {} })
-export type Os = typeof Os.Type
-
 // SCREEN
 
 export const Screen = defineTaggedUnion({
@@ -17,7 +12,7 @@ export const Screen = defineTaggedUnion({
 })
 export type Screen = typeof Screen.Type
 
-export const Menu = defineTaggedUnion({ Closed: {}, Open: {} })
+export const Menu = defineTaggedUnion({ Closed: {}, Game: {}, People: {} })
 export type Menu = typeof Menu.Type
 
 // GAME
@@ -152,7 +147,6 @@ export type Viewport = typeof Viewport.Type
 // MODEL
 
 export const Model = Schema.Struct({
-  os: Os,
   screen: Screen,
   menu: Menu,
   nameInput: Schema.String,

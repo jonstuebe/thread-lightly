@@ -50,66 +50,34 @@ export const info = (): Html =>
     ],
   )
 
-export const arrowBack = (): Html =>
-  svg(
-    '24',
-    '24',
-    '0 0 24 24',
-    [ih.Fill('currentColor')],
-    [ih.path([ih.D('M20 11H7.8l5.6-5.6L12 4l-8 8 8 8 1.4-1.4L7.8 13H20z')])],
-  )
-
-export const more = (): Html =>
-  svg(
-    '24',
-    '24',
-    '0 0 24 24',
-    [ih.Fill('currentColor')],
-    [
-      ih.circle([ih.Cx('12'), ih.Cy('5'), ih.R('2')]),
-      ih.circle([ih.Cx('12'), ih.Cy('12'), ih.R('2')]),
-      ih.circle([ih.Cx('12'), ih.Cy('19'), ih.R('2')]),
-    ],
-  )
-
 export const arrowUp = (): Html =>
   svg('16', '16', '0 0 16 16', stroked('2.4'), [
     ih.path([ih.D('M8 13V3M3.5 7.5 8 3l4.5 4.5')]),
   ])
-
-export const send = (): Html =>
-  svg(
-    '22',
-    '22',
-    '0 0 24 24',
-    [ih.Fill('currentColor')],
-    [ih.path([ih.D('M3 20.5V14l8-2-8-2V3.5L22 12z')])],
-  )
 
 export const plus = (): Html =>
   svg('18', '18', '0 0 18 18', stroked('2.2'), [
     ih.path([ih.D('M9 3v12M3 9h12')]),
   ])
 
-export const plusCircle = (): Html =>
-  svg('24', '24', '0 0 24 24', stroked('2'), [
-    ih.circle([ih.Cx('12'), ih.Cy('12'), ih.R('9')]),
-    ih.path([ih.D('M12 8v8M8 12h8')]),
+export const compose = (): Html =>
+  svg('22', '22', '0 0 24 24', stroked('1.8'), [
+    ih.path([
+      ih.D('M11 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5'),
+    ]),
+    ih.path([ih.D('M17.6 3.6a1.9 1.9 0 0 1 2.8 2.8L12 14.8 8.8 15.2l.4-3.2z')]),
   ])
 
-export const emoji = (): Html =>
-  svg(
-    '22',
-    '22',
-    '0 0 24 24',
-    [ih.Fill('none'), ih.Stroke('currentColor'), ih.StrokeWidth('1.8')],
-    [
-      ih.circle([ih.Cx('12'), ih.Cy('12'), ih.R('9')]),
-      ih.path([ih.D('M8.5 14.5c1.8 2 5.2 2 7 0'), ih.StrokeLinecap('round')]),
-      ih.circle([ih.Cx('9'), ih.Cy('10'), ih.R('1'), ih.Fill('currentColor')]),
-      ih.circle([ih.Cx('15'), ih.Cy('10'), ih.R('1'), ih.Fill('currentColor')]),
-    ],
-  )
+export const search = (): Html =>
+  svg('15', '15', '0 0 16 16', stroked('1.8'), [
+    ih.circle([ih.Cx('7'), ih.Cy('7'), ih.R('5')]),
+    ih.path([ih.D('m10.8 10.8 3.4 3.4')]),
+  ])
+
+export const close = (): Html =>
+  svg('14', '14', '0 0 14 14', stroked('2.2'), [
+    ih.path([ih.D('M3 3l8 8M11 3l-8 8')]),
+  ])
 
 export const lock = (): Html =>
   svg(

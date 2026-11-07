@@ -68,6 +68,21 @@ describe('chat', () => {
     )
   })
 
+  test('tapping the group name lists who is in the chat and who left', () => {
+    scene(
+      { update, view },
+      given(votingModel(1)),
+      click(role('button', { name: /Pine Hollow Lodge/ })),
+      expect(role('dialog', { name: 'Pine Hollow Lodge 🌲' })).toExist(),
+      expect(text('Riley (you)')).toExist(),
+      expect(text('Retired fishing guide in his 70s')).toExist(),
+      expect(role('list', { name: 'Left the chat' })).toExist(),
+      expect(text('Owns the lodge')).toExist(),
+      click(role('button', { name: 'Close' })),
+      expect(role('dialog')).not.toExist(),
+    )
+  })
+
   test('the composer is paused at night', () => {
     scene(
       { update, view },

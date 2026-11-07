@@ -11,23 +11,14 @@ import {
 import { GuestName } from './cast'
 import { castGuestVotes, dealNewCase, fallbackLines, rollMorning } from './game'
 import { Message } from './message'
-import { FeedItem, Line, Os, Situation } from './model'
+import { FeedItem, Line, Situation } from './model'
 
 export const THREAD_END_ID = 'thread-end'
 export const COMPOSER_INPUT_ID = 'composer-input'
 
 const GUEST_TEXTS_TIMEOUT = Duration.seconds(30)
 
-// DEVICE
-
-export const DetectOs = Command.define('DetectOs', {
-  messages: [Message.CompletedDetectOs],
-  execute: Effect.sync(() =>
-    Message.CompletedDetectOs({
-      os: /Android/i.test(navigator.userAgent) ? Os.Android() : Os.Ios(),
-    }),
-  ),
-})
+// DOM
 
 export const ScrollToLatest = Command.define('ScrollToLatest', {
   messages: [Message.CompletedScrollToLatest],
