@@ -145,10 +145,14 @@ Canned replies alone answer the topic, not the question: "which room is the case
 - a **menu**: one reply per topic the guest could answer right now (`activeReplies`, rotated by times asked). `Secret` topics are left out unless Clef picked that topic with confidence, so a vague question can't stumble into a secret.
 - the last few turns and the message
 
-It picks at most two menu replies, or only the background, or `NONE`, and writes one text in voice. Clef then checks the text against the fact text of every fact the picked replies carry, and that it claims nothing beyond the picked replies and the background. A lie must stay a lie, or the case file loses its evidence. The message carries exactly the picked replies' fact IDs, so the Durable Object still knows what was revealed and the checker's proofs hold.
+It answers in JSON mode (`{ pick, reply }`), so the format can't break: it picks at most two menu replies, none for the background alone, or `["NONE"]`, and writes one text in voice. Clef then asks two things. Does the text claim anything beyond the picked replies and the background? If so, the composition fails. And for each picked reply, does the text leave out a time, place or something someone did or saw? A reply told in full lends the message all its fact IDs; a trimmed one lends none. A lie must stay a lie, or the case file loses its evidence.
+
+Asking Clef per fact ("does the text say X?") doesn't work: a fact's text says more than any reply does, so Clef scores even the dictionary reply itself under 0.5.
 
 - `NONE` → a greeting if the tone is friendly, otherwise a dodge, with no repeated-question surcharge
-- the composer fails or breaks a fact → Clef's confident topic posts verbatim, or else a greeting or dodge
+- the composer fails → Clef's confident topic posts verbatim, or else a greeting or dodge
+- the composer trims the confident topic's reply → compose once more with that reply as the only menu item. If it's told in full, post that. If not, the question was narrower than the topic ("what room was the toast in?" routed to `the-evening`), so post the first answer with only the facts it kept. A broad question still gets the topic's facts, which is what the checker assumes.
+- an accusation's pressed reply posts reworded only if the rewrite keeps its facts, otherwise as written
 
 ```ts
 Topic {
