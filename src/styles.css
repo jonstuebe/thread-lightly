@@ -1,0 +1,1036 @@
+@import 'tailwindcss';
+
+/* NOTE: hand-tuned to look like iMessage (iOS) and Google Messages (Android).
+   The app element carries data-os; iOS tokens double as the page defaults. */
+
+/* ---------- iOS tokens ---------- */
+:root {
+  --font:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue',
+    Helvetica, Arial, sans-serif;
+  --bg: #ffffff;
+  --text: #000000;
+  --text-2: #3c3c43;
+  --muted: #8e8e93;
+  --in-bg: #e9e9eb;
+  --in-text: #000000;
+  --out-bg: #0b84fe;
+  --out-text: #ffffff;
+  --header-bg: rgba(249, 249, 249, 0.94);
+  --sep: #c6c6c8;
+  --card: #f2f2f7;
+  --opt: #ffffff;
+  --accent: #007aff;
+  --on-accent: #ffffff;
+  --field: transparent;
+  --card-r: 16px;
+  --danger: #ff3b30;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --bg: #000000;
+    --text: #ffffff;
+    --text-2: #d1d1d6;
+    --muted: #8e8e93;
+    --in-bg: #26252a;
+    --in-text: #ffffff;
+    --out-bg: #0a84ff;
+    --out-text: #ffffff;
+    --header-bg: rgba(22, 22, 24, 0.94);
+    --sep: #38383a;
+    --card: #1c1c1e;
+    --opt: #2c2c2e;
+    --accent: #0a84ff;
+    --on-accent: #ffffff;
+    --danger: #ff453a;
+  }
+}
+
+/* ---------- Android (Material 3) tokens ---------- */
+.app[data-os='android'] {
+  --font: Roboto, 'Google Sans', system-ui, 'Segoe UI', Arial, sans-serif;
+  --bg: #ffffff;
+  --text: #1f1f1f;
+  --text-2: #444746;
+  --muted: #5f6368;
+  --in-bg: #e9eef6;
+  --in-text: #1f1f1f;
+  --out-bg: #d3e3fd;
+  --out-text: #041e49;
+  --header-bg: #ffffff;
+  --sep: #e1e3e1;
+  --card: #f0f4f9;
+  --opt: #ffffff;
+  --accent: #0b57d0;
+  --on-accent: #ffffff;
+  --field: #e9eef6;
+  --card-r: 20px;
+  --danger: #b3261e;
+}
+@media (prefers-color-scheme: dark) {
+  .app[data-os='android'] {
+    color-scheme: dark;
+    --bg: #131314;
+    --text: #e3e3e3;
+    --text-2: #c4c7c5;
+    --muted: #9aa0a6;
+    --in-bg: #2d2f31;
+    --in-text: #e3e3e3;
+    --out-bg: #004a77;
+    --out-text: #c2e7ff;
+    --header-bg: #131314;
+    --sep: #2d2f31;
+    --card: #1e1f20;
+    --opt: #282a2c;
+    --accent: #a8c7fa;
+    --on-accent: #062e6f;
+    --field: #282a2c;
+    --danger: #f2b8b5;
+  }
+}
+
+/* ---------- Base ---------- */
+:root {
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: var(--bg);
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  height: 100%;
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  z-index: 10;
+  background: var(--header-bg);
+  backdrop-filter: blur(20px);
+}
+[hidden] {
+  display: none !important;
+}
+button {
+  font: inherit;
+  color: inherit;
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.app {
+  height: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: var(--bg);
+  overflow: hidden;
+}
+@media (min-width: 600px) {
+  .app {
+    border-left: 1px solid var(--sep);
+    border-right: 1px solid var(--sep);
+  }
+}
+/* Keyboard open: pin the chat to the visible area above the keyboard */
+html,
+body {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+.app {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100%;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+#root {
+  height: 100%;
+}
+.app.kb {
+  padding-bottom: 0;
+}
+
+/* ---------- Header ---------- */
+.hdr {
+  flex: none;
+  background: var(--header-bg);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 0.5px solid var(--sep);
+  z-index: 5;
+}
+.ib {
+  appearance: none;
+  background: none;
+  border: 0;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+  flex: none;
+}
+[data-os='ios'] .hdr {
+  display: grid;
+  grid-template-columns: 60px 1fr 60px;
+  align-items: center;
+  padding: 6px 6px 8px;
+}
+[data-os='ios'] .hdr .ib {
+  color: var(--accent);
+}
+[data-os='ios'] .hdr .ib.right {
+  justify-self: end;
+}
+.hcenter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+.stack {
+  display: flex;
+  padding-left: 12px;
+}
+.stack .avatar {
+  visibility: visible;
+  width: 34px;
+  height: 34px;
+  font-size: 14px;
+  margin-left: -12px;
+  border: 2px solid var(--header-bg);
+}
+.htitle-ios {
+  appearance: none;
+  background: none;
+  border: 0;
+  font-size: 11.5px;
+  color: var(--text);
+  cursor: pointer;
+  padding: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.htitle-ios span {
+  color: var(--muted);
+}
+[data-os='android'] .hdr {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 4px;
+  border-bottom-color: transparent;
+}
+[data-os='android'] .hdr .ib {
+  color: var(--text-2);
+}
+.gav {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--out-bg);
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  margin: 0 10px 0 2px;
+  flex: none;
+}
+.htext {
+  flex: 1;
+  min-width: 0;
+}
+.htitle {
+  font-size: 18px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.hsub {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ---------- Thread ---------- */
+.thread {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 8px 12px 12px;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+.row {
+  display: flex;
+  gap: 8px;
+  margin-top: 2px;
+  align-items: flex-end;
+}
+.row.first {
+  margin-top: 10px;
+}
+.row.out {
+  justify-content: flex-end;
+}
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  flex: none;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  visibility: hidden;
+  line-height: 1;
+}
+[data-os='ios'] .row.in.last .avatar {
+  visibility: visible;
+}
+.col {
+  display: flex;
+  flex-direction: column;
+  max-width: 74%;
+  min-width: 0;
+}
+.row.out .col {
+  align-items: flex-end;
+}
+.name {
+  font-size: 11.5px;
+  color: var(--muted);
+  margin: 0 0 2px 12px;
+  display: none;
+}
+.row.in.first .name {
+  display: block;
+}
+.bubble {
+  position: relative;
+  z-index: 0;
+  background: var(--in-bg);
+  color: var(--in-text);
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+.row.out .bubble {
+  background: var(--out-bg);
+  color: var(--out-text);
+}
+
+[data-os='ios'] .bubble {
+  padding: 7px 12px;
+  border-radius: 18px;
+  font-size: 17px;
+  line-height: 1.29;
+}
+[data-os='ios'] .row.last .bubble::before,
+[data-os='ios'] .row.last .bubble::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  height: 20px;
+  z-index: -1;
+}
+[data-os='ios'] .row.in.last .bubble::before {
+  left: -7px;
+  width: 20px;
+  background: var(--in-bg);
+  border-bottom-right-radius: 16px;
+}
+[data-os='ios'] .row.in.last .bubble::after {
+  left: -10px;
+  width: 10px;
+  background: var(--bg);
+  border-bottom-right-radius: 10px;
+}
+[data-os='ios'] .row.out.last .bubble::before {
+  right: -7px;
+  width: 20px;
+  background: var(--out-bg);
+  border-bottom-left-radius: 16px;
+}
+[data-os='ios'] .row.out.last .bubble::after {
+  right: -10px;
+  width: 10px;
+  background: var(--bg);
+  border-bottom-left-radius: 10px;
+}
+[data-os='ios'] .row.out + .row.in.first,
+[data-os='ios'] .row.in + .row.out.first {
+  margin-top: 10px;
+}
+
+[data-os='android'] .row {
+  align-items: flex-start;
+}
+[data-os='android'] .row.in.first .avatar {
+  visibility: visible;
+  margin-top: 19px;
+}
+[data-os='android'] .avatar {
+  width: 32px;
+  height: 32px;
+  font-size: 13px;
+  font-weight: 500;
+}
+[data-os='android'] .name {
+  margin-left: 14px;
+  font-size: 12px;
+}
+[data-os='android'] .bubble {
+  padding: 9px 14px;
+  border-radius: 20px;
+  font-size: 16px;
+  line-height: 1.4;
+}
+[data-os='android'] .row.in:not(.first) .bubble {
+  border-top-left-radius: 4px;
+}
+[data-os='android'] .row.in:not(.last) .bubble {
+  border-bottom-left-radius: 4px;
+}
+[data-os='android'] .row.out:not(.first) .bubble {
+  border-top-right-radius: 4px;
+}
+[data-os='android'] .row.out:not(.last) .bubble {
+  border-bottom-right-radius: 4px;
+}
+
+.dots {
+  display: inline-flex;
+  gap: 4px;
+  padding: 5px 2px;
+}
+.dots i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--muted);
+  opacity: 0.4;
+  animation: blink 1.2s infinite;
+}
+.dots i:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.dots i:nth-child(3) {
+  animation-delay: 0.4s;
+}
+@keyframes blink {
+  0%,
+  60%,
+  100% {
+    opacity: 0.35;
+  }
+  30% {
+    opacity: 1;
+  }
+}
+
+.thread-end {
+  height: 1px;
+}
+.sys {
+  text-align: center;
+  color: var(--muted);
+  font-size: 11.5px;
+  margin: 20px 20px 4px;
+  line-height: 1.4;
+}
+.sys b {
+  font-weight: 600;
+}
+.event {
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  margin: 8px 24px;
+  line-height: 1.4;
+}
+[data-os='android'] .thread-end {
+  height: 1px;
+}
+.sys {
+  font-size: 12px;
+  font-weight: 500;
+}
+[data-os='android'] .event {
+  font-size: 12.5px;
+}
+
+/* ---------- Cards ---------- */
+.card {
+  margin: 14px auto 8px;
+  max-width: 360px;
+  width: calc(100% - 16px);
+  background: var(--card);
+  border-radius: var(--card-r);
+  padding: 14px 14px 14px;
+}
+.card.private {
+  box-shadow: inset 0 0 0 1.5px var(--accent);
+}
+.tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.tag svg {
+  flex: none;
+}
+.card h3 {
+  margin: 0 0 4px;
+  font-size: 16.5px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+[data-os='android'] .card h3 {
+  font-weight: 500;
+  font-size: 17px;
+}
+.card p {
+  margin: 0 0 4px;
+  font-size: 14.5px;
+  line-height: 1.45;
+  color: var(--text-2);
+}
+.card p.small {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 8px;
+}
+.opts {
+  display: grid;
+  gap: 6px;
+  margin-top: 10px;
+}
+.opt {
+  appearance: none;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+  background: var(--opt);
+  border: 0;
+  border-radius: 12px;
+  padding: 8px 12px 8px 8px;
+  cursor: pointer;
+  min-height: 44px;
+}
+[data-os='android'] .opt {
+  border-radius: 14px;
+}
+.opt:disabled {
+  cursor: default;
+}
+.opt .avatar {
+  visibility: visible;
+  position: relative;
+}
+.opt .on {
+  position: relative;
+  flex: 1;
+  font-size: 15.5px;
+}
+.opt .note {
+  position: relative;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.opt.sel {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+.opt .fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  background: var(--accent);
+  opacity: 0.16;
+  transition: width 0.35s ease;
+}
+.voters {
+  position: relative;
+  display: flex;
+}
+.voters i {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  margin-left: -4px;
+  border: 1.5px solid var(--opt);
+  font-style: normal;
+  font-size: 9px;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+}
+.voters i.you {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.cnt {
+  position: relative;
+  font-size: 14px;
+  font-weight: 600;
+  min-width: 14px;
+  text-align: right;
+}
+.card .actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+}
+
+/* ---------- Phase bar & composer ---------- */
+.phasebar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px 6px 16px;
+  border-top: 0.5px solid var(--sep);
+  font-size: 13px;
+  color: var(--muted);
+  min-height: 48px;
+}
+[data-os='android'] .phasebar {
+  border-top-color: transparent;
+  background: var(--bg);
+}
+.btn {
+  appearance: none;
+  border: 0;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 600;
+  font-size: 14.5px;
+  padding: 0 16px;
+  height: 36px;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+[data-os='android'] .btn {
+  height: 40px;
+  font-weight: 500;
+  padding: 0 20px;
+}
+.btn:disabled {
+  opacity: 0.38;
+  cursor: default;
+}
+.btn.ghost {
+  background: transparent;
+  color: var(--accent);
+  padding: 0 8px;
+}
+
+.composer {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px 8px;
+  background: var(--bg);
+}
+.plus {
+  flex: none;
+  appearance: none;
+  border: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--card);
+  color: var(--muted);
+  display: grid;
+  place-items: center;
+}
+.field {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+.field input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 17px;
+  outline: none;
+  padding: 7px 0;
+}
+.field input::placeholder {
+  color: var(--muted);
+}
+.field input:disabled {
+  opacity: 0.7;
+}
+.send {
+  flex: none;
+  appearance: none;
+  border: 0;
+  background: var(--accent);
+  color: var(--on-accent);
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.send:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+[data-os='ios'] .field {
+  border: 1px solid var(--sep);
+  border-radius: 18px;
+  min-height: 36px;
+  padding: 1px 3px 1px 14px;
+}
+[data-os='ios'] .field:focus-within {
+  border-color: var(--muted);
+}
+[data-os='ios'] .send {
+  width: 29px;
+  height: 29px;
+  color: #fff;
+}
+[data-os='android'] .composer {
+  padding: 4px 8px 10px;
+}
+[data-os='android'] .plus {
+  background: transparent;
+  color: var(--text-2);
+  width: 40px;
+  height: 40px;
+}
+[data-os='android'] .field {
+  background: var(--field);
+  border-radius: 24px;
+  min-height: 48px;
+  padding: 0 8px 0 18px;
+}
+[data-os='android'] .field input {
+  font-size: 16px;
+}
+[data-os='android'] .field .emo {
+  color: var(--text-2);
+  display: grid;
+  place-items: center;
+  width: 32px;
+}
+[data-os='android'] .send {
+  width: 48px;
+  height: 48px;
+}
+
+/* ---------- Lock screen ---------- */
+.lock {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 56px 14px 24px;
+  color: #fff;
+  background: linear-gradient(
+    180deg,
+    #0e2433 0%,
+    #1b4650 42%,
+    #3c3a5c 72%,
+    #1a2232 100%
+  );
+  overflow: hidden;
+}
+.lock .moon {
+  position: absolute;
+  top: 22%;
+  right: 18%;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #f3ead2;
+  box-shadow: 0 0 60px 18px rgba(243, 234, 210, 0.25);
+}
+.lk-date {
+  font-size: 20px;
+  font-weight: 600;
+  opacity: 0.9;
+  position: relative;
+}
+.lk-time {
+  font-size: 92px;
+  font-weight: 700;
+  letter-spacing: -2px;
+  line-height: 1;
+  margin-top: 2px;
+  position: relative;
+}
+[data-os='android'] .lock {
+  align-items: flex-start;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+[data-os='android'] .lk-time {
+  order: -1;
+  font-weight: 400;
+  font-size: 108px;
+  letter-spacing: -3px;
+}
+[data-os='android'] .lk-date {
+  font-size: 17px;
+  font-weight: 500;
+  margin-top: 6px;
+}
+.notif {
+  appearance: none;
+  position: relative;
+  z-index: 1;
+  margin-top: 40px;
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  text-align: left;
+  border: 0;
+  cursor: pointer;
+  background: rgba(245, 245, 247, 0.78);
+  color: #111;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 22px;
+  padding: 12px 14px;
+}
+[data-os='android'] .notif {
+  border-radius: 26px;
+  background: rgba(240, 244, 249, 0.94);
+  padding: 14px 16px;
+  align-self: center;
+}
+.n-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  background: #34c759;
+  display: grid;
+  place-items: center;
+  flex: none;
+  color: #fff;
+}
+[data-os='android'] .n-icon {
+  border-radius: 50%;
+  background: #0b57d0;
+}
+.n-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.n-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 15px;
+}
+.n-top span {
+  color: #6b6b70;
+  font-size: 13px;
+}
+.n-text {
+  font-size: 15px;
+  line-height: 1.3;
+}
+.lk-hint {
+  position: relative;
+  z-index: 1;
+  margin-top: 14px;
+  font-size: 14px;
+  opacity: 0.85;
+  align-self: center;
+  animation: pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.trees {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 42%;
+}
+
+/* ---------- Sheets ---------- */
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+}
+.sheet {
+  position: relative;
+  width: 100%;
+  background: var(--bg);
+  color: var(--text);
+  border-radius: 18px 18px 0 0;
+  padding: 22px 20px calc(22px + env(safe-area-inset-bottom, 0px));
+  max-height: 92%;
+  overflow: auto;
+}
+[data-os='android'] .sheet {
+  border-radius: 28px 28px 0 0;
+}
+.sheet h2 {
+  margin: 0 0 8px;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+[data-os='android'] .sheet h2 {
+  font-weight: 500;
+  font-size: 22px;
+}
+.sheet p {
+  margin: 0 0 12px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text-2);
+  max-width: 60ch;
+}
+.sheet label {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+  margin: 16px 0 6px;
+}
+.tin {
+  width: 100%;
+  font: inherit;
+  font-size: 17px;
+  color: var(--text);
+  background: var(--card);
+  border: 1px solid var(--sep);
+  border-radius: 12px;
+  padding: 11px 14px;
+}
+.seg {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--card);
+  border-radius: 10px;
+  padding: 3px;
+  gap: 3px;
+}
+.seg button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  border-radius: 8px;
+  height: 34px;
+  font-size: 14.5px;
+  cursor: pointer;
+}
+.seg button[aria-checked='true'] {
+  background: var(--opt);
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+[data-os='android'] .seg {
+  border-radius: 20px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--muted);
+  gap: 0;
+  overflow: hidden;
+}
+[data-os='android'] .seg button {
+  border-radius: 0;
+  height: 40px;
+}
+[data-os='android'] .seg button[aria-checked='true'] {
+  background: var(--out-bg);
+  color: var(--out-text);
+  box-shadow: none;
+  font-weight: 500;
+}
+.sheet .btn {
+  display: block;
+  width: 100%;
+  height: 46px;
+  margin-top: 20px;
+  font-size: 16px;
+}
+.sheet .btn.ghost {
+  margin-top: 6px;
+}
+.hint {
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
