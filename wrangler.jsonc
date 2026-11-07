@@ -34,4 +34,17 @@
   "migrations": [{ "tag": "v1", "new_sqlite_classes": ["CaseObject"] }],
 
   "observability": { "enabled": true },
+
+  // PR Previews (`wrangler preview`) don't inherit bindings from the top level.
+  // Each Preview gets its own isolated CaseObject namespace; migrations above
+  // still apply.
+  "previews": {
+    "vars": {
+      "SMALLTALK_MODEL": "@cf/meta/llama-3.1-8b-instruct-fast",
+    },
+    "ai": { "binding": "AI" },
+    "durable_objects": {
+      "bindings": [{ "name": "CASES", "class_name": "CaseObject" }],
+    },
+  },
 }
