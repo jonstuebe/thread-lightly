@@ -30,7 +30,6 @@ const MAX_SMALLTALK_LENGTH = 200
 const FIDELITY_THRESHOLD = 0.5
 const MAX_COMPOSED_LENGTH = 320
 const UNANSWERED = 'NONE'
-const BACKGROUND_ONLY = '-'
 
 const Choice = Schema.Struct({
   choice: Schema.String,
@@ -102,8 +101,10 @@ const chatHistory = (recent: ReadonlyArray<Turn>, text: string) => [
 
 // NOTE: the composing model sees the case background, which the player could
 // hear from anyone, and the guest's menu of replies, never the rest of the
-// case. Clef then checks the text kept every fact of the replies it picked (a
-// lie must stay a lie, or the case file loses its evidence) and added none.
+// case. Clef then checks the text added no claim, and for each reply it
+// picked, whether it left out a time, place or sighting (a lie must stay a
+// lie, or the case file loses its evidence). Only replies told in full lend
+// the message their facts.
 const composePrompt = (
   caseData: Case,
   guest: Guest,
@@ -119,29 +120,30 @@ const composePrompt = (
       onNone: () => [],
       onSome: key => [`The detective is most likely asking about [${key}].`],
     }),
-    `Reply to the detective's latest message with one text message in your voice, under 45 words. Lead with what answers the question. Build it from what everyone knows and at most ${MAX_PICKED} of your answers: keep every claim in an answer you use exactly (times, places, names, what you saw), and add no new facts. If you're asked again, answer again in fresh words, not your earlier message.`,
-    `Write exactly two lines:\nPICK: the keys of the answers you used, comma separated; ${BACKGROUND_ONLY} if you used only what everyone knows; ${UNANSWERED} if nothing above answers the message\nREPLY: your text message (leave empty after ${UNANSWERED})`,
+    `Reply to the detective's latest message with one text message in your voice, under 45 words. Lead with what answers the question. Build it from what everyone knows and at most ${MAX_PICKED} of your answers: if you use an answer, say every claim in it (times, places, names, what you saw, what you didn't do), even the parts nobody asked about; never trim one away. Add no new facts. If you're asked again, answer again in fresh words, not your earlier message.`,
+    `Answer in JSON: "pick" lists the keys of the answers you used; leave it empty if you used only what everyone knows, or make it ["${UNANSWERED}"] if nothing above answers the message. "reply" is your text message (empty after ${UNANSWERED}).`,
   ].join('\n\n')
 
-// NOTE: the model is told to write PICK then REPLY, but sometimes writes the
-// reply first and the PICK line after it, so take the PICK line from anywhere.
-const parseComposed = (
-  response: string,
-): Readonly<{ keys: ReadonlyArray<string>; reply: string }> | undefined => {
-  const pick = /^\s*PICK:\s*(.*)$/im.exec(response)
-  if (pick === null) {
-    return undefined
-  }
-  const keys = Array.map((pick[1] ?? '').split(/[,;]/), key =>
-    key.trim().replace(/^\[|\]$/g, ''),
-  ).filter(key => key !== '')
-  const withoutPick = response.replace(pick[0], '')
-  const labelled = /REPLY:\s*([\s\S]*)/i.exec(withoutPick)
-  const reply = (labelled?.[1] ?? withoutPick)
-    .trim()
-    .replace(/^["“]|["”]$/g, '')
-  return { keys, reply }
+// NOTE: JSON mode makes the model fill this schema, so the output can't put
+// the reply and the picks in the wrong order. Workers AI returns the object as
+// `response`; older paths return it as a JSON string, so accept both.
+const ComposedJson = Schema.Struct({
+  pick: Schema.Array(Schema.String),
+  reply: Schema.String,
+})
+
+const COMPOSED_JSON_SCHEMA = {
+  type: 'object',
+  properties: {
+    pick: { type: 'array', items: { type: 'string' } },
+    reply: { type: 'string' },
+  },
+  required: ['pick', 'reply'],
 }
+
+const ComposerOutput = Schema.Struct({
+  response: Schema.Union([ComposedJson, Schema.fromJsonString(ComposedJson)]),
+})
 
 const byNoulDescending = Order.mapInput(
   Order.flip(Order.Number),
@@ -246,7 +248,11 @@ export const liveAiLayer = (
             ai,
             replyModel,
             {
-              max_tokens: 160,
+              max_tokens: 200,
+              response_format: {
+                type: 'json_schema',
+                json_schema: COMPOSED_JSON_SCHEMA,
+              },
               messages: [
                 {
                   role: 'system',
@@ -255,36 +261,37 @@ export const liveAiLayer = (
                 ...chatHistory(recent, text),
               ],
             },
-            SmallTalkOutput,
+            ComposerOutput,
           )
-          const parsed = parseComposed(response)
-          if (parsed === undefined) {
-            return yield* new AiFailed({
-              reason: `composer broke format: ${response}`,
-            })
-          }
-          const realKeys = Array.filter(
-            parsed.keys,
-            key => key !== UNANSWERED && key !== BACKGROUND_ONLY,
-          )
-          if (parsed.keys.includes(UNANSWERED) && realKeys.length === 0) {
+          const keys = Array.map(response.pick, key =>
+            key.trim().replace(/^\[|\]$/g, ''),
+          ).filter(key => key !== '' && key !== '-')
+          const realKeys = Array.filter(keys, key => key !== UNANSWERED)
+          if (keys.includes(UNANSWERED) && realKeys.length === 0) {
             return { _tag: 'Unanswered' } as const
           }
           const unknown = Array.filter(
             realKeys,
             key => !menu.some(item => item.key === key),
           )
-          const picked = Array.take(
-            Array.filter(menu, item => realKeys.includes(item.key)),
-            MAX_PICKED,
-          )
-          const line = parsed.reply.slice(0, MAX_COMPOSED_LENGTH)
+          // NOTE: a one-item menu is the reply the engine needs said, so it
+          // counts as picked even if the model claims it used only background.
+          const picked =
+            menu.length === 1
+              ? menu
+              : Array.take(
+                  Array.filter(menu, item => realKeys.includes(item.key)),
+                  MAX_PICKED,
+                )
+          const line = response.reply
+            .trim()
+            .replace(/^["“]|["”]$/g, '')
+            .slice(0, MAX_COMPOSED_LENGTH)
           if (line === '' || unknown.length > 0) {
             return yield* new AiFailed({
-              reason: `composer picked ${parsed.keys}`,
+              reason: `composer picked ${keys}`,
             })
           }
-          const facts = Array.flatMap(picked, item => item.facts)
           const { answers } = yield* run(
             ai,
             CLEF_MODEL,
@@ -302,11 +309,11 @@ export const liveAiLayer = (
                   instructions: `Does the text claim something found in neither the sources nor the common knowledge: a new time, place, name, or thing someone did or saw? Opinions, feelings and tone don't count.`,
                 },
                 ...Object.fromEntries(
-                  facts.map((fact, index) => [
-                    `keeps${index}`,
+                  picked.map((item, index) => [
+                    `omits${index}`,
                     {
                       type: 'noul',
-                      instructions: `Does the text still claim this, in any words: "${fact.text}"?`,
+                      instructions: `Compare the text with this source: "${item.text}". Does the text leave out something the source says about a time, a place, or what someone did or saw? Leaving out jokes, feelings and filler doesn't count.`,
                     },
                   ]),
                 ),
@@ -323,11 +330,11 @@ export const liveAiLayer = (
             _tag: 'Answered',
             text: line,
             picked: Array.map(picked, item => item.key),
-            kept: Array.filter(
-              facts,
-              (_, index) =>
-                (answers[`keeps${index}`]?.noul ?? 0) >= FIDELITY_THRESHOLD,
-            ).map(fact => fact.id),
+            kept: Array.flatMap(picked, (item, index) =>
+              (answers[`omits${index}`]?.noul ?? 1) < FIDELITY_THRESHOLD
+                ? Array.map(item.facts, fact => fact.id)
+                : [],
+            ),
           } as const
         }),
     }),

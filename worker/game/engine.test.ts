@@ -275,7 +275,7 @@ describe('direct messages', () => {
 
   test('a fact the composed text drops is not carried', () => {
     const step = play(start, dm('margot', 'what does it look like?'), {
-      route: () => routed('the-brooch'),
+      route: () => routed('the-brooch', { confidence: 0.1 }),
       compose: () => ({
         _tag: 'Answered',
         text: 'Silver, with a little garnet.',
@@ -285,6 +285,50 @@ describe('direct messages', () => {
     })
     expect(guestReplies(step)).toEqual(['Silver, with a little garnet.'])
     expect(step.state.messages.at(-1)?.factIds).toEqual([])
+  })
+
+  test('a narrow question keeps its narrow answer when the retry trims too', () => {
+    const step = play(start, dm('margot', 'what room was the toast in?'), {
+      route: () => routed('the-evening'),
+      compose: () => ({
+        _tag: 'Answered',
+        text: 'My toast was at ten, in the great room.',
+        picked: ['the-evening'],
+        kept: [],
+      }),
+    })
+    expect(guestReplies(step)).toEqual([
+      'My toast was at ten, in the great room.',
+    ])
+    expect(step.state.messages.at(-1)?.factIds).toEqual([])
+  })
+
+  test('shortened facts get one more try from the confident reply alone', () => {
+    const menus: Array<ReadonlyArray<string>> = []
+    const step = play(start, dm('dale', 'where were you friday night?'), {
+      route: () => routed('whereabouts-friday'),
+      compose: ({ menu }) => {
+        menus.push(menu.map(item => item.key))
+        return menu.length === 1
+          ? answered(menu, 'asleep by 11:15, stayed in, never came down', [
+              'whereabouts-friday',
+            ])
+          : {
+              _tag: 'Answered',
+              text: 'out like a light by quarter past eleven',
+              picked: ['whereabouts-friday'],
+              kept: [],
+            }
+      },
+    })
+    expect(menus.at(-1)).toEqual(['whereabouts-friday'])
+    expect(guestReplies(step)).toEqual([
+      'asleep by 11:15, stayed in, never came down',
+    ])
+    expect(step.state.messages.at(-1)?.factIds).toEqual([
+      'dale-asleep-by-1115',
+      'dale-stayed-inside',
+    ])
   })
 
   test('a low-confidence question can still be answered from the menu', () => {
@@ -342,6 +386,22 @@ describe('direct messages', () => {
     expect(guestReplies(step)).toEqual([
       "whoa. I'm family here. maybe ask wes where his money comes from",
     ])
+  })
+
+  test('a pressed reply posts as written when the rewrite drops its facts', () => {
+    const pressed = caseData.guests.find(guest => guest.id === 'wes')!
+      .dictionary.pressed.variants[0]
+    expect(pressed.factIds.length).toBeGreaterThan(0)
+    const step = play(start, dm('wes', 'you took it'), {
+      route: () => routed('the-brooch', { tone: 'accusatory' }),
+      compose: () => ({
+        _tag: 'Answered',
+        text: 'Excuse me?',
+        picked: ['pressed'],
+        kept: [],
+      }),
+    })
+    expect(guestReplies(step)).toEqual([pressed.text])
   })
 
   test('an injection attempt is dodged', () => {

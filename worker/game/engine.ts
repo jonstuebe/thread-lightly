@@ -44,6 +44,7 @@ import {
   INJECTION_THRESHOLD,
   MAX_GROUP_RESPONDERS,
   Composer,
+  type Composed,
   Router,
   SMALLTALK,
   SmallTalk,
@@ -794,7 +795,11 @@ const answer = (
           text: Option.match(composed, {
             onNone: () => pressed.text,
             onSome: result =>
-              result._tag === 'Answered' && result.picked.includes(PRESSED_KEY)
+              result._tag === 'Answered' &&
+              result.picked.includes(PRESSED_KEY) &&
+              Array.every(pressed.factIds, factId =>
+                result.kept.includes(factId),
+              )
                 ? result.text
                 : pressed.text,
           }),
@@ -813,37 +818,43 @@ const answer = (
       topics,
       Option.map(confidentTopic, topic => topic.id),
     )
-    const maybeComposed = yield* Effect.option(
-      composer.compose({
-        guest,
-        menu: Array.map(menu, ({ topic, reply }) => ({
-          key: topic,
-          text: reply.text,
-          facts: factsOf(caseData, reply),
-        })),
-        hint: Option.map(confidentTopic, topic => topic.id),
-        recent,
-        text: message,
-      }),
+    const compose = (items: ReadonlyArray<MenuEntry>) =>
+      Effect.option(
+        composer.compose({
+          guest,
+          menu: Array.map(items, ({ topic, reply }) => ({
+            key: topic,
+            text: reply.text,
+            facts: factsOf(caseData, reply),
+          })),
+          hint: Option.map(confidentTopic, topic => topic.id),
+          recent,
+          text: message,
+        }),
+      )
+    const keepsAll = (
+      composed: Composed,
+      item: MenuEntry,
+    ): composed is Extract<Composed, { _tag: 'Answered' }> =>
+      composed._tag === 'Answered' &&
+      composed.picked.includes(item.topic) &&
+      Array.every(item.reply.factIds, factId => composed.kept.includes(factId))
+    const maybeComposed = yield* compose(menu)
+
+    const confidentItem = Option.flatMap(confidentTopic, topic =>
+      Array.findFirst(menu, item => item.topic === topic.id),
     )
+    const verbatim = ({ topic, reply }: MenuEntry): Answer => ({
+      reply,
+      cost: costFor([topic]),
+      topics: [topic],
+      dodged: false,
+    })
 
     // NOTE: the composer is down or broke the facts, so fall back to the
     // router's confident pick verbatim, as before the composer existed.
     if (Option.isNone(maybeComposed)) {
-      return Option.match(
-        Option.flatMap(confidentTopic, topic =>
-          Array.findFirst(menu, item => item.topic === topic.id),
-        ),
-        {
-          onNone: fallback,
-          onSome: ({ topic, reply }) => ({
-            reply,
-            cost: costFor([topic]),
-            topics: [topic],
-            dodged: false,
-          }),
-        },
-      )
+      return Option.match(confidentItem, { onNone: fallback, onSome: verbatim })
     }
 
     const composed = maybeComposed.value
@@ -853,6 +864,26 @@ const answer = (
     const picked = Array.filter(menu, item =>
       composed.picked.includes(item.topic),
     )
+
+    // NOTE: the solvability checker assumes a question routed to a topic gets
+    // that topic's facts. If the composer used the confident topic but trimmed
+    // some away, compose once more from that reply alone. If that trims too,
+    // the question was narrower than the topic: post the first answer, which
+    // carries only what it says, rather than a canned line that doesn't answer.
+    const shortened = Option.filter(
+      confidentItem,
+      item => picked.includes(item) && !keepsAll(composed, item),
+    )
+    if (Option.isSome(shortened)) {
+      const item = shortened.value
+      const retried = yield* compose([item])
+      if (Option.isSome(retried) && keepsAll(retried.value, item)) {
+        return {
+          ...verbatim(item),
+          reply: { text: retried.value.text, factIds: item.reply.factIds },
+        }
+      }
+    }
     const pickedTopics = Array.map(picked, item => item.topic)
     return {
       reply: {

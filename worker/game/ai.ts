@@ -57,7 +57,8 @@ export class SmallTalk extends Context.Service<
 // a claim, and reports in `kept` which of the picked replies' facts the text
 // still states. The engine posts exactly those fact IDs, so a message carries
 // what it says and nothing more. `picked` is empty when the background alone
-// answers. `Unanswered` means nothing on the menu fits.
+// answers; a one-item menu is always picked. `Unanswered` means nothing on the
+// menu fits.
 export type MenuItem = Readonly<{
   key: string
   text: string
