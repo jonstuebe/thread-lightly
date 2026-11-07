@@ -46,6 +46,7 @@ import {
   SmallTalk,
   type Turn,
 } from './ai'
+import { PATIENCE, type Patience } from './patience'
 import type { GameState, StoredMessage } from './state'
 
 export const DAY_START_MINUTES = 9 * 60
@@ -123,6 +124,8 @@ export const bedtimeMinutes = (bedtime: string): number => {
   return (hours < 12 ? hours + 24 : hours) * 60 + minutes
 }
 
+const traitsOf = (guest: Guest): Patience => PATIENCE[guest.temperament]
+
 const patienceOf = (state: GameState, guest: Guest): number =>
   state.patience[guest.id] ?? 0
 
@@ -137,7 +140,7 @@ export const statusOf = (state: GameState, guest: Guest): GuestStatus => {
   if (patience <= 0) {
     return 'leftOnRead'
   }
-  if (patience <= guest.patience.perDay / 3) {
+  if (patience <= traitsOf(guest).perDay / 3) {
     return 'annoyed'
   }
   return 'available'
@@ -187,7 +190,7 @@ const beginDay = (caseData: Case, step: Step, day: Day): Step => {
       phase: 'day',
       minutes: DAY_START_MINUTES,
       patience: Object.fromEntries(
-        Array.map(caseData.guests, guest => [guest.id, guest.patience.perDay]),
+        Array.map(caseData.guests, guest => [guest.id, traitsOf(guest).perDay]),
       ),
     },
   }
@@ -670,7 +673,7 @@ const answer = (
       router.route({ guest, topics, recent, text: message }),
     )
     if (Option.isNone(maybeRouting)) {
-      return dodge(state, guest, guest.patience.costs.neutral)
+      return dodge(state, guest, traitsOf(guest).costs.neutral)
     }
     const routing = maybeRouting.value
     const asks = state.asks[guest.id] ?? []
@@ -679,8 +682,8 @@ const answer = (
       ask => ask.day === state.day && ask.topic === routing.topic,
     )
     const cost =
-      guest.patience.costs[routing.tone] +
-      (repeated ? guest.patience.costs.repeated : 0)
+      traitsOf(guest).costs[routing.tone] +
+      (repeated ? traitsOf(guest).costs.repeated : 0)
 
     if (routing.injection >= INJECTION_THRESHOLD) {
       return dodge(state, guest, cost)
@@ -743,7 +746,7 @@ const applyAnswer = (
 ): Step => {
   const state = step.state
   const patience = Math.min(
-    guest.patience.perDay,
+    traitsOf(guest).perDay,
     patienceOf(state, guest) - given.cost,
   )
   const asks = Option.match(given.topic, {

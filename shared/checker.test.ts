@@ -354,14 +354,6 @@ describe('traits', () => {
     }))
     expect(checksFailed(broken)).toEqual(['traits'])
   })
-
-  test('catches a thief whose patience stands out', () => {
-    const broken = withGuest(base, 'dale', guest => ({
-      ...guest,
-      patience: { ...guest.patience, perDay: 2 },
-    }))
-    expect(checksFailed(broken)).toEqual(['traits'])
-  })
 })
 
 describe('coverage', () => {

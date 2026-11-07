@@ -406,7 +406,11 @@
     }
   ],
   "nightMoves": [
-    { "_tag": "Destroy", "night": 1, "fact": "muddy-boots" },
+    {
+      "_tag": "Destroy",
+      "night": 1,
+      "fact": "muddy-boots"
+    },
     {
       "_tag": "Plant",
       "night": 2,
@@ -466,7 +470,10 @@
   ],
   "groupBeats": [
     {
-      "trigger": { "_tag": "Morning", "day": 1 },
+      "trigger": {
+        "_tag": "Morning",
+        "day": 1
+      },
       "lines": [
         {
           "guest": "margot",
@@ -478,7 +485,11 @@
           "text": "wasn't me, I was dead asleep on the couch all night",
           "factIds": ["wes-snoring"]
         },
-        { "guest": "priya", "text": "Oh Margot. I'm so sorry.", "factIds": [] },
+        {
+          "guest": "priya",
+          "text": "Oh Margot. I'm so sorry.",
+          "factIds": []
+        },
         {
           "guest": "dale",
           "text": "Probably fell behind something. I'll help look after coffee",
@@ -487,18 +498,28 @@
       ]
     },
     {
-      "trigger": { "_tag": "Idle", "day": 1 },
+      "trigger": {
+        "_tag": "Idle",
+        "day": 1
+      },
       "lines": [
         {
           "guest": "wes",
           "text": "who finished the good coffee",
           "factIds": []
         },
-        { "guest": "priya", "text": "Not me.", "factIds": [] }
+        {
+          "guest": "priya",
+          "text": "Not me.",
+          "factIds": []
+        }
       ]
     },
     {
-      "trigger": { "_tag": "Morning", "day": 2 },
+      "trigger": {
+        "_tag": "Morning",
+        "day": 2
+      },
       "lines": [
         {
           "guest": "margot",
@@ -513,7 +534,10 @@
       ]
     },
     {
-      "trigger": { "_tag": "Morning", "day": 3 },
+      "trigger": {
+        "_tag": "Morning",
+        "day": 3
+      },
       "lines": [
         {
           "guest": "margot",
@@ -525,7 +549,11 @@
           "text": "WHAT. I wasn't even here last night, I was at my cabin!",
           "factIds": ["wes-at-cabin-sunday"]
         },
-        { "guest": "dale", "text": "Well. That settles that.", "factIds": [] }
+        {
+          "guest": "dale",
+          "text": "Well. That settles that.",
+          "factIds": []
+        }
       ]
     }
   ],
@@ -536,16 +564,6 @@
       "role": "Your host, and the brooch's owner",
       "voice": "Warm, frazzled, apologizes a lot, types in full sentences with the odd ALL CAPS word when upset.",
       "temperament": "anxious",
-      "patience": {
-        "perDay": 8,
-        "costs": {
-          "neutral": 1,
-          "friendly": 0,
-          "rude": 3,
-          "accusatory": 3,
-          "repeated": 2
-        }
-      },
       "bedtime": "23:00",
       "knows": [
         "brooch-seen-at-toast",
@@ -563,7 +581,10 @@
           {
             "id": "whereabouts-friday",
             "description": "where Margot was and what she did on Friday night, the night the brooch went missing",
-            "subject": { "_tag": "Whereabouts", "night": 0 },
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 0
+            },
             "visibility": "public",
             "variants": [
               {
@@ -579,10 +600,16 @@
           {
             "id": "whereabouts-saturday",
             "description": "where Margot was and what she heard on Saturday night",
-            "subject": { "_tag": "Whereabouts", "night": 1 },
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 1
+            },
             "visibility": "public",
             "variants": [
-              { "text": "Tonight? Ask me tomorrow, detective.", "factIds": [] }
+              {
+                "text": "Tonight? Ask me tomorrow, detective.",
+                "factIds": []
+              }
             ],
             "afterNight": [
               {
@@ -599,10 +626,16 @@
           {
             "id": "whereabouts-sunday",
             "description": "where Margot was on Sunday night, including her trip to the boathouse for the oars",
-            "subject": { "_tag": "Whereabouts", "night": 2 },
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 2
+            },
             "visibility": "dmOnly",
             "variants": [
-              { "text": "Sunday night hasn't happened yet!", "factIds": [] }
+              {
+                "text": "Sunday night hasn't happened yet!",
+                "factIds": []
+              }
             ],
             "afterNight": [
               {
@@ -619,7 +652,9 @@
           {
             "id": "the-brooch",
             "description": "the missing silver brooch itself, its history, and when it was last seen",
-            "subject": { "_tag": "Item" },
+            "subject": {
+              "_tag": "Item"
+            },
             "visibility": "public",
             "variants": [
               {
@@ -635,7 +670,9 @@
           {
             "id": "the-display-case",
             "description": "the glass display case in the great room and how Margot found it in the morning",
-            "subject": { "_tag": "Other" },
+            "subject": {
+              "_tag": "Other"
+            },
             "visibility": "public",
             "variants": [
               {
@@ -647,7 +684,10 @@
           {
             "id": "about-dale",
             "description": "Dale, Margot's brother-in-law, and his late-night text about ice",
-            "subject": { "_tag": "Guest", "guest": "dale" },
+            "subject": {
+              "_tag": "Guest",
+              "guest": "dale"
+            },
             "visibility": "dmOnly",
             "variants": [
               {
@@ -663,7 +703,10 @@
           {
             "id": "about-priya",
             "description": "Priya, Margot's quiet college roommate",
-            "subject": { "_tag": "Guest", "guest": "priya" },
+            "subject": {
+              "_tag": "Guest",
+              "guest": "priya"
+            },
             "visibility": "public",
             "variants": [
               {
@@ -675,7 +718,10 @@
           {
             "id": "about-wes",
             "description": "Wes, the neighbor who talks nonstop, and the money he borrowed",
-            "subject": { "_tag": "Guest", "guest": "wes" },
+            "subject": {
+              "_tag": "Guest",
+              "guest": "wes"
+            },
             "visibility": "dmOnly",
             "variants": [
               {
@@ -711,16 +757,6 @@
       "role": "Margot's brother-in-law",
       "voice": "Easygoing, jokey, a bit too quick to change the subject. Lowercase, no punctuation when relaxed.",
       "temperament": "chatty",
-      "patience": {
-        "perDay": 8,
-        "costs": {
-          "neutral": 1,
-          "friendly": 0,
-          "rude": 2,
-          "accusatory": 2,
-          "repeated": 2
-        }
-      },
       "bedtime": "23:30",
       "knows": ["brooch-seen-at-toast", "case-found-open"],
       "claims": [
@@ -735,7 +771,10 @@
           {
             "id": "whereabouts-friday",
             "description": "where Dale was and what he did on Friday night, the night the brooch went missing",
-            "subject": { "_tag": "Whereabouts", "night": 0 },
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 0
+            },
             "visibility": "public",
             "variants": [
               {
@@ -751,10 +790,16 @@
           {
             "id": "whereabouts-saturday",
             "description": "where Dale was on Saturday night",
-            "subject": { "_tag": "Whereabouts", "night": 1 },
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 1
+            },
             "visibility": "public",
             "variants": [
-              { "text": "tonight? planning on an early one", "factIds": [] }
+              {
+                "text": "tonight? planning on an early one",
+                "factIds": []
+              }
             ],
             "afterNight": [
               {
@@ -771,9 +816,17 @@
           {
             "id": "whereabouts-sunday",
             "description": "where Dale was on Sunday night",
-            "subject": { "_tag": "Whereabouts", "night": 2 },
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 2
+            },
             "visibility": "public",
-            "variants": [{ "text": "ha, ask me after", "factIds": [] }],
+            "variants": [
+              {
+                "text": "ha, ask me after",
+                "factIds": []
+              }
+            ],
             "afterNight": [
               {
                 "night": 2,
@@ -789,7 +842,9 @@
           {
             "id": "the-brooch",
             "description": "the missing silver brooch and when Dale last saw it",
-            "subject": { "_tag": "Item" },
+            "subject": {
+              "_tag": "Item"
+            },
             "visibility": "public",
             "variants": [
               {
@@ -801,7 +856,9 @@
           {
             "id": "his-phone",
             "description": "Dale's phone: where it was overnight, texting, and the Wi-Fi log showing it online",
-            "subject": { "_tag": "Other" },
+            "subject": {
+              "_tag": "Other"
+            },
             "visibility": "dmOnly",
             "variants": [
               {
@@ -817,7 +874,9 @@
           {
             "id": "going-outside",
             "description": "going outdoors at night: the boathouse, the dock, the path, muddy boots",
-            "subject": { "_tag": "Other" },
+            "subject": {
+              "_tag": "Other"
+            },
             "visibility": "dmOnly",
             "variants": [
               {
@@ -829,16 +888,25 @@
           {
             "id": "about-margot",
             "description": "Margot, Dale's sister-in-law and the host",
-            "subject": { "_tag": "Guest", "guest": "margot" },
+            "subject": {
+              "_tag": "Guest",
+              "guest": "margot"
+            },
             "visibility": "public",
             "variants": [
-              { "text": "margot's great. worries too much", "factIds": [] }
+              {
+                "text": "margot's great. worries too much",
+                "factIds": []
+              }
             ]
           },
           {
             "id": "about-priya",
             "description": "Priya, the quiet college friend",
-            "subject": { "_tag": "Guest", "guest": "priya" },
+            "subject": {
+              "_tag": "Guest",
+              "guest": "priya"
+            },
             "visibility": "public",
             "variants": [
               {
@@ -850,7 +918,10 @@
           {
             "id": "about-wes",
             "description": "Wes, the talkative neighbor who sleeps on the couch",
-            "subject": { "_tag": "Guest", "guest": "wes" },
+            "subject": {
+              "_tag": "Guest",
+              "guest": "wes"
+            },
             "visibility": "dmOnly",
             "variants": [
               {
@@ -886,16 +957,6 @@
       "role": "Margot's college roommate",
       "voice": "Clipped and careful. Short sentences, full stops, never volunteers anything.",
       "temperament": "guarded",
-      "patience": {
-        "perDay": 5,
-        "costs": {
-          "neutral": 1,
-          "friendly": 1,
-          "rude": 3,
-          "accusatory": 3,
-          "repeated": 2
-        }
-      },
       "bedtime": "22:30",
       "knows": [
         "brooch-seen-at-toast",
@@ -910,7 +971,10 @@
           {
             "id": "whereabouts-friday",
             "description": "where Priya was on Friday night, the night the brooch went missing",
-            "subject": { "_tag": "Whereabouts", "night": 0 },
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 0
+            },
             "visibility": "public",
             "variants": [
               {
@@ -922,16 +986,25 @@
           {
             "id": "whereabouts-saturday",
             "description": "where Priya was on Saturday night",
-            "subject": { "_tag": "Whereabouts", "night": 1 },
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 1
+            },
             "visibility": "dmOnly",
             "variants": [
-              { "text": "Tonight? Reading, probably.", "factIds": [] }
+              {
+                "text": "Tonight? Reading, probably.",
+                "factIds": []
+              }
             ],
             "afterNight": [
               {
                 "night": 1,
                 "variants": [
-                  { "text": "Asleep. I wear earplugs.", "factIds": [] }
+                  {
+                    "text": "Asleep. I wear earplugs.",
+                    "factIds": []
+                  }
                 ]
               }
             ]
@@ -939,20 +1012,35 @@
           {
             "id": "whereabouts-sunday",
             "description": "where Priya was on Sunday night",
-            "subject": { "_tag": "Whereabouts", "night": 2 },
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 2
+            },
             "visibility": "dmOnly",
-            "variants": [{ "text": "We'll see.", "factIds": [] }],
+            "variants": [
+              {
+                "text": "We'll see.",
+                "factIds": []
+              }
+            ],
             "afterNight": [
               {
                 "night": 2,
-                "variants": [{ "text": "Asleep by eleven.", "factIds": [] }]
+                "variants": [
+                  {
+                    "text": "Asleep by eleven.",
+                    "factIds": []
+                  }
+                ]
               }
             ]
           },
           {
             "id": "the-brooch",
             "description": "the missing silver brooch and when Priya last saw it",
-            "subject": { "_tag": "Item" },
+            "subject": {
+              "_tag": "Item"
+            },
             "visibility": "public",
             "variants": [
               {
@@ -964,7 +1052,9 @@
           {
             "id": "the-boathouse",
             "description": "the boathouse and the dock at night, and a flashlight on the path",
-            "subject": { "_tag": "Other" },
+            "subject": {
+              "_tag": "Other"
+            },
             "visibility": "dmOnly",
             "variants": [
               {
@@ -976,7 +1066,9 @@
           {
             "id": "smoking",
             "description": "Priya smoking: cigarettes, the smell of smoke, sneaking out for one",
-            "subject": { "_tag": "Secret" },
+            "subject": {
+              "_tag": "Secret"
+            },
             "visibility": "dmOnly",
             "variants": [
               {
@@ -988,16 +1080,25 @@
           {
             "id": "about-margot",
             "description": "Margot, Priya's old roommate and the host",
-            "subject": { "_tag": "Guest", "guest": "margot" },
+            "subject": {
+              "_tag": "Guest",
+              "guest": "margot"
+            },
             "visibility": "public",
             "variants": [
-              { "text": "Margot has always been good to me.", "factIds": [] }
+              {
+                "text": "Margot has always been good to me.",
+                "factIds": []
+              }
             ]
           },
           {
             "id": "about-dale",
             "description": "Dale, Margot's brother-in-law, and how he acted at dinner",
-            "subject": { "_tag": "Guest", "guest": "dale" },
+            "subject": {
+              "_tag": "Guest",
+              "guest": "dale"
+            },
             "visibility": "dmOnly",
             "variants": [
               {
@@ -1009,7 +1110,10 @@
           {
             "id": "about-wes",
             "description": "Wes, the neighbor, and his snoring on the couch",
-            "subject": { "_tag": "Guest", "guest": "wes" },
+            "subject": {
+              "_tag": "Guest",
+              "guest": "wes"
+            },
             "visibility": "public",
             "variants": [
               {
@@ -1021,7 +1125,10 @@
         ],
         "pressed": {
           "variants": [
-            { "text": "I don't have to talk to you.", "factIds": [] }
+            {
+              "text": "I don't have to talk to you.",
+              "factIds": []
+            }
           ]
         },
         "dodges": [
@@ -1042,16 +1149,6 @@
       "role": "The neighbor from across the lake",
       "voice": "Talks nonstop, lots of exclamation marks and tangents, defensive about money.",
       "temperament": "chatty",
-      "patience": {
-        "perDay": 10,
-        "costs": {
-          "neutral": 1,
-          "friendly": -1,
-          "rude": 2,
-          "accusatory": 3,
-          "repeated": 1
-        }
-      },
       "bedtime": "00:30",
       "knows": [
         "brooch-seen-at-toast",
@@ -1068,7 +1165,10 @@
           {
             "id": "whereabouts-friday",
             "description": "where Wes was on Friday night, the night the brooch went missing",
-            "subject": { "_tag": "Whereabouts", "night": 0 },
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 0
+            },
             "visibility": "public",
             "variants": [
               {
@@ -1080,7 +1180,10 @@
           {
             "id": "whereabouts-saturday",
             "description": "where Wes was on Saturday night",
-            "subject": { "_tag": "Whereabouts", "night": 1 },
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 1
+            },
             "visibility": "public",
             "variants": [
               {
@@ -1103,7 +1206,10 @@
           {
             "id": "whereabouts-sunday",
             "description": "where Wes was on Sunday night, back at his own cabin",
-            "subject": { "_tag": "Whereabouts", "night": 2 },
+            "subject": {
+              "_tag": "Whereabouts",
+              "night": 2
+            },
             "visibility": "public",
             "variants": [
               {
@@ -1126,7 +1232,9 @@
           {
             "id": "the-brooch",
             "description": "the missing silver brooch and when Wes last saw it",
-            "subject": { "_tag": "Item" },
+            "subject": {
+              "_tag": "Item"
+            },
             "visibility": "public",
             "variants": [
               {
@@ -1138,7 +1246,9 @@
           {
             "id": "the-kitchen-door",
             "description": "the kitchen door and mudroom: boots and coats left by the back door",
-            "subject": { "_tag": "Other" },
+            "subject": {
+              "_tag": "Other"
+            },
             "visibility": "public",
             "variants": [
               {
@@ -1156,7 +1266,9 @@
           {
             "id": "money",
             "description": "Wes's money troubles, debts, and whether he paid Margot back",
-            "subject": { "_tag": "Secret" },
+            "subject": {
+              "_tag": "Secret"
+            },
             "visibility": "dmOnly",
             "variants": [
               {
@@ -1168,7 +1280,10 @@
           {
             "id": "about-margot",
             "description": "Margot, the host, and her parties",
-            "subject": { "_tag": "Guest", "guest": "margot" },
+            "subject": {
+              "_tag": "Guest",
+              "guest": "margot"
+            },
             "visibility": "public",
             "variants": [
               {
@@ -1180,7 +1295,10 @@
           {
             "id": "about-dale",
             "description": "Dale, Margot's brother-in-law, the jokey one",
-            "subject": { "_tag": "Guest", "guest": "dale" },
+            "subject": {
+              "_tag": "Guest",
+              "guest": "dale"
+            },
             "visibility": "public",
             "variants": [
               {
@@ -1192,10 +1310,16 @@
           {
             "id": "about-priya",
             "description": "Priya, the guarded college friend",
-            "subject": { "_tag": "Guest", "guest": "priya" },
+            "subject": {
+              "_tag": "Guest",
+              "guest": "priya"
+            },
             "visibility": "public",
             "variants": [
-              { "text": "Priya's a vault! Never says anything!", "factIds": [] }
+              {
+                "text": "Priya's a vault! Never says anything!",
+                "factIds": []
+              }
             ]
           }
         ],

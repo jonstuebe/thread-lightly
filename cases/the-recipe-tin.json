@@ -929,16 +929,6 @@
       "role": "Your host, and Nana Ingrid's granddaughter",
       "voice": "Warm and flustered. Long run-on sentences with \"oh gosh\" and trailing ellipses, doubles her exclamation marks when upset, the odd 💛.",
       "temperament": "anxious",
-      "patience": {
-        "perDay": 8,
-        "costs": {
-          "neutral": 1,
-          "friendly": 0,
-          "rude": 3,
-          "accusatory": 3,
-          "repeated": 2
-        }
-      },
       "bedtime": "23:00",
       "knows": [
         "tin-seen-at-dessert",
@@ -1471,16 +1461,6 @@
       "role": "Hattie's younger brother",
       "voice": "Terse and sarcastic. All lowercase, almost no punctuation, one-line answers, a flat \"k.\" when annoyed.",
       "temperament": "prickly",
-      "patience": {
-        "perDay": 6,
-        "costs": {
-          "neutral": 1,
-          "friendly": 1,
-          "rude": 3,
-          "accusatory": 3,
-          "repeated": 2
-        }
-      },
       "bedtime": "00:30",
       "knows": [
         "tin-seen-at-dessert",
@@ -1986,16 +1966,6 @@
       "role": "Hattie's next-door neighbor, three-time bake-off champion",
       "voice": "Warm and theatrical. Calls everyone \"darling\" or \"sweetheart\", full sentences, baking metaphors, signs off with an x.",
       "temperament": "chatty",
-      "patience": {
-        "perDay": 9,
-        "costs": {
-          "neutral": 1,
-          "friendly": -1,
-          "rude": 2,
-          "accusatory": 3,
-          "repeated": 1
-        }
-      },
       "bedtime": "22:30",
       "knows": [
         "tin-seen-at-dessert",
@@ -2502,16 +2472,6 @@
       "role": "Hattie's coworker from the library, bunking with Colette",
       "voice": "Bubbly and young. All lowercase, \"omg\", \"lol\", \"like\", lots of 😭 and ✨, crams two thoughts into one message.",
       "temperament": "chatty",
-      "patience": {
-        "perDay": 10,
-        "costs": {
-          "neutral": 1,
-          "friendly": -1,
-          "rude": 2,
-          "accusatory": 3,
-          "repeated": 1
-        }
-      },
       "bedtime": "23:30",
       "knows": [
         "tin-seen-at-dessert",
@@ -3006,16 +2966,6 @@
       "role": "Nana Ingrid's friend of fifty years",
       "voice": "Old-fashioned and sparing. Complete sentences, proper punctuation, no emoji, never more than two sentences.",
       "temperament": "guarded",
-      "patience": {
-        "perDay": 5,
-        "costs": {
-          "neutral": 1,
-          "friendly": 0,
-          "rude": 3,
-          "accusatory": 3,
-          "repeated": 2
-        }
-      },
       "bedtime": "21:30",
       "knows": [
         "tin-seen-at-dessert",
@@ -3493,16 +3443,6 @@
       "role": "Hattie's friend from culinary school, a baking blogger",
       "voice": "Breathless gossip. Opens with \"ok so\", loves dashes and *asterisks* for emphasis, drops a ☕ when she has tea to spill.",
       "temperament": "gossip",
-      "patience": {
-        "perDay": 9,
-        "costs": {
-          "neutral": 1,
-          "friendly": 0,
-          "rude": 2,
-          "accusatory": 2,
-          "repeated": 1
-        }
-      },
       "bedtime": "01:00",
       "knows": [
         "tin-seen-at-dessert",

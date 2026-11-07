@@ -61,8 +61,7 @@ Fact { id, text, isTrue, about: GuestId[], concernsTheft }
 
 Guest {
   id, name, role, voice
-  temperament                      // section 4
-  patience: { perDay, costs: { neutral, friendly, rude, accusatory, repeated } }
+  temperament                      // section 4; also sets patience
   bedtime                          // "22:30"
   knows: FactId[]                  // true facts they can say
   claims: FactId[]                 // what they say even if it's false
@@ -89,13 +88,26 @@ The hand-written case `cases/silver-brooch.json` (four guests) is the reference 
 Each guest has traits drawn from a fixed list, so prompts and patience rules stay consistent:
 
 - **Temperament:** chatty, guarded, prickly, anxious, flattered by attention, gossip.
-- **Patience:** a daily budget of points. A normal question costs 1. A rude, repeated or accusatory question costs more (Clef decides; section 5).
+- **Patience:** a daily budget of points, set by temperament, not by the case. A normal question costs 1. A rude, repeated or accusatory question costs more (Clef decides; section 5).
 - **Bedtime:** after it, they reply "going to bed, ask me tomorrow" and nothing else.
-- **Patience recovery:** a few traits earn points back. The gossip opens up if you share a rumor, and the flattered guest if you compliment them.
+- **Patience recovery:** a few traits earn points back. The gossip and the flattered guest gain a point from a friendly message.
+
+The table lives in `worker/game/patience.ts`, and playtest tuning happens there:
+
+| Temperament | Per day | Friendly | Rude | Accusatory | Repeated |
+| ----------- | ------- | -------- | ---- | ---------- | -------- |
+| chatty      | 10      | 0        | 2    | 3          | +1       |
+| gossip      | 9       | −1       | 2    | 3          | +1       |
+| flattered   | 8       | −1       | 3    | 3          | +1       |
+| anxious     | 7       | 0        | 2    | 3          | +2       |
+| prickly     | 6       | 1        | 3    | 2          | +2       |
+| guarded     | 5       | 1        | 3    | 3          | +2       |
+
+A neutral question costs 1 for everyone. The clock limits a day as much as patience does: each message moves it 20 minutes, so a day holds roughly 37–49 messages before bedtimes, against 45–50 points of patience across a six-guest cast.
 
 As patience drops, replies get shorter. At zero, the guest leaves you on read for the rest of the day.
 
-**Patience must never be a tell.** The thief draws traits from the same list as everyone else. Generation must not make the thief the only guarded guest. The checker enforces this (section 9).
+**Patience must never be a tell.** The thief draws traits from the same list as everyone else, and because patience comes from temperament, a thief who shares a temperament with an innocent is exactly as patient. The checker rejects a thief with a temperament no innocent has (section 9). Across the library, thieves should vary in temperament too, or players learn that the chatty one did it.
 
 ## 5. Conversation engine
 
@@ -397,7 +409,7 @@ All of this happens on a branch, since it replaces the current game.
    - ~~Night moves~~: played from the case data through `afterNight` and `ifFactDestroyed` (built in step 3).
    - ~~Idle chatter~~: idle beats play on the clock (section 6).
    - ~~Endings and the timeline reveal~~: the result carries the solution and marks each event saved, seen or missed (section 8).
-   - **Patience tuning** is left for playtesting. The numbers live in each case, so tuning means editing cases and the generate-case skill, not the engine.
+   - ~~Patience tuning, first pass~~: patience comes from temperament (section 4), so the same trait behaves the same in every case. Fine-tuning the table is left for playtesting.
 
 ## 13. Open questions
 

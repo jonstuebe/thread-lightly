@@ -108,29 +108,12 @@ export const Temperament = Schema.Literals([
 ])
 export type Temperament = typeof Temperament.Type
 
-const PatienceCost = Schema.Int.check(
-  Schema.isBetween({ minimum: -3, maximum: 5 }),
-)
-
-export const Patience = Schema.Struct({
-  perDay: Schema.Int.check(Schema.isBetween({ minimum: 1, maximum: 30 })),
-  costs: Schema.Struct({
-    neutral: PatienceCost,
-    friendly: PatienceCost,
-    rude: PatienceCost,
-    accusatory: PatienceCost,
-    repeated: PatienceCost,
-  }),
-})
-export type Patience = typeof Patience.Type
-
 export const Guest = Schema.Struct({
   id: GuestId,
   name: Schema.NonEmptyString,
   role: Schema.NonEmptyString,
   voice: Schema.NonEmptyString,
   temperament: Temperament,
-  patience: Patience,
   bedtime: ClockTime,
   knows: Schema.Array(FactId),
   claims: Schema.Array(FactId),

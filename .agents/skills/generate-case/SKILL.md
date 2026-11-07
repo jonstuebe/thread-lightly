@@ -27,7 +27,7 @@ Night 0 is Friday (the theft), night 1 Saturday, night 2 Sunday. Day 1 is Saturd
 Write a plot note in the scratchpad before any JSON. It holds:
 
 - **Setting:** title, premise (two sentences, naming the host and how many guests), the missing item, and 3–4 Wi-Fi access points (rooms or outbuildings of the lodge).
-- **Cast of six:** the host plus five guests. For each: name, relationship to the host, temperament (from the six in `shared/case.ts`), voice (how they type: case, punctuation, emoji, sentence length), bedtime, patience budget.
+- **Cast of six:** the host plus five guests. For each: name, relationship to the host, temperament (from the six in `shared/case.ts`; it also sets their patience, per `worker/game/patience.ts`), voice (how they type: case, punctuation, emoji, sentence length), bedtime. Give the thief the temperament the existing cases' thieves use least, shared with at least one innocent.
 - **The true timeline,** nights 0–2, minute by minute where it matters. The theft on night 0, the thief's move on nights 1 and 2, and what innocents were doing, including the ones who were up and about for their own reasons.
 - **The thief's cover story:** 3–5 false claims, each one breakable by a true fact someone else holds or the Wi-Fi log shows. At least one break must survive both night moves and be findable on day 3. A lie that hides the thief's movements, the item, or the motive that made them take it concerns the theft. The thief may also tell a lie unrelated to the theft (`concernsTheft: false`): catching only that one ends in "They walk".
 - **Secrets** for two or three innocents: a true, non-theft fact they lie about, with their lie and its proof. These are red herrings: they make innocents look guilty without being guilty.
@@ -71,7 +71,7 @@ The checker proves the case solvable; you make it fair and fun. Read it as a pla
 
 - **Fair:** the thief's flaw is discoverable by asking natural questions. No fact needs a question nobody would think to ask.
 - **Not too easy:** the thief isn't the only liar, the only one up at night, or the only one in the Wi-Fi log at the theft hour. At least one innocent looks worse than the thief on day 1.
-- **Not a tell:** the thief's temperament and patience match at least one innocent, and their replies are no shorter, shiftier or more defensive than an innocent with a secret.
+- **Not a tell:** the thief's temperament matches at least one innocent, and their replies are no shorter, shiftier or more defensive than an innocent with a secret.
 - **In voice:** each guest sounds like themselves and nobody else. Text messages, not prose: short, casual, the odd typo where the voice calls for it.
 - **Cozy:** small stakes, warm people, no violence, nothing cruel. The thief has a sympathetic or comic motive.
 - **Original:** classic mystery tropes are welcome (the alibi with a gap, the witness who misread what they saw, the too-obvious suspect). Plots, characters and details from specific books, films or games are not.

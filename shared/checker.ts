@@ -593,21 +593,13 @@ const checkTraits = (lookups: Lookups): ReadonlyArray<Problem> => {
     caseData.guests,
     guest => guest.id !== thief.id,
   )
-  const budgets = Array.map(innocents, guest => guest.patience.perDay)
-  const lowest = Math.min(...budgets)
-  const highest = Math.max(...budgets)
-  return [
-    ...problemIf(
-      !Array.some(innocents, guest => guest.temperament === thief.temperament),
-      'traits',
-      `the thief is the only ${thief.temperament} guest`,
-    ),
-    ...problemIf(
-      thief.patience.perDay < lowest || thief.patience.perDay > highest,
-      'traits',
-      `the thief's patience (${thief.patience.perDay}) is outside the innocents' range (${lowest}-${highest})`,
-    ),
-  ]
+  // NOTE: patience comes from temperament (worker/game/patience.ts), so a
+  // shared temperament means shared patience too.
+  return problemIf(
+    !Array.some(innocents, guest => guest.temperament === thief.temperament),
+    'traits',
+    `the thief is the only ${thief.temperament} guest`,
+  )
 }
 
 // COVERAGE

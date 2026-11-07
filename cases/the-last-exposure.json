@@ -4,12 +4,7 @@
     "title": "The Last Exposure",
     "premise": "Bea Lindqvist invited five guests to Pine Hollow to celebrate her sixtieth birthday. On Saturday morning her vintage rangefinder camera, with Friday's undeveloped roll still inside, is gone from the great room mantel.",
     "missingItem": "Bea's vintage rangefinder camera and the undeveloped roll inside it",
-    "accessPoints": [
-      "lodge",
-      "kitchen",
-      "porch",
-      "woodshed"
-    ]
+    "accessPoints": ["lodge", "kitchen", "porch", "woodshed"]
   },
   "thief": "lionel",
   "theftFact": "lionel-took-camera",
@@ -18,155 +13,119 @@
       "id": "camera-on-mantel-1030",
       "text": "Bea set her camera on the great room mantel after the 10:30pm group photo on Friday",
       "isTrue": true,
-      "about": [
-        "bea"
-      ],
+      "about": ["bea"],
       "concernsTheft": true
     },
     {
       "id": "camera-on-mantel-1230",
       "text": "The camera was still on the mantel at 12:30am on Friday night, when Wren and Juno stopped playing music and left the great room",
       "isTrue": true,
-      "about": [
-        "wren",
-        "juno"
-      ],
+      "about": ["wren", "juno"],
       "concernsTheft": true
     },
     {
       "id": "camera-gone-0700",
       "text": "Bea found the mantel empty at 7am on Saturday",
       "isTrue": true,
-      "about": [
-        "bea"
-      ],
+      "about": ["bea"],
       "concernsTheft": true
     },
     {
       "id": "lionel-took-camera",
       "text": "Lionel took Bea's camera from the mantel at 1:08am on Friday night and hid it in an apple crate in the woodshed",
       "isTrue": true,
-      "about": [
-        "lionel"
-      ],
+      "about": ["lionel"],
       "concernsTheft": true
     },
     {
       "id": "roll-friday-frames",
       "text": "The roll in the camera holds Bea's Friday pictures, from her sunset walk to the 10:30pm group photo",
       "isTrue": true,
-      "about": [
-        "bea"
-      ],
+      "about": ["bea"],
       "concernsTheft": true
     },
     {
       "id": "lionel-said-goodnight-1040",
       "text": "Lionel said goodnight and went upstairs at 10:40pm on Friday",
       "isTrue": true,
-      "about": [
-        "lionel"
-      ],
+      "about": ["lionel"],
       "concernsTheft": true
     },
     {
       "id": "lionel-asleep-by-1045",
       "text": "Lionel was asleep by 10:45pm on Friday and didn't stir until the dawn chorus",
       "isTrue": false,
-      "about": [
-        "lionel"
-      ],
+      "about": ["lionel"],
       "concernsTheft": true
     },
     {
       "id": "lionel-never-in-woodshed",
       "text": "Lionel hasn't set foot in the woodshed all weekend",
       "isTrue": false,
-      "about": [
-        "lionel"
-      ],
+      "about": ["lionel"],
       "concernsTheft": true
     },
     {
       "id": "lionel-not-photographed",
       "text": "Bea didn't take a single photo of Lionel on Friday",
       "isTrue": false,
-      "about": [
-        "lionel"
-      ],
+      "about": ["lionel"],
       "concernsTheft": true
     },
     {
       "id": "lionel-slept-saturday",
       "text": "Lionel slept straight through Saturday night",
       "isTrue": false,
-      "about": [
-        "lionel"
-      ],
+      "about": ["lionel"],
       "concernsTheft": true
     },
     {
       "id": "lionel-bed-early-sunday",
       "text": "Lionel went up at 9:45pm on Sunday and didn't come down until morning",
       "isTrue": false,
-      "about": [
-        "lionel"
-      ],
+      "about": ["lionel"],
       "concernsTheft": true
     },
     {
       "id": "wifi-lionel-woodshed-0114",
       "text": "Lionel's phone joined the woodshed access point at 1:14am on Friday night",
       "isTrue": true,
-      "about": [
-        "lionel"
-      ],
+      "about": ["lionel"],
       "concernsTheft": true
     },
     {
       "id": "wifi-lionel-kitchen-0210",
       "text": "Lionel's phone joined the kitchen access point at 2:10am on Saturday night",
       "isTrue": true,
-      "about": [
-        "lionel"
-      ],
+      "about": ["lionel"],
       "concernsTheft": true
     },
     {
       "id": "wifi-lionel-woodshed-2352",
       "text": "Lionel's phone joined the woodshed access point at 11:52pm on Sunday night",
       "isTrue": true,
-      "about": [
-        "lionel"
-      ],
+      "about": ["lionel"],
       "concernsTheft": true
     },
     {
       "id": "lionel-glasses-in-woodshed",
       "text": "Lionel's tortoiseshell reading glasses were lying on the woodshed chopping block on Saturday afternoon",
       "isTrue": true,
-      "about": [
-        "lionel"
-      ],
+      "about": ["lionel"],
       "concernsTheft": true
     },
     {
       "id": "bea-lent-readers",
       "text": "Lionel couldn't find his reading glasses at Saturday breakfast, so Bea lent him her spare pair",
       "isTrue": true,
-      "about": [
-        "lionel",
-        "bea"
-      ],
+      "about": ["lionel", "bea"],
       "concernsTheft": true
     },
     {
       "id": "lionel-glasses-back",
       "text": "Lionel had his own reading glasses back by Monday morning",
       "isTrue": true,
-      "about": [
-        "lionel"
-      ],
+      "about": ["lionel"],
       "concernsTheft": true
     },
     {
@@ -180,166 +139,126 @@
       "id": "bea-photographed-lionel",
       "text": "At sunset on Friday Bea took a photo of Lionel up a stepladder at the big pine on the dock path",
       "isTrue": true,
-      "about": [
-        "bea",
-        "lionel"
-      ],
+      "about": ["bea", "lionel"],
       "concernsTheft": true
     },
     {
       "id": "juno-saw-lionel-ladder",
       "text": "Around 7:45pm on Friday Juno saw Lionel carrying a stepladder and a lumpy pillowcase up from the dock path",
       "isTrue": true,
-      "about": [
-        "juno",
-        "lionel"
-      ],
+      "about": ["juno", "lionel"],
       "concernsTheft": true
     },
     {
       "id": "lionel-owl-talk",
       "text": "Next week Lionel is presenting the great gray owl he says he spotted in the big pine at Pine Hollow to the county birding society",
       "isTrue": true,
-      "about": [
-        "lionel"
-      ],
+      "about": ["lionel"],
       "concernsTheft": true
     },
     {
       "id": "rafe-doubts-owl",
       "text": "Great gray owls are almost never seen this far south, and Rafe found no other record of one anywhere near Pine Hollow",
       "isTrue": true,
-      "about": [
-        "rafe",
-        "lionel"
-      ],
+      "about": ["rafe", "lionel"],
       "concernsTheft": true
     },
     {
       "id": "dot-saw-flashlight",
       "text": "From the kitchen window around 1:10am on Friday night, Dot saw a flashlight crossing the yard to the woodshed",
       "isTrue": true,
-      "about": [
-        "dot"
-      ],
+      "about": ["dot"],
       "concernsTheft": true
     },
     {
       "id": "wren-saw-woodshed-light",
       "text": "From the lakeside porch, Wren saw the woodshed light come on around 1:15am on Friday night",
       "isTrue": true,
-      "about": [
-        "wren"
-      ],
+      "about": ["wren"],
       "concernsTheft": true
     },
     {
       "id": "wren-call-lisbon",
       "text": "Wren was on the lakeside porch on a video call with her girlfriend in Lisbon from 12:35am to 1:25am on Friday night",
       "isTrue": true,
-      "about": [
-        "wren"
-      ],
+      "about": ["wren"],
       "concernsTheft": true
     },
     {
       "id": "wifi-wren-porch-0035",
       "text": "Wren's phone joined the porch access point at 12:35am on Friday night",
       "isTrue": true,
-      "about": [
-        "wren"
-      ],
+      "about": ["wren"],
       "concernsTheft": true
     },
     {
       "id": "wifi-juno-kitchen-0032",
       "text": "Juno's phone joined the kitchen access point at 12:32am on Friday night",
       "isTrue": true,
-      "about": [
-        "juno"
-      ],
+      "about": ["juno"],
       "concernsTheft": true
     },
     {
       "id": "juno-bed-1240",
       "text": "Juno fetched a glass of water from the kitchen and was in bed by 12:40am on Friday night",
       "isTrue": true,
-      "about": [
-        "juno"
-      ],
+      "about": ["juno"],
       "concernsTheft": true
     },
     {
       "id": "bea-bed-1130",
       "text": "Bea went to bed at 11:30pm on Friday and slept until nearly 7",
       "isTrue": true,
-      "about": [
-        "bea"
-      ],
+      "about": ["bea"],
       "concernsTheft": true
     },
     {
       "id": "rafe-bed-1100-friday",
       "text": "Rafe went upstairs at 11pm on Friday",
       "isTrue": true,
-      "about": [
-        "rafe"
-      ],
+      "about": ["rafe"],
       "concernsTheft": true
     },
     {
       "id": "dot-ate-cake",
       "text": "Dot crept down to the kitchen at 12:48am on Friday night and ate a third of Bea's leftover birthday cake, losing her no-sugar bet",
       "isTrue": true,
-      "about": [
-        "dot"
-      ],
+      "about": ["dot"],
       "concernsTheft": false
     },
     {
       "id": "dot-in-bed-by-ten",
       "text": "Dot was in bed by 10pm on Friday and never came downstairs",
       "isTrue": false,
-      "about": [
-        "dot"
-      ],
+      "about": ["dot"],
       "concernsTheft": false
     },
     {
       "id": "wifi-dot-kitchen-0048",
       "text": "Dot's phone joined the kitchen access point at 12:48am on Friday night",
       "isTrue": true,
-      "about": [
-        "dot"
-      ],
+      "about": ["dot"],
       "concernsTheft": false
     },
     {
       "id": "dot-bed-ten-sunday",
       "text": "Dot was in bed by 10pm on Sunday and never came downstairs",
       "isTrue": false,
-      "about": [
-        "dot"
-      ],
+      "about": ["dot"],
       "concernsTheft": false
     },
     {
       "id": "wifi-dot-kitchen-0020",
       "text": "Dot's phone joined the kitchen access point at 12:20am on Sunday night",
       "isTrue": true,
-      "about": [
-        "dot"
-      ],
+      "about": ["dot"],
       "concernsTheft": false
     },
     {
       "id": "dot-sugar-bet",
       "text": "Dot bet Bea fifty dollars she could go a whole month without sugar",
       "isTrue": true,
-      "about": [
-        "dot",
-        "bea"
-      ],
+      "about": ["dot", "bea"],
       "concernsTheft": false
     },
     {
@@ -353,64 +272,49 @@
       "id": "rafe-broke-rocker",
       "text": "Rafe broke the lodge's antique porch rocker on Friday afternoon and has been secretly mending it in the woodshed",
       "isTrue": true,
-      "about": [
-        "rafe"
-      ],
+      "about": ["rafe"],
       "concernsTheft": false
     },
     {
       "id": "rafe-never-in-woodshed",
       "text": "Rafe hasn't set foot in the woodshed all weekend",
       "isTrue": false,
-      "about": [
-        "rafe"
-      ],
+      "about": ["rafe"],
       "concernsTheft": false
     },
     {
       "id": "rafe-turned-in-sat",
       "text": "Rafe turned in at 11pm on Saturday and stayed in his room all night",
       "isTrue": false,
-      "about": [
-        "rafe"
-      ],
+      "about": ["rafe"],
       "concernsTheft": false
     },
     {
       "id": "wifi-rafe-woodshed-1810",
       "text": "Rafe's phone joined the woodshed access point at 6:10pm on Friday",
       "isTrue": true,
-      "about": [
-        "rafe"
-      ],
+      "about": ["rafe"],
       "concernsTheft": false
     },
     {
       "id": "wifi-rafe-woodshed-2320",
       "text": "Rafe's phone joined the woodshed access point at 11:20pm on Saturday night",
       "isTrue": true,
-      "about": [
-        "rafe"
-      ],
+      "about": ["rafe"],
       "concernsTheft": false
     },
     {
       "id": "wifi-rafe-woodshed-2205",
       "text": "Rafe's phone joined the woodshed access point at 10:05pm on Sunday",
       "isTrue": true,
-      "about": [
-        "rafe"
-      ],
+      "about": ["rafe"],
       "concernsTheft": false
     },
     {
       "id": "dot-saw-rafe-drag",
       "text": "Around 6pm on Friday Dot saw Rafe drag something bulky under a tarp into the woodshed",
       "isTrue": true,
-      "about": [
-        "dot",
-        "rafe"
-      ],
+      "about": ["dot", "rafe"],
       "concernsTheft": false
     },
     {
@@ -424,157 +328,119 @@
       "id": "rocker-back-sunday",
       "text": "When Bea went out to the porch at 10:40pm on Sunday, the antique rocker was back in its place, mended",
       "isTrue": true,
-      "about": [
-        "bea"
-      ],
+      "about": ["bea"],
       "concernsTheft": false
     },
     {
       "id": "rafe-sawdust",
       "text": "Rafe came to Saturday breakfast with sawdust on his sleeves",
       "isTrue": true,
-      "about": [
-        "rafe"
-      ],
+      "about": ["rafe"],
       "concernsTheft": false
     },
     {
       "id": "rafe-bed-1130-sunday",
       "text": "Rafe went to bed around 11:30pm on Sunday",
       "isTrue": true,
-      "about": [
-        "rafe"
-      ],
+      "about": ["rafe"],
       "concernsTheft": false
     },
     {
       "id": "bea-porch-sunday",
       "text": "Bea sat out on the porch looking at the stars from 10:40 to 11:05pm on Sunday",
       "isTrue": true,
-      "about": [
-        "bea"
-      ],
+      "about": ["bea"],
       "concernsTheft": false
     },
     {
       "id": "wifi-bea-porch-2240",
       "text": "Bea's phone joined the porch access point at 10:40pm on Sunday",
       "isTrue": true,
-      "about": [
-        "bea"
-      ],
+      "about": ["bea"],
       "concernsTheft": false
     },
     {
       "id": "bea-slept-saturday",
       "text": "Bea slept straight through Saturday night",
       "isTrue": true,
-      "about": [
-        "bea"
-      ],
+      "about": ["bea"],
       "concernsTheft": false
     },
     {
       "id": "wren-promised-camera",
       "text": "Bea has promised to leave the camera to Wren one day",
       "isTrue": true,
-      "about": [
-        "wren",
-        "bea"
-      ],
+      "about": ["wren", "bea"],
       "concernsTheft": true
     },
     {
       "id": "wren-lent-tote",
       "text": "On Saturday evening Wren lent Juno her canvas tote to carry her songbook",
       "isTrue": true,
-      "about": [
-        "wren",
-        "juno"
-      ],
+      "about": ["wren", "juno"],
       "concernsTheft": true
     },
     {
       "id": "case-in-wren-tote",
       "text": "On Sunday morning Bea found her camera's leather case in Wren's tote in the mudroom",
       "isTrue": true,
-      "about": [
-        "bea",
-        "wren"
-      ],
+      "about": ["bea", "wren"],
       "concernsTheft": true
     },
     {
       "id": "wren-hid-camera-case",
       "text": "Wren hid the camera's leather case in her own tote bag",
       "isTrue": false,
-      "about": [
-        "wren"
-      ],
+      "about": ["wren"],
       "concernsTheft": true
     },
     {
       "id": "juno-tote-empty",
       "text": "At 1:50am on Saturday night Juno hung Wren's tote in the mudroom with nothing in it, then lay awake in the bunk room until 3 while Wren slept",
       "isTrue": true,
-      "about": [
-        "juno",
-        "wren"
-      ],
+      "about": ["juno", "wren"],
       "concernsTheft": true
     },
     {
       "id": "wifi-juno-kitchen-0150",
       "text": "Juno's phone joined the kitchen access point at 1:50am on Saturday night",
       "isTrue": true,
-      "about": [
-        "juno"
-      ],
+      "about": ["juno"],
       "concernsTheft": true
     },
     {
       "id": "juno-heard-stairs",
       "text": "Around 2:05am on Saturday night Juno heard someone creep down the stairs",
       "isTrue": true,
-      "about": [
-        "juno"
-      ],
+      "about": ["juno"],
       "concernsTheft": true
     },
     {
       "id": "wren-bed-1230-sat",
       "text": "Wren fell asleep in the bunk room around 12:30am on Saturday night and slept until 9",
       "isTrue": true,
-      "about": [
-        "wren"
-      ],
+      "about": ["wren"],
       "concernsTheft": true
     },
     {
       "id": "wren-in-bunk-sunday",
       "text": "Wren stayed in the bunk room all Sunday night",
       "isTrue": true,
-      "about": [
-        "wren"
-      ],
+      "about": ["wren"],
       "concernsTheft": true
     },
     {
       "id": "juno-bed-sunday",
       "text": "Juno was asleep by 11:30pm on Sunday and slept through the night",
       "isTrue": true,
-      "about": [
-        "juno"
-      ],
+      "about": ["juno"],
       "concernsTheft": true
     },
     {
       "id": "dot-slept-saturday",
       "text": "Dot slept through Saturday night with her earplugs in",
       "isTrue": true,
-      "about": [
-        "dot"
-      ],
+      "about": ["dot"],
       "concernsTheft": false
     }
   ],
@@ -593,26 +459,19 @@
       "night": 0,
       "time": "7:40pm",
       "text": "On the dock path at sunset, Lionel climbs a stepladder to take down the carved owl decoy he wedged in the big pine last month. Bea, shooting the sunset, takes his picture.",
-      "factIds": [
-        "bea-photographed-lionel",
-        "lionel-owl-talk"
-      ]
+      "factIds": ["bea-photographed-lionel", "lionel-owl-talk"]
     },
     {
       "night": 0,
       "time": "7:45pm",
       "text": "Juno sees Lionel hurrying up from the dock path with the stepladder and a lumpy pillowcase.",
-      "factIds": [
-        "juno-saw-lionel-ladder"
-      ]
+      "factIds": ["juno-saw-lionel-ladder"]
     },
     {
       "night": 0,
       "time": "10:30pm",
       "text": "Bea takes a group photo by the fire and sets the camera on the mantel. Dot has already gone up.",
-      "factIds": [
-        "camera-on-mantel-1030"
-      ]
+      "factIds": ["camera-on-mantel-1030"]
     },
     {
       "night": 0,
@@ -628,61 +487,43 @@
       "night": 0,
       "time": "12:30am",
       "text": "Wren and Juno stop playing music and leave the great room. The camera is still on the mantel.",
-      "factIds": [
-        "camera-on-mantel-1230"
-      ]
+      "factIds": ["camera-on-mantel-1230"]
     },
     {
       "night": 0,
       "time": "12:32am",
       "text": "Juno fetches a glass of water and goes to bed.",
-      "factIds": [
-        "wifi-juno-kitchen-0032",
-        "juno-bed-1240"
-      ]
+      "factIds": ["wifi-juno-kitchen-0032", "juno-bed-1240"]
     },
     {
       "night": 0,
       "time": "12:35am",
       "text": "Wren takes a video call with her girlfriend in Lisbon out on the lakeside porch.",
-      "factIds": [
-        "wren-call-lisbon",
-        "wifi-wren-porch-0035"
-      ]
+      "factIds": ["wren-call-lisbon", "wifi-wren-porch-0035"]
     },
     {
       "night": 0,
       "time": "12:48am",
       "text": "Dot creeps down to the kitchen and eats a third of the birthday cake, three days short of winning her no-sugar bet.",
-      "factIds": [
-        "dot-ate-cake",
-        "wifi-dot-kitchen-0048"
-      ]
+      "factIds": ["dot-ate-cake", "wifi-dot-kitchen-0048"]
     },
     {
       "night": 0,
       "time": "1:08am",
       "text": "Lionel slips downstairs, takes the camera from the mantel and goes out the front door.",
-      "factIds": [
-        "lionel-took-camera"
-      ]
+      "factIds": ["lionel-took-camera"]
     },
     {
       "night": 0,
       "time": "1:10am",
       "text": "From the kitchen window, Dot sees a flashlight crossing to the woodshed and takes it for Rafe.",
-      "factIds": [
-        "dot-saw-flashlight"
-      ]
+      "factIds": ["dot-saw-flashlight"]
     },
     {
       "night": 0,
       "time": "1:14am",
       "text": "In the woodshed Lionel can't get the camera's baseplate off in the dark. He sets his reading glasses on the chopping block, gives up and hides the camera in an apple crate. Wren sees the woodshed light come on.",
-      "factIds": [
-        "wifi-lionel-woodshed-0114",
-        "wren-saw-woodshed-light"
-      ]
+      "factIds": ["wifi-lionel-woodshed-0114", "wren-saw-woodshed-light"]
     },
     {
       "night": 0,
@@ -705,36 +546,25 @@
       "night": 1,
       "time": "11:20pm",
       "text": "Rafe works on the rocker in the woodshed until just before midnight.",
-      "factIds": [
-        "wifi-rafe-woodshed-2320"
-      ]
+      "factIds": ["wifi-rafe-woodshed-2320"]
     },
     {
       "night": 1,
       "time": "1:50am",
       "text": "Juno, who borrowed Wren's tote for her songbook, hangs it in the mudroom empty and lies awake in the bunk room until 3. Wren sleeps through.",
-      "factIds": [
-        "wren-lent-tote",
-        "juno-tote-empty",
-        "wifi-juno-kitchen-0150"
-      ]
+      "factIds": ["wren-lent-tote", "juno-tote-empty", "wifi-juno-kitchen-0150"]
     },
     {
       "night": 1,
       "time": "2:10am",
       "text": "Lionel creeps down the stairs, which Juno hears, and slips the camera's empty leather case into Wren's tote.",
-      "factIds": [
-        "juno-heard-stairs",
-        "wifi-lionel-kitchen-0210"
-      ]
+      "factIds": ["juno-heard-stairs", "wifi-lionel-kitchen-0210"]
     },
     {
       "night": 2,
       "time": "10:05pm",
       "text": "Rafe carries the mended rocker back to the porch.",
-      "factIds": [
-        "wifi-rafe-woodshed-2205"
-      ]
+      "factIds": ["wifi-rafe-woodshed-2205"]
     },
     {
       "night": 2,
@@ -750,18 +580,13 @@
       "night": 2,
       "time": "11:52pm",
       "text": "Lionel fetches his glasses from the chopping block and finally gets the baseplate off. Then he thinks of Bea's party on that roll, can't bring himself to open it to the light, and puts the camera back in the crate.",
-      "factIds": [
-        "wifi-lionel-woodshed-2352",
-        "lionel-glasses-back"
-      ]
+      "factIds": ["wifi-lionel-woodshed-2352", "lionel-glasses-back"]
     },
     {
       "night": 2,
       "time": "12:20am",
       "text": "Dot goes back down for more cake.",
-      "factIds": [
-        "wifi-dot-kitchen-0020"
-      ]
+      "factIds": ["wifi-dot-kitchen-0020"]
     }
   ],
   "wifiLog": [
@@ -772,9 +597,7 @@
       "guest": "rafe",
       "event": "joined",
       "accessPoint": "woodshed",
-      "factIds": [
-        "wifi-rafe-woodshed-1810"
-      ]
+      "factIds": ["wifi-rafe-woodshed-1810"]
     },
     {
       "id": "n0-rafe-lodge",
@@ -792,9 +615,7 @@
       "guest": "juno",
       "event": "joined",
       "accessPoint": "kitchen",
-      "factIds": [
-        "wifi-juno-kitchen-0032"
-      ]
+      "factIds": ["wifi-juno-kitchen-0032"]
     },
     {
       "id": "n0-wren-porch",
@@ -803,9 +624,7 @@
       "guest": "wren",
       "event": "joined",
       "accessPoint": "porch",
-      "factIds": [
-        "wifi-wren-porch-0035"
-      ]
+      "factIds": ["wifi-wren-porch-0035"]
     },
     {
       "id": "n0-juno-lodge",
@@ -823,9 +642,7 @@
       "guest": "dot",
       "event": "joined",
       "accessPoint": "kitchen",
-      "factIds": [
-        "wifi-dot-kitchen-0048"
-      ]
+      "factIds": ["wifi-dot-kitchen-0048"]
     },
     {
       "id": "n0-lionel-woodshed",
@@ -834,9 +651,7 @@
       "guest": "lionel",
       "event": "joined",
       "accessPoint": "woodshed",
-      "factIds": [
-        "wifi-lionel-woodshed-0114"
-      ]
+      "factIds": ["wifi-lionel-woodshed-0114"]
     },
     {
       "id": "n0-dot-lodge",
@@ -872,9 +687,7 @@
       "guest": "rafe",
       "event": "joined",
       "accessPoint": "woodshed",
-      "factIds": [
-        "wifi-rafe-woodshed-2320"
-      ]
+      "factIds": ["wifi-rafe-woodshed-2320"]
     },
     {
       "id": "n1-rafe-lodge",
@@ -892,9 +705,7 @@
       "guest": "juno",
       "event": "joined",
       "accessPoint": "kitchen",
-      "factIds": [
-        "wifi-juno-kitchen-0150"
-      ]
+      "factIds": ["wifi-juno-kitchen-0150"]
     },
     {
       "id": "n1-juno-lodge",
@@ -912,9 +723,7 @@
       "guest": "lionel",
       "event": "joined",
       "accessPoint": "kitchen",
-      "factIds": [
-        "wifi-lionel-kitchen-0210"
-      ]
+      "factIds": ["wifi-lionel-kitchen-0210"]
     },
     {
       "id": "n1-lionel-lodge",
@@ -932,9 +741,7 @@
       "guest": "rafe",
       "event": "joined",
       "accessPoint": "woodshed",
-      "factIds": [
-        "wifi-rafe-woodshed-2205"
-      ]
+      "factIds": ["wifi-rafe-woodshed-2205"]
     },
     {
       "id": "n2-rafe-porch",
@@ -961,9 +768,7 @@
       "guest": "bea",
       "event": "joined",
       "accessPoint": "porch",
-      "factIds": [
-        "wifi-bea-porch-2240"
-      ]
+      "factIds": ["wifi-bea-porch-2240"]
     },
     {
       "id": "n2-bea-lodge",
@@ -981,9 +786,7 @@
       "guest": "lionel",
       "event": "joined",
       "accessPoint": "woodshed",
-      "factIds": [
-        "wifi-lionel-woodshed-2352"
-      ]
+      "factIds": ["wifi-lionel-woodshed-2352"]
     },
     {
       "id": "n2-lionel-lodge",
@@ -1001,9 +804,7 @@
       "guest": "dot",
       "event": "joined",
       "accessPoint": "kitchen",
-      "factIds": [
-        "wifi-dot-kitchen-0020"
-      ]
+      "factIds": ["wifi-dot-kitchen-0020"]
     },
     {
       "id": "n2-dot-lodge",
@@ -1124,17 +925,12 @@
         {
           "guest": "bea",
           "text": "Everyone, my camera is GONE. I left it on the mantel after the group photo at half ten and this morning, nothing. Just dust.",
-          "factIds": [
-            "camera-on-mantel-1030",
-            "camera-gone-0700"
-          ]
+          "factIds": ["camera-on-mantel-1030", "camera-gone-0700"]
         },
         {
           "guest": "wren",
           "text": "omg NO. the whole party is on that roll 😭",
-          "factIds": [
-            "roll-friday-frames"
-          ]
+          "factIds": ["roll-friday-frames"]
         },
         {
           "guest": "lionel",
@@ -1190,24 +986,17 @@
         {
           "guest": "bea",
           "text": "I went for my gardening gloves and found my camera's leather case. In the mudroom. In Wren's tote.",
-          "factIds": [
-            "case-in-wren-tote",
-            "wren-hid-camera-case"
-          ]
+          "factIds": ["case-in-wren-tote", "wren-hid-camera-case"]
         },
         {
           "guest": "wren",
           "text": "WHAT. i did not put that there!! juno had my tote last night",
-          "factIds": [
-            "wren-lent-tote"
-          ]
+          "factIds": ["wren-lent-tote"]
         },
         {
           "guest": "juno",
           "text": "Also someone crept down the stairs at like 2am?? I heard the creaky step!!",
-          "factIds": [
-            "juno-heard-stairs"
-          ]
+          "factIds": ["juno-heard-stairs"]
         },
         {
           "guest": "lionel",
@@ -1253,16 +1042,12 @@
         {
           "guest": "wren",
           "text": "ok who was in the woodshed last night. somebody cleared off the whole chopping block",
-          "factIds": [
-            "woodshed-tidied"
-          ]
+          "factIds": ["woodshed-tidied"]
         },
         {
           "guest": "bea",
           "text": "And the old porch rocker is BACK, mended! I found it last night when I went out for the stars. Has someone got a guilty conscience?",
-          "factIds": [
-            "rocker-back-sunday"
-          ]
+          "factIds": ["rocker-back-sunday"]
         },
         {
           "guest": "lionel",
@@ -1307,16 +1092,6 @@
       "role": "Your host, the birthday girl, and the camera's owner",
       "voice": "Warm and wordy, a retired newspaper photographer. Calls people 'dear', strings thoughts together with dashes, and drops into ALL CAPS when something upsets her.",
       "temperament": "chatty",
-      "patience": {
-        "perDay": 10,
-        "costs": {
-          "neutral": 1,
-          "friendly": 0,
-          "rude": 2,
-          "accusatory": 3,
-          "repeated": 1
-        }
-      },
       "bedtime": "23:30",
       "knows": [
         "camera-on-mantel-1030",
@@ -1349,15 +1124,11 @@
             "variants": [
               {
                 "text": "I went up at half eleven, dear, and slept like the dead until nearly seven. Sixty takes it out of you.",
-                "factIds": [
-                  "bea-bed-1130"
-                ]
+                "factIds": ["bea-bed-1130"]
               },
               {
                 "text": "Bed at 11:30 - I didn't stir until almost seven. Some detective's assistant I'd make.",
-                "factIds": [
-                  "bea-bed-1130"
-                ]
+                "factIds": ["bea-bed-1130"]
               }
             ]
           },
@@ -1385,15 +1156,11 @@
                 "variants": [
                   {
                     "text": "I slept straight through, I'm ashamed to say. Didn't hear a thing.",
-                    "factIds": [
-                      "bea-slept-saturday"
-                    ]
+                    "factIds": ["bea-slept-saturday"]
                   },
                   {
                     "text": "Out like a light all Saturday night - whatever went on, I missed it.",
-                    "factIds": [
-                      "bea-slept-saturday"
-                    ]
+                    "factIds": ["bea-slept-saturday"]
                   }
                 ]
               }
@@ -1423,15 +1190,11 @@
                 "variants": [
                   {
                     "text": "I sat out on the porch looking at the stars from about twenty to eleven until just after eleven. Then bed.",
-                    "factIds": [
-                      "bea-porch-sunday"
-                    ]
+                    "factIds": ["bea-porch-sunday"]
                   },
                   {
                     "text": "Porch, 10:40 to 11:05 or so, wrapped in a blanket with the stars. Then straight up to bed.",
-                    "factIds": [
-                      "bea-porch-sunday"
-                    ]
+                    "factIds": ["bea-porch-sunday"]
                   }
                 ]
               }
@@ -1447,17 +1210,11 @@
             "variants": [
               {
                 "text": "My old rangefinder - thirty years at the Ledger with me. I set it on the mantel after the group photo at half ten, and at seven on Saturday the mantel was EMPTY.",
-                "factIds": [
-                  "camera-on-mantel-1030",
-                  "camera-gone-0700"
-                ]
+                "factIds": ["camera-on-mantel-1030", "camera-gone-0700"]
               },
               {
                 "text": "It sat on the mantel from the 10:30 group photo onward - I put it there myself. When I came down at seven it was gone. Just gone.",
-                "factIds": [
-                  "camera-on-mantel-1030",
-                  "camera-gone-0700"
-                ]
+                "factIds": ["camera-on-mantel-1030", "camera-gone-0700"]
               }
             ]
           },
@@ -1471,15 +1228,11 @@
             "variants": [
               {
                 "text": "The whole of Friday is on that roll, dear - my sunset walk, dinner, the cake, the group photo at half ten. Twenty-four frames I'll never get back.",
-                "factIds": [
-                  "roll-friday-frames"
-                ]
+                "factIds": ["roll-friday-frames"]
               },
               {
                 "text": "Everything from Friday. The sunset on the dock path right through to the group photo. If someone opens the back in daylight, it's all gone.",
-                "factIds": [
-                  "roll-friday-frames"
-                ]
+                "factIds": ["roll-friday-frames"]
               }
             ]
           },
@@ -1493,15 +1246,11 @@
             "variants": [
               {
                 "text": "Oh, it was glorious. And I got Lionel up a stepladder at the big pine, a perfect silhouette against the sunset - heaven knows what he was doing up there.",
-                "factIds": [
-                  "bea-photographed-lionel"
-                ]
+                "factIds": ["bea-photographed-lionel"]
               },
               {
                 "text": "I shot the sunset off the dock path. Caught Lionel halfway up a stepladder at the big pine, of all things! I can't wait to see that one printed.",
-                "factIds": [
-                  "bea-photographed-lionel"
-                ]
+                "factIds": ["bea-photographed-lionel"]
               }
             ]
           },
@@ -1515,15 +1264,11 @@
             "variants": [
               {
                 "text": "Juno sang, Dot pretended not to cry, and we finished with a group photo by the fire at half ten. Then the camera went on the mantel.",
-                "factIds": [
-                  "camera-on-mantel-1030"
-                ]
+                "factIds": ["camera-on-mantel-1030"]
               },
               {
                 "text": "A perfect night, dear. Last thing I did was the group photo at 10:30, and I set the camera on the mantel right after.",
-                "factIds": [
-                  "camera-on-mantel-1030"
-                ]
+                "factIds": ["camera-on-mantel-1030"]
               }
             ]
           },
@@ -1551,15 +1296,11 @@
                 "variants": [
                   {
                     "text": "I went to the mudroom for my gardening gloves on Sunday morning and there was my camera's leather case, poking out of Wren's tote. I don't know WHAT to think.",
-                    "factIds": [
-                      "case-in-wren-tote"
-                    ]
+                    "factIds": ["case-in-wren-tote"]
                   },
                   {
                     "text": "Wren's tote, in the mudroom, Sunday morning - my camera's case, just sitting there. Empty. I can't believe it of her. I won't.",
-                    "factIds": [
-                      "case-in-wren-tote"
-                    ]
+                    "factIds": ["case-in-wren-tote"]
                   }
                 ]
               }
@@ -1589,15 +1330,11 @@
                 "variants": [
                   {
                     "text": "When I went out at twenty to eleven, the old rocker was BACK on the porch - mended, good as new! Somebody has a guilty conscience.",
-                    "factIds": [
-                      "rocker-back-sunday"
-                    ]
+                    "factIds": ["rocker-back-sunday"]
                   },
                   {
                     "text": "The rocker! Gone since Friday, and at 10:40 on Sunday there it was in its place on the porch, glued and sanded. Who DOES that?",
-                    "factIds": [
-                      "rocker-back-sunday"
-                    ]
+                    "factIds": ["rocker-back-sunday"]
                   }
                 ]
               }
@@ -1613,15 +1350,11 @@
             "variants": [
               {
                 "text": "The lodge's antique rocker has been missing from the porch since Friday afternoon. The owner will have my head.",
-                "factIds": [
-                  "rocker-missing"
-                ]
+                "factIds": ["rocker-missing"]
               },
               {
                 "text": "Gone from the porch since Friday afternoon! Who steals a ROCKING CHAIR?",
-                "factIds": [
-                  "rocker-missing"
-                ]
+                "factIds": ["rocker-missing"]
               }
             ],
             "afterNight": [
@@ -1630,15 +1363,11 @@
                 "variants": [
                   {
                     "text": "It came back! I found it on the porch at 10:40 on Sunday night, mended. I'm choosing not to ask.",
-                    "factIds": [
-                      "rocker-back-sunday"
-                    ]
+                    "factIds": ["rocker-back-sunday"]
                   },
                   {
                     "text": "Back on the porch when I went out for the stars at 10:40 on Sunday - mended, polished, the lot. I could cry.",
-                    "factIds": [
-                      "rocker-back-sunday"
-                    ]
+                    "factIds": ["rocker-back-sunday"]
                   }
                 ]
               }
@@ -1654,17 +1383,11 @@
             "variants": [
               {
                 "text": "A third of my birthday cake vanished on Friday night! It can't be Dot - she's bet me fifty dollars she'll go a month without sugar.",
-                "factIds": [
-                  "cake-missing",
-                  "dot-sugar-bet"
-                ]
+                "factIds": ["cake-missing", "dot-sugar-bet"]
               },
               {
                 "text": "Somebody ate a third of the cake overnight. Not Dot, mind - fifty dollars says she's off sugar for the month.",
-                "factIds": [
-                  "cake-missing",
-                  "dot-sugar-bet"
-                ]
+                "factIds": ["cake-missing", "dot-sugar-bet"]
               }
             ]
           },
@@ -1678,15 +1401,11 @@
             "variants": [
               {
                 "text": "Lionel couldn't find his reading glasses at Saturday breakfast, poor man, so I lent him my spare pair. He looks like a startled owl in them.",
-                "factIds": [
-                  "bea-lent-readers"
-                ]
+                "factIds": ["bea-lent-readers"]
               },
               {
                 "text": "He lost his specs somewhere on Friday - at breakfast he was squinting at the bird book, so I gave him my spares.",
-                "factIds": [
-                  "bea-lent-readers"
-                ]
+                "factIds": ["bea-lent-readers"]
               }
             ]
           },
@@ -1701,15 +1420,11 @@
             "variants": [
               {
                 "text": "Lionel's my neighbor in town. He's terribly excited - next week he presents the great gray owl he spotted in the big pine here to the birding society.",
-                "factIds": [
-                  "lionel-owl-talk"
-                ]
+                "factIds": ["lionel-owl-talk"]
               },
               {
                 "text": "Dear Lionel. All he talks about is his great gray owl in the big pine - he's presenting it to the birding society next week.",
-                "factIds": [
-                  "lionel-owl-talk"
-                ]
+                "factIds": ["lionel-owl-talk"]
               }
             ]
           },
@@ -1724,15 +1439,11 @@
             "variants": [
               {
                 "text": "Wren's my niece - she's studying photography, I taught her on that very camera. I've promised she'll have it one day. Not THIS day.",
-                "factIds": [
-                  "wren-promised-camera"
-                ]
+                "factIds": ["wren-promised-camera"]
               },
               {
                 "text": "My Wren. The camera's hers when I'm gone, I've always said so. She knows she only has to wait.",
-                "factIds": [
-                  "wren-promised-camera"
-                ]
+                "factIds": ["wren-promised-camera"]
               }
             ]
           },
@@ -1747,15 +1458,11 @@
             "variants": [
               {
                 "text": "My big sister. All bark. She's bet me fifty dollars she can go a month without sugar - she's nearly there, too.",
-                "factIds": [
-                  "dot-sugar-bet"
-                ]
+                "factIds": ["dot-sugar-bet"]
               },
               {
                 "text": "Dot's Dot. Sharp as a tack. She's off sugar this month for a fifty-dollar bet with me.",
-                "factIds": [
-                  "dot-sugar-bet"
-                ]
+                "factIds": ["dot-sugar-bet"]
               }
             ]
           },
@@ -1840,10 +1547,7 @@
           "Hello, dear! Thank you for coming - I'm beside myself.",
           "Detective! Come in, come in."
         ],
-        "thanks": [
-          "Anything, dear. Just find my camera.",
-          "Thank YOU."
-        ],
+        "thanks": ["Anything, dear. Just find my camera.", "Thank YOU."],
         "goodnight": "I'm off to bed, dear. Ask me in the morning."
       }
     },
@@ -1853,16 +1557,6 @@
       "role": "Bea's neighbor in town, and the county birding society's most decorated member",
       "voice": "Courtly and a little pompous. Full sentences, proper punctuation, birdwatching metaphors, 'I'm afraid' and 'dear me'. Melts at any compliment about his birding.",
       "temperament": "flattered",
-      "patience": {
-        "perDay": 8,
-        "costs": {
-          "neutral": 1,
-          "friendly": -1,
-          "rude": 2,
-          "accusatory": 3,
-          "repeated": 1
-        }
-      },
       "bedtime": "22:30",
       "knows": [
         "camera-on-mantel-1030",
@@ -1931,15 +1625,11 @@
                 "variants": [
                   {
                     "text": "I slept straight through, I'm pleased to say. Not so much as a creak.",
-                    "factIds": [
-                      "lionel-slept-saturday"
-                    ]
+                    "factIds": ["lionel-slept-saturday"]
                   },
                   {
                     "text": "Dead to the world all Saturday night. The lake air, you know.",
-                    "factIds": [
-                      "lionel-slept-saturday"
-                    ]
+                    "factIds": ["lionel-slept-saturday"]
                   }
                 ]
               }
@@ -1969,15 +1659,11 @@
                 "variants": [
                   {
                     "text": "I went up at a quarter to ten and didn't come down until morning. Dull, I'm afraid, but true.",
-                    "factIds": [
-                      "lionel-bed-early-sunday"
-                    ]
+                    "factIds": ["lionel-bed-early-sunday"]
                   },
                   {
                     "text": "Upstairs by 9:45 with a field guide. I didn't come down again until breakfast.",
-                    "factIds": [
-                      "lionel-bed-early-sunday"
-                    ]
+                    "factIds": ["lionel-bed-early-sunday"]
                   }
                 ]
               }
@@ -1993,15 +1679,11 @@
             "variants": [
               {
                 "text": "Bea set it on the mantel after the group photograph at half past ten. That's the last I saw of it.",
-                "factIds": [
-                  "camera-on-mantel-1030"
-                ]
+                "factIds": ["camera-on-mantel-1030"]
               },
               {
                 "text": "On the mantel, after the 10:30 photograph. A handsome old thing. Dreadful business.",
-                "factIds": [
-                  "camera-on-mantel-1030"
-                ]
+                "factIds": ["camera-on-mantel-1030"]
               }
             ]
           },
@@ -2033,15 +1715,11 @@
             "variants": [
               {
                 "text": "Bea didn't take a single photograph of me on Friday, I'm quite sure. I keep well clear of cameras. I don't photograph well.",
-                "factIds": [
-                  "lionel-not-photographed"
-                ]
+                "factIds": ["lionel-not-photographed"]
               },
               {
                 "text": "A photograph of me? Not on Friday, no. I made a point of keeping out of her viewfinder.",
-                "factIds": [
-                  "lionel-not-photographed"
-                ]
+                "factIds": ["lionel-not-photographed"]
               }
             ]
           },
@@ -2055,15 +1733,11 @@
             "variants": [
               {
                 "text": "The woodshed? I haven't set foot in it all weekend. Spiders, detective. I draw the line at spiders.",
-                "factIds": [
-                  "lionel-never-in-woodshed"
-                ]
+                "factIds": ["lionel-never-in-woodshed"]
               },
               {
                 "text": "Never been inside it. Firewood is a young man's game.",
-                "factIds": [
-                  "lionel-never-in-woodshed"
-                ]
+                "factIds": ["lionel-never-in-woodshed"]
               }
             ]
           },
@@ -2077,15 +1751,11 @@
             "variants": [
               {
                 "text": "Mislaid, I'm afraid. Bea very kindly lent me her spare pair at Saturday breakfast.",
-                "factIds": [
-                  "bea-lent-readers"
-                ]
+                "factIds": ["bea-lent-readers"]
               },
               {
                 "text": "Lost them somewhere. Bea took pity on me at breakfast and lent me hers. Rather too pink for my taste.",
-                "factIds": [
-                  "bea-lent-readers"
-                ]
+                "factIds": ["bea-lent-readers"]
               }
             ],
             "afterNight": [
@@ -2094,15 +1764,11 @@
                 "variants": [
                   {
                     "text": "Found them, thank goodness. I have my own glasses back. Panic over.",
-                    "factIds": [
-                      "lionel-glasses-back"
-                    ]
+                    "factIds": ["lionel-glasses-back"]
                   },
                   {
                     "text": "Oh, they turned up. Back on my nose where they belong.",
-                    "factIds": [
-                      "lionel-glasses-back"
-                    ]
+                    "factIds": ["lionel-glasses-back"]
                   }
                 ]
               }
@@ -2132,15 +1798,11 @@
                 "variants": [
                   {
                     "text": "A sorry business. Bea found her camera case in young Wren's tote. I take no pleasure in saying it.",
-                    "factIds": [
-                      "case-in-wren-tote"
-                    ]
+                    "factIds": ["case-in-wren-tote"]
                   },
                   {
                     "text": "In Wren's tote, of all places. One hates to draw conclusions. And yet.",
-                    "factIds": [
-                      "case-in-wren-tote"
-                    ]
+                    "factIds": ["case-in-wren-tote"]
                   }
                 ]
               }
@@ -2170,15 +1832,11 @@
                 "variants": [
                   {
                     "text": "Raccoons, I expect. I heard nothing. I was upstairs by a quarter to ten.",
-                    "factIds": [
-                      "lionel-bed-early-sunday"
-                    ]
+                    "factIds": ["lionel-bed-early-sunday"]
                   },
                   {
                     "text": "I was in bed by 9:45 and stayed there. Whatever went bump, it wasn't me.",
-                    "factIds": [
-                      "lionel-bed-early-sunday"
-                    ]
+                    "factIds": ["lionel-bed-early-sunday"]
                   }
                 ]
               }
@@ -2194,15 +1852,11 @@
             "variants": [
               {
                 "text": "Ah! The great gray. In the big pine, right here at Pine Hollow. I present it to the county birding society next week. Quite the coup.",
-                "factIds": [
-                  "lionel-owl-talk"
-                ]
+                "factIds": ["lionel-owl-talk"]
               },
               {
                 "text": "A great gray owl in the big pine, detective. Next week the birding society hears all about it. I've been practising my slides.",
-                "factIds": [
-                  "lionel-owl-talk"
-                ]
+                "factIds": ["lionel-owl-talk"]
               }
             ]
           },
@@ -2309,15 +1963,11 @@
                 "variants": [
                   {
                     "text": "Bea found her camera case in Wren's tote, you know. I take no pleasure in it.",
-                    "factIds": [
-                      "case-in-wren-tote"
-                    ]
+                    "factIds": ["case-in-wren-tote"]
                   },
                   {
                     "text": "Her tote, detective. Bea's camera case was in Wren's tote. I'm only repeating what's known.",
-                    "factIds": [
-                      "case-in-wren-tote"
-                    ]
+                    "factIds": ["case-in-wren-tote"]
                   }
                 ]
               }
@@ -2398,15 +2048,11 @@
               "variants": [
                 {
                   "text": "Really, this is beneath you. Ask Wren how Bea's camera case came to be in her tote.",
-                  "factIds": [
-                    "case-in-wren-tote"
-                  ]
+                  "factIds": ["case-in-wren-tote"]
                 },
                 {
                   "text": "I am seventy-one years old and I identify warblers for pleasure. The case was in WREN's tote, detective.",
-                  "factIds": [
-                    "case-in-wren-tote"
-                  ]
+                  "factIds": ["case-in-wren-tote"]
                 }
               ]
             }
@@ -2424,10 +2070,7 @@
           "Good day, detective. A fine morning for it.",
           "Ah, detective. How can I help?"
         ],
-        "thanks": [
-          "Not at all, not at all.",
-          "My pleasure, detective."
-        ],
+        "thanks": ["Not at all, not at all.", "My pleasure, detective."],
         "goodnight": "I'm off to roost, detective. Ask me in the morning."
       }
     },
@@ -2437,16 +2080,6 @@
       "role": "Bea's niece, a photography student",
       "voice": "All lowercase, run-on sentences, 'omg', 'lol', 'ok so', the odd emoji. Loves passing on what she's heard.",
       "temperament": "gossip",
-      "patience": {
-        "perDay": 9,
-        "costs": {
-          "neutral": 1,
-          "friendly": -1,
-          "rude": 2,
-          "accusatory": 3,
-          "repeated": 1
-        }
-      },
       "bedtime": "01:30",
       "knows": [
         "camera-on-mantel-1230",
@@ -2476,15 +2109,11 @@
             "variants": [
               {
                 "text": "ok so i was on the lakeside porch on facetime w my gf in lisbon from like 12:35 to 1:25. it's morning there lol",
-                "factIds": [
-                  "wren-call-lisbon"
-                ]
+                "factIds": ["wren-call-lisbon"]
               },
               {
                 "text": "porch!! 12:35 til 1:25ish, video call w mariana in lisbon. then bed",
-                "factIds": [
-                  "wren-call-lisbon"
-                ]
+                "factIds": ["wren-call-lisbon"]
               }
             ]
           },
@@ -2512,15 +2141,11 @@
                 "variants": [
                   {
                     "text": "crashed in the bunk room at like 12:30 and slept til 9. didn't move once",
-                    "factIds": [
-                      "wren-bed-1230-sat"
-                    ]
+                    "factIds": ["wren-bed-1230-sat"]
                   },
                   {
                     "text": "asleep by 12:30, dead to the world til 9 😴",
-                    "factIds": [
-                      "wren-bed-1230-sat"
-                    ]
+                    "factIds": ["wren-bed-1230-sat"]
                   }
                 ]
               }
@@ -2550,15 +2175,11 @@
                 "variants": [
                   {
                     "text": "bunk room all night, packing and doomscrolling. didn't leave once",
-                    "factIds": [
-                      "wren-in-bunk-sunday"
-                    ]
+                    "factIds": ["wren-in-bunk-sunday"]
                   },
                   {
                     "text": "stayed in the bunk room the whole night ngl",
-                    "factIds": [
-                      "wren-in-bunk-sunday"
-                    ]
+                    "factIds": ["wren-in-bunk-sunday"]
                   }
                 ]
               }
@@ -2574,15 +2195,11 @@
             "variants": [
               {
                 "text": "it was def still on the mantel at 12:30 when me + juno stopped jamming and went up. i remember bc i almost took a pic of it lol",
-                "factIds": [
-                  "camera-on-mantel-1230"
-                ]
+                "factIds": ["camera-on-mantel-1230"]
               },
               {
                 "text": "12:30 friday night it was on the mantel, 100%. juno saw it too",
-                "factIds": [
-                  "camera-on-mantel-1230"
-                ]
+                "factIds": ["camera-on-mantel-1230"]
               }
             ]
           },
@@ -2596,15 +2213,11 @@
             "variants": [
               {
                 "text": "omg the roll is the worst part. it's all of friday, bea's sunset walk thru the group photo. if anyone opens the back it's toast",
-                "factIds": [
-                  "roll-friday-frames"
-                ]
+                "factIds": ["roll-friday-frames"]
               },
               {
                 "text": "it's the whole party!! sunset to the group pic. film is so fragile, one flash of daylight and poof",
-                "factIds": [
-                  "roll-friday-frames"
-                ]
+                "factIds": ["roll-friday-frames"]
               }
             ]
           },
@@ -2618,15 +2231,11 @@
             "variants": [
               {
                 "text": "ok actually yes. around 1:15 the woodshed light came on. i figured motion sensor or a raccoon. now i'm like 👀",
-                "factIds": [
-                  "wren-saw-woodshed-light"
-                ]
+                "factIds": ["wren-saw-woodshed-light"]
               },
               {
                 "text": "the woodshed light flicked on at like 1:15 while i was on the call. didn't see who tho",
-                "factIds": [
-                  "wren-saw-woodshed-light"
-                ]
+                "factIds": ["wren-saw-woodshed-light"]
               }
             ]
           },
@@ -2640,29 +2249,21 @@
             "variants": [
               {
                 "text": "ok so i went for kindling saturday afternoon and lionel's tortoiseshell reading glasses were just sitting on the chopping block?? weird place for them",
-                "factIds": [
-                  "lionel-glasses-in-woodshed"
-                ]
+                "factIds": ["lionel-glasses-in-woodshed"]
               },
               {
                 "text": "lionel's reading glasses were on the chopping block in there saturday afternoon. the tortoiseshell ones. idk why he'd be out there lol",
-                "factIds": [
-                  "lionel-glasses-in-woodshed"
-                ]
+                "factIds": ["lionel-glasses-in-woodshed"]
               }
             ],
             "ifFactDestroyed": [
               {
                 "text": "went for kindling this morning and somebody cleared off the whole chopping block. like, everything. sus",
-                "factIds": [
-                  "woodshed-tidied"
-                ]
+                "factIds": ["woodshed-tidied"]
               },
               {
                 "text": "the chopping block got totally cleared off overnight. who tidies a woodshed at night??",
-                "factIds": [
-                  "woodshed-tidied"
-                ]
+                "factIds": ["woodshed-tidied"]
               }
             ]
           },
@@ -2690,15 +2291,11 @@
                 "variants": [
                   {
                     "text": "i did NOT put that case in there. i lent juno my tote saturday night for her songbook, ask her!!",
-                    "factIds": [
-                      "wren-lent-tote"
-                    ]
+                    "factIds": ["wren-lent-tote"]
                   },
                   {
                     "text": "juno had my tote all saturday night for her songbook. i never touched it. someone is framing me fr",
-                    "factIds": [
-                      "wren-lent-tote"
-                    ]
+                    "factIds": ["wren-lent-tote"]
                   }
                 ]
               }
@@ -2728,15 +2325,11 @@
                 "variants": [
                   {
                     "text": "someone was in the woodshed last night, the chopping block got cleared off completely",
-                    "factIds": [
-                      "woodshed-tidied"
-                    ]
+                    "factIds": ["woodshed-tidied"]
                   },
                   {
                     "text": "ok so this morning the woodshed chopping block was totally bare. somebody was out there",
-                    "factIds": [
-                      "woodshed-tidied"
-                    ]
+                    "factIds": ["woodshed-tidied"]
                   }
                 ]
               }
@@ -2752,15 +2345,11 @@
             "variants": [
               {
                 "text": "yeah that's me on the porch, 12:35 to 1:25. facetime w mariana in lisbon. you can literally ask her",
-                "factIds": [
-                  "wren-call-lisbon"
-                ]
+                "factIds": ["wren-call-lisbon"]
               },
               {
                 "text": "the porch thing in the log is me on a call to lisbon lol. not a crime",
-                "factIds": [
-                  "wren-call-lisbon"
-                ]
+                "factIds": ["wren-call-lisbon"]
               }
             ]
           },
@@ -2774,15 +2363,11 @@
             "variants": [
               {
                 "text": "so cute. juno and i jammed by the fire after everyone left and the camera was still on the mantel when we went up at 12:30",
-                "factIds": [
-                  "camera-on-mantel-1230"
-                ]
+                "factIds": ["camera-on-mantel-1230"]
               },
               {
                 "text": "best party. me + juno were the last ones up, til 12:30. camera still on the mantel then",
-                "factIds": [
-                  "camera-on-mantel-1230"
-                ]
+                "factIds": ["camera-on-mantel-1230"]
               }
             ]
           },
@@ -2796,15 +2381,11 @@
             "variants": [
               {
                 "text": "ok yes bea's promised it to me one day. which i know looks bad. but i want her to LIVE forever, not give me a camera",
-                "factIds": [
-                  "wren-promised-camera"
-                ]
+                "factIds": ["wren-promised-camera"]
               },
               {
                 "text": "it's mine someday, she's always said. i'd never take it. i'd literally rather shoot on my phone",
-                "factIds": [
-                  "wren-promised-camera"
-                ]
+                "factIds": ["wren-promised-camera"]
               }
             ]
           },
@@ -2838,15 +2419,11 @@
             "variants": [
               {
                 "text": "lionel's been squinting all day bc he 'lost' his glasses. they were literally on the woodshed chopping block saturday afternoon lmao",
-                "factIds": [
-                  "lionel-glasses-in-woodshed"
-                ]
+                "factIds": ["lionel-glasses-in-woodshed"]
               },
               {
                 "text": "his tortoiseshell readers were on the chopping block in the woodshed saturday. idk what he was doing out there",
-                "factIds": [
-                  "lionel-glasses-in-woodshed"
-                ]
+                "factIds": ["lionel-glasses-in-woodshed"]
               }
             ],
             "ifFactDestroyed": [
@@ -2871,15 +2448,11 @@
             "variants": [
               {
                 "text": "aunt dot is a menace (affectionate). she bet bea fifty bucks she could go a month w no sugar lol",
-                "factIds": [
-                  "dot-sugar-bet"
-                ]
+                "factIds": ["dot-sugar-bet"]
               },
               {
                 "text": "dot's on a no-sugar month for a $50 bet with bea. she's been SO grumpy",
-                "factIds": [
-                  "dot-sugar-bet"
-                ]
+                "factIds": ["dot-sugar-bet"]
               }
             ]
           },
@@ -2926,15 +2499,11 @@
                 "variants": [
                   {
                     "text": "juno had my tote saturday night for her songbook. she'll tell you, i never touched it",
-                    "factIds": [
-                      "wren-lent-tote"
-                    ]
+                    "factIds": ["wren-lent-tote"]
                   },
                   {
                     "text": "ask juno, she borrowed my tote saturday night. she'll back me up",
-                    "factIds": [
-                      "wren-lent-tote"
-                    ]
+                    "factIds": ["wren-lent-tote"]
                   }
                 ]
               }
@@ -2945,15 +2514,11 @@
           "variants": [
             {
               "text": "excuse me?? i was on the porch on facetime with mariana from 12:35 to 1:25. ask her lol",
-              "factIds": [
-                "wren-call-lisbon"
-              ]
+              "factIds": ["wren-call-lisbon"]
             },
             {
               "text": "omg no. i was on a call to lisbon on the porch the whole time, 12:35 to 1:25",
-              "factIds": [
-                "wren-call-lisbon"
-              ]
+              "factIds": ["wren-call-lisbon"]
             }
           ],
           "afterNight": [
@@ -2962,15 +2527,11 @@
               "variants": [
                 {
                   "text": "i did NOT put that case in my tote. juno borrowed it saturday night!! somebody's framing me",
-                  "factIds": [
-                    "wren-lent-tote"
-                  ]
+                  "factIds": ["wren-lent-tote"]
                 },
                 {
                   "text": "it wasn't me!! juno had my tote all saturday night, ask her",
-                  "factIds": [
-                    "wren-lent-tote"
-                  ]
+                  "factIds": ["wren-lent-tote"]
                 }
               ]
             }
@@ -2985,14 +2546,8 @@
           "that's above my pay grade lol",
           "hmm idk ask dot she sees everything"
         ],
-        "greetings": [
-          "heyyy detective",
-          "hi!! ok what do u need"
-        ],
-        "thanks": [
-          "np!!",
-          "ofc 🫶"
-        ],
+        "greetings": ["heyyy detective", "hi!! ok what do u need"],
+        "thanks": ["np!!", "ofc 🫶"],
         "goodnight": "ok i'm actually going to sleep now. tmrw!!"
       }
     },
@@ -3002,16 +2557,6 @@
       "role": "Bea's older sister",
       "voice": "Dry and terse. Short sentences with full stops, even on questions. No emoji, ever. Sarcasm is her love language.",
       "temperament": "prickly",
-      "patience": {
-        "perDay": 6,
-        "costs": {
-          "neutral": 1,
-          "friendly": 1,
-          "rude": 3,
-          "accusatory": 2,
-          "repeated": 2
-        }
-      },
       "bedtime": "22:00",
       "knows": [
         "camera-on-mantel-1030",
@@ -3023,10 +2568,7 @@
         "case-in-wren-tote",
         "rocker-missing"
       ],
-      "claims": [
-        "dot-in-bed-by-ten",
-        "dot-bed-ten-sunday"
-      ],
+      "claims": ["dot-in-bed-by-ten", "dot-bed-ten-sunday"],
       "secret": "dot-ate-cake",
       "dictionary": {
         "topics": [
@@ -3041,15 +2583,11 @@
             "variants": [
               {
                 "text": "In bed by ten. I didn't come down again. I'm sixty-four, not sixteen.",
-                "factIds": [
-                  "dot-in-bed-by-ten"
-                ]
+                "factIds": ["dot-in-bed-by-ten"]
               },
               {
                 "text": "Bed at ten. Stayed there. Riveting, I know.",
-                "factIds": [
-                  "dot-in-bed-by-ten"
-                ]
+                "factIds": ["dot-in-bed-by-ten"]
               }
             ]
           },
@@ -3077,15 +2615,11 @@
                 "variants": [
                   {
                     "text": "Asleep. Earplugs in. Didn't hear a thing.",
-                    "factIds": [
-                      "dot-slept-saturday"
-                    ]
+                    "factIds": ["dot-slept-saturday"]
                   },
                   {
                     "text": "Slept through. Earplugs. Best investment I ever made.",
-                    "factIds": [
-                      "dot-slept-saturday"
-                    ]
+                    "factIds": ["dot-slept-saturday"]
                   }
                 ]
               }
@@ -3115,15 +2649,11 @@
                 "variants": [
                   {
                     "text": "Bed by ten. Never came down. Same as every night.",
-                    "factIds": [
-                      "dot-bed-ten-sunday"
-                    ]
+                    "factIds": ["dot-bed-ten-sunday"]
                   },
                   {
                     "text": "In bed at ten and stayed there. Shocking, I know.",
-                    "factIds": [
-                      "dot-bed-ten-sunday"
-                    ]
+                    "factIds": ["dot-bed-ten-sunday"]
                   }
                 ]
               }
@@ -3139,15 +2669,11 @@
             "variants": [
               {
                 "text": "Bea says she left it on the mantel after her half-ten photo. I'd gone up by then.",
-                "factIds": [
-                  "camera-on-mantel-1030"
-                ]
+                "factIds": ["camera-on-mantel-1030"]
               },
               {
                 "text": "On the mantel at 10:30, apparently. She leaves things everywhere. It was bound to happen.",
-                "factIds": [
-                  "camera-on-mantel-1030"
-                ]
+                "factIds": ["camera-on-mantel-1030"]
               }
             ]
           },
@@ -3179,15 +2705,11 @@
             "variants": [
               {
                 "text": "I bet Bea fifty dollars I could go a month without sugar. Draw your own conclusions.",
-                "factIds": [
-                  "dot-sugar-bet"
-                ]
+                "factIds": ["dot-sugar-bet"]
               },
               {
                 "text": "A month off sugar. Fifty dollars riding on it. Why would I touch the cake.",
-                "factIds": [
-                  "dot-sugar-bet"
-                ]
+                "factIds": ["dot-sugar-bet"]
               }
             ]
           },
@@ -3201,15 +2723,11 @@
             "variants": [
               {
                 "text": "Around six on Friday I saw Rafe drag something bulky under a tarp into the woodshed. Ask him what.",
-                "factIds": [
-                  "dot-saw-rafe-drag"
-                ]
+                "factIds": ["dot-saw-rafe-drag"]
               },
               {
                 "text": "Rafe. Friday, about six. Hauling something under a tarp into that woodshed. Make of it what you will.",
-                "factIds": [
-                  "dot-saw-rafe-drag"
-                ]
+                "factIds": ["dot-saw-rafe-drag"]
               }
             ]
           },
@@ -3237,15 +2755,11 @@
                 "variants": [
                   {
                     "text": "Bea's camera case in the girl's tote. Convenient place for it. Too convenient.",
-                    "factIds": [
-                      "case-in-wren-tote"
-                    ]
+                    "factIds": ["case-in-wren-tote"]
                   },
                   {
                     "text": "In Wren's tote. In the mudroom. Where anyone could put anything. Think.",
-                    "factIds": [
-                      "case-in-wren-tote"
-                    ]
+                    "factIds": ["case-in-wren-tote"]
                   }
                 ]
               }
@@ -3313,15 +2827,11 @@
             "variants": [
               {
                 "text": "Too loud. Too much singing. I was in bed by ten and stayed there.",
-                "factIds": [
-                  "dot-in-bed-by-ten"
-                ]
+                "factIds": ["dot-in-bed-by-ten"]
               },
               {
                 "text": "Nice enough. I left them to it and was in bed by ten. Never came back down.",
-                "factIds": [
-                  "dot-in-bed-by-ten"
-                ]
+                "factIds": ["dot-in-bed-by-ten"]
               }
             ]
           },
@@ -3335,15 +2845,11 @@
             "variants": [
               {
                 "text": "Gone from the porch since Friday afternoon. I have my theories.",
-                "factIds": [
-                  "rocker-missing"
-                ]
+                "factIds": ["rocker-missing"]
               },
               {
                 "text": "Missing since Friday afternoon. Somebody sat in it who shouldn't have. That's all I'll say in public.",
-                "factIds": [
-                  "rocker-missing"
-                ]
+                "factIds": ["rocker-missing"]
               }
             ]
           },
@@ -3415,15 +2921,11 @@
             "variants": [
               {
                 "text": "Rafe dragged something under a tarp into the woodshed around six on Friday. Ask him what. I did. He changed the subject.",
-                "factIds": [
-                  "dot-saw-rafe-drag"
-                ]
+                "factIds": ["dot-saw-rafe-drag"]
               },
               {
                 "text": "Watch Rafe. Friday at six he was hauling something bulky into the woodshed under a tarp.",
-                "factIds": [
-                  "dot-saw-rafe-drag"
-                ]
+                "factIds": ["dot-saw-rafe-drag"]
               }
             ]
           },
@@ -3451,17 +2953,11 @@
           "variants": [
             {
               "text": "I did not take Bea's camera. If you must know, I was in the kitchen at one in the morning eating her birthday cake. And around ten past one I saw a flashlight going out to the woodshed. I assumed it was Rafe.",
-              "factIds": [
-                "dot-ate-cake",
-                "dot-saw-flashlight"
-              ]
+              "factIds": ["dot-ate-cake", "dot-saw-flashlight"]
             },
             {
               "text": "Fine. I came down at quarter to one and ate a third of the cake. There goes fifty dollars. While I was at it, a flashlight crossed the yard to the woodshed around 1:10. Happy.",
-              "factIds": [
-                "dot-ate-cake",
-                "dot-saw-flashlight"
-              ]
+              "factIds": ["dot-ate-cake", "dot-saw-flashlight"]
             }
           ]
         },
@@ -3473,14 +2969,8 @@
           "I wouldn't know.",
           "Next question."
         ],
-        "greetings": [
-          "Detective.",
-          "Yes. What."
-        ],
-        "thanks": [
-          "Fine.",
-          "Don't mention it. Really. Don't."
-        ],
+        "greetings": ["Detective.", "Yes. What."],
+        "thanks": ["Fine.", "Don't mention it. Really. Don't."],
         "goodnight": "I'm going to bed. Don't text me."
       }
     },
@@ -3490,16 +2980,6 @@
       "role": "Bea's old reporter colleague from the Pine County Ledger",
       "voice": "Clipped, like a man still writing to a word count. Fragments. Full stops. Often answers a question with a question.",
       "temperament": "guarded",
-      "patience": {
-        "perDay": 5,
-        "costs": {
-          "neutral": 1,
-          "friendly": 1,
-          "rude": 3,
-          "accusatory": 2,
-          "repeated": 2
-        }
-      },
       "bedtime": "23:00",
       "knows": [
         "camera-on-mantel-1030",
@@ -3510,10 +2990,7 @@
         "case-in-wren-tote",
         "rocker-missing"
       ],
-      "claims": [
-        "rafe-never-in-woodshed",
-        "rafe-turned-in-sat"
-      ],
+      "claims": ["rafe-never-in-woodshed", "rafe-turned-in-sat"],
       "secret": "rafe-broke-rocker",
       "dictionary": {
         "topics": [
@@ -3528,15 +3005,11 @@
             "variants": [
               {
                 "text": "Upstairs at eleven. Book. Lights out. Why?",
-                "factIds": [
-                  "rafe-bed-1100-friday"
-                ]
+                "factIds": ["rafe-bed-1100-friday"]
               },
               {
                 "text": "Went up at eleven. Read. Slept.",
-                "factIds": [
-                  "rafe-bed-1100-friday"
-                ]
+                "factIds": ["rafe-bed-1100-friday"]
               }
             ]
           },
@@ -3564,15 +3037,11 @@
                 "variants": [
                   {
                     "text": "Turned in at eleven. Stayed in my room. All night.",
-                    "factIds": [
-                      "rafe-turned-in-sat"
-                    ]
+                    "factIds": ["rafe-turned-in-sat"]
                   },
                   {
                     "text": "Eleven. Bed. Didn't leave the room. Next.",
-                    "factIds": [
-                      "rafe-turned-in-sat"
-                    ]
+                    "factIds": ["rafe-turned-in-sat"]
                   }
                 ]
               }
@@ -3602,15 +3071,11 @@
                 "variants": [
                   {
                     "text": "Bed around half eleven. Long day.",
-                    "factIds": [
-                      "rafe-bed-1130-sunday"
-                    ]
+                    "factIds": ["rafe-bed-1130-sunday"]
                   },
                   {
                     "text": "Turned in about 11:30. That's it.",
-                    "factIds": [
-                      "rafe-bed-1130-sunday"
-                    ]
+                    "factIds": ["rafe-bed-1130-sunday"]
                   }
                 ]
               }
@@ -3626,15 +3091,11 @@
             "variants": [
               {
                 "text": "That camera shot every front page I wrote. Last saw it going on the mantel after the 10:30 photo.",
-                "factIds": [
-                  "camera-on-mantel-1030"
-                ]
+                "factIds": ["camera-on-mantel-1030"]
               },
               {
                 "text": "On the mantel. After the half-ten group shot. Then I went up.",
-                "factIds": [
-                  "camera-on-mantel-1030"
-                ]
+                "factIds": ["camera-on-mantel-1030"]
               }
             ]
           },
@@ -3666,15 +3127,11 @@
             "variants": [
               {
                 "text": "Haven't been near it all weekend. Why?",
-                "factIds": [
-                  "rafe-never-in-woodshed"
-                ]
+                "factIds": ["rafe-never-in-woodshed"]
               },
               {
                 "text": "The woodshed? Not once. Not my department.",
-                "factIds": [
-                  "rafe-never-in-woodshed"
-                ]
+                "factIds": ["rafe-never-in-woodshed"]
               }
             ]
           },
@@ -3688,15 +3145,11 @@
             "variants": [
               {
                 "text": "Missing since Friday afternoon, I hear. Not my beat.",
-                "factIds": [
-                  "rocker-missing"
-                ]
+                "factIds": ["rocker-missing"]
               },
               {
                 "text": "Gone from the porch since Friday. Ask the owner. Rockers break.",
-                "factIds": [
-                  "rocker-missing"
-                ]
+                "factIds": ["rocker-missing"]
               }
             ],
             "afterNight": [
@@ -3725,15 +3178,11 @@
             "variants": [
               {
                 "text": "Great grays don't come this far south. I checked. Nobody's ever logged one near Pine Hollow. Except Lionel.",
-                "factIds": [
-                  "rafe-doubts-owl"
-                ]
+                "factIds": ["rafe-doubts-owl"]
               },
               {
                 "text": "Off the record? I don't buy it. Great gray this far south, no other sighting on record. Smells.",
-                "factIds": [
-                  "rafe-doubts-owl"
-                ]
+                "factIds": ["rafe-doubts-owl"]
               }
             ]
           },
@@ -3761,15 +3210,11 @@
                 "variants": [
                   {
                     "text": "Case in the niece's tote. Too neat. Plants usually are.",
-                    "factIds": [
-                      "case-in-wren-tote"
-                    ]
+                    "factIds": ["case-in-wren-tote"]
                   },
                   {
                     "text": "Wren's tote, mudroom, Sunday morning. Anyone could reach that hook. Who'd want us looking at Wren?",
-                    "factIds": [
-                      "case-in-wren-tote"
-                    ]
+                    "factIds": ["case-in-wren-tote"]
                   }
                 ]
               }
@@ -3799,15 +3244,11 @@
                 "variants": [
                   {
                     "text": "Turned in at half eleven. Missed whatever it was.",
-                    "factIds": [
-                      "rafe-bed-1130-sunday"
-                    ]
+                    "factIds": ["rafe-bed-1130-sunday"]
                   },
                   {
                     "text": "Asleep from 11:30. Nothing to report.",
-                    "factIds": [
-                      "rafe-bed-1130-sunday"
-                    ]
+                    "factIds": ["rafe-bed-1130-sunday"]
                   }
                 ]
               }
@@ -3841,17 +3282,11 @@
             "variants": [
               {
                 "text": "Good party. Group photo at 10:30, camera to the mantel, I went up at eleven.",
-                "factIds": [
-                  "camera-on-mantel-1030",
-                  "rafe-bed-1100-friday"
-                ]
+                "factIds": ["camera-on-mantel-1030", "rafe-bed-1100-friday"]
               },
               {
                 "text": "Toast, cake, Juno sang. Photo at half ten, camera on the mantel. Bed at eleven.",
-                "factIds": [
-                  "camera-on-mantel-1030",
-                  "rafe-bed-1100-friday"
-                ]
+                "factIds": ["camera-on-mantel-1030", "rafe-bed-1100-friday"]
               }
             ]
           },
@@ -3903,15 +3338,11 @@
             "variants": [
               {
                 "text": "Lionel. Ask him about his owl. Great grays don't come this far south. No other record near here. Ever.",
-                "factIds": [
-                  "rafe-doubts-owl"
-                ]
+                "factIds": ["rafe-doubts-owl"]
               },
               {
                 "text": "Nice man. Shaky story. A great gray at Pine Hollow, and not one other birder ever logged one nearby?",
-                "factIds": [
-                  "rafe-doubts-owl"
-                ]
+                "factIds": ["rafe-doubts-owl"]
               }
             ]
           },
@@ -3977,15 +3408,11 @@
           "variants": [
             {
               "text": "I didn't take the camera. Fine. Off the record. I broke the lodge's rocker Friday afternoon. Been mending it in the woodshed so nobody'd know. That's the whole story.",
-              "factIds": [
-                "rafe-broke-rocker"
-              ]
+              "factIds": ["rafe-broke-rocker"]
             },
             {
               "text": "You want a confession? Here. I sat in that antique rocker Friday and it folded. I've been fixing it in the woodshed. I didn't touch Bea's camera.",
-              "factIds": [
-                "rafe-broke-rocker"
-              ]
+              "factIds": ["rafe-broke-rocker"]
             }
           ]
         },
@@ -3997,14 +3424,8 @@
           "Couldn't say.",
           "Pass."
         ],
-        "greetings": [
-          "Detective.",
-          "Go ahead."
-        ],
-        "thanks": [
-          "Sure.",
-          "Don't quote me."
-        ],
+        "greetings": ["Detective.", "Go ahead."],
+        "thanks": ["Sure.", "Don't quote me."],
         "goodnight": "Filing for the night. Tomorrow."
       }
     },
@@ -4014,16 +3435,6 @@
       "role": "Bea's goddaughter, a folk singer",
       "voice": "Bubbly and breathless. Proper capitals but lots of exclamation marks, double question marks and ✨🎶. Lights up when anyone mentions her singing.",
       "temperament": "flattered",
-      "patience": {
-        "perDay": 8,
-        "costs": {
-          "neutral": 1,
-          "friendly": -1,
-          "rude": 3,
-          "accusatory": 3,
-          "repeated": 1
-        }
-      },
       "bedtime": "00:30",
       "knows": [
         "camera-on-mantel-1030",
@@ -4053,17 +3464,11 @@
             "variants": [
               {
                 "text": "Wren and I jammed by the fire till 12:30 and the camera was still on the mantel then!! I got a glass of water and was in bed by 12:40 ✨",
-                "factIds": [
-                  "camera-on-mantel-1230",
-                  "juno-bed-1240"
-                ]
+                "factIds": ["camera-on-mantel-1230", "juno-bed-1240"]
               },
               {
                 "text": "Music with Wren till 12:30 - camera still on the mantel! Water from the kitchen, bed by 12:40!",
-                "factIds": [
-                  "camera-on-mantel-1230",
-                  "juno-bed-1240"
-                ]
+                "factIds": ["camera-on-mantel-1230", "juno-bed-1240"]
               }
             ]
           },
@@ -4091,15 +3496,11 @@
                 "variants": [
                   {
                     "text": "At 1:50 I hung Wren's tote in the mudroom - totally empty, I'd just taken my songbook out!! Then I lay awake in the bunk room till 3 and Wren never moved once!",
-                    "factIds": [
-                      "juno-tote-empty"
-                    ]
+                    "factIds": ["juno-tote-empty"]
                   },
                   {
                     "text": "Sunroom, then at 1:50 I hung Wren's tote up EMPTY in the mudroom, then bunk room. Couldn't sleep till 3! Wren was out cold the whole time!!",
-                    "factIds": [
-                      "juno-tote-empty"
-                    ]
+                    "factIds": ["juno-tote-empty"]
                   }
                 ]
               }
@@ -4129,15 +3530,11 @@
                 "variants": [
                   {
                     "text": "Asleep by 11:30 and slept all night for once!! 😴",
-                    "factIds": [
-                      "juno-bed-sunday"
-                    ]
+                    "factIds": ["juno-bed-sunday"]
                   },
                   {
                     "text": "Out like a light at 11:30! Didn't hear a single thing, sorry!!",
-                    "factIds": [
-                      "juno-bed-sunday"
-                    ]
+                    "factIds": ["juno-bed-sunday"]
                   }
                 ]
               }
@@ -4153,15 +3550,11 @@
             "variants": [
               {
                 "text": "It was definitely still on the mantel at 12:30 when Wren and I stopped playing!! I looked right at it!",
-                "factIds": [
-                  "camera-on-mantel-1230"
-                ]
+                "factIds": ["camera-on-mantel-1230"]
               },
               {
                 "text": "12:30 on Friday night, on the mantel, I'd swear to it!! 🥺",
-                "factIds": [
-                  "camera-on-mantel-1230"
-                ]
+                "factIds": ["camera-on-mantel-1230"]
               }
             ]
           },
@@ -4207,17 +3600,11 @@
                 "variants": [
                   {
                     "text": "Wren lent me her tote Saturday for my songbook! I hung it in the mudroom at 1:50 and there was NOTHING else in it!! And Wren never left her bunk after, I was awake till 3!",
-                    "factIds": [
-                      "wren-lent-tote",
-                      "juno-tote-empty"
-                    ]
+                    "factIds": ["wren-lent-tote", "juno-tote-empty"]
                   },
                   {
                     "text": "It was MY fault it was in the mudroom!! I borrowed it from Wren, emptied it, hung it up at 1:50 with nothing inside. Wren slept the whole time, I was awake till 3!!",
-                    "factIds": [
-                      "wren-lent-tote",
-                      "juno-tote-empty"
-                    ]
+                    "factIds": ["wren-lent-tote", "juno-tote-empty"]
                   }
                 ]
               }
@@ -4247,15 +3634,11 @@
                 "variants": [
                   {
                     "text": "Around 2:05 I heard someone creep down the stairs!! The creaky third step! I was too scared to look 🙈",
-                    "factIds": [
-                      "juno-heard-stairs"
-                    ]
+                    "factIds": ["juno-heard-stairs"]
                   },
                   {
                     "text": "Somebody went down the stairs at like 2:05!! Super slow, like they didn't want to be heard!",
-                    "factIds": [
-                      "juno-heard-stairs"
-                    ]
+                    "factIds": ["juno-heard-stairs"]
                   }
                 ]
               }
@@ -4285,15 +3668,11 @@
                 "variants": [
                   {
                     "text": "I slept right through it all, I was asleep by 11:30!! So sorry!!",
-                    "factIds": [
-                      "juno-bed-sunday"
-                    ]
+                    "factIds": ["juno-bed-sunday"]
                   },
                   {
                     "text": "No idea, I was asleep by 11:30 for once!! 😴",
-                    "factIds": [
-                      "juno-bed-sunday"
-                    ]
+                    "factIds": ["juno-bed-sunday"]
                   }
                 ]
               }
@@ -4309,15 +3688,11 @@
             "variants": [
               {
                 "text": "Ooh! Around 7:45 on Friday I saw Lionel coming up from the dock path with a stepladder and a lumpy pillowcase?? Very mysterious ✨",
-                "factIds": [
-                  "juno-saw-lionel-ladder"
-                ]
+                "factIds": ["juno-saw-lionel-ladder"]
               },
               {
                 "text": "Lionel!! Friday about 7:45, hurrying up from the dock path with a stepladder and a pillowcase with something lumpy in it!",
-                "factIds": [
-                  "juno-saw-lionel-ladder"
-                ]
+                "factIds": ["juno-saw-lionel-ladder"]
               }
             ]
           },
@@ -4331,15 +3706,11 @@
             "variants": [
               {
                 "text": "Someone ate a THIRD of the birthday cake overnight!! I went to make Bea breakfast Saturday and it was just... gone!",
-                "factIds": [
-                  "cake-missing"
-                ]
+                "factIds": ["cake-missing"]
               },
               {
                 "text": "A whole third of the cake, gone by Saturday morning!! Not me, I swear, I'm a savory person!",
-                "factIds": [
-                  "cake-missing"
-                ]
+                "factIds": ["cake-missing"]
               }
             ]
           },
@@ -4353,15 +3724,11 @@
             "variants": [
               {
                 "text": "The old rocker's been missing from the porch since Friday afternoon!! I loved that chair!",
-                "factIds": [
-                  "rocker-missing"
-                ]
+                "factIds": ["rocker-missing"]
               },
               {
                 "text": "Gone since Friday afternoon!! Who takes a rocking chair??",
-                "factIds": [
-                  "rocker-missing"
-                ]
+                "factIds": ["rocker-missing"]
               }
             ]
           },
@@ -4375,15 +3742,11 @@
             "variants": [
               {
                 "text": "I sang Bea a song I wrote for her and she CRIED!! Then the group photo at 10:30 and the camera went on the mantel!",
-                "factIds": [
-                  "camera-on-mantel-1030"
-                ]
+                "factIds": ["camera-on-mantel-1030"]
               },
               {
                 "text": "Best night!! Group photo by the fire at 10:30, then Bea put the camera on the mantel ✨",
-                "factIds": [
-                  "camera-on-mantel-1030"
-                ]
+                "factIds": ["camera-on-mantel-1030"]
               }
             ]
           },
@@ -4415,15 +3778,11 @@
             "variants": [
               {
                 "text": "The kitchen on Friday is me getting a glass of water before bed!! Bed by 12:40, promise!",
-                "factIds": [
-                  "juno-bed-1240"
-                ]
+                "factIds": ["juno-bed-1240"]
               },
               {
                 "text": "That's just me getting water on Friday!! I was in bed by 12:40!",
-                "factIds": [
-                  "juno-bed-1240"
-                ]
+                "factIds": ["juno-bed-1240"]
               }
             ],
             "afterNight": [
@@ -4432,17 +3791,11 @@
                 "variants": [
                   {
                     "text": "Friday's kitchen one is me getting water, bed by 12:40! And Saturday's is me at 1:50 hanging Wren's tote up in the mudroom, EMPTY!",
-                    "factIds": [
-                      "juno-bed-1240",
-                      "juno-tote-empty"
-                    ]
+                    "factIds": ["juno-bed-1240", "juno-tote-empty"]
                   },
                   {
                     "text": "Water on Friday, bed by 12:40! Then Saturday at 1:50 I was hanging Wren's empty tote in the mudroom! Nothing sneaky, promise!!",
-                    "factIds": [
-                      "juno-bed-1240",
-                      "juno-tote-empty"
-                    ]
+                    "factIds": ["juno-bed-1240", "juno-tote-empty"]
                   }
                 ]
               }
@@ -4478,15 +3831,11 @@
             "variants": [
               {
                 "text": "Lionel's so sweet!! Oh - on Friday around 7:45 I saw him coming up from the dock path with a stepladder and a lumpy pillowcase? Birdwatching stuff maybe??",
-                "factIds": [
-                  "juno-saw-lionel-ladder"
-                ]
+                "factIds": ["juno-saw-lionel-ladder"]
               },
               {
                 "text": "He said I sing like a thrush!! 🥹 Also he was carrying a stepladder and a lumpy pillowcase up from the dock path at like 7:45 Friday, which was weird??",
-                "factIds": [
-                  "juno-saw-lionel-ladder"
-                ]
+                "factIds": ["juno-saw-lionel-ladder"]
               }
             ]
           },
@@ -4514,15 +3863,11 @@
                 "variants": [
                   {
                     "text": "It can't be Wren!! I hung her tote up empty at 1:50 and lay awake till 3 and she didn't move once!",
-                    "factIds": [
-                      "juno-tote-empty"
-                    ]
+                    "factIds": ["juno-tote-empty"]
                   },
                   {
                     "text": "Not Wren!! Her tote was empty when I hung it up at 1:50, and she was asleep till way after 3, I was lying right there awake!",
-                    "factIds": [
-                      "juno-tote-empty"
-                    ]
+                    "factIds": ["juno-tote-empty"]
                   }
                 ]
               }
@@ -4558,15 +3903,11 @@
             "variants": [
               {
                 "text": "Rafe is SO mysterious!! He came to Saturday breakfast with sawdust all over his sleeves?? Like a lumberjack!",
-                "factIds": [
-                  "rafe-sawdust"
-                ]
+                "factIds": ["rafe-sawdust"]
               },
               {
                 "text": "Rafe's nice! Quiet! He had sawdust on his sleeves at Saturday breakfast, I don't know why!!",
-                "factIds": [
-                  "rafe-sawdust"
-                ]
+                "factIds": ["rafe-sawdust"]
               }
             ]
           }
@@ -4575,15 +3916,11 @@
           "variants": [
             {
               "text": "Me?? Oh no no no. I was in bed by 12:40, I promise!! 😭",
-              "factIds": [
-                "juno-bed-1240"
-              ]
+              "factIds": ["juno-bed-1240"]
             },
             {
               "text": "I would NEVER!! I got water and went to bed at 12:40, ask anyone!!",
-              "factIds": [
-                "juno-bed-1240"
-              ]
+              "factIds": ["juno-bed-1240"]
             }
           ],
           "afterNight": [
@@ -4592,17 +3929,11 @@
               "variants": [
                 {
                   "text": "No!! I was in bed by 12:40 on Friday! And Saturday I hung Wren's tote up EMPTY at 1:50, I'm not lying!! 😭",
-                  "factIds": [
-                    "juno-bed-1240",
-                    "juno-tote-empty"
-                  ]
+                  "factIds": ["juno-bed-1240", "juno-tote-empty"]
                 },
                 {
                   "text": "I didn't do anything!! Bed at 12:40 Friday, and Saturday I hung Wren's tote up at 1:50 with nothing in it! 🥺",
-                  "factIds": [
-                    "juno-bed-1240",
-                    "juno-tote-empty"
-                  ]
+                  "factIds": ["juno-bed-1240", "juno-tote-empty"]
                 }
               ]
             }
@@ -4616,14 +3947,8 @@
           "That's a Bea question, I think!",
           "No clue, sorry sorry!!"
         ],
-        "greetings": [
-          "Hi detective!! ✨",
-          "Oh hi!! How can I help??"
-        ],
-        "thanks": [
-          "Of course!! 🥹",
-          "Anytime!!"
-        ],
+        "greetings": ["Hi detective!! ✨", "Oh hi!! How can I help??"],
+        "thanks": ["Of course!! 🥹", "Anytime!!"],
         "goodnight": "Okay I'm going to bed!! Night night ✨"
       }
     }

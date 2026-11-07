@@ -151,7 +151,7 @@ describe('starting a game', () => {
   })
 
   test('gives every guest a full day of patience', () => {
-    expect(state.patience).toEqual({ margot: 8, dale: 8, priya: 5, wes: 10 })
+    expect(state.patience).toEqual({ margot: 7, dale: 10, priya: 5, wes: 10 })
   })
 
   test('the snapshot carries no fact IDs and no thief', () => {
@@ -177,7 +177,7 @@ describe('direct messages', () => {
       'dale-asleep-by-1115',
       'dale-stayed-inside',
     ])
-    expect(step.state.patience['dale']).toBe(7)
+    expect(step.state.patience['dale']).toBe(9)
   })
 
   test('asking again rotates the wording and costs more', () => {
@@ -187,7 +187,7 @@ describe('direct messages', () => {
     expect(guestReplies(second)).toEqual([
       "asleep by 11:15, didn't set foot outside all night",
     ])
-    expect(second.state.patience['dale']).toBe(4)
+    expect(second.state.patience['dale']).toBe(7)
   })
 
   test('an accusation gets the pressed reply', () => {

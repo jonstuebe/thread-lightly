@@ -1045,16 +1045,6 @@
       "role": "Your host, and three-time winner of the Pine Hollow Regatta",
       "voice": "Gracious and a little grand. Full sentences, proper punctuation, sailing expressions, the odd ⚓. Warms right up when complimented.",
       "temperament": "flattered",
-      "patience": {
-        "perDay": 8,
-        "costs": {
-          "neutral": 1,
-          "friendly": -1,
-          "rude": 3,
-          "accusatory": 3,
-          "repeated": 2
-        }
-      },
       "bedtime": "22:00",
       "knows": [
         "cup-on-mantel-at-toast",
@@ -1448,16 +1438,6 @@
       "role": "Ruth's jib trimmer of twenty years, from down the shore",
       "voice": "Folksy old sailor. All lowercase, rambling run-ons, \"heh\" and \"anyhow\", drifts onto the wind and the weather when he'd rather not answer.",
       "temperament": "chatty",
-      "patience": {
-        "perDay": 9,
-        "costs": {
-          "neutral": 1,
-          "friendly": 0,
-          "rude": 2,
-          "accusatory": 2,
-          "repeated": 1
-        }
-      },
       "bedtime": "23:00",
       "knows": ["cup-on-mantel-at-toast", "hal-cherry-tobacco"],
       "claims": [
@@ -1891,16 +1871,6 @@
       "role": "Ruth's college roommate, a retired doctor and keen owl-watcher",
       "voice": "Warm, precise and a little breathless. Full sentences, \"Oh!\", (parenthetical asides), bird facts, the occasional 🦉.",
       "temperament": "chatty",
-      "patience": {
-        "perDay": 9,
-        "costs": {
-          "neutral": 1,
-          "friendly": 0,
-          "rude": 2,
-          "accusatory": 3,
-          "repeated": 1
-        }
-      },
       "bedtime": "22:30",
       "knows": [
         "cup-on-mantel-at-toast",
@@ -2270,16 +2240,6 @@
       "role": "Ruth's sailing rival, who lost last year's regatta by a boat length",
       "voice": "Terse and dry. All lowercase, short flat sentences ending in periods, sarcasm, no emoji ever.",
       "temperament": "prickly",
-      "patience": {
-        "perDay": 6,
-        "costs": {
-          "neutral": 1,
-          "friendly": 1,
-          "rude": 3,
-          "accusatory": 3,
-          "repeated": 2
-        }
-      },
       "bedtime": "23:30",
       "knows": [
         "cup-on-mantel-at-toast",
@@ -2668,16 +2628,6 @@
       "role": "Ruth's grandson, home from engineering school, crewing for her this year",
       "voice": "Nervous and sweet. All lowercase, \"um\", \"like\", trailing ellipses, apologizes a lot, 😬 and 🥹.",
       "temperament": "anxious",
-      "patience": {
-        "perDay": 7,
-        "costs": {
-          "neutral": 1,
-          "friendly": 0,
-          "rude": 2,
-          "accusatory": 3,
-          "repeated": 2
-        }
-      },
       "bedtime": "00:30",
       "knows": [
         "cup-on-mantel-at-toast",
@@ -3118,16 +3068,6 @@
       "role": "Runs the lake's general store and post office, Ruth's neighbor",
       "voice": "Gossip in full flow. \"honey\", \"between you and me\", CAPITALS for the juicy bits, long breathless messages, ☕👀.",
       "temperament": "gossip",
-      "patience": {
-        "perDay": 10,
-        "costs": {
-          "neutral": 1,
-          "friendly": -1,
-          "rude": 2,
-          "accusatory": 3,
-          "repeated": 1
-        }
-      },
       "bedtime": "22:00",
       "knows": [
         "cup-on-mantel-at-toast",
