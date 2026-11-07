@@ -69,8 +69,6 @@
 /* ---------- Base ---------- */
 :root {
   box-sizing: border-box;
-  padding-top: env(safe-area-inset-top, 0px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
   background: var(--bg);
 }
 *,
@@ -125,20 +123,30 @@ button {
   flex-direction: column;
   position: relative;
 }
-/* Keyboard open: pin the chat to the visible area above the keyboard */
 html,
 body {
-  position: fixed;
-  inset: 0;
   overflow: hidden;
   overscroll-behavior: none;
 }
-.app {
+/* iOS Safari decides at first paint whether the page may draw under its
+   status bar and floating toolbar, and it won't if anything is
+   position: fixed. So the page loads unpinned (the lock screen runs edge to
+   edge), and only once the chat is up do we pin it to the visible area above
+   the keyboard. */
+html:has(.app):not(:has(.lock)),
+html:has(.app):not(:has(.lock)) body {
   position: fixed;
+  inset: 0;
+}
+html:has(.app):not(:has(.lock)) .app {
+  position: fixed;
+}
+.app {
+  position: absolute;
   left: 0;
   right: 0;
   top: 0;
-  height: 100%;
+  height: 100lvh;
   padding-top: env(safe-area-inset-top, 0px);
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
@@ -147,6 +155,11 @@ body {
 }
 .app.kb {
   padding-bottom: 0;
+}
+/* Safari tints its status bar with the body background */
+html:has(.lock),
+html:has(.lock) body {
+  background: #0e2433;
 }
 
 /* ---------- Header ---------- */
