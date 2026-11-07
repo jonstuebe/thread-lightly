@@ -102,12 +102,20 @@ const previewOf = (
   })
 }
 
-const statusBadge = (guest: GuestProfile, h: HtmlBuilder<Message>): Html =>
-  guest.status === 'asleep'
-    ? h.span([h.Class('badge')], ['Asleep'])
-    : guest.status === 'leftOnRead'
-      ? h.span([h.Class('badge')], ['Not replying'])
-      : h.empty
+// NOTE: once the case is closed, statuses from the last night no longer mean
+// anything, so the badges go away.
+const statusBadge = (
+  board: Board,
+  guest: GuestProfile,
+  h: HtmlBuilder<Message>,
+): Html =>
+  Option.isSome(board.maybeResult)
+    ? h.empty
+    : guest.status === 'asleep'
+      ? h.span([h.Class('badge')], ['Asleep'])
+      : guest.status === 'leftOnRead'
+        ? h.span([h.Class('badge')], ['Not replying'])
+        : h.empty
 
 const row = (
   model: Model,
@@ -205,7 +213,7 @@ export const listView = (
               avatar(board, guest.id, h),
               guest.name,
               previewOf(model, board, direct(guest.id), guest.role),
-              statusBadge(guest, h),
+              statusBadge(board, guest, h),
               h,
             ),
           ),
@@ -243,11 +251,13 @@ export const connectionBanner = (
     ? h.div([h.Class('banner'), h.Role('status')], ['Reconnecting…'])
     : h.empty
 
-export const statusLine = (guest: GuestProfile): string =>
-  guest.status === 'asleep'
-    ? `${firstName(guest.name)} has gone to bed`
-    : guest.status === 'leftOnRead'
-      ? `${firstName(guest.name)} isn’t replying`
-      : guest.status === 'annoyed'
-        ? `${firstName(guest.name)} seems a bit short with you`
-        : guest.role
+export const statusLine = (board: Board, guest: GuestProfile): string =>
+  Option.isSome(board.maybeResult)
+    ? guest.role
+    : guest.status === 'asleep'
+      ? `${firstName(guest.name)} has gone to bed`
+      : guest.status === 'leftOnRead'
+        ? `${firstName(guest.name)} isn’t replying`
+        : guest.status === 'annoyed'
+          ? `${firstName(guest.name)} seems a bit short with you`
+          : guest.role

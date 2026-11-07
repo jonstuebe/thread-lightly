@@ -52,6 +52,36 @@ describe('conversations', () => {
     )
   })
 
+  test('status badges go away once the case is closed', () => {
+    const asleep = {
+      ...board,
+      guests: board.guests.map(guest => ({
+        ...guest,
+        status: 'asleep' as const,
+      })),
+    }
+    scene(
+      { update, view },
+      given({ ...playingModel, maybeBoard: Option.some(asleep) }),
+      expect(text('Asleep')).toExist(),
+    )
+    scene(
+      { update, view },
+      given({
+        ...playingModel,
+        maybeBoard: Option.some({
+          ...asleep,
+          maybeResult: Option.some({
+            ending: 'caseClosed' as const,
+            thief: 'dale',
+            timeline: [],
+          }),
+        }),
+      }),
+      expect(text('Asleep')).not.toExist(),
+    )
+  })
+
   test('opening a guest thread lets you message them', () => {
     scene(
       { update, view },

@@ -31,14 +31,22 @@ const where = (message: ChatMessage): string =>
       ? 'Wi-Fi log'
       : 'DM'
 
+const quoteBody = (
+  board: Board,
+  message: ChatMessage,
+  h: HtmlBuilder<Message>,
+): ReadonlyArray<Html> => [
+  h.span([h.Class('quote-text')], [messageText(board, message)]),
+  h.span([h.Class('quote-meta')], [`Day ${message.day} · ${where(message)}`]),
+]
+
 const quote = (
   board: Board,
   message: ChatMessage,
   h: HtmlBuilder<Message>,
 ): ReadonlyArray<Html> => [
   h.span([h.Class('quote-who')], [senderLabel(board, message)]),
-  h.span([h.Class('quote-text')], [messageText(board, message)]),
-  h.span([h.Class('quote-meta')], [`Day ${message.day} · ${where(message)}`]),
+  ...quoteBody(board, message, h),
 ]
 
 const primary = (
@@ -166,7 +174,10 @@ const caseFileView = (board: Board, h: HtmlBuilder<Message>): Html => {
                         message.id,
                         [h.Class('file-item')],
                         [
-                          h.div([h.Class('quote')], quote(board, message, h)),
+                          h.div(
+                            [h.Class('quote')],
+                            quoteBody(board, message, h),
+                          ),
                           h.button(
                             [
                               h.Type('button'),

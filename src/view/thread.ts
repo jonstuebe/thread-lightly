@@ -49,7 +49,7 @@ const heading = (
         onSome: profile => ({
           avatarView: avatar(board, guest, h),
           title: profile.name,
-          subtitle: statusLine(profile),
+          subtitle: statusLine(board, profile),
         }),
       }),
   })
