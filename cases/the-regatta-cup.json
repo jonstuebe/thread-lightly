@@ -3,6 +3,7 @@
   "setting": {
     "title": "The Regatta Cup",
     "premise": "Ruth Calloway invited five guests to Pine Hollow for the weekend before the lake's annual regatta. On Saturday morning the little engraved Regatta Cup she won last summer is gone from her mantel.",
+    "background": "Pine Hollow is a two-storey log lodge on a lake. Downstairs: the great room with the fireplace and the mantel, where Ruth keeps her photographs and the cup; the kitchen and its pantry; and the front door. Upstairs: the bedrooms; Lena's window looks out over the dock path. Across the yard is the bunkhouse, and the dock path runs down to the dock and Ruth's boathouse, where she keeps her boat, Mabel. Ruth is hosting the weekend before next Saturday's regatta, Friday to Monday. Friday: everyone arrived in the afternoon, then dinner, and at 10 the skippers' toast in the great room, where Ruth raised the Regatta Cup and set it back on the mantel. Saturday morning the mantel was bare. Ruth, Lena, Marisol and Nell have rooms in the lodge; Hal and Theo share the bunkhouse. The cup is a little pewter trophy with every winner since 1971 engraved round the base, Ruth's name among them three times.",
     "missingItem": "the Pine Hollow Regatta Cup, Ruth's small engraved sailing trophy",
     "accessPoints": ["great room", "kitchen", "boathouse", "bunkhouse"]
   },
@@ -1402,6 +1403,42 @@
                 ]
               }
             ]
+          },
+          {
+            "id": "suspicions",
+            "description": "who Ruth thinks took her cup, and why",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "I won't point fingers at my own crew. But a rival who lost by a boat length has a long winter to brood. ⚓",
+                "factIds": []
+              },
+              {
+                "text": "Whoever it was knows this lodge and knows that mantel. That narrows it to everyone I love.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "heard-friday",
+            "description": "anything Ruth saw or heard during Friday night, the night of the theft: noises, lights, people up and about",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "I heard nothing at all, I'm sorry to say. Race week; I sleep hard.",
+                "factIds": []
+              },
+              {
+                "text": "Not a sound. The rain on the roof, perhaps, and then nothing until morning. ⚓",
+                "factIds": []
+              }
+            ]
           }
         ],
         "pressed": {
@@ -1820,6 +1857,42 @@
                 "factIds": []
               }
             ]
+          },
+          {
+            "id": "suspicions",
+            "description": "who Hal thinks took the cup, and why",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "heh, not my place. but marisol's been sniffing round ruth's boathouse all summer, anyhow",
+                "factIds": []
+              },
+              {
+                "text": "if i was a betting man i'd look at whoever's been beat by ruth one too many times. anyhow, wind's swinging west",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "heard-friday",
+            "description": "anything Hal saw or heard during Friday night, the night of the theft: noises, lights, people up and about",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "heard the rain on the bunkhouse roof, that's about it. good sleeping weather heh",
+                "factIds": []
+              },
+              {
+                "text": "nothin but wind and rain, anyhow. slept like a stone",
+                "factIds": []
+              }
+            ]
           }
         ],
         "pressed": {
@@ -2201,6 +2274,24 @@
             "variants": [
               {
                 "text": "Nell knows everything about everyone on this lake, bless her. Some of it's even true.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "suspicions",
+            "description": "who Lena thinks took the cup, and why",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "Oh, I hate this. I keep going round and round and landing on Marisol, and then I feel disloyal. (She does want that cup.)",
+                "factIds": []
+              },
+              {
+                "text": "I'm a doctor, not a detective! But people who insist they're fine usually aren't. (Forty years of medicine taught me that.)",
                 "factIds": []
               }
             ]
@@ -2593,6 +2684,42 @@
               {
                 "text": "nell will tell you i did it. nell tells everyone everything.",
                 "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "suspicions",
+            "description": "who Marisol thinks took the cup, and why",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "not me. ask whoever wants ruth's luck gone before next saturday.",
+                "factIds": []
+              },
+              {
+                "text": "everyone's looking at me. lost by a boat length, must be a thief. lazy.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "heard-friday",
+            "description": "anything Marisol saw or heard during Friday night, the night of the theft: noises, lights, people up and about",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "nothing. i never left the lodge.",
+                "factIds": ["marisol-stayed-in"]
+              },
+              {
+                "text": "no. i was inside all night after the toast.",
+                "factIds": ["marisol-stayed-in"]
               }
             ]
           }
@@ -3012,6 +3139,42 @@
                 "factIds": []
               }
             ]
+          },
+          {
+            "id": "suspicions",
+            "description": "who Theo thinks took the cup, and why",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "um i really don't know... marisol asked gran a LOT about the sails at dinner?? but that's probably nothing, sorry 😬",
+                "factIds": []
+              },
+              {
+                "text": "i don't want it to be anyone... maybe marisol? she really wants to win 😬",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "heard-friday",
+            "description": "anything Theo saw or heard during Friday night, the night of the theft: noises, lights, people up and about",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "um, nothing? i was in the bunkhouse all night",
+                "factIds": ["theo-in-bunk-friday"]
+              },
+              {
+                "text": "nope. bunkhouse, all night, sleeping. nothing to hear 😬",
+                "factIds": ["theo-in-bunk-friday"]
+              }
+            ]
           }
         ],
         "pressed": {
@@ -3393,6 +3556,42 @@
               {
                 "text": "Lena's a doll. out every night chasing owls. she'll outlive us all",
                 "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "suspicions",
+            "description": "who Nell thinks took the cup, and why",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "honey between you and me? somebody in this lodge is NOT telling the truth about race week ☕",
+                "factIds": []
+              },
+              {
+                "text": "I've got THEORIES, honey. but a store owner hears things, and not ALL of them are about Marisol 👀",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "heard-friday",
+            "description": "anything Nell saw or heard during Friday night, the night of the theft: noises, lights, people up and about",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "honey I heard NOTHING, earplugs in and asleep by eleven, and I am still MAD about it ☕",
+                "factIds": ["nell-asleep-friday"]
+              },
+              {
+                "text": "asleep by eleven with my earplugs, so NOTHING, which is a tragedy for a woman like me 👀",
+                "factIds": ["nell-asleep-friday"]
               }
             ]
           }

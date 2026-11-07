@@ -3,6 +3,7 @@
   "setting": {
     "title": "The Last Exposure",
     "premise": "Bea Lindqvist invited five guests to Pine Hollow to celebrate her sixtieth birthday. On Saturday morning her vintage rangefinder camera, with Friday's undeveloped roll still inside, is gone from the great room mantel.",
+    "background": "Pine Hollow is a two-storey log lodge on a lake. Downstairs: the great room with the stone fireplace and the mantel; the kitchen, whose window looks out over the back yard; the sunroom; and the mudroom by the back door, where coats, boots and bags hang on hooks. The front door opens onto the lakeside porch. Upstairs: the bedrooms and the bunk room. Out back, across the yard by the lake path, is the woodshed, and the dock path runs down to the dock past the big pine. Bea is turning sixty and hosting the long weekend, Friday to Monday. Friday: everyone arrived in the afternoon, then Bea's birthday dinner, with toasts, cake and a song from Juno, and at 10:30 Bea took a group photo by the fire and set her camera on the mantel. Saturday morning the mantel was empty. Bea, Lionel, Dot and Rafe each have a bedroom upstairs; Wren and Juno share the bunk room. The camera is Bea's old rangefinder, her companion through thirty years as a photographer at the Pine County Ledger: a heavy black-and-chrome thing with a worn leather case and a roll of film still inside.",
     "missingItem": "Bea's vintage rangefinder camera and the undeveloped roll inside it",
     "accessPoints": ["lodge", "kitchen", "porch", "woodshed"]
   },
@@ -1521,6 +1522,42 @@
                 "factIds": []
               }
             ]
+          },
+          {
+            "id": "suspicions",
+            "description": "who Bea thinks took her camera, and why",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "I can't bear to suspect anyone, dear - they're my family and my oldest friends. Find it and tell me it was a raccoon.",
+                "factIds": []
+              },
+              {
+                "text": "Honestly? I keep wondering if someone wanted the ROLL, not the camera - but who on earth would care about my party snaps?",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "heard-friday",
+            "description": "anything Bea saw or heard during Friday night, the night of the theft: noises, lights, people up and about",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Not a whisper, dear - sixty years old and I slept like a log through the whole thing.",
+                "factIds": []
+              },
+              {
+                "text": "Nothing at all - I'd had two glasses of fizz and I was gone the moment my head touched the pillow.",
+                "factIds": []
+              }
+            ]
           }
         ],
         "pressed": {
@@ -2029,6 +2066,42 @@
                 "factIds": []
               }
             ]
+          },
+          {
+            "id": "suspicions",
+            "description": "who Lionel thinks took Bea's camera, and why",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "Dear me, I'd rather not say. But young Wren has always admired that camera, I'm afraid. Not that I'd breathe a word to Bea.",
+                "factIds": []
+              },
+              {
+                "text": "I'm a birder, not a detective. Still, one does notice who lingers by the mantel - and I'm afraid it's always Wren.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "heard-friday",
+            "description": "anything Lionel saw or heard during Friday night, the night of the theft: noises, lights, people up and about",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Not a peep, I'm afraid. I was asleep by a quarter to eleven.",
+                "factIds": ["lionel-asleep-by-1045"]
+              },
+              {
+                "text": "Nothing whatever. I was fast asleep by 10:45, like a sensible wren in a hedge.",
+                "factIds": ["lionel-asleep-by-1045"]
+              }
+            ]
           }
         ],
         "pressed": {
@@ -2508,6 +2581,24 @@
                 ]
               }
             ]
+          },
+          {
+            "id": "suspicions",
+            "description": "who Wren thinks took the camera, and why",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "ok so idk but rafe is ALWAYS disappearing somewhere?? like where does he go lol",
+                "factIds": []
+              },
+              {
+                "text": "honestly rafe?? he's so quiet and he keeps vanishing out back. not saying. just saying 👀",
+                "factIds": []
+              }
+            ]
           }
         ],
         "pressed": {
@@ -2945,6 +3036,42 @@
               {
                 "text": "Talented. Loud. Apologizes too much.",
                 "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "suspicions",
+            "description": "who Dot thinks took Bea's camera, and why",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "Rafe. He's been skulking about all weekend. Draw your own conclusions.",
+                "factIds": []
+              },
+              {
+                "text": "Not me. If I were going to steal anything it'd be the cake. Hypothetically. Ask Rafe.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "heard-friday",
+            "description": "anything Dot saw or heard during Friday night, the night of the theft: noises, lights, people up and about",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Nothing. I was in bed by ten and I never came down.",
+                "factIds": ["dot-in-bed-by-ten"]
+              },
+              {
+                "text": "I was asleep by ten. Never came downstairs. Some of us go to bed.",
+                "factIds": ["dot-in-bed-by-ten"]
               }
             ]
           }
@@ -3399,6 +3526,42 @@
               },
               {
                 "text": "Can't keep a secret to save her life. Useful, for you.",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "suspicions",
+            "description": "who Rafe thinks took Bea's camera, and why",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "Who benefits? Ask that. Not who was nearest.",
+                "factIds": []
+              },
+              {
+                "text": "Somebody who doesn't want those pictures printed. Who's in them?",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "heard-friday",
+            "description": "anything Rafe saw or heard during Friday night, the night of the theft: noises, lights, people up and about",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Nothing. Slept. Why?",
+                "factIds": []
+              },
+              {
+                "text": "Heard nothing. Saw nothing. Next.",
                 "factIds": []
               }
             ]
@@ -3908,6 +4071,42 @@
               {
                 "text": "Rafe's nice! Quiet! He had sawdust on his sleeves at Saturday breakfast, I don't know why!!",
                 "factIds": ["rafe-sawdust"]
+              }
+            ]
+          },
+          {
+            "id": "suspicions",
+            "description": "who Juno thinks took Bea's camera, and why",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "dmOnly",
+            "variants": [
+              {
+                "text": "I don't know!! Everyone's so lovely!! Maybe Dot?? She's been SO grumpy since breakfast 🙈",
+                "factIds": []
+              },
+              {
+                "text": "Not Wren, NEVER!! Maybe Dot?? She snapped at me about the cake 🥺",
+                "factIds": []
+              }
+            ]
+          },
+          {
+            "id": "heard-friday",
+            "description": "anything Juno saw or heard during Friday night, the night of the theft: noises, lights, people up and about",
+            "subject": {
+              "_tag": "Other"
+            },
+            "visibility": "public",
+            "variants": [
+              {
+                "text": "Nothing!! I got my glass of water and I was out like a light ✨",
+                "factIds": []
+              },
+              {
+                "text": "Not a thing!! I fell asleep the second my head hit the pillow!",
+                "factIds": []
               }
             ]
           }
