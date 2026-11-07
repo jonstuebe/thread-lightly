@@ -269,7 +269,7 @@ Cases are generated **offline, never by the Worker**. Generation is a local Clau
 Each run of the skill:
 
 1. Writes a case as JSON matching the case schema.
-2. Runs the checker on it (`pnpm cases:check`). If a check fails, the skill fixes the case and checks again.
+2. Runs the checker on it (`bun run cases:check`). If a check fails, the skill fixes the case and checks again.
 3. Saves the case to `cases/<id>.json`, which gets committed.
 
 The skill's instructions ask for:
@@ -324,7 +324,7 @@ CaseObject (Durable Object, Effect)
   - stores everything in Durable Object storage; uses WebSocket hibernation
 
 Local only, never deployed:
-  case-generation skill (Claude Code, Opus 5.5 high effort) → cases/*.json → pnpm cases:check
+  case-generation skill (Claude Code, Opus 5.5 high effort) → cases/*.json → bun run cases:check
 ```
 
 ### Effect on both sides
@@ -403,7 +403,7 @@ All of this happens on a branch, since it replaces the current game.
 2. ~~**Schemas and checker.**~~ Done. `shared/case.ts`, `shared/replies.ts`, `shared/checker.ts` and `shared/protocol.ts`, tested against `cases/silver-brooch.json`.
 3. ~~**Server foundation.**~~ Done. `worker/game/engine.ts` holds the rules as a pure Effect function (state and client message in, state and server messages out), with Clef and small talk behind the `Router` and `SmallTalk` services (`worker/game/ai.ts`, live versions in `worker/ai-live.ts`). `worker/case-object.ts` is the Durable Object shell. The engine tests play the silver brooch case end to end with a scripted fake, and a manual WebSocket run against live Clef closed the case.
 4. ~~**Client rewrite.**~~ Done. The Foldkit client in `src/` plays the silver brooch case over the WebSocket: the conversation list, DM, group and Wi-Fi log threads, long-press (or right-click, or Enter) to save, the case file, the arrest steps and the result with its timeline. The socket is a `ManagedResource` (`src/socket.ts`). The client paces replies itself; see "How the chat is paced" in the README. `/api/guest-texts`, the Anthropic SDK and the Mafia flow are gone.
-5. ~~**Case generation.**~~ Done. The `generate-case` skill (`.agents/skills/generate-case`) writes a case and checks it with `pnpm cases:check` (`scripts/check-cases.ts`). The checker gained rule 9, variants agree. The first batch is `the-recipe-tin`, `the-regatta-cup` and `the-last-exposure`. `src/no-case-data.test.ts` keeps the client's imports away from case data, and the wire protocol's primitives moved to `shared/ids.ts` so the client no longer bundles the case schema.
+5. ~~**Case generation.**~~ Done. The `generate-case` skill (`.agents/skills/generate-case`) writes a case and checks it with `bun run cases:check` (`scripts/check-cases.ts`). The checker gained rule 9, variants agree. The first batch is `the-recipe-tin`, `the-regatta-cup` and `the-last-exposure`. `src/no-case-data.test.ts` keeps the client's imports away from case data, and the wire protocol's primitives moved to `shared/ids.ts` so the client no longer bundles the case schema.
 6. **Make the guests feel alive.** Mostly done:
    - ~~Group chat director~~: Clef picks up to two responders (built in step 3).
    - ~~Night moves~~: played from the case data through `afterNight` and `ifFactDestroyed` (built in step 3).

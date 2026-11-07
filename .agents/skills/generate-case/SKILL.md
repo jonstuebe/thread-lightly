@@ -1,6 +1,6 @@
 ---
 name: generate-case
-description: Write a new Pine Hollow mystery into cases/, checked solvable by pnpm cases:check.
+description: Write a new Pine Hollow mystery into cases/, checked solvable by bun run cases:check.
 disable-model-invocation: true
 model: claude-opus-5-5
 effort: high
@@ -9,7 +9,7 @@ argument-hint: '[optional premise, item or twist to build around]'
 
 # Generate a case
 
-You are writing one cozy, murder-free mystery for Pine Hollow: a host and their guests spend a long weekend at the Pine Hollow lodge, something precious goes missing on Friday night, and the player, a detective texting everyone, must catch the thief by Monday. The finished case is one JSON file in `cases/` that passes `pnpm cases:check`.
+You are writing one cozy, murder-free mystery for Pine Hollow: a host and their guests spend a long weekend at the Pine Hollow lodge, something precious goes missing on Friday night, and the player, a detective texting everyone, must catch the thief by Monday. The finished case is one JSON file in `cases/` that passes `bun run cases:check`.
 
 Night 0 is Friday (the theft), night 1 Saturday, night 2 Sunday. Day 1 is Saturday, day 3 Monday. The Wi-Fi log for night N is published on the morning of day N+1.
 
@@ -60,7 +60,7 @@ Write it in a few passes (facts, timeline and Wi-Fi log; then one guest at a tim
 ### 3. Check until clean
 
 ```bash
-pnpm cases:check <scratch>/<id>.json
+bun run cases:check <scratch>/<id>.json
 ```
 
 Each problem names its check and the fact or guest at fault. Fix the case, not the claim: if a proof isn't findable on day 3, give someone a day 3 reply that carries it rather than deleting the contradiction. Repeat until the file prints `✓`.
@@ -76,10 +76,10 @@ The checker proves the case solvable; you make it fair and fun. Read it as a pla
 - **Cozy:** small stakes, warm people, no violence, nothing cruel. The thief has a sympathetic or comic motive.
 - **Original:** classic mystery tropes are welcome (the alibi with a gap, the witness who misread what they saw, the too-obvious suspect). Plots, characters and details from specific books, films or games are not.
 
-Run `pnpm cases:check` again after every fix.
+Run `bun run cases:check` again after every fix.
 
 ### 5. Save it
 
-Move the file to `cases/<id>.json`, format just that file with `pnpm exec oxfmt cases/<id>.json` (`pnpm format` rewrites unrelated files), then run `pnpm cases:check` (all cases, which also catches a duplicate ID) and `pnpm test`. Both must pass.
+Move the file to `cases/<id>.json`, format just that file with `bunx oxfmt cases/<id>.json` (`bun run format` rewrites unrelated files), then run `bun run cases:check` (all cases, which also catches a duplicate ID) and `bun run test`. Both must pass.
 
 Report the title, the thief, the two night moves and the solve path in a few lines. Leave committing to the person.

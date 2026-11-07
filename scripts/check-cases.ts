@@ -1,4 +1,4 @@
-// NOTE: `pnpm cases:check [file ...]` runs the solvability checker on case
+// NOTE: `bun run cases:check [file ...]` runs the solvability checker on case
 // files and prints every problem. With no arguments it checks all of cases/.
 // The generate-case skill runs it after each draft; it exits 1 on any problem.
 

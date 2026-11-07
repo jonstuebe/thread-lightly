@@ -13,24 +13,27 @@ It will live at **threadlightly.jonstuebe.com**. The design is in [`docs/design.
 
 ## Getting started
 
+`mise.toml` pins Bun and Node; `mise install` sets them up.
+
 ```bash
-pnpm install
-pnpm dev          # Vite + the Worker together, via @cloudflare/vite-plugin
+mise install
+bun install
+bun run dev          # Vite + the Worker together, via @cloudflare/vite-plugin
 ```
 
-The Workers AI binding always calls Cloudflare, even in local dev, so `pnpm dev` needs `wrangler login`.
+The Workers AI binding always calls Cloudflare, even in local dev, so `bun run dev` needs `wrangler login`.
 
 ```bash
-pnpm test         # client Story/Scene tests, engine and checker tests
-pnpm lint         # oxlint with the Foldkit and Effect rule sets
-pnpm typecheck    # client and Worker
-pnpm format
-pnpm cases:check  # run the solvability checker on cases/ (or on files you name)
+bun run test         # client Story/Scene tests, engine and checker tests
+bun run lint         # oxlint with the Foldkit and Effect rule sets
+bun run typecheck    # client and Worker
+bun run format
+bun run cases:check  # run the solvability checker on cases/ (or on files you name)
 ```
 
 ### Adding a case
 
-Run the `/generate-case` skill in Claude Code. It plots a mystery, writes it as JSON, checks it with `pnpm cases:check` until it passes, and saves it to `cases/`. Commit the file and the Worker bundles it on the next build.
+Run the `/generate-case` skill in Claude Code. It plots a mystery, writes it as JSON, checks it with `bun run cases:check` until it passes, and saves it to `cases/`. Commit the file and the Worker bundles it on the next build.
 
 ## Layout
 
@@ -53,7 +56,7 @@ worker/             the Cloudflare Worker
   game/             the rules as a pure function, plus the AI services
   case-object.ts    the Durable Object for one case
 cases/              case files, one JSON per case
-scripts/            local tooling (check-cases.ts behind pnpm cases:check)
+scripts/            local tooling (check-cases.ts behind bun run cases:check)
 wrangler.jsonc      Worker, assets, Durable Object, AI and custom domain config
 ```
 
@@ -72,8 +75,8 @@ The game ID is kept in `localStorage`, so a reload rejoins the same case. If the
 Not wired up yet, but the config is ready:
 
 ```bash
-pnpm wrangler login
-pnpm deploy
+bunx wrangler login
+bun run deploy
 ```
 
 `wrangler.jsonc` routes the Worker to the `threadlightly.jonstuebe.com` custom domain, which needs `jonstuebe.com` to be a zone on the same Cloudflare account.

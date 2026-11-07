@@ -11,7 +11,7 @@
     "format": "oxfmt",
     "test": "vitest run",
     "lint": "oxlint src && effect-tsgo patch --no-typescript --oxlint && oxlint --config .oxlintrc.effect.json --deny-warnings src",
-    "cases:check": "tsx scripts/check-cases.ts"
+    "cases:check": "bun scripts/check-cases.ts"
   },
   "dependencies": {
     "@effect/platform-browser": "4.1.0",
@@ -34,11 +34,14 @@
     "oxlint": "1.85.0",
     "oxlint-tsgolint": "7.0.2003",
     "tailwindcss": "^4.3.3",
-    "tsx": "^4.23.15",
     "typescript": "^7.0.2",
     "vite": "^8.3.1",
     "vitest": "^5.0.2",
     "wrangler": "^4.158.0"
   },
-  "private": true
+  "private": true,
+  "trustedDependencies": [
+    "esbuild",
+    "workerd"
+  ]
 }
