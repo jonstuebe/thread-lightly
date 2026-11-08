@@ -31,7 +31,7 @@ export const lockScreenView = (model: Model, h: HtmlBuilder<Message>): Html => {
         [
           h.Type('button'),
           h.Class('notif'),
-          h.AriaLabel('Open the message from Pine Hollow Lodge'),
+          h.AriaLabel('Open the message from Thread Lightly'),
           h.Disabled(!canStart),
           h.OnClick(Message.ClickedNotification()),
         ],
@@ -42,7 +42,7 @@ export const lockScreenView = (model: Model, h: HtmlBuilder<Message>): Html => {
             [
               h.span(
                 [h.Class('n-top')],
-                [h.b([], ['Pine Hollow Lodge 🌲']), h.span([], ['now'])],
+                [h.b([], ['Thread Lightly']), h.span([], ['now'])],
               ),
               h.span(
                 [h.Class('n-text')],
@@ -55,7 +55,7 @@ export const lockScreenView = (model: Model, h: HtmlBuilder<Message>): Html => {
         ],
       ),
       h.p([h.Class('lk-hint'), h.Role('status')], [hintOf(model)]),
-      Icon.lodgeScene(),
+      Icon.nightScene(),
     ],
   )
 }

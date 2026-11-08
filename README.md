@@ -1,6 +1,6 @@
 # Thread Lightly
 
-**Pine Hollow** is a cozy, murder-free mystery played over text messages. Something has gone missing at the lodge. You're the detective: DM the guests, ask the group chat, read the lodge Wi-Fi log each morning, and save messages to your case file. By the end of day 3, arrest the thief with two saved messages: a lie they told and the proof that it's a lie.
+**Thread Lightly** is a cozy, murder-free mystery played over text messages. Something has gone missing, and each case is set somewhere new. You're the detective: DM the guests, ask the group chat, read the Wi-Fi log each morning, and save messages to your case file. By the end of day 3, arrest the thief with two saved messages: a lie they told and the proof that it's a lie.
 
 It will live at **threadlightly.jonstuebe.com**. The design is in [`docs/design.md`](./docs/design.md).
 

@@ -32,10 +32,10 @@ describe('lock screen', () => {
     scene(
       { update, view },
       given(lockedModel),
-      click(role('button', { name: /Pine Hollow/ })),
+      click(role('button', { name: /Thread Lightly/ })),
       Command.expectExact(StartCase),
       Command.resolve(StartCase, Message.FailedStartCase()),
-      expect(role('button', { name: /Pine Hollow/ })).toBeEnabled(),
+      expect(role('button', { name: /Thread Lightly/ })).toBeEnabled(),
     )
   })
 })
@@ -45,8 +45,8 @@ describe('conversations', () => {
     scene(
       { update, view },
       given(playingModel),
-      expect(role('button', { name: 'Lodge Wi-Fi log' })).toExist(),
-      expect(role('button', { name: 'Pine Hollow guests' })).toExist(),
+      expect(role('button', { name: 'Wi-Fi log' })).toExist(),
+      expect(role('button', { name: 'Guests' })).toExist(),
       expect(role('button', { name: 'Margot Hale' })).toExist(),
       expect(role('button', { name: 'Dale Pruitt' })).toExist(),
       expect(role('button', { name: 'Case file, 0 saved' })).toExist(),

@@ -1,15 +1,23 @@
 ---
 name: generate-case
-description: Write a new Pine Hollow mystery into cases/, checked solvable by bun run cases:check.
+description: Write a new Thread Lightly mystery into cases/, checked solvable by bun run cases:check.
 disable-model-invocation: true
 model: claude-opus-5-5
 effort: high
-argument-hint: '[optional premise, item or twist to build around]'
+argument-hint: '[optional setting, premise, item or twist to build around]'
 ---
 
 # Generate a case
 
-You are writing one cozy, murder-free mystery for Pine Hollow: a host and their guests spend a long weekend at the Pine Hollow lodge, something precious goes missing on Friday night, and the player, a detective texting everyone, must catch the thief by Monday. The finished case is one JSON file in `cases/` that passes `bun run cases:check`.
+You are writing one cozy, murder-free mystery for Thread Lightly: a host and their guests spend a long weekend somewhere they all sleep under one roof, something precious goes missing on Friday night, and the player, a detective texting everyone, must catch the thief by Monday. The finished case is one JSON file in `cases/` that passes `bun run cases:check`.
+
+**The place.** Use the setting the person asks for. If they name none, pick one no existing case uses. A lodge, a sleeper train, a houseboat or a country inn all work. The place needs:
+
+- rooms, cars or buildings that a phone can move between, each with its own Wi-Fi access point;
+- a reason only the six guests are there at night, such as staff who sleep elsewhere, said in the background;
+- an edge where a phone drops off the network, such as going outside or off the train, so a `left` entry means something.
+
+The game names no place on its own: the premise and background are all the guests and the player know about where they are.
 
 Night 0 is Friday (the theft), night 1 Saturday, night 2 Sunday. Day 1 is Saturday, day 3 Monday. The Wi-Fi log for night N is published on the morning of day N+1.
 
@@ -18,7 +26,7 @@ Night 0 is Friday (the theft), night 1 Saturday, night 2 Sunday. Day 1 is Saturd
 - `docs/design.md` sections 3–9: the case model, guests, conversation engine, group chat, night moves and arrest. They are the rules this case must play by.
 - `shared/case.ts`: the schema, the source of truth for every field.
 - `cases/silver-brooch.json`: a complete, passing case. Match its shape and tone; borrow nothing else from it.
-- `ls cases/`, each case's `setting` and its guests' names: your case must differ from every one already there in item, host, thief's method and twist, and reuse none of their first names.
+- `ls cases/`, each case's `setting` and its guests' names: your case must differ from every one already there in item, host, thief's method and twist (and in place, unless the person asked for one already used), and reuse none of their first names.
 
 ## Steps
 
@@ -26,8 +34,8 @@ Night 0 is Friday (the theft), night 1 Saturday, night 2 Sunday. Day 1 is Saturd
 
 Write a plot note in the scratchpad before any JSON. It holds:
 
-- **Setting:** title, premise (two sentences, naming the host and how many guests), the missing item, and 3–4 Wi-Fi access points (rooms or outbuildings of the lodge).
-- **Background:** what every guest knows and nobody disputes: the lodge's rooms and how they connect, the weekend's schedule up to the theft (arrivals, dinner, the moment everyone last saw the item together), who is staying in which room, and what the item looks like. Players ask these things constantly ("which room is the case in?", "when was the toast?"), and any guest may answer from it in their own words. So it must hold nothing a player could use as evidence: no one's movements after the group broke up, no times that a claim or proof depends on, and nothing a liar would deny.
+- **Setting:** title, premise (two sentences, naming the host and how many guests), the missing item, and 3–4 Wi-Fi access points (the place's rooms, cars or outbuildings).
+- **Background:** what every guest knows and nobody disputes: the place's rooms and how they connect, who else is around and when they leave for the night, the weekend's schedule up to the theft (arrivals, dinner, the moment everyone last saw the item together), who is staying in which room, and what the item looks like. Players ask these things constantly ("which room is the case in?", "when was the toast?"), and any guest may answer from it in their own words. So it must hold nothing a player could use as evidence: no one's movements after the group broke up, no times that a claim or proof depends on, and nothing a liar would deny.
 - **Cast of six:** the host plus five guests. For each: name, relationship to the host, temperament (from the six in `shared/case.ts`; it also sets their patience, per `worker/game/patience.ts`), voice (how they type: case, punctuation, emoji, sentence length), bedtime. Name a voice's emoji outright and match them to the guest's age, per `docs/research/genz-emoji.md`: a young guest gets one kind per text and not often (😭 for funny, never 😂), and an older guest gets one literal emoji that fits them (⚓, 🦉) or none at all. Never write "the odd emoji" or a mixed string like ✨🎶. Give the thief the temperament the existing cases' thieves use least, shared with at least one innocent.
 - **The true timeline,** nights 0–2, minute by minute where it matters. The theft on night 0, the thief's move on nights 1 and 2, and what innocents were doing, including the ones who were up and about for their own reasons.
 - **The thief's cover story:** 3–5 false claims, each one breakable by a true fact someone else holds or the Wi-Fi log shows. At least one break must survive both night moves and be findable on day 3. A lie that hides the thief's movements, the item, or the motive that made them take it concerns the theft. The thief may also tell a lie unrelated to the theft (`concernsTheft: false`): catching only that one ends in "They walk".

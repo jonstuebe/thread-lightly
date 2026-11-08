@@ -195,7 +195,7 @@ export type Contradiction = typeof Contradiction.Type
 // CASE
 
 // NOTE: `background` is what every guest knows and nobody disputes: the
-// lodge's rooms, the weekend's schedule, who is staying where, what the item
+// layout of the place, the schedule, who is staying where, what the item
 // looks like. Any guest may say it, so it carries no facts and must hold
 // nothing a player could use as evidence.
 export const Setting = Schema.Struct({

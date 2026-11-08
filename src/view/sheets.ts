@@ -112,7 +112,7 @@ const introView = (board: Board, h: HtmlBuilder<Message>): Html =>
           h.li(
             [],
             [
-              'Every morning the lodge Wi-Fi log shows whose phone moved around overnight. It never lies.',
+              'Every morning the Wi-Fi log shows whose phone moved around overnight. It never lies.',
             ],
           ),
           h.li(
