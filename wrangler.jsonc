@@ -18,6 +18,9 @@
     { "pattern": "threadlightly.jonstuebe.com", "custom_domain": true },
   ],
 
+  // PR builds get a workers.dev Preview URL; the custom domain stays production.
+  "preview_urls": true,
+
   // One CaseObject per game (worker/case-object.ts).
   "durable_objects": {
     "bindings": [{ "name": "CASES", "class_name": "CaseObject" }],
