@@ -4,7 +4,7 @@
 // costs nothing.
 
 import { DurableObject } from 'cloudflare:workers'
-import { Clock, Effect, Option, Schema, pipe } from 'effect'
+import { Option, Schema } from 'effect'
 
 import type { Case } from '../shared/case'
 import {
@@ -12,7 +12,6 @@ import {
   ServerMessage,
   ServerMessageJson,
 } from '../shared/protocol'
-import { liveAiLayer } from './ai-live'
 import { CASES } from './cases'
 import type { Env } from './env'
 import { handle, snapshot, startGame } from './game/engine'
@@ -64,7 +63,7 @@ export class CaseObject extends DurableObject<Env> {
     socket: WebSocket,
     data: string | ArrayBuffer,
   ): Promise<void> {
-    // NOTE: model calls await, so without the queue two messages could
+    // NOTE: loading and saving await, so without the queue two messages could
     // interleave and the second would overwrite the first one's state.
     this.queue = this.queue
       .then(() => this.process(socket, data))
@@ -86,13 +85,18 @@ export class CaseObject extends DurableObject<Env> {
     if (stored === undefined) {
       return Option.none()
     }
-    const state = Schema.decodeUnknownSync(GameState)(stored)
-    return Option.map(
-      Option.fromUndefinedOr(CASES.get(state.caseId)),
-      caseData => ({
-        caseData,
-        state,
-      }),
+    // NOTE: a game stored by an older engine no longer decodes; it reads as
+    // no game, and the client starts a new one.
+    return Option.flatMap(
+      Schema.decodeUnknownOption(GameState)(stored),
+      state =>
+        Option.map(
+          Option.fromUndefinedOr(CASES.get(state.caseId)),
+          caseData => ({
+            caseData,
+            state,
+          }),
+        ),
     )
   }
 
@@ -106,37 +110,24 @@ export class CaseObject extends DurableObject<Env> {
       return
     }
     const { caseData, state } = loaded.value
-    const env = this.env
-    const storage = this.ctx.storage
-    const sockets = this.ctx.getWebSockets()
-
-    const program = Effect.gen(function* () {
-      const maybeMessage = yield* Effect.option(
-        Schema.decodeEffect(ClientMessageJson)(
-          typeof data === 'string' ? data : '',
-        ),
-      )
-      if (Option.isNone(maybeMessage)) {
-        return [ServerMessage.cases.Rejected.make({ reason: 'invalid' })]
-      }
-      const now = yield* Clock.currentTimeMillis
-      const step = yield* handle(caseData, state, maybeMessage.value, now)
-      if (step.state !== state) {
-        const encoded = yield* Effect.orDie(
-          Schema.encodeEffect(GameState)(step.state),
-        )
-        yield* Effect.promise(() => storage.put(STATE_KEY, encoded))
-      }
-      return step.out
-    })
-
-    const out = await pipe(
-      program,
-      Effect.provide(
-        liveAiLayer(env.AI, caseData, env.SMALLTALK_MODEL, env.REPLY_MODEL),
-      ),
-      Effect.runPromise,
+    const decoded = Schema.decodeOption(ClientMessageJson)(
+      typeof data === 'string' ? data : '',
     )
+    const step = Option.match(decoded, {
+      onNone: () => ({
+        state,
+        out: [ServerMessage.cases.Rejected.make({ reason: 'invalid' })],
+      }),
+      onSome: message => handle(caseData, state, message, Date.now()),
+    })
+    if (step.state !== state) {
+      await this.ctx.storage.put(
+        STATE_KEY,
+        Schema.encodeSync(GameState)(step.state),
+      )
+    }
+    const out = step.out
+    const sockets = this.ctx.getWebSockets()
 
     out.forEach(message => {
       const encoded = encode(message)

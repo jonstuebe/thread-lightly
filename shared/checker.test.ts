@@ -1,16 +1,25 @@
-/// <reference types="vite/client" />
-
 import { Array, Effect, Exit, Schema } from 'effect'
 import { describe, expect, test } from 'vitest'
 
-import silverBrooch from '../cases/silver-brooch.json'
-import { Case, type Guest, type Topic } from './case'
-import { type Check, findProblems, validateCase } from './checker'
+import { type Answer, Case, type Guest, type Question } from './case'
+import { type Check, findProblems, isError, searchDay, validateCase } from './checker'
+import tinyCase from './fixtures/tiny-case.json'
 
-const base = Schema.decodeUnknownSync(Case)(silverBrooch)
+// NOTE: tiny-case is a test fixture, not a playable case. Bea is the thief:
+// she says she was asleep by 10, and the Wi-Fi log has her phone joining the
+// garden at 11:52pm.
+const base = Schema.decodeUnknownSync(Case)(tinyCase)
 
-const checksFailed = (caseData: Case): ReadonlyArray<Check> =>
-  Array.dedupe(Array.map(findProblems(caseData), problem => problem.check))
+const errorChecks = (caseData: Case): ReadonlyArray<Check> =>
+  Array.dedupe(
+    Array.map(Array.filter(findProblems(caseData), isError), problem => problem.check),
+  )
+
+const warnings = (caseData: Case): ReadonlyArray<string> =>
+  Array.map(
+    Array.filter(findProblems(caseData), problem => !isError(problem)),
+    problem => problem.message,
+  )
 
 const withGuest = (
   caseData: Case,
@@ -23,390 +32,409 @@ const withGuest = (
   ),
 })
 
-const withTopic = (
+const withQuestion = (
   caseData: Case,
   guestId: string,
-  topicId: string,
-  change: (topic: Topic) => Topic,
+  questionId: string,
+  change: (question: Question) => Question,
 ): Case =>
   withGuest(caseData, guestId, guest => ({
     ...guest,
-    dictionary: {
-      ...guest.dictionary,
-      topics: Array.map(guest.dictionary.topics, topic =>
-        topic.id === topicId ? change(topic) : topic,
-      ),
-    },
+    questions: Array.map(guest.questions, question =>
+      question.id === questionId ? change(question) : question,
+    ),
   }))
 
-describe('the case library', () => {
-  const cases = import.meta.glob<unknown>('../cases/*.json', {
-    eager: true,
-    import: 'default',
+const withAnswer = (
+  caseData: Case,
+  guestId: string,
+  questionId: string,
+  change: (answer: Answer) => Answer,
+): Case =>
+  withQuestion(caseData, guestId, questionId, question => ({
+    ...question,
+    answer: change(question.answer),
+  }))
+
+describe('the fixture', () => {
+  test('has no problems at all', () => {
+    expect(findProblems(base)).toEqual([])
   })
 
-  test('has at least one case', () => {
-    expect(Object.keys(cases).length).toBeGreaterThan(0)
+  test('passes validateCase', () => {
+    expect(Exit.isSuccess(Effect.runSyncExit(validateCase(tinyCase)))).toBe(true)
   })
 
-  test.each(Object.entries(cases))('%s passes every check', (_path, json) => {
-    const exit = Effect.runSyncExit(validateCase(json))
-    if (Exit.isFailure(exit)) {
-      expect.fail(JSON.stringify(exit.cause, null, 2))
-    }
+  test('is won on a fresh day 3 by asking Bea, then showing the Wi-Fi entry', () => {
+    expect(searchDay(base, 3)).toEqual({
+      _tag: 'Won',
+      actions: [
+        'morning: ask bea-night0',
+        'afternoon: prove bea-night0 with bea-in-garden',
+      ],
+    })
+  })
+
+  test('waits for Bea to come back on day 1, when she is away all afternoon', () => {
+    expect(searchDay(base, 1)).toEqual({
+      _tag: 'Won',
+      actions: [
+        'morning: ask bea-night0',
+        'evening: prove bea-night0 with bea-in-garden',
+      ],
+    })
   })
 })
 
 describe('schema', () => {
   test('rejects a case with a missing field', () => {
-    const { thief: _thief, ...withoutThief } = silverBrooch
-    const exit = Effect.runSyncExit(validateCase(withoutThief))
+    const { thief: _thief, ...withoutThief } = tinyCase
+    expect(Exit.isFailure(Effect.runSyncExit(validateCase(withoutThief)))).toBe(true)
+  })
+
+  test('rejects an empty budget', () => {
+    const exit = Effect.runSyncExit(
+      validateCase({ ...tinyCase, budget: { ...tinyCase.budget, evening: 0 } }),
+    )
     expect(Exit.isFailure(exit)).toBe(true)
   })
 
-  test('rejects a malformed bedtime', () => {
-    const exit = Effect.runSyncExit(
-      validateCase({
-        ...silverBrooch,
-        guests: silverBrooch.guests.map(guest => ({
-          ...guest,
-          bedtime: '10:30pm',
+  test('rejects an answer of more than three bubbles', () => {
+    const line = { text: 'hm', factIds: [] }
+    const caseData = {
+      ...tinyCase,
+      guests: tinyCase.guests.map(guest => ({
+        ...guest,
+        questions: guest.questions.map(question => ({
+          ...question,
+          answer: { ...question.answer, lines: [line, line, line, line] },
         })),
-      }),
-    )
-    expect(Exit.isFailure(exit)).toBe(true)
+      })),
+    }
+    expect(Exit.isFailure(Effect.runSyncExit(validateCase(caseData)))).toBe(true)
   })
 })
 
 describe('references', () => {
-  test('catches a reply that names an unknown fact', () => {
-    const broken = withTopic(base, 'wes', 'about-dale', topic => ({
-      ...topic,
-      variants: [{ text: 'Dale did it!', factIds: ['no-such-fact'] }],
+  test('flags an unknown fact in an answer', () => {
+    const caseData = withAnswer(base, 'theo', 'theo-june', answer => ({
+      ...answer,
+      lines: [{ text: 'hm', factIds: ['nope'] }],
     }))
-    expect(findProblems(broken)).toContainEqual({
-      check: 'references',
-      message: 'wes.topics.about-dale names unknown fact "no-such-fact"',
+    expect(errorChecks(caseData)).toEqual(['references'])
+  })
+
+  test('flags an unlock on an unknown contradiction', () => {
+    const caseData = withQuestion(base, 'theo', 'theo-june', question => ({
+      ...question,
+      unlock: [{ _tag: 'Caught', contradiction: 'nope' }],
+    }))
+    expect(errorChecks(caseData)).toEqual(['references'])
+  })
+
+  test('flags a question ID used twice', () => {
+    const caseData = withQuestion(base, 'theo', 'theo-june', question => ({
+      ...question,
+      id: 'bea-june',
+    }))
+    expect(errorChecks(caseData)).toEqual(['references'])
+  })
+})
+
+describe('answers', () => {
+  test('an answer carrying a claim needs a caught reply', () => {
+    const caseData = withAnswer(base, 'max', 'max-night0', ({ caught: _caught, ...answer }) => answer)
+    expect(errorChecks(caseData)).toContain('answers')
+  })
+
+  test('only an answer carrying a claim may have a caught reply', () => {
+    const caseData = withAnswer(base, 'max', 'max-bea', answer => ({
+      ...answer,
+      caught: [{ text: 'ok fine', factIds: [] }],
+    }))
+    expect(errorChecks(caseData)).toEqual(['answers'])
+  })
+
+  test('a claim only in the group chat is flagged, since it can never be confronted there', () => {
+    const caseData: Case = {
+      ...base,
+      groupQuestions: [
+        {
+          id: 'group-sleep',
+          ask: 'Did everyone sleep ok?',
+          from: 1,
+          unlock: [],
+          replies: [{ guest: 'max', text: 'Early night.', factIds: ['max-early-night'] }],
+        },
+      ],
+    }
+    expect(errorChecks(caseData)).toContain('answers')
+  })
+
+  test('a guest who is away can’t speak in a beat', () => {
+    const caseData: Case = {
+      ...base,
+      beats: Array.map(base.beats, beat =>
+        beat.day === 2 && beat.part === 'afternoon'
+          ? { ...beat, lines: [{ guest: 'max', text: 'hi', factIds: [] }] }
+          : beat,
+      ),
+    }
+    expect(errorChecks(caseData)).toEqual(['answers'])
+  })
+
+  test('every day needs a morning beat', () => {
+    const caseData: Case = {
+      ...base,
+      beats: Array.filter(base.beats, beat => beat.day !== 3),
+    }
+    expect(errorChecks(caseData)).toEqual(['answers'])
+  })
+})
+
+describe('reachable', () => {
+  test('a question that unlocks on a fact nobody ever says can never be asked', () => {
+    const caseData = withQuestion(base, 'theo', 'theo-june', question => ({
+      ...question,
+      unlock: [{ _tag: 'Seen', fact: 'bea-took-ribbon' }],
+    }))
+    expect(errorChecks(caseData)).toEqual(['reachable'])
+  })
+
+  test('a question that closes before its unlock can hold is flagged', () => {
+    const caseData = withQuestion(base, 'june', 'june-light', question => ({
+      ...question,
+      from: 1,
+      until: 2,
+    }))
+    expect(errorChecks(caseData)).toContain('reachable')
+  })
+})
+
+describe('winnable', () => {
+  test('fails when the thief is away all of day 3', () => {
+    const caseData = withGuest(base, 'bea', guest => ({
+      ...guest,
+      away: [
+        ...guest.away,
+        { day: 3, part: 'morning', status: 'out' },
+        { day: 3, part: 'afternoon', status: 'out' },
+        { day: 3, part: 'evening', status: 'out' },
+      ],
+    }))
+    expect(errorChecks(caseData)).toContain('winnable')
+  })
+
+  // NOTE: hide Bea's alibi behind catching Max, so a fresh day 3 needs four
+  // actions: ask Max, catch Max, ask Bea, catch Bea.
+  const chained = withQuestion(base, 'bea', 'bea-night0', question => ({
+    ...question,
+    unlock: [{ _tag: 'Caught', contradiction: 'max-call' }],
+  }))
+
+  test('fails when the shortest win needs more ticks than day 3 holds', () => {
+    expect(searchDay(chained, 3)).toEqual({ _tag: 'Lost' })
+    expect(errorChecks(chained)).toEqual(['winnable'])
+  })
+
+  test('passes once the budget fits the chain', () => {
+    const roomier: Case = {
+      ...chained,
+      budget: { morning: 2, afternoon: 2, evening: 1 },
+    }
+    expect(searchDay(roomier, 3)).toEqual({
+      _tag: 'Won',
+      actions: [
+        'morning: ask max-night0',
+        'morning: prove max-night0 with max-in-lounge',
+        'afternoon: ask bea-night0',
+        'afternoon: prove bea-night0 with bea-in-garden',
+      ],
+    })
+    expect(errorChecks(roomier)).toEqual([])
+  })
+
+  test('presses when the lie only comes out under pressure', () => {
+    const slip = withAnswer(base, 'bea', 'bea-night0', answer => ({
+      ...answer,
+      lines: [{ text: 'why do you ask', factIds: [] }],
+    }))
+    expect(searchDay(slip, 3)).toEqual({
+      _tag: 'Won',
+      actions: [
+        'morning: ask bea-night0',
+        'afternoon: press bea-night0',
+        'evening: prove bea-night0 with bea-in-garden',
+      ],
     })
   })
 
-  test('catches a thief who is not a guest', () => {
-    expect(checksFailed({ ...base, thief: 'nobody' })).toEqual(['references'])
+  test('uses a group question when that is where the proof is', () => {
+    const caseData: Case = {
+      ...withGuest(base, 'theo', guest => ({
+        ...guest,
+        knows: [...guest.knows, 'bea-in-garden'],
+      })),
+      wifiLog: Array.map(base.wifiLog, entry =>
+        entry.id === 'w-bea-garden' ? { ...entry, factIds: [] } : entry,
+      ),
+      groupQuestions: [
+        {
+          id: 'group-garden',
+          ask: 'Did anyone see someone in the garden late?',
+          from: 1,
+          unlock: [],
+          replies: [
+            { guest: 'theo', text: 'Bea, I think. Around midnight.', factIds: ['bea-in-garden'] },
+          ],
+        },
+      ],
+    }
+    expect(errorChecks(caseData)).toEqual([])
+    expect(searchDay(caseData, 3)).toMatchObject({ _tag: 'Won' })
   })
 })
 
 describe('contradictions', () => {
-  test('catches a contradiction whose claim is true', () => {
-    const broken: Case = {
+  test('a claim must be false', () => {
+    const caseData: Case = {
+      ...base,
+      facts: Array.map(base.facts, fact =>
+        fact.id === 'max-early-night' ? { ...fact, isTrue: true } : fact,
+      ),
+    }
+    expect(errorChecks(caseData)).toEqual(['contradictions'])
+  })
+
+  test('a claim must be said in a DM answer', () => {
+    const caseData: Case = {
       ...base,
       contradictions: [
         ...base.contradictions,
         {
-          suspect: 'dale',
-          claimFact: 'brooch-seen-at-toast',
-          proofFact: 'case-found-open',
-          concernsTheft: true,
+          id: 'max-again',
+          suspect: 'max',
+          claimFact: 'june-heard-nothing',
+          proofFact: 'june-up-at-midnight',
+          concernsTheft: false,
         },
       ],
     }
-    expect(checksFailed(broken)).toEqual(['contradictions'])
+    expect(errorChecks(caseData)).toContain('contradictions')
   })
 })
 
-describe('thiefProvable', () => {
-  test('fails when the only theft proof is destroyed before day 3', () => {
-    const broken: Case = {
+describe('night moves', () => {
+  test('a destroyed fact needs an ifDestroyed answer after the night', () => {
+    const caseData = withQuestion(base, 'theo', 'theo-path', ({ ifDestroyed: _gone, ...question }) => question)
+    expect(errorChecks(caseData)).toEqual(['nightMoves'])
+  })
+
+  test('a destroyed fact can’t be in the Wi-Fi log', () => {
+    const caseData: Case = {
+      ...base,
+      wifiLog: Array.map(base.wifiLog, entry =>
+        entry.id === 'w-bea-house' ? { ...entry, factIds: ['pin-on-path'] } : entry,
+      ),
+    }
+    expect(errorChecks(caseData)).toContain('nightMoves')
+  })
+
+  test('a coached guest has to give the tell when pressed', () => {
+    const caseData = withAnswer(base, 'june', 'june-light', answer => ({
+      ...answer,
+      pressed: [{ text: 'her light was off', factIds: [] }],
+    }))
+    expect(errorChecks(caseData)).toEqual(['nightMoves'])
+  })
+
+  test('a coached claim can’t be said before the night', () => {
+    const caseData = withQuestion(base, 'june', 'june-light', question => ({
+      ...question,
+      from: 1,
+      unlock: [],
+    }))
+    expect(errorChecks(caseData)).toEqual(['nightMoves'])
+  })
+})
+
+describe('no false proof', () => {
+  test('the fact that disproves a coached claim must be findable on day 3', () => {
+    const caseData: Case = {
+      ...base,
+      nightMoves: Array.map(base.nightMoves, move =>
+        move._tag === 'Coach' ? { ...move, disprovedBy: 'pin-on-path' } : move,
+      ),
+    }
+    expect(errorChecks(caseData)).toEqual(['noFalseProof'])
+  })
+})
+
+describe('no leaks', () => {
+  test('a guest can only say what they know or claim', () => {
+    const caseData = withAnswer(base, 'max', 'max-bea', answer => ({
+      ...answer,
+      lines: [{ text: 'she was in the garden', factIds: ['bea-in-garden'] }],
+    }))
+    expect(errorChecks(caseData)).toEqual(['noLeaks'])
+  })
+
+  test('the theft fact may only appear in the timeline', () => {
+    const caseData = withGuest(
+      withAnswer(base, 'bea', 'bea-ribbon', answer => ({
+        ...answer,
+        lines: [{ text: 'I took it', factIds: ['bea-took-ribbon'] }],
+      })),
+      'bea',
+      guest => ({ ...guest, knows: [...guest.knows, 'bea-took-ribbon'] }),
+    )
+    expect(errorChecks(caseData)).toEqual(['noLeaks'])
+  })
+})
+
+describe('menu shape', () => {
+  test('every guest needs a lie to catch', () => {
+    const caseData: Case = {
       ...base,
       contradictions: Array.filter(
         base.contradictions,
-        contradiction =>
-          contradiction.suspect !== 'dale' ||
-          contradiction.proofFact === 'muddy-boots',
+        contradiction => contradiction.id !== 'max-call',
       ),
     }
-    expect(checksFailed(broken)).toEqual(['thiefProvable'])
+    expect(errorChecks(caseData)).toContain('menuShape')
   })
 
-  test('fails when the thief never repeats the claim on day 3', () => {
-    const onlyBeforeNight1 = (topic: Topic): Topic => ({
-      ...topic,
-      afterNight: [
+  test('the thief can’t have more questions than any innocent', () => {
+    const caseData = withGuest(base, 'bea', guest => ({
+      ...guest,
+      questions: [
+        ...guest.questions,
         {
-          night: 1,
-          variants: [{ text: 'not talking about friday', factIds: [] }],
-        },
-      ],
-    })
-    const quiet = withTopic(
-      withTopic(base, 'dale', 'whereabouts-friday', onlyBeforeNight1),
-      'dale',
-      'going-outside',
-      onlyBeforeNight1,
-    )
-    const broken: Case = {
-      ...withTopic(quiet, 'dale', 'his-phone', onlyBeforeNight1),
-      contradictions: Array.filter(
-        quiet.contradictions,
-        contradiction =>
-          contradiction.claimFact !== 'dale-slept-saturday' &&
-          contradiction.claimFact !== 'dale-bed-early-sunday',
-      ),
-    }
-    expect(checksFailed(broken)).toContain('thiefProvable')
-  })
-})
-
-describe('nightMoves', () => {
-  test('needs exactly one move per night', () => {
-    expect(
-      findProblems({ ...base, nightMoves: base.nightMoves.slice(0, 1) }),
-    ).toContainEqual({
-      check: 'nightMoves',
-      message: 'night 2 has 0 moves; it needs exactly one',
-    })
-  })
-
-  test('catches a planted fact that shows up before it is planted', () => {
-    const broken: Case = {
-      ...base,
-      groupBeats: Array.map(base.groupBeats, beat =>
-        beat.trigger._tag === 'Morning' && beat.trigger.day === 2
-          ? {
-              ...beat,
-              lines: [
-                {
-                  guest: 'margot',
-                  text: 'Wes hid the box!',
-                  factIds: ['velvet-box-in-tackle'],
-                },
-              ],
-            }
-          : beat,
-      ),
-    }
-    expect(checksFailed(broken)).toContain('nightMoves')
-  })
-
-  test('refuses to destroy a Wi-Fi log entry', () => {
-    const broken: Case = {
-      ...base,
-      nightMoves: [
-        { _tag: 'Destroy', night: 1, fact: 'wifi-dale-kitchen-0112' },
-        ...base.nightMoves.slice(1),
-      ],
-    }
-    expect(findProblems(broken)).toContainEqual({
-      check: 'nightMoves',
-      message:
-        "Destroy on night 1: wifi-dale-kitchen-0112 is in the Wi-Fi log, which the thief can't edit",
-    })
-  })
-
-  describe('coaching', () => {
-    const coached: Case = {
-      ...withTopic(
-        withGuest(base, 'priya', guest => ({
-          ...guest,
-          knows: [...guest.knows, 'dale-asked-priya'],
-          claims: [...guest.claims, 'priya-saw-dale-asleep'],
-          dictionary: {
-            ...guest.dictionary,
-            pressed: {
-              ...guest.dictionary.pressed,
-              afterNight: [
-                {
-                  night: 2,
-                  variants: [
-                    {
-                      text: 'Fine. Dale asked me to say that.',
-                      factIds: ['dale-asked-priya'],
-                    },
-                  ],
-                },
-              ],
-            },
+          id: 'bea-weather',
+          ask: 'Nice weather?',
+          from: 1,
+          unlock: [],
+          answer: {
+            lines: [{ text: 'gorgeous ☀️', factIds: [] }],
+            pressed: [{ text: 'yes??', factIds: [] }],
           },
-        })),
-        'priya',
-        'about-dale',
-        topic => ({
-          ...topic,
-          afterNight: [
-            {
-              night: 2,
-              variants: [
-                {
-                  text: 'I looked in on Dale at 1. He was asleep.',
-                  factIds: ['priya-saw-dale-asleep'],
-                },
-              ],
-            },
-          ],
-        }),
-      ),
-      facts: [
-        ...base.facts,
-        {
-          id: 'priya-saw-dale-asleep',
-          text: 'Priya saw Dale asleep in his room at 1am on Friday',
-          isTrue: false,
-          about: ['dale', 'priya'],
-          concernsTheft: true,
-        },
-        {
-          id: 'dale-asked-priya',
-          text: 'Dale asked Priya to say she saw him asleep',
-          isTrue: true,
-          about: ['dale', 'priya'],
-          concernsTheft: true,
         },
       ],
-      nightMoves: [
-        base.nightMoves[0]!,
-        {
-          _tag: 'Coach',
-          night: 2,
-          guest: 'priya',
-          fact: 'priya-saw-dale-asleep',
-          tellFact: 'dale-asked-priya',
-          disprovedBy: 'wifi-dale-kitchen-0112',
-        },
-      ],
-      groupBeats: Array.map(base.groupBeats, beat => ({
-        ...beat,
-        lines: Array.map(beat.lines, line => ({
-          ...line,
-          factIds: Array.filter(
-            line.factIds,
-            fact => fact !== 'velvet-box-in-tackle',
-          ),
-        })),
-      })),
-    }
-
-    test('accepts a valid coach move', () => {
-      expect(findProblems(coached)).toEqual([])
-    })
-
-    test('catches a coached guest with no tell', () => {
-      const noTell = withGuest(coached, 'priya', guest => ({
-        ...guest,
-        dictionary: {
-          ...guest.dictionary,
-          pressed: { variants: guest.dictionary.pressed.variants },
-        },
-      }))
-      expect(findProblems(noTell)).toContainEqual({
-        check: 'nightMoves',
-        message: 'Coach on night 2: priya never gives the tell under pressure',
-      })
-    })
+    }))
+    expect(errorChecks(caseData)).toEqual(['menuShape'])
   })
 })
 
-describe('noFalseProof', () => {
-  test('fails when nothing reachable disproves the plant', () => {
-    const broken = withTopic(base, 'margot', 'whereabouts-sunday', topic => ({
-      ...topic,
-      afterNight: [
-        { night: 2, variants: [{ text: 'I stayed in.', factIds: [] }] },
-      ],
-    }))
-    expect(checksFailed(broken)).toEqual(['noFalseProof'])
-  })
-})
-
-describe('noLeaks', () => {
-  test("catches a guest saying a fact they don't know", () => {
-    const broken = withTopic(base, 'priya', 'about-wes', topic => ({
-      ...topic,
-      variants: [
-        { text: 'Wes owes Margot money.', factIds: ['wes-owes-margot'] },
-      ],
-    }))
-    expect(findProblems(broken)).toContainEqual({
-      check: 'noLeaks',
-      message:
-        "priya says wes-owes-margot, which isn't in their knows or claims",
-    })
-  })
-
-  test('catches the theft fact said outright', () => {
-    const broken = withGuest(base, 'wes', guest => ({
-      ...guest,
-      knows: [...guest.knows, 'dale-took-brooch'],
-      dictionary: {
-        ...guest.dictionary,
-        pressed: {
-          variants: [{ text: 'Dale took it!', factIds: ['dale-took-brooch'] }],
-        },
-      },
-    }))
-    expect(checksFailed(broken)).toEqual(['noLeaks'])
-  })
-})
-
-describe('traits', () => {
-  test('catches a thief whose temperament is unique', () => {
-    const broken = withGuest(base, 'dale', guest => ({
-      ...guest,
-      temperament: 'prickly',
-    }))
-    expect(checksFailed(broken)).toEqual(['traits'])
-  })
-})
-
-describe('coverage', () => {
-  test('catches a guest with no whereabouts for a night', () => {
-    const broken = withGuest(base, 'wes', guest => ({
-      ...guest,
-      dictionary: {
-        ...guest.dictionary,
-        topics: [
-          guest.dictionary.topics[0]!,
-          ...Array.filter(
-            guest.dictionary.topics.slice(1),
-            topic => topic.id !== 'whereabouts-saturday',
-          ),
-        ],
-      },
-    }))
-    expect(findProblems(broken)).toEqual([
-      {
-        check: 'coverage',
-        message: 'wes has no whereabouts topic for night 1',
-      },
-    ])
-  })
-
-  test('catches a missing morning beat', () => {
-    const broken: Case = {
+describe('tuning', () => {
+  test('warns, without failing, when there are too few questions for the budget', () => {
+    const caseData: Case = {
       ...base,
-      groupBeats: Array.filter(
-        base.groupBeats,
-        beat => !(beat.trigger._tag === 'Morning' && beat.trigger.day === 2),
-      ),
+      budget: { morning: 4, afternoon: 4, evening: 3 },
     }
-    expect(findProblems(broken)).toContainEqual({
-      check: 'coverage',
-      message: 'day 2 has no morning beat',
-    })
-  })
-})
-
-describe('variants', () => {
-  test('catches a fact only some variants carry', () => {
-    const broken = withTopic(base, 'priya', 'whereabouts-friday', topic => ({
-      ...topic,
-      variants: [
-        topic.variants[0],
-        { text: 'Out on the dock, if you must know.', factIds: [] },
-      ],
-    }))
-    expect(findProblems(broken)).toContainEqual({
-      check: 'variants',
-      message:
-        "priya's whereabouts-friday variants carry different facts; every reply in a group must carry the same ones",
-    })
+    expect(errorChecks(caseData)).toEqual([])
+    expect(warnings(caseData)).toEqual([
+      expect.stringContaining('20 questions on offer for a budget of 33'),
+      expect.stringContaining('can be won on day 1 in 2 actions'),
+    ])
   })
 })

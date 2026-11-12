@@ -1,0 +1,329 @@
+{
+  "id": "tiny-case",
+  "setting": {
+    "title": "The Blue Ribbon",
+    "premise": "Hazel's jam won a blue ribbon at the county fair. The morning after, it's gone from the mantel of her bed-and-breakfast.",
+    "missingItem": "Hazel's blue ribbon",
+    "accessPoints": ["house", "garden", "lounge"]
+  },
+  "budget": { "morning": 1, "afternoon": 1, "evening": 1 },
+  "guests": [
+    {
+      "id": "bea",
+      "name": "Bea",
+      "role": "a fellow jam-maker",
+      "voice": "breezy, lots of emoji",
+      "knows": ["bea-in-garden", "ribbon-on-mantel"],
+      "claims": ["bea-asleep-by-10"],
+      "away": [{ "day": 1, "part": "afternoon", "status": "at the farmers' market 🍓" }],
+      "goodnight": "night all 🌙",
+      "wrongProof": [["up reading?? that's not a crime 🙄"], ["what does that have to do with me"]],
+      "questions": [
+        {
+          "id": "bea-night0",
+          "ask": "Where were you the night the ribbon went missing?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [{ "text": "asleep by 10, honest. that fair wiped me out 😴", "factIds": ["bea-asleep-by-10"] }],
+            "pressed": [{ "text": "yes?? I was exhausted", "factIds": ["bea-asleep-by-10"] }],
+            "caught": [
+              { "text": "ok fine. I couldn't sleep, I went out to the garden for air", "factIds": ["bea-in-garden"] },
+              { "text": "that's all it was", "factIds": [] }
+            ]
+          }
+        },
+        {
+          "id": "bea-ribbon",
+          "ask": "Did you see the ribbon at dinner?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [{ "text": "yeah it was on the mantel, Hazel was so proud 🥹", "factIds": ["ribbon-on-mantel"] }],
+            "pressed": [{ "text": "it was there at dinner, I'm sure", "factIds": ["ribbon-on-mantel"] }]
+          }
+        },
+        {
+          "id": "bea-theo",
+          "ask": "What do you make of Theo?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [{ "text": "theo's sweet. eats a LOT tho 😂", "factIds": [] }],
+            "pressed": [{ "text": "I mean that's all I know", "factIds": [] }]
+          }
+        },
+        {
+          "id": "bea-june",
+          "ask": "What do you make of June?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [{ "text": "june's lovely, we're in rooms next door", "factIds": [] }],
+            "pressed": [{ "text": "what about her?", "factIds": [] }]
+          }
+        },
+        {
+          "id": "bea-max",
+          "ask": "What do you make of Max?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [{ "text": "max is always on his phone 🙄", "factIds": [] }],
+            "pressed": [{ "text": "like ALWAYS", "factIds": [] }]
+          }
+        }
+      ]
+    },
+    {
+      "id": "theo",
+      "name": "Theo",
+      "role": "a retired teacher",
+      "voice": "gentle, full sentences",
+      "knows": ["theo-in-kitchen", "pin-on-path"],
+      "claims": ["theo-upstairs"],
+      "secret": "theo-in-kitchen",
+      "away": [{ "day": 1, "part": "evening", "status": "out for a walk 🚶" }],
+      "goodnight": "Goodnight, everyone.",
+      "wrongProof": [["I'm not sure what you're getting at."]],
+      "questions": [
+        {
+          "id": "theo-night0",
+          "ask": "Where were you the night the ribbon went missing?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [{ "text": "Upstairs all night, reading.", "factIds": ["theo-upstairs"] }],
+            "pressed": [{ "text": "I didn't leave my room.", "factIds": ["theo-upstairs"] }],
+            "caught": [{ "text": "Oh dear. I snuck down for some jam. Please don't tell Hazel.", "factIds": ["theo-in-kitchen"] }]
+          }
+        },
+        {
+          "id": "theo-path",
+          "ask": "Anything odd outside this morning?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [{ "text": "There's a little gold pin on the garden path.", "factIds": ["pin-on-path"] }],
+            "pressed": [{ "text": "Just a pin. Odd place for it.", "factIds": [] }]
+          },
+          "ifDestroyed": {
+            "lines": [{ "text": "Someone's swept the path. Very tidy.", "factIds": [] }],
+            "pressed": [{ "text": "That's all, really.", "factIds": [] }]
+          }
+        },
+        {
+          "id": "theo-saw-bea",
+          "ask": "Did you see Bea go out that night?",
+          "from": 1,
+          "unlock": [{ "_tag": "Caught", "contradiction": "bea-alibi" }],
+          "answer": {
+            "lines": [{ "text": "I heard the back door around midnight. I didn't look.", "factIds": [] }],
+            "pressed": [{ "text": "Just the door, I'm afraid.", "factIds": [] }]
+          }
+        },
+        {
+          "id": "theo-june",
+          "ask": "What do you make of June?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [{ "text": "A light sleeper, I'd guess.", "factIds": [] }],
+            "pressed": [{ "text": "Only a guess.", "factIds": [] }]
+          }
+        },
+        {
+          "id": "theo-max",
+          "ask": "What do you make of Max?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [{ "text": "Busy man. Always on a call.", "factIds": [] }],
+            "pressed": [{ "text": "Busy, that's all.", "factIds": [] }]
+          }
+        }
+      ]
+    },
+    {
+      "id": "june",
+      "name": "June",
+      "role": "Hazel's niece",
+      "voice": "lowercase, no punctuation",
+      "knows": ["june-up-at-midnight", "theo-in-kitchen", "bea-asked-june"],
+      "claims": ["june-heard-nothing", "june-saw-light-off"],
+      "away": [{ "day": 2, "part": "morning", "status": "at yoga 🧘" }],
+      "goodnight": "night x",
+      "wrongProof": [["that's literally nothing to do with what i said"]],
+      "questions": [
+        {
+          "id": "june-night0",
+          "ask": "Did you hear anything the night the ribbon went missing?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [{ "text": "nope slept like a rock 😴", "factIds": ["june-heard-nothing"] }],
+            "pressed": [{ "text": "nothing!!", "factIds": [] }],
+            "caught": [
+              { "text": "ok i was up for water", "factIds": ["june-up-at-midnight"] },
+              { "text": "theo was in the kitchen with the jam 🫙", "factIds": ["theo-in-kitchen"] }
+            ]
+          }
+        },
+        {
+          "id": "june-light",
+          "ask": "Did you notice Bea that night?",
+          "from": 3,
+          "unlock": [{ "_tag": "AfterNight", "night": 2 }],
+          "answer": {
+            "lines": [{ "text": "her light was off by 10 im right next door", "factIds": ["june-saw-light-off"] }],
+            "pressed": [{ "text": "ok she asked me to say that. sorry 😬", "factIds": ["bea-asked-june"] }]
+          }
+        },
+        {
+          "id": "june-bea",
+          "ask": "What do you make of Bea?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [{ "text": "bea's fun", "factIds": [] }],
+            "pressed": [{ "text": "she's fun idk", "factIds": [] }]
+          }
+        },
+        {
+          "id": "june-theo",
+          "ask": "What do you make of Theo?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [{ "text": "theo is a sweetheart", "factIds": [] }],
+            "pressed": [{ "text": "a sweetheart", "factIds": [] }]
+          }
+        },
+        {
+          "id": "june-max",
+          "ask": "What do you make of Max?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [{ "text": "max needs a holiday from his holiday", "factIds": [] }],
+            "pressed": [{ "text": "lol", "factIds": [] }]
+          }
+        }
+      ]
+    },
+    {
+      "id": "max",
+      "name": "Max",
+      "role": "a consultant on a long weekend",
+      "voice": "clipped, a bit defensive",
+      "knows": ["max-in-lounge", "june-up-at-midnight", "ribbon-on-mantel"],
+      "claims": ["max-early-night"],
+      "secret": "max-in-lounge",
+      "away": [{ "day": 2, "part": "afternoon", "status": "out on the lake 🛶" }],
+      "goodnight": "Night.",
+      "wrongProof": [["Not following."]],
+      "questions": [
+        {
+          "id": "max-night0",
+          "ask": "Where were you the night the ribbon went missing?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [{ "text": "Early night. I was shattered.", "factIds": ["max-early-night"] }],
+            "pressed": [{ "text": "Early night. Like 10.", "factIds": ["max-early-night"] }],
+            "caught": [{ "text": "Fine. I was on a work call in the lounge. It's embarrassing, ok?", "factIds": ["max-in-lounge"] }]
+          }
+        },
+        {
+          "id": "max-june",
+          "ask": "June says she slept right through. True?",
+          "from": 1,
+          "unlock": [{ "_tag": "Seen", "fact": "june-heard-nothing" }],
+          "answer": {
+            "lines": [{ "text": "No. She came down for water around midnight.", "factIds": ["june-up-at-midnight"] }],
+            "pressed": [{ "text": "Pretty sure it was her.", "factIds": ["june-up-at-midnight"] }]
+          }
+        },
+        {
+          "id": "max-ribbon",
+          "ask": "Did you see the ribbon at dinner?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [{ "text": "On the mantel. Couldn't miss it.", "factIds": ["ribbon-on-mantel"] }],
+            "pressed": [{ "text": "It was there.", "factIds": [] }]
+          }
+        },
+        {
+          "id": "max-bea",
+          "ask": "What do you make of Bea?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [{ "text": "Chatty.", "factIds": [] }],
+            "pressed": [{ "text": "Very chatty.", "factIds": [] }]
+          }
+        },
+        {
+          "id": "max-theo",
+          "ask": "What do you make of Theo?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [{ "text": "Harmless.", "factIds": [] }],
+            "pressed": [{ "text": "Totally harmless.", "factIds": [] }]
+          }
+        }
+      ]
+    }
+  ],
+  "thief": "bea",
+  "theftFact": "bea-took-ribbon",
+  "timeline": [
+    { "night": 0, "time": "11:30pm", "text": "Max takes a work call in the lounge.", "factIds": ["max-in-lounge"] },
+    { "night": 0, "time": "11:45pm", "text": "Bea takes the ribbon from the mantel.", "factIds": ["bea-took-ribbon"] },
+    { "night": 0, "time": "11:52pm", "text": "Bea slips into the garden to hide it and drops its pin on the path.", "factIds": ["bea-in-garden", "pin-on-path"] },
+    { "night": 0, "time": "12:05am", "text": "June comes down for water and sees Theo in the kitchen with the jam.", "factIds": ["june-up-at-midnight", "theo-in-kitchen"] },
+    { "night": 1, "time": "6:10am", "text": "Bea sweeps the garden path.", "factIds": ["bea-in-garden-dawn"] },
+    { "night": 2, "time": "10:15pm", "text": "Bea asks June to say her light was off by 10.", "factIds": ["bea-asked-june"] }
+  ],
+  "facts": [
+    { "id": "bea-took-ribbon", "text": "Bea took the ribbon.", "isTrue": true, "about": ["bea"], "concernsTheft": true },
+    { "id": "bea-asleep-by-10", "text": "Bea was asleep by 10pm.", "isTrue": false, "about": ["bea"], "concernsTheft": true },
+    { "id": "bea-in-garden", "text": "Bea was in the garden at 11:52pm.", "isTrue": true, "about": ["bea"], "concernsTheft": true },
+    { "id": "bea-in-garden-dawn", "text": "Bea was in the garden at 6:10am.", "isTrue": true, "about": ["bea"], "concernsTheft": true },
+    { "id": "ribbon-on-mantel", "text": "The ribbon was on the mantel at dinner.", "isTrue": true, "about": [], "concernsTheft": true },
+    { "id": "pin-on-path", "text": "The ribbon's pin was on the garden path.", "isTrue": true, "about": [], "concernsTheft": true },
+    { "id": "theo-upstairs", "text": "Theo stayed upstairs all night.", "isTrue": false, "about": ["theo"], "concernsTheft": false },
+    { "id": "theo-in-kitchen", "text": "Theo was in the kitchen eating jam at midnight.", "isTrue": true, "about": ["theo"], "concernsTheft": false },
+    { "id": "june-heard-nothing", "text": "June slept through the night.", "isTrue": false, "about": ["june"], "concernsTheft": false },
+    { "id": "june-up-at-midnight", "text": "June came down for water at midnight.", "isTrue": true, "about": ["june"], "concernsTheft": false },
+    { "id": "june-saw-light-off", "text": "Bea's light was off by 10pm.", "isTrue": false, "about": ["bea", "june"], "concernsTheft": true },
+    { "id": "bea-asked-june", "text": "Bea asked June to cover for her.", "isTrue": true, "about": ["bea", "june"], "concernsTheft": true },
+    { "id": "max-early-night", "text": "Max had an early night.", "isTrue": false, "about": ["max"], "concernsTheft": false },
+    { "id": "max-in-lounge", "text": "Max was on a work call in the lounge at 11:30pm.", "isTrue": true, "about": ["max"], "concernsTheft": false }
+  ],
+  "beats": [
+    { "day": 1, "part": "morning", "lines": [{ "guest": "theo", "text": "Has anyone seen Hazel's ribbon? It's gone from the mantel.", "factIds": [] }] },
+    { "day": 2, "part": "morning", "lines": [{ "guest": "max", "text": "Someone tidied the garden at dawn. Keen.", "factIds": [] }] },
+    { "day": 2, "part": "afternoon", "lines": [{ "guest": "bea", "text": "lunch is out ☀️", "factIds": [] }] },
+    { "day": 3, "part": "morning", "lines": [{ "guest": "june", "text": "morning all ☕", "factIds": [] }] }
+  ],
+  "groupQuestions": [],
+  "nightMoves": [
+    { "_tag": "Destroy", "night": 1, "fact": "pin-on-path" },
+    { "_tag": "Coach", "night": 2, "guest": "june", "fact": "june-saw-light-off", "tellFact": "bea-asked-june", "disprovedBy": "bea-in-garden" }
+  ],
+  "contradictions": [
+    { "id": "bea-alibi", "suspect": "bea", "claimFact": "bea-asleep-by-10", "proofFact": "bea-in-garden", "concernsTheft": true },
+    { "id": "theo-snack", "suspect": "theo", "claimFact": "theo-upstairs", "proofFact": "theo-in-kitchen", "concernsTheft": false },
+    { "id": "june-water", "suspect": "june", "claimFact": "june-heard-nothing", "proofFact": "june-up-at-midnight", "concernsTheft": false },
+    { "id": "max-call", "suspect": "max", "claimFact": "max-early-night", "proofFact": "max-in-lounge", "concernsTheft": false }
+  ],
+  "wifiLog": [
+    { "id": "w-max-lounge", "night": 0, "time": "11:30pm", "guest": "max", "event": "joined", "accessPoint": "lounge", "factIds": ["max-in-lounge"] },
+    { "id": "w-bea-garden", "night": 0, "time": "11:52pm", "guest": "bea", "event": "joined", "accessPoint": "garden", "factIds": ["bea-in-garden"] },
+    { "id": "w-bea-dawn", "night": 1, "time": "6:10am", "guest": "bea", "event": "joined", "accessPoint": "garden", "factIds": ["bea-in-garden-dawn"] },
+    { "id": "w-bea-house", "night": 2, "time": "10:15pm", "guest": "bea", "event": "joined", "accessPoint": "house", "factIds": [] }
+  ]
+}

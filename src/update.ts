@@ -1,4 +1,4 @@
-import { Array, Option, String, pipe } from 'effect'
+import { Array, Option } from 'effect'
 import { type Update } from 'foldkit'
 import { modifyFields } from 'foldkit/struct'
 
@@ -6,9 +6,12 @@ import {
   type CaseResult,
   type ChatMessage,
   ClientMessage,
-  MAX_MESSAGE_LENGTH,
+  type Clock,
+  type Menu,
+  type MessageId,
   type RejectionReason,
   ServerMessage,
+  type Thread,
 } from '../shared/protocol'
 import {
   AFTER_POST_MILLIS,
@@ -17,12 +20,12 @@ import {
   NIGHT_MILLIS,
   RECONNECT_MILLIS,
   WIFI_ENTRY_MILLIS,
+  findMessage,
   isSameThread,
   threadKey,
   typingMillis,
 } from './chat'
 import {
-  BlurComposer,
   SaveGame,
   ScrollToLatest,
   SendToServer,
@@ -34,6 +37,7 @@ import {
 import { Message } from './message'
 import {
   ArrestStep,
+  Asking,
   type Board,
   Connection,
   type Flags,
@@ -63,16 +67,13 @@ export const init = (flags: Flags): UpdateReturn => ({
     incoming: [],
     playback: Playback.Idle(),
     playbackEpoch: 0,
-    pendingSends: [],
+    asking: Asking.Ready(),
     maybeOpenThread: Option.none(),
     unread: [],
-    messageInput: '',
-    isComposerFocused: false,
-    maybeViewport: Option.none(),
     maybeNotice: Option.none(),
     sheet: Sheet.Closed(),
     maybePress: Option.none(),
-    nextLocalId: 0,
+    nextPressId: 0,
   },
 })
 
@@ -99,10 +100,15 @@ const sendToServer = (model: Model, message: ClientMessage): UpdateReturn => ({
   commands: [SendToServer({ message })],
 })
 
-export const isPlaying = (model: Model): boolean =>
+// NOTE: the detective can act only while it's their move: it's daytime, the
+// case is open, nothing is still playing, and no line of theirs is in flight.
+export const isReadyToAsk = (model: Model): boolean =>
+  model.asking._tag === 'Ready' &&
+  model.playback._tag === 'Idle' &&
+  Array.isReadonlyArrayEmpty(model.incoming) &&
   Option.exists(
     model.maybeBoard,
-    board => board.phase === 'day' && Option.isNone(board.maybeResult),
+    board => board.clock.phase === 'asking' && Option.isNone(board.maybeResult),
   )
 
 const isViewing = (model: Model, message: ChatMessage): boolean =>
@@ -142,7 +148,7 @@ const dropCase = (model: Model): UpdateReturn => ({
     incoming: () => [],
     playback: () => Playback.Idle(),
     playbackEpoch: epoch => epoch + 1,
-    pendingSends: () => [],
+    asking: () => Asking.Ready(),
     maybeOpenThread: () => Option.none(),
     sheet: () => Sheet.Closed(),
     maybeNotice: () =>
@@ -181,42 +187,23 @@ const loseConnection = (model: Model): UpdateReturn => {
 
 // PLAYBACK
 
-const takePending = (model: Model, message: ChatMessage): Model => {
-  const body = message.body
-  const text = body._tag === 'Text' ? body.text : ''
-  const sameThread = (index: number) =>
-    Option.exists(Array.get(model.pendingSends, index), pending =>
-      isSameThread(pending.thread, message.thread),
-    )
-  const maybeIndex = pipe(
-    Array.findFirstIndex(
-      model.pendingSends,
-      pending =>
-        isSameThread(pending.thread, message.thread) && pending.text === text,
-    ),
-    Option.orElse(() =>
-      Array.findFirstIndex(model.pendingSends, (_, index) => sameThread(index)),
-    ),
-  )
-  return Option.match(maybeIndex, {
-    onNone: () => model,
-    onSome: index =>
-      modifyFields(model, {
-        pendingSends: pending => Array.remove(pending, index),
-      }),
-  })
-}
+// NOTE: the wait ends when the server posts anything in the thread the
+// detective acted in, usually their own line.
+const settleAsking = (asking: Asking, message: ChatMessage): Asking =>
+  asking._tag === 'Waiting' && isSameThread(asking.thread, message.thread)
+    ? Asking.Ready()
+    : asking
 
 const applyPost = (model: Model, message: ChatMessage): UpdateReturn => {
-  const posted = withBoard(model, board =>
-    Array.some(board.messages, existing => existing.id === message.id)
-      ? board
-      : { ...board, messages: [...board.messages, message] },
+  const posted = modifyFields(
+    withBoard(model, board =>
+      Array.some(board.messages, existing => existing.id === message.id)
+        ? board
+        : { ...board, messages: [...board.messages, message] },
+    ),
+    { asking: asking => settleAsking(asking, message) },
   )
-  if (message.sender._tag === 'Detective') {
-    return { model: takePending(posted, message), commands: [ScrollToLatest()] }
-  }
-  if (isViewing(model, message)) {
+  if (message.sender._tag === 'Detective' || isViewing(model, message)) {
     return { model: posted, commands: [ScrollToLatest()] }
   }
   const key = threadKey(message.thread)
@@ -232,15 +219,34 @@ const hold = (model: Model, millis: number): UpdateReturn => ({
   commands: [WaitForBeat({ epoch: model.playbackEpoch, millis })],
 })
 
+const replaceMenu = (menus: ReadonlyArray<Menu>, menu: Menu) =>
+  Array.some(menus, existing => isSameThread(existing.thread, menu.thread))
+    ? Array.map(menus, existing =>
+        isSameThread(existing.thread, menu.thread) ? menu : existing,
+      )
+    : [...menus, menu]
+
 const applyResult = (model: Model, result: CaseResult): Model =>
   modifyFields(
-    withBoard(model, board => ({
-      ...board,
-      phase: 'arrest',
-      maybeResult: Option.some(result),
-    })),
+    withBoard(model, board => ({ ...board, maybeResult: Option.some(result) })),
     { sheet: () => Sheet.Result() },
   )
+
+const openArrestIfDue = (model: Model, clock: Clock): Model =>
+  clock.phase === 'arrest' && model.sheet._tag === 'Closed'
+    ? modifyFields(model, {
+        sheet: () => Sheet.Arrest({ step: ArrestStep.PickSuspect() }),
+      })
+    : model
+
+const applyClock = (model: Model, clock: Clock): Model =>
+  openArrestIfDue(
+    withBoard(model, board => ({ ...board, clock })),
+    clock,
+  )
+
+const isNewDay = (model: Model, clock: Clock): boolean =>
+  Option.exists(model.maybeBoard, board => clock.day > board.clock.day)
 
 const play = (model: Model, next: Incoming): UpdateReturn =>
   Incoming.match(next, {
@@ -256,6 +262,7 @@ const play = (model: Model, next: Incoming): UpdateReturn =>
               epoch: model.playbackEpoch,
               millis: typingMillis(body.text),
             }),
+            ...(isViewing(model, message) ? [ScrollToLatest()] : []),
           ],
         }
       }
@@ -266,6 +273,13 @@ const play = (model: Model, next: Incoming): UpdateReturn =>
       }
       return andThen(applyPost(model, message), advance)
     },
+    MenuChange: ({ menu }) =>
+      advance(
+        withBoard(model, board => ({
+          ...board,
+          menus: replaceMenu(board.menus, menu),
+        })),
+      ),
     StatusChange: ({ guest, status }) =>
       advance(
         withBoard(model, board => ({
@@ -275,28 +289,51 @@ const play = (model: Model, next: Incoming): UpdateReturn =>
           ),
         })),
       ),
-    PhaseChange: ({ day, phase }) => {
-      const changed = withBoard(model, board => ({ ...board, day, phase }))
-      if (phase === 'night') {
-        return hold(changed, NIGHT_MILLIS)
-      }
-      if (phase === 'arrest' && model.sheet._tag === 'Closed') {
-        return advance(
-          modifyFields(changed, {
-            sheet: () => Sheet.Arrest({ step: ArrestStep.PickSuspect() }),
-          }),
-        )
-      }
-      return advance(changed)
-    },
+    ClockChange: ({ clock }) =>
+      isNewDay(model, clock)
+        ? {
+            model: modifyFields(model, {
+              playback: () => Playback.Night({ clock }),
+            }),
+            commands: [
+              WaitForBeat({ epoch: model.playbackEpoch, millis: NIGHT_MILLIS }),
+            ],
+          }
+        : advance(applyClock(model, clock)),
+    Pressed: ({ answerId }) =>
+      advance(
+        withBoard(model, board =>
+          board.pressed.includes(answerId)
+            ? board
+            : { ...board, pressed: [...board.pressed, answerId] },
+        ),
+      ),
+    Caught: ({ lie }) =>
+      advance(
+        withBoard(model, board =>
+          Array.some(
+            board.caught,
+            existing => existing.claimMessageId === lie.claimMessageId,
+          )
+            ? board
+            : { ...board, caught: [...board.caught, lie] },
+        ),
+      ),
     Result: ({ result }) => advance(applyResult(model, result)),
   })
+
+// NOTE: menu and status changes resize the menu under the thread after the
+// last post scrolled it, so the open thread scrolls again once playback rests.
+const settled = (model: Model): UpdateReturn =>
+  Option.isSome(model.maybeOpenThread)
+    ? { model, commands: [ScrollToLatest()] }
+    : { model }
 
 const advance = (model: Model): UpdateReturn =>
   model.playback._tag !== 'Idle'
     ? { model }
     : Array.match(model.incoming, {
-        onEmpty: () => ({ model }),
+        onEmpty: () => settled(model),
         onNonEmpty: ([next, ...rest]) =>
           play(modifyFields(model, { incoming: () => rest }), next),
       })
@@ -313,53 +350,78 @@ const continuePlayback = (model: Model): UpdateReturn =>
       ),
     Holding: () =>
       advance(modifyFields(model, { playback: () => Playback.Idle() })),
+    Night: ({ clock }) =>
+      advance(
+        applyClock(
+          modifyFields(model, { playback: () => Playback.Idle() }),
+          clock,
+        ),
+      ),
   })
 
 // SERVER MESSAGES
 
-const NOTICES: Readonly<Record<RejectionReason, string>> = {
-  asleep: 'They’re asleep. Try again tomorrow.',
-  leftOnRead: 'They’ve stopped answering you for today.',
+export const NOTICES: Readonly<Record<RejectionReason, string>> = {
+  away: 'They’re not around right now.',
+  quiet: 'They’re not answering right now.',
+  asleep: 'Everyone’s asleep.',
+  unknownQuestion: 'That question isn’t on the menu anymore.',
+  notAnAnswer: 'You can only press or confront a reply to your question.',
+  alreadyPressed: 'You’ve already pressed that answer.',
+  alreadyCaught: 'You’ve already caught that lie.',
+  notInCaseFile: 'Save the proof to your case file first.',
+  notCaught: 'That lie hasn’t been caught.',
   notNow: 'That can’t happen right now.',
   tooFast: 'Slow down a little.',
   unknownMessage: 'That message isn’t in the case anymore.',
   invalid: 'That didn’t go through.',
 }
 
-const reject = (model: Model, reason: RejectionReason): UpdateReturn => {
-  const restored = Array.match(model.pendingSends, {
-    onEmpty: () => model,
-    onNonEmpty: ([first, ...rest]) =>
-      reason === 'unknownMessage'
-        ? model
-        : modifyFields(model, {
-            pendingSends: () => rest,
-            messageInput: input => (input === '' ? first.text : input),
-          }),
-  })
-  return {
-    model: modifyFields(restored, {
-      maybeNotice: () => Option.some(NOTICES[reason]),
-      sheet: sheet =>
-        sheet._tag === 'Arrest' && sheet.step._tag === 'Submitted'
-          ? Sheet.Arrest({ step: ArrestStep.PickSuspect() })
-          : sheet,
-    }),
+const reject = (model: Model, reason: RejectionReason): UpdateReturn => ({
+  model: modifyFields(model, {
+    asking: () => Asking.Ready(),
+    maybeNotice: () => Option.some(NOTICES[reason]),
+    sheet: sheet =>
+      sheet._tag === 'Arrest' && sheet.step._tag === 'Submitted'
+        ? Sheet.Arrest({ step: ArrestStep.PickSuspect() })
+        : sheet,
+  }),
+})
+
+// NOTE: sleeping before the evening throws away the rest of the day, so it
+// asks first. Sleeping in the evening or at bedtime doesn't.
+const isEarlyNight = (model: Model): boolean =>
+  Option.exists(model.maybeBoard, board => board.clock.part !== 'evening')
+
+const goToSleep = (model: Model): UpdateReturn =>
+  sendToServer(
+    modifyFields(model, { sheet: () => Sheet.Closed() }),
+    ClientMessage.cases.GoToSleep.make({}),
+  )
+
+const sheetAfterSnapshot = (sheet: Sheet, board: Board): Sheet => {
+  if (Option.isSome(board.maybeResult)) {
+    return sheet._tag === 'Arrest' ? Sheet.Result() : sheet
   }
+  if (board.clock.phase === 'arrest' && sheet._tag === 'Closed') {
+    return Sheet.Arrest({ step: ArrestStep.PickSuspect() })
+  }
+  return sheet
 }
 
 const receive = (model: Model, message: ServerMessage): UpdateReturn =>
   ServerMessage.match(message, {
     Snapshot: snapshot => {
-      const maybeResult = Option.fromUndefinedOr(snapshot.result)
       const board: Board = {
         intro: snapshot.intro,
         guests: snapshot.guests,
         messages: snapshot.messages,
+        menus: snapshot.menus,
         caseFile: snapshot.caseFile,
-        day: snapshot.day,
-        phase: snapshot.phase,
-        maybeResult,
+        pressed: snapshot.pressed,
+        caught: snapshot.caught,
+        clock: snapshot.clock,
+        maybeResult: Option.fromUndefinedOr(snapshot.result),
       }
       return {
         model: modifyFields(model, {
@@ -367,11 +429,8 @@ const receive = (model: Model, message: ServerMessage): UpdateReturn =>
           incoming: () => [],
           playback: () => Playback.Idle(),
           playbackEpoch: epoch => epoch + 1,
-          pendingSends: () => [],
-          sheet: sheet =>
-            Option.isSome(maybeResult) && sheet._tag === 'Arrest'
-              ? Sheet.Result()
-              : sheet,
+          asking: () => Asking.Ready(),
+          sheet: sheet => sheetAfterSnapshot(sheet, board),
         }),
         commands: [ScrollToLatest()],
       }
@@ -379,16 +438,48 @@ const receive = (model: Model, message: ServerMessage): UpdateReturn =>
     Typing: () => ({ model }),
     MessagePosted: ({ message: posted }) =>
       enqueue(model, Incoming.Post({ message: posted })),
+    MenuChanged: ({ menu }) => enqueue(model, Incoming.MenuChange({ menu })),
+    AnswerPressed: ({ answerId }) =>
+      enqueue(model, Incoming.Pressed({ answerId })),
+    LieCaught: ({ lie }) => enqueue(model, Incoming.Caught({ lie })),
     GuestStatusChanged: ({ guest, status }) =>
       enqueue(model, Incoming.StatusChange({ guest, status })),
-    PhaseChanged: ({ day, phase }) =>
-      enqueue(model, Incoming.PhaseChange({ day, phase })),
+    ClockChanged: ({ clock }) =>
+      enqueue(model, Incoming.ClockChange({ clock })),
     CaseFileChanged: ({ caseFile }) => ({
       model: withBoard(model, board => ({ ...board, caseFile })),
     }),
     ArrestResult: ({ result }) => enqueue(model, Incoming.Result({ result })),
     Rejected: ({ reason }) => reject(model, reason),
   })
+
+// ASKING
+
+const ask = (
+  model: Model,
+  thread: Thread,
+  message: ClientMessage,
+): UpdateReturn =>
+  isReadyToAsk(model)
+    ? {
+        model: modifyFields(model, {
+          asking: () => Asking.Waiting({ thread }),
+          sheet: () => Sheet.Closed(),
+          maybeNotice: () => Option.none(),
+        }),
+        commands: [SendToServer({ message }), ScrollToLatest()],
+      }
+    : { model }
+
+const withMessage = (
+  model: Model,
+  messageId: MessageId,
+  next: (message: ChatMessage) => UpdateReturn,
+): UpdateReturn =>
+  Option.match(
+    Option.flatMap(model.maybeBoard, board => findMessage(board, messageId)),
+    { onNone: () => ({ model }), onSome: next },
+  )
 
 // CASE FILE
 
@@ -434,13 +525,43 @@ const arrestBack = (model: Model, step: ArrestStep): UpdateReturn =>
     PickSuspect: () => ({
       model: modifyFields(model, { sheet: () => Sheet.CaseFile() }),
     }),
-    PickClaim: () => toArrestStep(model, ArrestStep.PickSuspect()),
-    PickProof: ({ suspect }) =>
-      toArrestStep(model, ArrestStep.PickClaim({ suspect })),
-    Confirm: ({ suspect, claim }) =>
-      toArrestStep(model, ArrestStep.PickProof({ suspect, claim })),
+    PickLie: () => toArrestStep(model, ArrestStep.PickSuspect()),
+    Confirm: ({ suspect }) =>
+      toArrestStep(model, ArrestStep.PickLie({ suspect })),
     Submitted: () => ({ model }),
   })
+
+const pickLie = (
+  model: Model,
+  maybeLie: Option.Option<MessageId>,
+): UpdateReturn =>
+  Option.match(arrestStep(model), {
+    onNone: () => ({ model }),
+    onSome: step =>
+      step._tag === 'PickLie'
+        ? toArrestStep(
+            model,
+            ArrestStep.Confirm({ suspect: step.suspect, maybeLie }),
+          )
+        : { model },
+  })
+
+const confirmArrest = (model: Model, step: ArrestStep): UpdateReturn => {
+  if (step._tag !== 'Confirm') {
+    return { model }
+  }
+  const message = Option.match(step.maybeLie, {
+    onNone: () => ClientMessage.cases.Arrest.make({ suspect: step.suspect }),
+    onSome: lie =>
+      ClientMessage.cases.Arrest.make({ suspect: step.suspect, lie }),
+  })
+  return sendToServer(
+    modifyFields(model, {
+      sheet: () => Sheet.Arrest({ step: ArrestStep.Submitted() }),
+    }),
+    message,
+  )
+}
 
 // UPDATE
 
@@ -462,10 +583,9 @@ export const update = (model: Model, message: Message): UpdateReturn =>
           incoming: () => [],
           playback: () => Playback.Idle(),
           playbackEpoch: epoch => epoch + 1,
-          pendingSends: () => [],
+          asking: () => Asking.Ready(),
           maybeOpenThread: () => Option.none(),
           unread: () => [],
-          messageInput: () => '',
           maybeNotice: () => Option.none(),
           sheet: () => Sheet.Intro(),
         }),
@@ -523,15 +643,11 @@ export const update = (model: Model, message: Message): UpdateReturn =>
       epoch === model.playbackEpoch ? continuePlayback(model) : { model },
 
     ClickedThreadRow: ({ thread }) => {
-      const isSame = Option.exists(model.maybeOpenThread, open =>
-        isSameThread(open, thread),
-      )
       const key = threadKey(thread)
       return {
         model: modifyFields(model, {
           maybeOpenThread: () => Option.some(thread),
           unread: unread => Array.filter(unread, other => other !== key),
-          messageInput: input => (isSame ? input : ''),
           maybeNotice: () => Option.none(),
         }),
         commands: [ScrollToLatest()],
@@ -542,68 +658,24 @@ export const update = (model: Model, message: Message): UpdateReturn =>
         maybeOpenThread: () => Option.none(),
         maybeNotice: () => Option.none(),
       }),
-      commands: [BlurComposer()],
     }),
-    UpdatedMessageInput: ({ value }) => ({
-      model: modifyFields(model, { messageInput: () => value }),
-    }),
-    SubmittedMessage: () => {
-      const text = String.trim(model.messageInput).slice(0, MAX_MESSAGE_LENGTH)
-      return Option.match(model.maybeOpenThread, {
-        onNone: () => ({ model }),
-        onSome: thread =>
-          !isPlaying(model) || thread._tag === 'WifiLog' || text === ''
-            ? { model }
-            : {
-                model: modifyFields(model, {
-                  pendingSends: pending => [
-                    ...pending,
-                    { id: model.nextLocalId, thread, text },
-                  ],
-                  nextLocalId: id => id + 1,
-                  messageInput: () => '',
-                  maybeNotice: () => Option.none(),
-                }),
-                commands: [
-                  SendToServer({
-                    message: ClientMessage.cases.SendMessage.make({
-                      thread,
-                      text,
-                    }),
-                  }),
-                  ScrollToLatest(),
-                ],
-              },
-      })
-    },
-    FocusedComposer: () => ({
-      model: modifyFields(model, { isComposerFocused: () => true }),
-      commands: [ScrollToLatest()],
-    }),
-    BlurredComposer: () => ({
-      model: modifyFields(model, { isComposerFocused: () => false }),
-    }),
-    ClickedThread: () =>
-      model.isComposerFocused
-        ? { model, commands: [BlurComposer()] }
-        : { model },
-    CompletedBlurComposer: () => ({ model }),
     CompletedScrollToLatest: () => ({ model }),
-    ChangedViewport: ({ height, offsetTop }) => ({
-      model: modifyFields(model, {
-        maybeViewport: () => Option.some({ height, offsetTop }),
-      }),
-    }),
+    ClickedChip: ({ thread, chipId }) =>
+      ask(
+        model,
+        thread,
+        ClientMessage.cases.AskQuestion.make({ thread, chipId }),
+      ),
 
     PressedMessage: ({ messageId }) => ({
       model: modifyFields(model, {
         maybePress: () =>
-          Option.some({ messageId, pressId: model.nextLocalId }),
-        nextLocalId: id => id + 1,
+          Option.some({ messageId, pressId: model.nextPressId }),
+        nextPressId: id => id + 1,
       }),
       commands: [
         WaitForLongPress({
-          pressId: model.nextLocalId,
+          pressId: model.nextPressId,
           millis: LONG_PRESS_MILLIS,
         }),
       ],
@@ -622,7 +694,6 @@ export const update = (model: Model, message: Message): UpdateReturn =>
                   sheet: () =>
                     Sheet.MessageActions({ messageId: press.messageId }),
                 }),
-                commands: [BlurComposer()],
               }
             : { model },
       }),
@@ -634,60 +705,60 @@ export const update = (model: Model, message: Message): UpdateReturn =>
     }),
     ClickedSaveMessage: ({ messageId }) => saveMessage(model, messageId),
     ClickedRemoveMessage: ({ messageId }) => removeMessage(model, messageId),
+    ClickedPressAnswer: ({ messageId }) =>
+      withMessage(model, messageId, pressed =>
+        ask(
+          model,
+          pressed.thread,
+          ClientMessage.cases.Press.make({ messageId }),
+        ),
+      ),
+    ClickedShowProof: ({ messageId }) => ({
+      model: modifyFields(model, {
+        sheet: () => Sheet.ShowProof({ messageId }),
+      }),
+    }),
+    ClickedProofItem: ({ proofMessageId }) =>
+      model.sheet._tag === 'ShowProof'
+        ? withMessage(model, model.sheet.messageId, confronted =>
+            ask(
+              model,
+              confronted.thread,
+              ClientMessage.cases.ShowProof.make({
+                messageId: confronted.id,
+                proofMessageId,
+              }),
+            ),
+          )
+        : { model },
 
     ClickedCaseInfo: () => ({
       model: modifyFields(model, { sheet: () => Sheet.Intro() }),
     }),
     ClickedCaseFile: () => ({
       model: modifyFields(model, { sheet: () => Sheet.CaseFile() }),
-      commands: [BlurComposer()],
     }),
     ClickedCloseSheet: () => ({
       model: modifyFields(model, { sheet: () => Sheet.Closed() }),
     }),
-    ClickedEndDay: () =>
-      isPlaying(model)
-        ? {
-            model: modifyFields(model, { sheet: () => Sheet.ConfirmEndDay() }),
-          }
-        : { model },
-    ClickedConfirmEndDay: () =>
+    ClickedClock: () => ({
+      model: modifyFields(model, { sheet: () => Sheet.Clock() }),
+    }),
+    ClickedSkipPart: () =>
       sendToServer(
         modifyFields(model, { sheet: () => Sheet.Closed() }),
-        ClientMessage.cases.EndDay.make({}),
+        ClientMessage.cases.SkipPart.make({}),
       ),
+    ClickedGoToSleep: () =>
+      isEarlyNight(model)
+        ? { model: modifyFields(model, { sheet: () => Sheet.ConfirmSleep() }) }
+        : goToSleep(model),
+    ClickedConfirmSleep: () => goToSleep(model),
     ClickedStartArrest: () => toArrestStep(model, ArrestStep.PickSuspect()),
     ClickedSuspect: ({ suspect }) =>
-      toArrestStep(model, ArrestStep.PickClaim({ suspect })),
-    ClickedClaim: ({ messageId }) =>
-      Option.match(arrestStep(model), {
-        onNone: () => ({ model }),
-        onSome: step =>
-          step._tag === 'PickClaim'
-            ? toArrestStep(
-                model,
-                ArrestStep.PickProof({
-                  suspect: step.suspect,
-                  claim: messageId,
-                }),
-              )
-            : { model },
-      }),
-    ClickedProof: ({ messageId }) =>
-      Option.match(arrestStep(model), {
-        onNone: () => ({ model }),
-        onSome: step =>
-          step._tag === 'PickProof'
-            ? toArrestStep(
-                model,
-                ArrestStep.Confirm({
-                  suspect: step.suspect,
-                  claim: step.claim,
-                  proof: messageId,
-                }),
-              )
-            : { model },
-      }),
+      toArrestStep(model, ArrestStep.PickLie({ suspect })),
+    ClickedLie: ({ messageId }) => pickLie(model, Option.some(messageId)),
+    ClickedNoLie: () => pickLie(model, Option.none()),
     ClickedArrestBack: () =>
       Option.match(arrestStep(model), {
         onNone: () => ({ model }),
@@ -696,19 +767,7 @@ export const update = (model: Model, message: Message): UpdateReturn =>
     ClickedConfirmArrest: () =>
       Option.match(arrestStep(model), {
         onNone: () => ({ model }),
-        onSome: step =>
-          step._tag === 'Confirm'
-            ? sendToServer(
-                modifyFields(model, {
-                  sheet: () => Sheet.Arrest({ step: ArrestStep.Submitted() }),
-                }),
-                ClientMessage.cases.MakeArrest.make({
-                  suspect: step.suspect,
-                  claimMessageId: step.claim,
-                  proofMessageId: step.proof,
-                }),
-              )
-            : { model },
+        onSome: step => confirmArrest(model, step),
       }),
     ClickedShowResult: () => ({
       model: modifyFields(model, { sheet: () => Sheet.Result() }),

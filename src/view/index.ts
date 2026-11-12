@@ -21,17 +21,7 @@ export const view = (model: Model, h: HtmlBuilder<Message>): Document => ({
             [
               'app',
               Option.isSome(model.maybeOpenThread) ? 'in-thread' : 'in-list',
-              model.isComposerFocused ? 'kb' : '',
             ].join(' '),
-          ),
-          h.Style(
-            Option.match(model.maybeViewport, {
-              onNone: () => ({}),
-              onSome: viewport => ({
-                top: `${viewport.offsetTop}px`,
-                height: `${viewport.height}px`,
-              }),
-            }),
           ),
         ],
         [

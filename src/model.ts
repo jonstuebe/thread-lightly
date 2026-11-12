@@ -4,13 +4,14 @@ import { defineTaggedUnion } from 'foldkit/schema'
 import {
   CaseIntro,
   CaseResult,
+  CaughtLie,
   ChatMessage,
-  Day,
+  Clock,
   GuestId,
   GuestProfile,
   GuestStatus,
+  Menu,
   MessageId,
-  Phase,
   Thread,
 } from '../shared/protocol'
 
@@ -39,14 +40,17 @@ export type Connection = typeof Connection.Type
 // BOARD
 
 // NOTE: the client's copy of what the server has told it. Only the server
-// changes it; the client never guesses at game state.
+// changes it; the client never guesses at game state. `pressed` holds the
+// answer IDs the detective has pressed.
 export const Board = Schema.Struct({
   intro: CaseIntro,
   guests: Schema.Array(GuestProfile),
   messages: Schema.Array(ChatMessage),
+  menus: Schema.Array(Menu),
   caseFile: Schema.Array(MessageId),
-  day: Day,
-  phase: Phase,
+  pressed: Schema.Array(Schema.String),
+  caught: Schema.Array(CaughtLie),
+  clock: Clock,
   maybeResult: Schema.Option(CaseResult),
 })
 export type Board = typeof Board.Type
@@ -55,35 +59,42 @@ export type Board = typeof Board.Type
 
 // NOTE: the server sends a reply as soon as it has one. The client holds
 // these back and plays them at reading speed, with a typing indicator first.
+// Everything that follows from a reply (new chips, the clock, a catch) waits
+// its turn behind it, so nothing shows up before the line that caused it.
 export const Incoming = defineTaggedUnion({
   Post: { message: ChatMessage },
+  MenuChange: { menu: Menu },
   StatusChange: { guest: GuestId, status: GuestStatus },
-  PhaseChange: { day: Day, phase: Phase },
+  ClockChange: { clock: Clock },
+  Pressed: { answerId: Schema.String },
+  Caught: { lie: CaughtLie },
   Result: { result: CaseResult },
 })
 export type Incoming = typeof Incoming.Type
 
+// NOTE: `Night` holds the next morning's clock while the house sleeps.
 export const Playback = defineTaggedUnion({
   Idle: {},
   Typing: { message: ChatMessage },
   Holding: {},
+  Night: { clock: Clock },
 })
 export type Playback = typeof Playback.Type
 
-export const PendingSend = Schema.Struct({
-  id: Schema.Number,
-  thread: Thread,
-  text: Schema.String,
+// NOTE: between tapping a chip (or pressing, or showing proof) and the
+// server posting the detective's line, the menus wait.
+export const Asking = defineTaggedUnion({
+  Ready: {},
+  Waiting: { thread: Thread },
 })
-export type PendingSend = typeof PendingSend.Type
+export type Asking = typeof Asking.Type
 
 // SHEETS
 
 export const ArrestStep = defineTaggedUnion({
   PickSuspect: {},
-  PickClaim: { suspect: GuestId },
-  PickProof: { suspect: GuestId, claim: MessageId },
-  Confirm: { suspect: GuestId, claim: MessageId, proof: MessageId },
+  PickLie: { suspect: GuestId },
+  Confirm: { suspect: GuestId, maybeLie: Schema.Option(MessageId) },
   Submitted: {},
 })
 export type ArrestStep = typeof ArrestStep.Type
@@ -92,8 +103,10 @@ export const Sheet = defineTaggedUnion({
   Closed: {},
   Intro: {},
   CaseFile: {},
-  ConfirmEndDay: {},
+  Clock: {},
+  ConfirmSleep: {},
   MessageActions: { messageId: MessageId },
+  ShowProof: { messageId: MessageId },
   Arrest: { step: ArrestStep },
   Result: {},
 })
@@ -105,12 +118,6 @@ export const Press = Schema.Struct({
 })
 export type Press = typeof Press.Type
 
-export const Viewport = Schema.Struct({
-  height: Schema.Number,
-  offsetTop: Schema.Number,
-})
-export type Viewport = typeof Viewport.Type
-
 // MODEL
 
 export const Model = Schema.Struct({
@@ -120,16 +127,13 @@ export const Model = Schema.Struct({
   incoming: Schema.Array(Incoming),
   playback: Playback,
   playbackEpoch: Schema.Number,
-  pendingSends: Schema.Array(PendingSend),
+  asking: Asking,
   maybeOpenThread: Schema.Option(Thread),
   unread: Schema.Array(Schema.String),
-  messageInput: Schema.String,
-  isComposerFocused: Schema.Boolean,
-  maybeViewport: Schema.Option(Viewport),
   maybeNotice: Schema.Option(Schema.String),
   sheet: Sheet,
   maybePress: Schema.Option(Press),
-  nextLocalId: Schema.Number,
+  nextPressId: Schema.Number,
 })
 export type Model = typeof Model.Type
 

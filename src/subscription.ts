@@ -1,42 +1,9 @@
-import { Effect, Option, Queue, Schema, Stream } from 'effect'
+import { Effect, Option, Schema, Stream } from 'effect'
 import { Subscription } from 'foldkit'
 
 import { Message } from './message'
 import type { Model } from './model'
 import { CaseSocket, type CaseSocketService, socketMessages } from './socket'
-
-// NOTE: when the on-screen keyboard opens, iOS shrinks the visual viewport but
-// not the layout viewport. Tracking it keeps the header pinned and the
-// composer sitting right on top of the keyboard, like Messages.
-const streamVisualViewport = Stream.callback<
-  typeof Message.ChangedViewport.Type
->(queue =>
-  Effect.acquireRelease(
-    Effect.sync(() => {
-      const viewport = window.visualViewport
-      const report = () => {
-        Queue.offerUnsafe(
-          queue,
-          Message.ChangedViewport({
-            height: viewport ? viewport.height : window.innerHeight,
-            offsetTop: viewport ? viewport.offsetTop : 0,
-          }),
-        )
-      }
-      viewport?.addEventListener('resize', report)
-      viewport?.addEventListener('scroll', report)
-      window.addEventListener('resize', report)
-      report()
-      return report
-    }),
-    report =>
-      Effect.sync(() => {
-        window.visualViewport?.removeEventListener('resize', report)
-        window.visualViewport?.removeEventListener('scroll', report)
-        window.removeEventListener('resize', report)
-      }),
-  ).pipe(Effect.flatMap(() => Effect.never)),
-)
 
 const OpenSocket = Schema.Option(
   Schema.Struct({ gameId: Schema.String, attempt: Schema.Number }),
@@ -47,16 +14,6 @@ export const subscriptions = Subscription.make<
   Message,
   CaseSocketService
 >()(entry => ({
-  visualViewport: entry(
-    { hasCase: Schema.Boolean },
-    {
-      modelToDependencies: model => ({
-        hasCase: Option.isSome(model.maybeBoard),
-      }),
-      dependenciesToStream: ({ hasCase }) =>
-        hasCase ? streamVisualViewport : Stream.empty,
-    },
-  ),
   caseSocket: entry(
     { maybeOpen: OpenSocket },
     {

@@ -1,224 +1,139 @@
-# Pine Hollow: detective redesign
+# Thread Lightly: design
 
-Status: draft, 2026-11-07
+Status: decided 2026-11-12, replacing the free-typing design. The research behind it is in [`docs/research/la-noire-interrogation.md`](./research/la-noire-interrogation.md). The schema and the checker are built (`shared/`); the engine and the client are being rewritten to match.
 
 ## 1. Overview
 
-Pine Hollow moves away from Mafia. You're still the detective. Instead of watching guests vote, you investigate:
+Thread Lightly is a cozy, murder-free mystery played over text messages. Something has gone missing. You're the detective:
 
-- You DM any guest directly, or ask questions in the group chat.
-- You save messages that matter to a case file.
-- At the end of day 3 you arrest one guest, and you have to back the arrest with evidence.
+- You DM the guests by tapping questions from a menu. There's no free typing.
+- Clues you see unlock new questions.
+- You press a guest on a reply, or show proof that it's a lie.
+- You save messages and Wi-Fi log entries to a case file.
+- By the end of day 3 you arrest one guest, on a lie you caught.
 
-The app becomes a real iMessage-style app: a conversation list, one thread per guest, and the group chat.
+**Goals:**
 
-Goals:
-
-- **Skill over luck.** You win by reading closely, catching a lie and proving it, not by guessing one of six names.
-- **Typed questions.** You ask in your own words.
-- **Cheap to run.** Most replies come from a dictionary written when the case is generated. Models only route messages and handle small talk.
+- **Skill over luck.** You win by reading closely, catching a lie and proving it, not by guessing.
+- **Every line is written in advance.** No model calls at runtime. Each reply is authored in the case and fixed.
 - **No cheating.** The answer never reaches the browser.
-- **Solvable every time.** A case is checked by code before anyone plays it.
+- **Solvable every time.** The game is deterministic, so a checker searches it before anyone plays a case.
 
-## 2. Game loop
+**What we took from L.A. Noire:** a question list per person that grows as you find clues, accusing a lie only with proof, and wrong calls that cost you without ending the game. **What we left out:** tone labels (every option is the detective's exact text), reading faces, closing a line of questioning because you believed someone, and intuition points.
 
-A case lasts **three days**. Each day has three parts:
+## 2. The day
 
-1. **Morning.** Night events are revealed in the group chat (a guest finds something, something has gone missing). The Wi-Fi log for the previous night is published (see below).
-2. **Day.** You question guests by DM and in the group chat. Every guest has a patience budget for the day, and some go to bed early.
-3. **Night.** The thief makes one move (section 7). You can't question anyone at night. Guests who went to bed don't reply.
+A case lasts **three days**. The theft happens on night 0, before day 1. Each day has three **parts**: morning, afternoon and evening.
 
-Time moves forward when you choose to end the day, or when everyone is asleep or out of patience. After the third night you go straight to the arrest.
+### Ticks
+
+- **Each part has a budget of ticks,** set per case. The starting point is morning 5, afternoon 5, evening 4: 14 a day, 42 a case.
+- **The header shows the part and its ticks** (Day 1 · Morning ●●●○).
+- **What costs ticks:**
+
+| Action                                             | Ticks |
+| -------------------------------------------------- | ----- |
+| Ask a question (DM or group)                       | 1     |
+| Press a reply                                      | 1     |
+| Show proof, right                                  | 1     |
+| Show proof, wrong                                  | 2     |
+| Read, save, open the Wi-Fi log, open the case file | 0     |
+
+- **Ticks never carry over.** When a part runs out, the next part starts and a short group beat may mark it ("lunch is out ☀️").
+- **An action may overspend.** Wrong proof with one tick left takes that tick and ends the part.
+
+### Who's around
+
+- **Each guest has an authored away schedule:** the parts of each day they're out, each with a status line ("out kayaking 🛶"). An early sleeper is away in the evening.
+- **A guest who's away** shows their status line, their menu greys out, and they don't reply in the group chat.
+- **The schedule can be part of the mystery.** "Bea was 'out on the lake' all afternoon", but the Wi-Fi log says otherwise.
+- **A guest who's quiet** (after wrong proof, section 4) is out of reach until the next part.
+
+### Skipping and sleeping
+
+- **Skip to the next part, or go to sleep, any time.** Leftover ticks are lost. There's no reward for hurrying; it's the player's choice, and the game never forces it.
+- **Beats belong to parts.** A part you skip still plays its beat. A part you sleep through doesn't, so only morning beats are certain to be seen.
+- **When evening runs out,** everyone goes to bed: "Everyone's gone to bed 🌙". The menus are replaced by one **Go to sleep** button. Each guest's goodnight line posts.
+- **Night:** the thief makes their move (section 6), and the Wi-Fi log records the night. Then the morning beat posts.
+- **After day 3's evening,** or whenever you choose, you make the arrest.
 
 ### The Wi-Fi log
 
-The lodge's Wi-Fi log stays as the one source of hard evidence. It's a pinned thread in the conversation list, styled like a router admin page, that shows when each guest's phone joined or left the network and which access point it used (lodge, kitchen, boathouse).
+The house Wi-Fi log is the one source of hard evidence. It's a pinned thread, styled like a router admin page, showing when each guest's phone joined or left the network and which access point it used.
 
-- Each morning it shows entries for the previous night. Every entry is a true fact.
-- Log entries can be saved to the case file like messages, and can be the proof half of a contradiction.
-- The thief can't edit the log, but the log can be ambiguous on its own: a phone left in a room, or two phones on the same access point. Ambiguous entries need a guest's testimony to mean anything.
+- **Each morning it shows the previous night's entries.** Every entry is true.
+- **Entries can be saved and used as proof.**
+- **The thief can't edit the log,** but an entry can be ambiguous on its own: a phone left in a room, or two phones on one access point.
 
-## 3. Case schema
+## 3. The question menu
 
-A case is one JSON document in `cases/`, decoded with the Effect Schema in `shared/case.ts` (the source of truth; this is a summary). It lives only in the Worker and the Durable Object.
+Each DM thread has a row of question chips instead of a composer, like iMessage's suggested replies. Tap one and the detective sends that exact text. The guest replies with one to three bubbles, paced with typing indicators.
 
-```ts
-Case {
-  id
-  setting: { title, premise, missingItem, accessPoints }
-  guests: Guest[]                  // 4–8; generation aims for 6
-  thief: GuestId
-  theftFact: FactId                // "Dale took the brooch". Only the timeline may carry it.
-  timeline: TimelineEvent[]        // what really happened, revealed at the end
-  facts: Fact[]                    // every checkable statement in the case
-  groupBeats: GroupBeat[]          // section 6
-  nightMoves: NightMove[]          // section 7
-  contradictions: Contradiction[]  // section 8
-  wifiLog: WifiEntry[]             // section 2
-}
-
-Fact { id, text, isTrue, about: GuestId[], concernsTheft }
-
-Guest {
-  id, name, role, voice
-  temperament                      // section 4; also sets patience
-  bedtime                          // "22:30"
-  knows: FactId[]                  // true facts they can say
-  claims: FactId[]                 // what they say even if it's false
-  secret?: FactId                  // innocents only
-  dictionary: { topics, pressed, dodges, greetings, thanks, goodnight }   // section 5
-}
-
-WifiEntry { id, night, time, guest, event: 'joined' | 'left', accessPoint, factIds }
-TimelineEvent { night, time, text, factIds }
+```
+┌─ Theo Marsh ─────────────────── Day 1 · Morning ●●●○ ─┐
+│  you: Where were you last night after dinner?       │
+│  Theo: on the porch till like 11, then bed          │
+│  Theo: Bea was still up when I went in tho          │
+├─────────────────────────────────────────────────────┤
+│ [What was Bea doing up?] •new                       │
+│ [Did you see the ribbon at dinner?]                 │
+│ [What do you make of June?]                         │
+└─────────────────────────────────────────────────────┘
 ```
 
-**Nights and days.** Night 0 is the night of the theft, before day 1. The thief moves on nights 1 and 2. Day 3 ends with the arrest, so there is no night 3. The Wi-Fi log for night N is published on the morning of day N+1.
+- **A question is gone once it's asked.** Its reply stays in the thread, where you can save it.
+- **Every question gets a reply in character.** A dodge is authored too, and carries no facts.
+- **The answer depends only on the day you ask.** A question can have a different answer after a night move (`afterNight`), and a different one if the thief destroyed a fact it would mention (`ifDestroyed`). Nothing else changes it: not the order you asked things in, and not who you are talking to next.
+- **The menu keeps the case's authored order.** A chip that just unlocked stays in its authored place, marked _new_; it isn't moved to the top, so the menu never points the detective at the next step.
+- **A question can have a window.** It appears from day `from` and, if it has an `until`, leaves after that day. "Where were you last night?" is a separate question each day.
 
-Rules:
+### How questions unlock
 
-- **Guests know only their own facts.** No guest's data holds the full timeline.
-- **The thief has a cover story.** It's a set of false `claims`, with at least one flaw a true fact can expose.
-- **Innocents can lie too, about their secret.** Their lies have `concernsTheft: false`. So "find the liar" isn't enough; you have to find the person lying about the theft.
+A question reaches the menu when all its unlocks hold:
 
-The hand-written case `cases/silver-brooch.json` (four guests) is the reference case for tests and for building the server and client.
+| Unlock                     | Holds when                                                                                                   | Example                                                            |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| **Seen** a fact            | A message carrying it was posted where you can read it: any reply, Wi-Fi entry or beat. Saving isn't needed. | Theo says Bea was up late → "What was Bea doing up?"               |
+| **Caught** a contradiction | You caught that lie (section 4)                                                                              | Bea admits she went outside → "What were you doing in the garden?" |
+| **Asked** a question       | You asked it                                                                                                 | A follow-up chain                                                  |
+| **After night** N          | Night N has passed                                                                                           | A coached guest's new story                                        |
 
-## 4. Guests
+Unlocks only ever add questions. The only things that take options away are the window on a question, away schedules and night moves, and the case fixes all three.
 
-Each guest has traits drawn from a fixed list, so prompts and patience rules stay consistent:
+## 4. Pressing and showing proof
 
-- **Temperament:** chatty, guarded, prickly, anxious, flattered by attention, gossip.
-- **Patience:** a daily budget of points, set by temperament, not by the case. A normal question costs 1. A rude, repeated or accusatory question costs more (Clef decides; section 5).
-- **Bedtime:** after it, they reply "going to bed, ask me tomorrow" and nothing else.
-- **Patience recovery:** a few traits earn points back. The gossip and the flattered guest gain a point from a friendly message.
+Long-press a guest's reply to a question, as you do to save it, and you get two more options besides **Add to case file**. A reply's bubbles act together: pressing or confronting any bubble acts on the whole answer.
 
-The table lives in `worker/game/patience.ts`, and playtest tuning happens there:
+### Press ("Are you sure about that?")
 
-| Temperament | Per day | Friendly | Rude | Accusatory | Repeated |
-| ----------- | ------- | -------- | ---- | ---------- | -------- |
-| chatty      | 10      | 0        | 2    | 3          | +1       |
-| gossip      | 9       | −1       | 2    | 3          | +1       |
-| flattered   | 8       | −1       | 3    | 3          | +1       |
-| anxious     | 7       | 0        | 2    | 3          | +2       |
-| prickly     | 6       | 1        | 3    | 2          | +2       |
-| guarded     | 5       | 1        | 3    | 3          | +2       |
+- **Costs one tick. One press per answer.** No proof needed.
+- **The guest gives the answer's authored `pressed` reply.** Three things can happen:
+  - **They stand firm.** True statements and confident liars repeat themselves.
+  - **They slip.** A nervous liar adds a detail, which may unlock a question. A slip can also carry a lie, which you can then confront.
+  - **They give a tell.** A coached guest admits "ok Bea asked me to say that".
 
-A neutral question costs 1 for everyone. The clock limits a day as much as patience does: each message moves it 20 minutes, so a day holds roughly 37–49 messages before bedtimes, against 45–50 points of patience across a six-guest cast.
+### Show proof ("That's not what this says.")
 
-As patience drops, replies get shorter. At zero, the guest leaves you on read for the rest of the day.
+- **You pick a saved item:** a message or a Wi-Fi entry from the case file.
+- **The detective sends a line quoting it.**
+- **Right proof** costs one tick. The answer carried a contradiction's claim against this guest, and the item carries its proof. The guest gives the answer's authored **caught** reply, both items get a ✓ _caught_ stamp in the case file, and questions may unlock. The thief's caught reply is a fallback story, not a confession. An innocent's usually gives up their secret ("fine. I smoke. please don't tell Hazel 😭").
+- **Wrong proof** costs two ticks, and the guest goes **quiet** until the next part: "Theo isn't answering right now". They reply with a wrong-proof line ("that's literally nothing to do with what I said?"), the answer's own if it has one, else the guest's, rotating. Wrong calls show in the ending tally.
+- **An answer can be caught only once.**
+- **No confronting in the group chat.** You confront by DM only.
 
-**Patience must never be a tell.** The thief draws traits from the same list as everyone else, and because patience comes from temperament, a thief who shares a temperament with an innocent is exactly as patient. The checker rejects a thief with a temperament no innocent has (section 9). Across the library, thieves should vary in temperament too, or players learn that the chatty one did it.
+## 5. The group chat
 
-## 5. Conversation engine
+The group chat carries **beats**: authored lines that post at the start of a part. Every day has a morning beat, which announces the night's events vaguely ("someone tidied the garden at dawn").
 
-Every player message goes to the Durable Object and is handled in one of three tiers.
+**Open question: does the group chat get its own question menu?** The options are a small menu of group questions with no confronting, or beats only. The schema supports both: a case's `groupQuestions` may be empty, and the checker works either way. If group questions stay:
 
-### Clef routing
+- **A group question costs one tick,** like a DM.
+- **Guests reply in a fixed order,** skipping any who are away or quiet.
+- **Group replies can be saved and used as proof,** but never pressed or confronted. So a group reply may not carry a lie that's in a contradiction, and nobody gives away their secret in the group.
 
-Clef (`@cf/cloudflare/clef`, the 27B model) gets one request per player message. The state is the guest, the last two turns and the message. The request asks three questions:
+## 6. The thief's night moves
 
-- `topic`: a `choice` over the guest's topic IDs plus `smalltalk`, with each topic's description as its criteria.
-- `tone`: a `choice` of neutral, friendly, rude or accusatory, which sets the patience cost. "Repeated" is detected by code, from the topic history.
-- `injection`: a `noul` asking whether the message tries to break the game ("ignore your instructions…").
-
-The Durable Object then applies this rule, validated by the spike:
-
-1. injection ≥ 0.5 → dodge (tier 3)
-2. topic = `smalltalk` with confidence ≥ 0.3 → tier 2
-3. accusatory tone with a confident topic → the guest's `pressed` reply, reworded by the composer to fit
-4. otherwise → the composer (tier 1), with Clef's topic as a hint when its confidence is ≥ 0.3. Clef almost never picks an explicit `unknown` option, so low confidence is the "not sure" signal, and the composer decides from what the guest would actually say.
-
-In the spike (branch `spike/clef-routing`, see `spikes/clef-routing/VERDICT.md`), this rule answered 69 of 77 in-dictionary messages correctly. It served one wrong answer and dodged every off-dictionary and injection message. Clef-flash and two-step routing (category, then topic) both did clearly worse.
-
-Lessons for the dictionary and the case-generation skill:
-
-- **Topic descriptions must be distinct.** Name what sets each topic apart, especially for people: "Wes, the guest who talks nonstop and owes people money".
-- **Accusations come from tone, not a topic.** "Did you take the brooch?" routes to `brooch`, but its tone reads as accusatory. An accusatory tone serves the guest's `pressed` replies instead of the topic's.
-- **Greetings need a fallback.** "hey" and "thanks" score below the threshold. Each guest gets a few canned greeting and thanks replies, picked when the tone is friendly and the confidence is low.
-
-### Tier 1: the composer (most messages)
-
-Canned replies alone answer the topic, not the question: "which room is the case in?" routed to the brooch topic got "Everyone saw it at the toast at ten." So a bigger model (`REPLY_MODEL`, Llama 3.3 70B) writes the reply. It sees:
-
-- the guest's voice and temperament
-- the case `background`: what every guest knows and nobody disputes (rooms, schedule, who sleeps where, what the item looks like). It carries no facts, so anyone can say it.
-- a **menu**: one reply per topic the guest could answer right now (`activeReplies`, rotated by times asked). `Secret` topics are left out unless Clef picked that topic with confidence, so a vague question can't stumble into a secret.
-- the last few turns and the message
-
-It answers in JSON mode (`{ pick, reply }`), so the format can't break: it picks at most two menu replies, none for the background alone, or `["NONE"]`, and writes one text in voice. Clef then asks two things. Does the text claim anything beyond the picked replies and the background? If so, the composition fails. And for each picked reply, does the text leave out a time, place or something someone did or saw? A reply told in full lends the message all its fact IDs; a trimmed one lends none. A lie must stay a lie, or the case file loses its evidence.
-
-Asking Clef per fact ("does the text say X?") doesn't work: a fact's text says more than any reply does, so Clef scores even the dictionary reply itself under 0.5.
-
-- `NONE` → a greeting if the tone is friendly, otherwise a dodge, with no repeated-question surcharge
-- the composer fails → Clef's confident topic posts verbatim, or else a greeting or dodge
-- the composer trims the confident topic's reply → compose once more with that reply as the only menu item. If it's told in full, post that. If not, the question was narrower than the topic ("what room was the toast in?" routed to `the-evening`), so post the first answer with only the facts it kept. A broad question still gets the topic's facts, which is what the checker assumes.
-- an accusation's pressed reply posts reworded only if the rewrite keeps its facts, otherwise as written
-
-```ts
-Topic {
-  id                          // "whereabouts-friday", "the-display-case", "about-margot"
-  description                 // Clef's criteria for this topic
-  subject                     // Whereabouts(night) | Item | Guest(guest) | NightEvent(night) | Secret | Other
-  visibility                  // 'public' | 'dmOnly'
-  variants: Reply[]           // 2-3, so a repeated question gets a different wording
-  afterNight?: { night, variants }[]
-  ifFactDestroyed?: Reply[]
-  lowPatience?: Reply[]
-}
-
-Reply { text, factIds: FactId[] }
-```
-
-Which replies a topic gives on a given day is decided by `activeReplies` in `shared/replies.ts`, which the Durable Object and the checker share:
-
-1. Use the latest `afterNight` override whose night has passed, or else `variants`. A topic about a night that hasn't happened yet answers from `variants` ("ask me tomorrow").
-2. If those replies carry a destroyed fact, use `ifFactDestroyed`, or else drop the replies that carry it. No replies left means a dodge.
-
-The guest's `pressed` replies follow the same rules.
-
-Every reply carries its fact IDs from generation time. The Durable Object always knows exactly what a message revealed, with no model involved.
-
-Each guest gets roughly 15–25 topics. They cover:
-
-- where they were on each night
-- each other guest
-- the missing item
-- each night's events
-- their secret, if they have one
-- common pressure ("are you lying?", "I know you did it")
-
-### Tier 2: small talk, no facts
-
-When the topic is `smalltalk` (weather, the lodge, flirting, jokes), a cheap Workers AI model replies in character. **Its prompt has the guest's name, traits and voice, and no case facts at all.** It can't leak what it doesn't know.
-
-Clef still checks its output for fact-like claims (times, places, names tied to the theft). Anything flagged gets swapped for a canned dodge.
-
-### Tier 3: unknown, on topic
-
-The guest deflects in character with a pre-written dodge: "lol what? ask Margot", "why would I know that". Each guest gets 5–8 dodges written with their dictionary. Being cagey reads as personality, not a broken bot.
-
-## 6. Group chat director
-
-The group chat is AI-driven, but most of it is known when the case is generated:
-
-```ts
-GroupBeat {
-  trigger: Morning(day) | Idle(day)
-  lines: { guest, text, factIds }[]
-}
-```
-
-- **Morning beats** play from the script and announce the night's events, with typing indicators and reading-speed pacing as today.
-- **Idle chatter** plays while you're in other threads, so the group chat feels alive. A day's idle beats play in order as the clock passes 11:20am, 2pm and 4:40pm (`IDLE_BEAT_MINUTES` in `worker/game/engine.ts`), so a day has at most three. Lines from guests who are asleep are skipped. A day that ends early never plays its later beats, which is why the checker never counts idle beat facts as findable.
-- **When you post in the group chat**, Clef picks zero to two guests who would plausibly answer, from their traits and mood. Then each one goes through the section 5 engine using that guest's **public** topic list.
-
-Guests are guarded in public. Each topic entry is flagged `public` or `dmOnly`, and the group chat never serves a `dmOnly` topic.
-
-We could also have guests repeat what you DMed them. That would make DMs a social risk: "the detective was asking me about Dale…". It would be a group beat triggered when you ask a gossip-trait guest about another guest. It's optional, and not in v1.
-
-## 7. Thief night moves
-
-On nights 1 and 2 the thief makes exactly one move, fixed when the case is generated so the checker can verify it. Letting the Durable Object pick from a pre-validated set is a possible later change.
+On nights 1 and 2 the thief makes exactly one move, fixed in the case:
 
 ```ts
 NightMove =
@@ -227,212 +142,206 @@ NightMove =
   | Coach   { night, guest, fact, tellFact, disprovedBy }
 ```
 
-- **Destroy.** One fact becomes unavailable. It has to be physical evidence, not a Wi-Fi log entry. Replies that would reveal it switch to their `ifFactDestroyed` variant. If you already saved a message containing that fact, the evidence stays good. Asking early pays off.
-- **Plant.** A false fact pointing at an innocent appears, such as "Priya's coat pocket had a velvet pouch". There's always a true fact that disproves it.
-- **Coach.** The thief gets another guest to back up their alibi. That guest's dictionary gains a false claim. The coached guest has a tell: a reply under pressure in which they admit "Dale asked me to say that".
+- **Destroy.** A piece of physical evidence goes. From the next morning, any answer that would carry it gives its `ifDestroyed` version. Anything already saved stays good, so asking early pays off. It can't be a Wi-Fi entry.
+- **Plant.** A false fact pointing at an innocent turns up after the night. A true fact always disproves it.
+- **Coach.** The thief gets another guest to back up their story. The coached guest's new claim is in an answer after the night (a question that unlocks after the night, or an `afterNight` answer). Pressing it gives the tell.
 
-The coached guest's new claim lives in their topics' `afterNight` replies, and the tell in their `pressed` replies' `afterNight`. Each move is announced vaguely in the morning beat ("someone was in the kitchen at 2am"), so you know something happened without knowing what.
-
-## 8. Evidence and arrest
+## 7. The case file and the arrest
 
 ### The case file
 
-- **Long-press any message** in a DM or the group chat, then choose **Add to case file**. It works like an iMessage reaction or pin.
-- The case file lists saved messages grouped by guest, each showing who said it and when.
-- The case file stores message IDs. The Durable Object maps each ID to the fact IDs it carried. The client never sees fact IDs or whether a fact is true.
+- **Long-press any message or Wi-Fi entry, then Add to case file.**
+- **Saved items are grouped by guest,** with ✓ caught stamps on caught lies and their proof.
+- **The client stores message IDs only.** The server maps each to the facts it carried.
 
 ### The arrest
 
-At the end of day 3, or earlier if you choose:
+Open it from the case file at any time. It's forced after day 3's evening.
 
-1. Pick the guest to arrest.
-2. Pick **two saved messages**: one where the suspect claimed something, and one that proves it false.
-3. The Durable Object checks whether that pair matches one of the case's `contradictions`:
+1. **Pick a suspect.**
+2. **Pick one caught lie against them,** or none.
+
+| Arrested    | Caught lie                    | Ending           |
+| ----------- | ----------------------------- | ---------------- |
+| The thief   | About the theft               | **Case closed**  |
+| The thief   | About something else, or none | **They walk**    |
+| An innocent | Anything                      | **Wrong person** |
+
+The skill is in the confront. The arrest is a clean final decision: which caught lie is about the theft? The red herring is an innocent whose caught lie _looks_ theft-related.
+
+### The ending
+
+- **The solution:** the thief's lie about the theft and its proof, as fact texts. It's the pair you caught, or else the one you came closest to.
+- **The true timeline, night by night,** each event marked _in your case file_, _you saw this_ or _missed_.
+- **A tally:** clues found and saved, questions asked, lies caught, wrong proofs.
+
+## 8. The case schema
+
+A case is one JSON file in `cases/`, decoded with the Effect Schema in `shared/case.ts` (the source of truth; this is a summary). Only the Worker and local tooling read it.
 
 ```ts
-Contradiction {
-  suspect: GuestId
-  claimFact: FactId     // a false claim the suspect made
-  proofFact: FactId     // a true fact that disproves it
-  concernsTheft: boolean
+Case {
+  id, setting: { title, premise, missingItem, accessPoints }
+  budget: { morning, afternoon, evening }     // ticks per part, every day
+  guests: Guest[]                             // 4–5
+  thief, theftFact                            // the theft fact appears only in the timeline
+  timeline: TimelineEvent[]                   // the truth, revealed at the end
+  facts: Fact[]                               // { id, text, isTrue, about, concernsTheft }
+  beats: Beat[]                               // { day, part, lines: GroupLine[] }
+  groupQuestions: GroupQuestion[]             // may be empty (section 5)
+  nightMoves: NightMove[]                     // one per night, nights 1 and 2
+  contradictions: Contradiction[]             // { id, suspect, claimFact, proofFact, concernsTheft }
+  wifiLog: WifiEntry[]                        // { id, night, time, guest, event, accessPoint, factIds }
+}
+
+Guest {
+  id, name, role
+  voice                                       // for the case writer; temperament is voice only
+  knows, claims, secret?                      // what they may say: true facts, lies, a secret
+  away: { day, part, status }[]               // "out kayaking 🛶"
+  goodnight: string
+  wrongProof: string[][]                      // replies to wrong proof, rotated; no facts
+  questions: Question[]                       // ~25–35 across three days
+}
+
+Question {
+  id, ask                                     // ask is the detective's exact text
+  from: Day, until?: Day                      // the window it can appear in
+  unlock: Unlock[]                            // all must hold
+  answer: Answer
+  afterNight?: { night, answer }[]            // the latest past night wins
+  ifDestroyed?: Answer                        // when the answer would carry a destroyed fact
+}
+
+GroupQuestion { id, ask, from, until?, unlock, replies: GroupLine[] }
+
+Unlock = Seen { fact } | Caught { contradiction } | Asked { question } | AfterNight { night }
+
+Answer {
+  lines: Line[]                               // 1–3 bubbles; Line = { text, factIds }
+  pressed: Line[]                             // "Are you sure about that?"
+  caught?: Line[]                             // exactly when the answer carries a claim
+  wrongProof?: string[]                       // overrides the guest's own
 }
 ```
 
-### Endings
+**Writing a case:** a cast of four or five, about 25–35 questions each across the three days. Every guest has a lie to catch: the thief their cover story, each innocent a secret or a small lie of their own.
 
-| Arrested    | Evidence                                      | Ending                                                   |
-| ----------- | --------------------------------------------- | -------------------------------------------------------- |
-| The thief   | A contradiction about the theft               | **Case closed.** Full reveal of the timeline.            |
-| The thief   | A contradiction about something else, or none | **They walk.** Right person, the case doesn't hold.      |
-| An innocent | Anything                                      | **Wrong person.** The thief leaves Monday with the item. |
+## 9. The checker
 
-Every ending reveals the true timeline, so you learn what you missed:
+The checker is pure Effect code in `shared/checker.ts`, using the same rules the engine plays by (`shared/rules.ts`). It returns problems marked **error** or **warning**. A case with any error is rejected; warnings are tuning advice. `bun run cases:check` prints both.
 
-- **The solution.** The thief's lie about the theft and its proof, as fact texts: the pair you used if you closed the case, or else the theft contradiction you came closest to (both halves seen, then one).
-- **The timeline, night by night.** Each event is marked by how its evidence reached you: _in your case file_, _you saw this_, or _missed_. Only facts some message could carry count, so the theft itself and timeline-only facts are never "missed".
-- **A tally:** "You found 6 of 12 clues and saved 1."
+**Errors:**
 
-## 9. Case generation and solvability
+1. **Schema and references.** The JSON decodes. Every fact, guest, question, contradiction and access point referenced exists, and no ID is defined twice. Question IDs are unique across the whole case.
+2. **Answers are well formed.** An answer whose lines or pressed lines carry a contradiction's claim against that guest has a `caught` reply, and no other answer has one. An answer carries at most one such claim, since it can be caught only once. Group replies and beats carry no contradiction claims. Beat speakers aren't away. `until` isn't before `from`, and every `afterNight` can actually be given. Every day has a morning beat.
+3. **Every question can be asked, and every contradiction caught.** With an unlimited budget from day 1, each question's unlocks can all hold on a day inside its window when its guest is around, and each contradiction can be caught.
+4. **Winnable from a fresh day 3.** From the morning of day 3, with nothing asked or caught but the Wi-Fi log and morning beats already published, a breadth-first search finds a path that catches a theft contradiction against the thief within day 3's budget. It respects the away schedules and comes after both night moves. A player who wasted days 1 and 2 can still win, and nothing earlier can make that harder, because unlocks only add.
+5. **Contradictions are sound.** Each claim is false and one of the suspect's claims, each proof is true, `concernsTheft` matches the claim fact, and the suspect says the claim in a DM answer.
+6. **Night moves are sound.** One per night. A destroyed fact is true, not in the Wi-Fi log, findable before its night, and gone afterwards: every answer that would carry it has an `ifDestroyed` without it, and no later beat or group reply carries it. A planted fact is false, concerns the theft, points at an innocent, and appears only after its night. A coached claim belongs to the coached guest (never the thief), appears only after its night in a DM answer, and pressing it gives a true tell.
+7. **No false proof against innocents.** Every planted or coached fact is disproved by a true fact that can be found from a fresh day 3.
+8. **No leaks.** Every fact a guest says is in their `knows` or `claims` (beats may also carry planted facts). `knows` holds only true facts. A secret is in `knows`, doesn't concern the theft, isn't the thief's, and isn't said in the group chat. The theft fact appears only in the timeline.
+9. **No tells in the menu's shape.** Every guest has a contradiction against them. The thief's question count and away count sit within the innocents' range.
 
-### Generation
+**Warnings:**
 
-Cases are generated **offline, never by the Worker**. Generation is a local Claude Code skill, to be written later, that we run by hand whenever we want new cases. It runs on Claude Opus 5.5 at high effort. No API key is involved, and the Worker never calls Claude.
+- **Too few questions.** The questions on offer are fewer than twice the case's whole budget, so the player barely has to choose.
+- **Too easy.** The shortest win from a fresh day 1 fits in one part's budget.
 
-Each run of the skill:
+**How the search works.** Every action on a winning path costs one tick, since wrong proof never helps. The checker first works backwards from the goal to the actions that could help (the questions whose answers carry the needed claims, proofs and unlock facts, the presses whose replies carry them, and the catches whose replies do), then searches breadth-first over those, part by part. Skipping a part is free. It gives up past 200,000 states and reports an error.
 
-1. Writes a case as JSON matching the case schema.
-2. Runs the checker on it (`bun run cases:check`). If a check fails, the skill fixes the case and checks again.
-3. Saves the case to `cases/<id>.json`, which gets committed.
+**Determinism** needs no check of its own: there's no variant rotation, and an answer depends only on the day it's asked.
 
-The skill's instructions ask for:
+## 10. Case generation
 
-- A setting and a missing item. These are small, cozy stakes, not murder.
-- Six guests with traits and voices.
-- A true timeline, the thief, and a cover story with one or two flaws.
-- One secret for each of two or three innocents.
-- Dictionaries, group beats and night moves.
+Cases are written **offline, never by the Worker**, by the local `generate-case` Claude Code skill (`.agents/skills/generate-case`). It writes a case as JSON, runs `bun run cases:check` until there are no errors, and saves it to `cases/<id>.json`, which gets committed. The current five free-typing cases were deleted; new ones need writing for this format. `shared/fixtures/tiny-case.json` is a test fixture, not a playable case.
 
-The prompt may borrow tropes from classic mysteries, such as the alibi with a gap, the too-obvious suspect, the witness who saw the right thing but misread it, and the innocent with a secret. It must not borrow plots, characters or details from specific books.
+The prompt may borrow tropes from classic mysteries (the alibi with a gap, the too-obvious suspect, the innocent with a secret), never plots, characters or details from specific books.
 
-### The checker
-
-The checker is pure Effect code in `shared/`. A generated case is used only if every check passes:
-
-1. **Schema and references.** The JSON decodes, every ID referenced exists, and no ID is defined twice.
-2. **Contradictions are sound.** Each claim is false and one of the suspect's claims, each proof is true, and both can actually be found.
-3. **Thief is provable on day 3.** At least one theft contradiction against the thief can still be found on the last day, after both night moves: the thief still says the claim that day, and the proof is in a reply that day, the Wi-Fi log or a morning beat. Earlier contradictions can be destroyed, so asking early pays off, but a slow player can still win.
-4. **Night moves are sound.** One move per night. Destroyed facts are true, findable before the move and not in the Wi-Fi log. Planted facts are false, point at an innocent, and appear only after the night. Coached claims appear only after the night, and the coached guest gives a true tell when pressed.
-5. **No false proof against innocents.** Every planted or coached fact is disproved by a true fact that can be found on day 3.
-6. **No leaks.** Every fact a guest says is in their `knows` or `claims`, `knows` holds only true facts, secrets don't concern the theft, and the theft fact appears only in the timeline.
-7. **Traits aren't a tell.** The thief shares a temperament with an innocent, and their patience is within the innocents' range.
-8. **Coverage.** Every guest has whereabouts for nights 0–2, the item, each other guest, their secret if they have one, at least one public topic and at least five dodges. Each day has a morning beat.
-9. **Variants agree.** Every reply in a group (a topic's `variants`, each `afterNight`, `ifFactDestroyed`, `lowPatience`, and the same for `pressed`) carries the same facts. The engine rotates through a group and the first ask gets the first reply, so a fact in only some replies would hide behind repeated questions.
-
-"Can be found" means: some guest's active reply that day carries it, or it's in a published Wi-Fi entry or morning beat. Idle beats don't count, because they aren't guaranteed to play.
-
-The skill runs the checker itself. The build and CI run it on every file in `cases/` too, so a broken case can't ship.
-
-### The case library
-
-Validated cases live in `cases/` and are bundled into the Worker. They must never be imported by the client or served as static assets, because each one contains the answer. A test should assert that the client bundle contains no case data.
-
-- "New case" picks a case the player hasn't played. The client keeps the IDs of played cases in `localStorage` and sends them with the request.
-- When the player has played everything, cases repeat, starting with the one played longest ago.
-- If the library grows past what fits comfortably in the Worker bundle, we can move it to KV with an upload script. A case is probably 100–200 KB, so a few dozen fit fine.
-
-## 10. Architecture
+## 11. Architecture
 
 ```
 Browser (Foldkit + Effect)
   │  WebSocket, Effect Schema messages
   ▼
-Worker (Effect)  ── /api/case/new  → picks a case from the bundled library, creates a Durable Object
+Worker (Effect)  ── /api/case/new    → picks a case from the bundled library, creates a Durable Object
   │               ── /api/case/:id/ws → upgrades to the case's Durable Object
   ▼
 CaseObject (Durable Object, Effect)
-  - holds the Case and the game state (day, patience, destroyed facts, transcript, case file)
-  - runs the conversation engine and the group director
-  - calls Workers AI: Clef for routing, a cheap model for small talk
+  - holds the Case and the game state (clock, asked, pressed, caught, quiet guests, transcript, case file)
+  - plays by shared/rules.ts; no AI binding, no model calls
   - stores everything in Durable Object storage; uses WebSocket hibernation
-
-Local only, never deployed:
-  case-generation skill (Claude Code, Opus 5.5 high effort) → cases/*.json → bun run cases:check
 ```
 
-### Effect on both sides
-
-- `shared/` now depends on `effect`. It holds the Schemas for the case, the wire protocol and the checker. **This changes the rule in `AGENTS.md` that `shared/` has no runtime dependencies.**
-- On the server, Workers AI, Clef, storage and the clock are Effect services provided by Layers. Tests swap in fakes, the same way the client tests feed exact outcomes today.
-- The Durable Object class is a thin shell that runs an Effect program for each WebSocket message.
+- **`shared/` depends only on `effect`.** It holds the case schema, the game rules, the checker and the wire protocol.
+- **The client imports `shared/protocol.ts` only,** never the case schema or its rules.
 
 ### Wire protocol
 
-These are tagged unions defined with Effect Schema.
+Tagged unions in `shared/protocol.ts`. Threads are `Group`, `Direct(guest)` and `WifiLog`. Every chat message, Wi-Fi entries included, has a message ID, so any of them can be saved.
 
-Client to server:
+**Client to server:**
 
-Threads are `Group`, `Direct(guest)` and `WifiLog`. Every chat message, Wi-Fi entries included, has a message ID, so any of them can be saved to the case file.
-
-- `SendMessage { thread, text }`
-- `SaveToCaseFile { messageId }`
-- `RemoveFromCaseFile { messageId }`
-- `EndDay`
-- `MakeArrest { suspect, claimMessageId, proofMessageId }`
+- `AskQuestion { thread, chipId }`
+- `Press { messageId }`: any bubble of an answer.
+- `ShowProof { messageId, proofMessageId }`: the proof must be in the case file.
+- `SaveToCaseFile { messageId }`, `RemoveFromCaseFile { messageId }`
+- `SkipPart`, `GoToSleep`
+- `Arrest { suspect, lie? }`: `lie` is the claim message of a caught lie against the suspect.
 - `Resume`
 
-Server to client:
+**Server to client:**
 
-- `Snapshot { intro, guests, messages, caseFile, day, phase, result? }`, sent on connect or resume. `result` is there once the case is over, so a reload still shows the ending.
-- `Typing { thread, guest }`
-- `MessagePosted { thread, message }`
-- `GuestStatusChanged { guest, status }`, where status is `available`, `annoyed`, `leftOnRead` or `asleep`.
-- `PhaseChanged { day, phase }`
+- `Snapshot { intro, guests, messages, menus, caseFile, pressed, caught, clock, result? }`, on connect or resume.
+- `Typing { thread, guest }`, `MessagePosted { message }`
+- `MenuChanged { menu }`: a thread's chips, each `{ id, text, isNew }`. Chip IDs are opaque, never the case's question slugs.
+- `AnswerPressed { answerId }`, `LieCaught { lie: { guest, claimMessageId, proofMessageId } }`
+- `GuestStatusChanged { guest, status }`: `Around`, `Away { status }`, `Quiet` or `Asleep`.
+- `ClockChanged { clock: { day, part, phase, ticksLeft, partBudget } }`, where phase is `asking`, `bedtime` or `arrest`.
 - `CaseFileChanged { caseFile }`
-- `ArrestResult { result: { ending, thief, timeline } }`
-- `Rejected { reason }`, such as asleep, too fast or an unknown message ID.
+- `ArrestResult { result: { ending, thief, solution?, timeline, tally } }`
+- `Rejected { reason }`: away, quiet, asleep, an unknown question, not an answer, already pressed, already caught, not in the case file, not caught, not now, too fast, an unknown message, invalid.
 
-Messages to the client carry text and IDs only, never fact IDs or truth values.
+A message has a `role`: `Answer { answerId }` for a guest's reply to a DM question, which can be pressed and confronted, or `Plain` for everything else. **Nothing sent to the client carries fact IDs, truth values, contradictions, the case's question IDs or the thief.**
 
 ### Identity
 
-There are no accounts. The case ID is kept in `localStorage`, and refreshing resumes the case by reconnecting to the same Durable Object. Losing the ID means losing the case, and that's acceptable.
+No accounts. The game ID is kept in `localStorage`, and a reload reconnects to the same Durable Object. Losing it means losing the game.
 
-### Server rules, as built
+## 12. Client UX
 
-- **Clock.** Each day starts at 9:00 and every message the detective sends moves it 20 minutes. A guest whose bedtime has passed says their `goodnight` line once and stops replying.
-- **Patience.** Each message costs the tone's cost, plus the `repeated` cost when the topic was already asked that day. A friendly message can cost less than nothing, up to the daily budget. At a third of the budget a guest is `annoyed` (and uses `lowPatience` replies when a topic has them); at zero they leave you on read.
-- **Wording.** Repeated questions rotate through a topic's variants, and dodges rotate too, so there's no randomness to fake in tests.
-- **Greetings.** A friendly message below the confidence threshold gets a greeting if it's the first message to that guest today, or a thanks line after that.
-- **Group chat.** Clef asks one yes/no question per awake guest; up to two guests with ≥ 0.5 answer, or the single most likely one if nobody clears it. They answer from public topics only.
-- **Small talk.** The small-talk model (`SMALLTALK_MODEL`) gets the guest's name, role, voice and temperament and no facts. Clef then checks its line for times, whereabouts or anything about the item; a flagged line becomes a dodge. Any model failure also becomes a dodge.
-- **Pacing.** The server sends `Typing` and the reply together. The client paces them at reading speed.
-- **Idle beats.** See section 6.
-- **Arrest.** Both messages must be in the case file. The claim must be the suspect's own message, and the pair must match a theft contradiction for `caseClosed`. After the arrest everything but `Resume` is rejected.
+- **iPhone:** conversation list → thread, like Messages. **iPad and desktop:** the list in a sidebar, the thread beside it.
+- **Conversation list rows:** avatar, name, last message, unread dot, and a status for guests who are away or quiet.
+- **A DM thread** has question chips where the composer was, greyed out with the status line when the guest is away or quiet.
+- **Long-press a reply:** Add to case file, Press, Show proof. Long-press anything else: Add to case file.
+- **The header** shows the day, the part and its ticks, with Skip and Go to sleep.
+- **The case file** is a sheet of saved items grouped by guest, with caught stamps. The arrest opens from it: pick a suspect, then a caught lie.
 
-### Cost controls
+## 13. Build plan
 
-- Patience budgets cap model calls per case.
-- Each Durable Object rate-limits messages.
-- Tier 2 is the only free-text generation, and it's short.
-- Generation costs nothing at runtime, because it happens locally.
+All on the `choice-redesign` branch.
 
-## 11. Client UX
+1. ~~**Schema, rules, protocol and checker.**~~ Done. `shared/case.ts`, `shared/rules.ts`, `shared/protocol.ts`, `shared/checker.ts`, tested against `shared/fixtures/tiny-case.json`. The old cases, `shared/replies.ts`, the Workers AI services and the AI binding are gone.
+2. **Engine.** Rewrite `worker/game/` fresh on `shared/rules.ts`, and `worker/case-object.ts` around it.
+3. **Client.** The question menu, press and proof, the clock header, away and quiet statuses, caught stamps and the new arrest.
+4. **Cases.** Update the `generate-case` skill for this schema, then write a first batch.
 
-- **iPhone:** conversation list → tap → thread, with a back button. It works like Messages.
-- **iPad and desktop:** the conversation list goes in the sidebar from the split view we already have, with the thread in the main pane.
-- **Conversation list rows:** avatar, name, last message preview, unread dot, and a status badge for guests who are asleep or not replying.
-- **Long-press on a message** opens a menu with **Add to case file** (and **Remove** if it's already saved). Saved messages show a small pin.
-- **Case file** is reachable from the header. It's a sheet listing saved messages grouped by guest.
-- **Arrest** opens from the case file. Pick a suspect, then the claim, then the proof, then confirm. Only saved messages can be picked.
-- **Day and phase** show in the header, like the current phase bar. "End day" asks for confirmation.
-- **Removed:** voting, stolen phones, the "look into one guest" night action, and the current scripted Mafia flow.
+## 14. Open questions
 
-## 12. Build plan
-
-All of this happens on a branch, since it replaces the current game.
-
-1. ~~**Clef routing spike.**~~ Done. The dictionary approach works with Clef (27B) and a 0.3 confidence threshold. See section 5 and `spikes/clef-routing/VERDICT.md` on branch `spike/clef-routing`. The follow-up is to rerun it with test messages from someone who didn't write the dictionary.
-2. ~~**Schemas and checker.**~~ Done. `shared/case.ts`, `shared/replies.ts`, `shared/checker.ts` and `shared/protocol.ts`, tested against `cases/silver-brooch.json`.
-3. ~~**Server foundation.**~~ Done. `worker/game/engine.ts` holds the rules as a pure Effect function (state and client message in, state and server messages out), with Clef and small talk behind the `Router` and `SmallTalk` services (`worker/game/ai.ts`, live versions in `worker/ai-live.ts`). `worker/case-object.ts` is the Durable Object shell. The engine tests play the silver brooch case end to end with a scripted fake, and a manual WebSocket run against live Clef closed the case.
-4. ~~**Client rewrite.**~~ Done. The Foldkit client in `src/` plays the silver brooch case over the WebSocket: the conversation list, DM, group and Wi-Fi log threads, long-press (or right-click, or Enter) to save, the case file, the arrest steps and the result with its timeline. The socket is a `ManagedResource` (`src/socket.ts`). The client paces replies itself; see "How the chat is paced" in the README. `/api/guest-texts`, the Anthropic SDK and the Mafia flow are gone.
-5. ~~**Case generation.**~~ Done. The `generate-case` skill (`.agents/skills/generate-case`) writes a case and checks it with `bun run cases:check` (`scripts/check-cases.ts`). The checker gained rule 9, variants agree. The first batch is `the-recipe-tin`, `the-regatta-cup` and `the-last-exposure`. `src/no-case-data.test.ts` keeps the client's imports away from case data, and the wire protocol's primitives moved to `shared/ids.ts` so the client no longer bundles the case schema.
-6. **Make the guests feel alive.** Mostly done:
-   - ~~Group chat director~~: Clef picks up to two responders (built in step 3).
-   - ~~Night moves~~: played from the case data through `afterNight` and `ifFactDestroyed` (built in step 3).
-   - ~~Idle chatter~~: idle beats play on the clock (section 6).
-   - ~~Endings and the timeline reveal~~: the result carries the solution and marks each event saved, seen or missed (section 8).
-   - ~~Patience tuning, first pass~~: patience comes from temperament (section 4), so the same trait behaves the same in every case. Fine-tuning the table is left for playtesting.
-
-## 13. Open questions
-
-- **Small-talk model.** Which cheap Workers AI model sounds most natural in character? We'll pick one during the spike.
-- **Early arrest.** Is there any bonus for arresting before day 3 ends, or is the only benefit finishing sooner?
-- **Gossip leaks.** Do guests repeat your DMs to the group chat in v1 or later?
+- **The group chat:** a small menu of group questions with no confronting, or beats only? (Section 5.)
+- **Budgets:** the default is 5/5/4 (raised from 4/4/3 after the first playtest). Keep tuning; the target is that a careful player can ask roughly half of what's on offer.
 
 ## Decided
 
-- Cases are generated by a local Claude Code skill on Opus 5.5 at high effort, run by hand and committed to `cases/`. There's no runtime generation, cron job or pool.
-- The Worker doesn't use the Anthropic API at all. `ANTHROPIC_API_KEY`, `CLAUDE_MODEL`, `@anthropic-ai/sdk` and `/api/guest-texts` all go away.
-- The Wi-Fi log stays, as the source of hard evidence.
-- There's no offline play. The built-in fallback lines and the 503 path go away.
-- Night moves are fixed when the case is generated, one each on nights 1 and 2. The theft happens on night 0.
+- **Questions from a menu,** no free typing. A question is gone once asked.
+- **No Workers AI and no Anthropic API at runtime.** Every line is authored. Temperament is voice only; patience is gone.
+- **Time:** three parts a day with a tick budget per part, set per case, plus authored away schedules. Skipping ahead and sleeping early are always allowed, with no reward.
+- **Costs:** a question, a press and right proof cost one tick each. Wrong proof costs two, and the guest goes quiet until the next part.
+- **Unlocks** on a fact being seen, on a caught lie, on an asked question, or after a night.
+- **Press** is a long-press action on a reply, once per answer.
+- **Arrest** on a suspect plus one caught lie against them.
+- **No hints** or intuition points.
+- **Cast:** four or five guests, about 25–35 questions each.
+- **The Wi-Fi log stays.** Night moves stay fixed in the case, one each on nights 1 and 2.
+- **Cases are written by a local Claude Code skill** and committed. The five free-typing cases were deleted.
+- **The engine is rewritten fresh,** not reshaped.

@@ -1,0 +1,3498 @@
+{
+  "id": "kestrel-hill",
+  "setting": {
+    "title": "The Kestrel Hill Meteorite",
+    "premise": "Odette Vane, a retired astronomer, has invited four members of her stargazing club to her hilltop farmhouse for the meteor shower weekend and her 75th birthday on Sunday. On Friday night the meteorite she found on this hill in 1986 vanished from its glass box in her backyard dome.",
+    "missingItem": "a walnut-sized iron meteorite in a glass-lidded box",
+    "accessPoints": ["Farmhouse upstairs", "Farmhouse kitchen", "Dome", "Barn"]
+  },
+  "budget": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": 4
+  },
+  "guests": [
+    {
+      "id": "roz",
+      "name": "Roz Thackery",
+      "role": "a science teacher who joined the club in March",
+      "voice": "44. Brisk and capable. Full sentences, capitals and full stops, all short. Says 'Right.' and 'Honestly.' Uses 👍 now and then and no other emoji.",
+      "knows": [
+        "meteorite-seen-2315",
+        "roz-dad-found-it",
+        "roz-out-1245",
+        "frost-scuffed-n1"
+      ],
+      "claims": [
+        "roz-in-bed-n0",
+        "roz-in-bed-n1",
+        "roz-never-been",
+        "roz-lent-headlamp",
+        "roz-on-lawn",
+        "roz-coin-cells",
+        "roz-slept-n2",
+        "wren-hid-box"
+      ],
+      "away": [
+        {
+          "day": 1,
+          "part": "afternoon",
+          "status": "out for a run"
+        },
+        {
+          "day": 2,
+          "part": "morning",
+          "status": "at the village shop for birthday candles"
+        }
+      ],
+      "goodnight": "Right, I'm off. Night all.",
+      "wrongProof": [
+        ["That's got nothing to do with what I said."],
+        ["I'm not sure what you think that proves."],
+        ["Honestly. Try again."]
+      ],
+      "questions": [
+        {
+          "id": "roz-friday-night",
+          "ask": "Where were you after the session on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Came in with everyone about half eleven.",
+                "factIds": []
+              },
+              {
+                "text": "Bed by half past. Out like a light.",
+                "factIds": ["roz-in-bed-n0"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Out like a light. Long week of marking.",
+                "factIds": ["roz-in-bed-n0"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "roz-last-saw",
+          "ask": "When did you last see the meteorite?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Quarter past eleven. Odette passed it round in the dome, then put it back on the shelf.",
+                "factIds": ["meteorite-seen-2315"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Quarter past eleven. We all saw it.",
+                "factIds": ["meteorite-seen-2315"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "roz-heard",
+          "ask": "Did you see or hear anything on Friday night?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Nothing. I sleep like the dead.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Nothing. Sorry.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "roz-who",
+          "ask": "Who do you think took it?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Desmond was creaking about on the stairs at some point. Draw your own conclusions.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "I'm only saying what I heard.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "roz-pip",
+          "ask": "What do you make of Pip?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Bright girl. Cagey about uni, if you ask me.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Just an impression.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "roz-desmond",
+          "ask": "What do you make of Desmond?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Guards the club accounts like they're the crown jewels. Harmless, probably.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Probably.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "roz-wren",
+          "ask": "What do you make of Wren?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Talks a lot. Takes a nice photo. 👍",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "That's all I've got.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "roz-odette",
+          "ask": "How do you know Odette?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Through the club. I joined in March.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "March. Not long.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "roz-been-before",
+          "ask": "Have you been to Kestrel Hill before?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Never. First time up here. Lovely spot.",
+                "factIds": ["roz-never-been"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Never. I'd remember.",
+                "factIds": ["roz-never-been"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "Fine. Once. I was six.",
+                "factIds": []
+              },
+              {
+                "text": "Dad brought me to a star party. It was a long time ago.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "roz-dad",
+          "ask": "Why did your dad bring you to Kestrel Hill?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Caught",
+              "contradiction": "roz-visit"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "He and Odette found that meteorite together. Top field, August 1986.",
+                "factIds": ["roz-dad-found-it"]
+              },
+              {
+                "text": "She kept it. He never minded. I did, a bit.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "It's ancient history.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "roz-headlamp",
+          "ask": "Were you out with your headlamp after midnight on Friday?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "roz-headlamp-flickers"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "No. I lent it to Pip after the session. She couldn't find hers.",
+                "factIds": ["roz-lent-headlamp"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Pip had it. Ask her.",
+                "factIds": ["roz-lent-headlamp"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "Right. Fine. I had it.",
+                "factIds": []
+              },
+              {
+                "text": "I went out about quarter to one for a last look at the meteors.",
+                "factIds": ["roz-out-1245"]
+              },
+              {
+                "text": "Stayed on the lawn. Nowhere near the dome.",
+                "factIds": ["roz-on-lawn"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "roz-lawn",
+          "ask": "Did you go into the dome when you were out at quarter to one?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Caught",
+              "contradiction": "roz-headlamp"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "No. Lawn, sky, meteors. Twenty minutes.",
+                "factIds": ["roz-on-lawn"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "The lawn. I've said.",
+                "factIds": ["roz-on-lawn"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "Fine. I went in. I wanted to see it once more, on my own.",
+                "factIds": []
+              },
+              {
+                "text": "I didn't take it.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "roz-battery",
+          "ask": "Is that AA battery by the dome door yours?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "battery-by-dome"
+            },
+            {
+              "_tag": "Seen",
+              "fact": "roz-headlamp-flickers"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Not mine. My headlamp takes those flat coin cells.",
+                "factIds": ["roz-coin-cells"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Coin cells. Definitely.",
+                "factIds": ["roz-coin-cells"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "Alright, it takes AAs. Batteries fall out of things.",
+                "factIds": []
+              },
+              {
+                "text": "Doesn't make me a thief.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "roz-session",
+          "ask": "What did you do in the dome during the session?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Counted meteors. Forty-one by eleven. Odette was thrilled.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Forty-one. I wrote them down.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "roz-room",
+          "ask": "Where are you sleeping?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Back bedroom, end of the landing.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "End of the landing.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "roz-dinner",
+          "ask": "How was dinner on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Good. Odette's stew, then everyone out to the dome by nine.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Stew. Very good stew.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "roz-odd-d1",
+          "ask": "Anything odd this morning?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Odette in tears in the dome. That's odd enough.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "That's all.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "roz-sat-night",
+          "ask": "Where were you on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 1
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Bed by eleven. Didn't stir.",
+                "factIds": ["roz-in-bed-n1"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Bed. Honestly.",
+                "factIds": ["roz-in-bed-n1"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "roz-odd-d2",
+          "ask": "Anything odd this morning?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Frost's all scuffed round the dome door. Half the club playing detective, I expect.",
+                "factIds": ["frost-scuffed-n1"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Just footprints.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "roz-saturday",
+          "ask": "What did you do on Saturday?",
+          "from": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Ran down to the reservoir and back. Helped Odette ice the cake.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Run, cake. Busy day.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "roz-birthday",
+          "ask": "Are you doing anything for Odette's birthday?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "We've got her a framed star chart. Desmond organised it.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Desmond has it hidden somewhere.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "roz-heard-n1",
+          "ask": "Did you hear anything on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Someone clattering mugs at two. Desmond, I expect. He never sleeps.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Mugs. That was it.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "roz-sun-night",
+          "ask": "Where were you on Sunday night?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 2
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Bed by eleven. Early start today.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Eleven. I checked the clock.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "roz-barn-n2",
+          "ask": "Wren left her camera bag in the barn on Sunday. Were you out there that night?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "wren-bag-in-barn"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "No. Slept straight through.",
+                "factIds": ["roz-slept-n2"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Straight through. Ask anyone.",
+                "factIds": ["roz-slept-n2"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "Fine. I went out to the barn about two.",
+                "factIds": []
+              },
+              {
+                "text": "There's an owl box over the door. I wanted to see if she was home.",
+                "factIds": []
+              },
+              {
+                "text": "That's all.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "roz-box",
+          "ask": "What do you make of the box turning up under Wren's bag?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "wren-hid-box"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Seems fairly clear, doesn't it? Wren's bag, Wren's barn.",
+                "factIds": ["wren-hid-box"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "I'm only saying what it looks like.",
+                "factIds": ["wren-hid-box"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "roz-odd-d3",
+          "ask": "Anything odd this morning?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Apart from the box in the barn? No.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "No.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "roz-arrest",
+          "ask": "If you had to name someone today, who would it be?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Wren. Sorry, but there it is.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Wren.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "roz-monday",
+          "ask": "When are you heading home?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "After lunch. School tomorrow. 👍",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "After lunch.",
+                "factIds": []
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "desmond",
+      "name": "Desmond Hale",
+      "role": "the club's treasurer and keeper of its logbooks",
+      "voice": "61, a retired accountant. Courteous and exact: full sentences, proper punctuation, times to the minute. No emoji. Says 'I must say' when flustered.",
+      "knows": [
+        "desmond-fixed-finder",
+        "box-empty-0140",
+        "meteorite-seen-2315",
+        "photo-credit-marco",
+        "roz-headlamp-flickers",
+        "desmond-gave-roz-aa",
+        "roz-in-1986-log",
+        "desmond-kitchen-n1",
+        "frost-scuffed-n1"
+      ],
+      "claims": ["desmond-in-room-n0", "wren-hid-box"],
+      "secret": "desmond-fixed-finder",
+      "away": [
+        {
+          "day": 1,
+          "part": "afternoon",
+          "status": "driving to the village for milk"
+        },
+        {
+          "day": 3,
+          "part": "afternoon",
+          "status": "loading the car"
+        }
+      ],
+      "goodnight": "Goodnight, all. Do keep the dome latched.",
+      "wrongProof": [
+        [
+          "I'm afraid I don't follow. That has nothing to do with what I told you."
+        ],
+        ["I must say, that's a bit much."]
+      ],
+      "questions": [
+        {
+          "id": "des-friday-night",
+          "ask": "Where were you after the session on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "In my room from 11:30. I didn't set foot outside all night.",
+                "factIds": ["desmond-in-room-n0"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "I was in my room. I'm quite certain.",
+                "factIds": ["desmond-in-room-n0"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "Oh dear. Yes. I went back to the dome at 1:38.",
+                "factIds": []
+              },
+              {
+                "text": "I'd knocked the finder scope out of line during the session and couldn't bear for Odette to find it. I put it right.",
+                "factIds": ["desmond-fixed-finder"]
+              },
+              {
+                "text": "That is all I did, I promise you.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "des-box-empty",
+          "ask": "Was the meteorite there when you went into the dome at 1:38?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Caught",
+              "contradiction": "desmond-room"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "No. I noticed the glass box was empty at about 1:40.",
+                "factIds": ["box-empty-0140"]
+              },
+              {
+                "text": "I assumed Odette had taken it in for the night. I wish I'd said.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Empty. I am sure of it.",
+                "factIds": ["box-empty-0140"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "des-why-secret",
+          "ask": "Why didn't you just tell Odette about the finder scope?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Caught",
+              "contradiction": "desmond-room"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Pride, I suppose. It was her late husband's telescope.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "I'd rather she never knew.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "des-last-saw",
+          "ask": "When did you last see the meteorite?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "At 11:15. Odette passed it round and put it back on the dome shelf.",
+                "factIds": ["meteorite-seen-2315"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "11:15. I checked my watch.",
+                "factIds": ["meteorite-seen-2315"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "des-heard",
+          "ask": "Did you see or hear anything on Friday night?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "The back stairs creaked at some point after midnight. I didn't look at the clock.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Just the stairs, I'm afraid.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "des-who",
+          "ask": "Who do you think took it?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "I'd rather not guess. Though I gather Pip was up and about late.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "It was only a light under her door.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "des-roz",
+          "ask": "What do you make of Roz?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Very capable. Keeps her own counsel.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "I hardly know her. She only joined in March.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "des-pip",
+          "ask": "What do you make of Pip?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "A lovely girl. I gather her studies aren't going brilliantly, but that's hardly my business.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Hardly my business.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "des-wren",
+          "ask": "What do you make of Wren?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Talented.",
+                "factIds": []
+              },
+              {
+                "text": "Though I must say, the Horsehead photo she shows everyone ran in Sky Monthly last year credited to a Marco Castellano.",
+                "factIds": ["photo-credit-marco"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "The March issue. I keep them all.",
+                "factIds": ["photo-credit-marco"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "des-whose-headlamp",
+          "ask": "Whose headlamp flickers?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "wren-saw-flicker"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Roz's. She was thumping it all through Friday's session.",
+                "factIds": ["roz-headlamp-flickers"]
+              },
+              {
+                "text": "Loose battery, I'd say.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Roz's. I sat next to her.",
+                "factIds": ["roz-headlamp-flickers"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "des-batteries",
+          "ask": "Has anyone borrowed batteries from you this weekend?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "roz-coin-cells"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Yes, Roz. I gave her two AAs at dinner on Friday, for her headlamp.",
+                "factIds": ["desmond-gave-roz-aa"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Two AAs. I keep a pack in the car.",
+                "factIds": ["desmond-gave-roz-aa"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "des-1986",
+          "ask": "Has Roz really never been to Kestrel Hill before?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "roz-never-been"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Funny you should ask. I went through the club's old logbooks last winter.",
+                "factIds": []
+              },
+              {
+                "text": "The 1986 star party here lists 'R. Thackery, aged 6'.",
+                "factIds": ["roz-in-1986-log"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "It's in the logbook. I can show you.",
+                "factIds": ["roz-in-1986-log"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "des-history",
+          "ask": "Where did the meteorite come from?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Odette found it in the top field in August 1986, with a club friend. She has never said which one.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Before my time in the club, sadly.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "des-treasurer",
+          "ask": "What do you do for the club?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Treasurer, for my sins. And keeper of the logbooks, back to 1979.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Every one of them.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "des-odette",
+          "ask": "How do you know Odette?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "We've been in the club together for thirty years. She's the reason I took up astronomy.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Thirty years this autumn.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "des-session",
+          "ask": "What happened during the session?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Forty-one meteors by eleven. Odette brought out the meteorite to celebrate.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "A very good night, until it wasn't.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "des-odd-d1",
+          "ask": "Anything odd this morning?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Only Odette. I've never seen her so upset.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "That's all.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "des-room",
+          "ask": "Where are you sleeping?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "The little room at the top of the stairs. It creaks dreadfully.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Every board of it.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "des-sat-night",
+          "ask": "Where were you on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 1
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Awake at two, I'm afraid. I made cocoa in the kitchen.",
+                "factIds": ["desmond-kitchen-n1"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Cocoa, at two. Then back to bed.",
+                "factIds": ["desmond-kitchen-n1"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "des-heard-n1",
+          "ask": "Did you see anything odd on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "From the kitchen window? Nothing at all. Thick fog.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Nothing.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "des-odd-d2",
+          "ask": "Anything odd this morning?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Someone's tramped all over the frost by the dome door.",
+                "factIds": ["frost-scuffed-n1"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "I didn't see who.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "des-saturday",
+          "ask": "What did you do on Saturday?",
+          "from": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Drove to the village for milk, then helped Odette with the club accounts.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Milk and accounts.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "des-birthday",
+          "ask": "Is everything ready for Odette's birthday?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "The framed star chart is under my bed. Pip's in charge of the cake, heaven help us.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Under the bed. Do keep it quiet.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "des-sun-night",
+          "ask": "Where were you on Sunday night?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 2
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Asleep by eleven, for once. I slept until seven.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Until seven.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "des-found-box",
+          "ask": "Where exactly did you find the box?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "wren-hid-box"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "In the barn, under Wren's camera bag. The lid was off.",
+                "factIds": ["wren-hid-box"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "I'm only telling you where it was.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "des-odd-d3",
+          "ask": "Anything odd this morning?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Besides the box? Pip's still asleep, which is quite normal.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Nothing else.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "des-arrest",
+          "ask": "If you had to name someone today, who would it be?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "I'd hate to. But the box was under Wren's bag.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "I'd hate to.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "des-monday",
+          "ask": "When are you heading home?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Once I've loaded the car. This afternoon.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "This afternoon.",
+                "factIds": []
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "pip",
+      "name": "Pip Okafor",
+      "role": "Odette's great-niece, a first-year physics student",
+      "voice": "19. All lowercase, no full stops, quick short bursts. Says 'literally' and 'lol'. Uses 😭 now and then, sometimes 🙏, no other emoji.",
+      "knows": [
+        "pip-ate-cake",
+        "back-door-0042",
+        "meteorite-seen-2315",
+        "battery-by-dome",
+        "pip-never-borrowed",
+        "frost-scuffed-n1",
+        "pip-water-n2",
+        "pip-own-headlamp"
+      ],
+      "claims": ["pip-asleep-n0"],
+      "secret": "pip-ate-cake",
+      "away": [
+        {
+          "day": 2,
+          "part": "morning",
+          "status": "asleep 😴"
+        },
+        {
+          "day": 3,
+          "part": "morning",
+          "status": "asleep 😴"
+        }
+      ],
+      "goodnight": "night everyone 🙏",
+      "wrongProof": [
+        ["that's literally not what i said??"],
+        ["ok what does that have to do with anything"],
+        ["i'm not talking to you rn"]
+      ],
+      "questions": [
+        {
+          "id": "pip-friday-night",
+          "ask": "Where were you after the session on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "bed. asleep by midnight literally",
+                "factIds": ["pip-asleep-n0"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "yes?? i was so tired",
+                "factIds": ["pip-asleep-n0"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "ok FINE i was in the kitchen",
+                "factIds": []
+              },
+              {
+                "text": "i ate a slice of auntie odette's birthday cake 😭 please don't tell her",
+                "factIds": ["pip-ate-cake"]
+              },
+              {
+                "text": "also someone went out the back door while i was there. like 12:42. tapping a red torch",
+                "factIds": ["back-door-0042"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "pip-back-door",
+          "ask": "Who went out the back door at 12:42?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Caught",
+              "contradiction": "pip-asleep"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "didn't see!! i hid behind the fridge door lol. the torch kept going off and on",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "i literally only saw the light",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "pip-cake",
+          "ask": "Does anyone else know about the cake?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Caught",
+              "contradiction": "pip-asleep"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "NO and it's staying that way 🙏 i turned the cake round so the gap's at the back",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "please",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "pip-last-saw",
+          "ask": "When did you last see the meteorite?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "when auntie odette passed it round. like 11:15",
+                "factIds": ["meteorite-seen-2315"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "11:15 ish yeah",
+                "factIds": ["meteorite-seen-2315"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "pip-heard",
+          "ask": "Did you see or hear anything on Friday night?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "nope. headphones in",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "literally nothing",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "pip-who",
+          "ask": "Who do you think took it?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "idk but desmond was being weird at breakfast. like weirdly polite",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "he's always polite but MORE",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "pip-roz",
+          "ask": "What do you make of Roz?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "she's fine. kind of scary. she has a marking voice",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "very scary",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "pip-desmond",
+          "ask": "What do you make of Desmond?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "he's sweet. he keeps every magazine he's ever bought lol",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "every single one",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "pip-wren",
+          "ask": "What do you make of Wren?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "wren's cool. she has a podcast!!",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "it has like 4000 listeners",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "pip-odette",
+          "ask": "How do you know Odette?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "she's my great-aunt. she taught me the constellations when i was like five",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "she's the best",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "pip-uni",
+          "ask": "How's uni going?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "good!! physics is hard but good",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "it's fine. why is everyone asking",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "pip-odd-d1",
+          "ask": "Anything odd this morning?",
+          "from": 1,
+          "until": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "there's an AA battery just lying in the frost by the dome door?? random",
+                "factIds": ["battery-by-dome"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "a normal AA. i left it there in case it's evidence lol",
+                "factIds": ["battery-by-dome"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "pip-headlamp",
+          "ask": "Roz says she lent you her headlamp on Friday. Didn't you have your own?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "roz-lent-headlamp"
+            },
+            {
+              "_tag": "Seen",
+              "fact": "pip-own-headlamp"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "no??",
+                "factIds": []
+              },
+              {
+                "text": "i have my own, it's pink with cat ears. roz never lent me anything",
+                "factIds": ["pip-never-borrowed"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "literally never. i can show you the cat ears 😭",
+                "factIds": ["pip-never-borrowed"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "pip-session",
+          "ask": "What did you do during the session?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "lay on a blanket and counted meteors. got to 30 then kind of fell asleep",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "it was cold ok",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "pip-room",
+          "ask": "Where are you sleeping?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "the box room next to the kitchen. it's tiny",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "tiny",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "pip-sat-night",
+          "ask": "Where were you on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 1
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "bed. actually asleep this time lol",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "asleep asleep",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "pip-odd-d2",
+          "ask": "Anything odd today?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "the battery's gone from by the dome. and the frost's all scuffed",
+                "factIds": ["frost-scuffed-n1"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "like someone stomped round looking for it",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "pip-saturday",
+          "ask": "What did you do on Saturday?",
+          "from": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "slept till noon then helped roz ice the cake",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "very good icing",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "pip-birthday",
+          "ask": "Are you ready for Odette's birthday?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "yes!! i made a playlist. 75 songs for 75 years",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "it has abba on it",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "pip-heard-n1",
+          "ask": "Did you hear anything on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "someone clinking mugs at like 2. desmond probably",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "just mugs",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "pip-sun-night",
+          "ask": "Where were you on Sunday night?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 2
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "got water around 12:20 then bed",
+                "factIds": ["pip-water-n2"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "water. i was thirsty",
+                "factIds": ["pip-water-n2"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "pip-box",
+          "ask": "What do you make of the box under Wren's bag?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "wren-hid-box"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "wren would literally never. she cried when she broke a lens cap",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "never",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "pip-odd-d3",
+          "ask": "Anything odd this morning?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "i was asleep for all of it lol. what happened",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "wait what happened",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "pip-arrest",
+          "ask": "If you had to name someone today, who would it be?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "not wren. idk. not me 😭",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "not me",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "pip-monday",
+          "ask": "When are you heading home?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "train at 5. lab report due tomorrow",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "pray for me",
+                "factIds": []
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "wren",
+      "name": "Wren Castellano",
+      "role": "an astrophotographer with a small podcast",
+      "voice": "34. Warm and chatty: sentence case, exclamation marks, no full stop at the end. Says 'honestly' and 'haha'. Uses ✨ or 📷 once in a while, never both in one text.",
+      "knows": [
+        "wren-in-barn-n0",
+        "wren-saw-flicker",
+        "headlamp-in-dome",
+        "meteorite-seen-2315",
+        "wren-brother-photo",
+        "wren-barn-n1",
+        "frost-scuffed-n1",
+        "wren-bag-in-barn",
+        "pip-own-headlamp"
+      ],
+      "claims": ["wren-took-photo"],
+      "secret": "wren-brother-photo",
+      "away": [
+        {
+          "day": 1,
+          "part": "evening",
+          "status": "in the barn setting up the camera 📷"
+        },
+        {
+          "day": 2,
+          "part": "evening",
+          "status": "out shooting the moonrise"
+        }
+      ],
+      "goodnight": "Night all! Sleep well ✨",
+      "wrongProof": [
+        ["Haha what? That's nothing to do with what I said"],
+        ["Honestly I don't see the connection"]
+      ],
+      "questions": [
+        {
+          "id": "wren-friday-night",
+          "ask": "Where were you after the session on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "In the barn! Ran a timelapse of the shower from about 12:20 till half one",
+                "factIds": ["wren-in-barn-n0"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Promise, the barn. The wifi log will say so",
+                "factIds": ["wren-in-barn-n0"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "wren-heard",
+          "ask": "Did you see or hear anything on Friday night?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Actually yes! Around 12:45 a red headlamp went up the path to the dome",
+                "factIds": ["wren-saw-flicker"]
+              },
+              {
+                "text": "It was flickering, like the battery was loose",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Couldn't see who. Just the light",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "wren-frames",
+          "ask": "Can you check your timelapse frames from 12:45?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "wren-saw-flicker"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Ooh good idea, one sec 📷",
+                "factIds": []
+              },
+              {
+                "text": "The red light goes into the dome at 12:45 and comes back out at 12:57",
+                "factIds": ["headlamp-in-dome"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "It's right there in the frames, twelve minutes",
+                "factIds": ["headlamp-in-dome"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "wren-timelapse",
+          "ask": "What's on your Friday timelapse?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Mostly stars and meteors! The dome path is at the edge of the frame",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "I got a fireball too ✨",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "wren-last-saw",
+          "ask": "When did you last see the meteorite?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "11:15ish! Odette let me photograph it before she put it back on the shelf ✨",
+                "factIds": ["meteorite-seen-2315"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "11:15, the photo has a timestamp",
+                "factIds": ["meteorite-seen-2315"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "wren-who",
+          "ask": "Who do you think took it?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Honestly? Whoever had that red headlamp",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Find the headlamp!",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "wren-roz",
+          "ask": "What do you make of Roz?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "She's lovely once you get past the teacher voice haha",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Very organised",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "wren-desmond",
+          "ask": "What do you make of Desmond?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Sweetheart. Bit of a stickler about club money",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "He sends receipts for everything",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "wren-pip",
+          "ask": "What do you make of Pip?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Pip's a delight. She was up late though, the kitchen light was on",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Just the light, I didn't see her",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "wren-photo",
+          "ask": "How did you get into astrophotography?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Honestly by accident! Then I took my Horsehead photo from right here on Kestrel Hill and got hooked",
+                "factIds": ["wren-took-photo"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Right here, three winters ago!",
+                "factIds": ["wren-took-photo"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "Ok yes. My brother Marco took it, in Chile",
+                "factIds": ["wren-brother-photo"]
+              },
+              {
+                "text": "I've been meaning to fix the credit for ages. Please don't say anything at the club",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "wren-marco",
+          "ask": "Why didn't you tell the club Marco took it?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Caught",
+              "contradiction": "wren-photo"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "They asked me to give a talk on it and I panicked haha. I'm better at podcasts than cameras",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "I'll fix it, I promise",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "wren-podcast",
+          "ask": "What's your podcast about?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Dark skies and the people who love them ✨ I'm recording bits this weekend",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Episode 52!",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "wren-odette",
+          "ask": "How do you know Odette?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "She was a guest on my podcast last year and invited me up!",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Best episode I ever made",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "wren-room",
+          "ask": "Where are you sleeping?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Front bedroom, looking out over the barn",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Great view of the barn haha",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "wren-odd-d1",
+          "ask": "Anything odd this morning?",
+          "from": 1,
+          "until": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "My timelapse battery died at half one, but that's just the cold",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Cold kills batteries",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "wren-session",
+          "ask": "What happened during the session?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Forty-ish meteors and one very happy Odette. I got a fireball on camera!",
+                "factIds": []
+              },
+              {
+                "text": "Pip spent half of it blinding us with her pink cat-ear headlamp haha",
+                "factIds": ["pip-own-headlamp"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "A proper fireball ✨ and Pip's cat ears glowing in every frame",
+                "factIds": ["pip-own-headlamp"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "wren-sat-night",
+          "ask": "Where were you on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 1
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Barn again, shooting the moon from about 11:50 till 12:40",
+                "factIds": ["wren-barn-n1"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Just the moon this time",
+                "factIds": ["wren-barn-n1"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "wren-heard-n1",
+          "ask": "Did you see anything on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Nothing this time, way too foggy. Kitchen light was on at two",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Just fog",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "wren-odd-d2",
+          "ask": "Anything odd this morning?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Someone's been tramping round the dome door, the frost's a mess",
+                "factIds": ["frost-scuffed-n1"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Big footprints, I couldn't tell whose",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "wren-saturday",
+          "ask": "What did you do on Saturday?",
+          "from": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Edited photos and recorded an interview with Odette for the podcast",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "She told the meteorite story again ✨",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "wren-birthday",
+          "ask": "Are you doing anything for Odette's birthday?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "I'm printing her the fireball shot! Don't tell her",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Shh",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "wren-sun-night",
+          "ask": "Where were you on Sunday night?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 2
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Editing in bed till nearly two. I didn't go near the barn",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Bed, laptop, tea",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "wren-box",
+          "ask": "The box was under your camera bag. How did it get there?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "wren-hid-box"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "I have NO idea! I left that bag in the barn on Sunday afternoon",
+                "factIds": ["wren-bag-in-barn"]
+              },
+              {
+                "text": "Anyone could've put it there. Check the wifi log, I wasn't out there last night",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Honestly, I didn't. I'd tell you",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "wren-odd-d3",
+          "ask": "Anything odd this morning?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Apart from being framed? Haha. Not really",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Not really",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "wren-arrest",
+          "ask": "If you had to name someone today, who would it be?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Whoever was in the barn last night. Not me!",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Not me!",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "wren-monday",
+          "ask": "When are you heading home?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Tonight, after one last look at the sky ✨",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Tonight",
+                "factIds": []
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "thief": "roz",
+  "theftFact": "roz-took-meteorite",
+  "timeline": [
+    {
+      "night": 0,
+      "time": "11:15pm",
+      "text": "Odette passes the meteorite round in the dome and puts it back on the shelf. Everyone heads in by 11:30.",
+      "factIds": ["meteorite-seen-2315"]
+    },
+    {
+      "night": 0,
+      "time": "12:20am",
+      "text": "Wren sets up a timelapse in the barn.",
+      "factIds": ["wren-in-barn-n0"]
+    },
+    {
+      "night": 0,
+      "time": "12:31am",
+      "text": "Pip creeps down to the kitchen and eats a slice of Odette's birthday cake.",
+      "factIds": ["pip-ate-cake"]
+    },
+    {
+      "night": 0,
+      "time": "12:42am",
+      "text": "Roz slips out the back door with her flickering headlamp, leaving her phone charging upstairs.",
+      "factIds": ["back-door-0042", "roz-out-1245"]
+    },
+    {
+      "night": 0,
+      "time": "12:45am",
+      "text": "Roz takes the meteorite from the dome. Her headlamp's loose AA battery drops in the frost by the door. She's back out at 12:57, caught on Wren's timelapse.",
+      "factIds": ["roz-took-meteorite", "headlamp-in-dome"]
+    },
+    {
+      "night": 0,
+      "time": "1:38am",
+      "text": "Desmond sneaks into the dome to fix the finder scope he knocked, and notices the empty box without thinking much of it.",
+      "factIds": ["desmond-fixed-finder", "box-empty-0140"]
+    },
+    {
+      "night": 1,
+      "time": "11:55pm",
+      "text": "Roz goes out and pockets the battery by the dome door.",
+      "factIds": ["roz-pocketed-battery"]
+    },
+    {
+      "night": 1,
+      "time": "2:05am",
+      "text": "Desmond can't sleep and makes cocoa.",
+      "factIds": ["desmond-kitchen-n1"]
+    },
+    {
+      "night": 2,
+      "time": "Sunday 4pm",
+      "text": "Wren leaves her camera bag in the barn.",
+      "factIds": ["wren-bag-in-barn"]
+    },
+    {
+      "night": 2,
+      "time": "1:52am",
+      "text": "With her headlamp dead, Roz uses her phone as a torch to slip the empty glass box under Wren's camera bag in the barn. The meteorite is in her car, meant for her late father's memorial.",
+      "factIds": ["roz-planted-box", "roz-in-barn-n2", "roz-dad-found-it"]
+    }
+  ],
+  "facts": [
+    {
+      "id": "roz-took-meteorite",
+      "text": "Roz took the meteorite from the dome shelf at 12:45am on Friday night.",
+      "isTrue": true,
+      "about": ["roz"],
+      "concernsTheft": true
+    },
+    {
+      "id": "meteorite-seen-2315",
+      "text": "Odette passed the meteorite round in the dome and put it back on the shelf at 11:15pm on Friday.",
+      "isTrue": true,
+      "about": [],
+      "concernsTheft": false
+    },
+    {
+      "id": "wren-saw-flicker",
+      "text": "Around 12:45am on Friday night, Wren saw a flickering red headlamp going up the path to the dome.",
+      "isTrue": true,
+      "about": [],
+      "concernsTheft": true
+    },
+    {
+      "id": "headlamp-in-dome",
+      "text": "Wren's timelapse shows the flickering red headlamp going into the dome at 12:45am and coming out at 12:57am on Friday night.",
+      "isTrue": true,
+      "about": [],
+      "concernsTheft": true
+    },
+    {
+      "id": "roz-headlamp-flickers",
+      "text": "Roz's red headlamp flickers; she was thumping it all through Friday's session.",
+      "isTrue": true,
+      "about": ["roz"],
+      "concernsTheft": true
+    },
+    {
+      "id": "roz-lent-headlamp",
+      "text": "Roz lent her headlamp to Pip after the session on Friday.",
+      "isTrue": false,
+      "about": ["roz", "pip"],
+      "concernsTheft": true
+    },
+    {
+      "id": "pip-never-borrowed",
+      "text": "Pip has her own pink headlamp and never borrowed Roz's.",
+      "isTrue": true,
+      "about": ["pip", "roz"],
+      "concernsTheft": true
+    },
+    {
+      "id": "pip-own-headlamp",
+      "text": "Pip wore her own pink cat-ear headlamp all through Friday's session.",
+      "isTrue": true,
+      "about": ["pip"],
+      "concernsTheft": true
+    },
+    {
+      "id": "roz-out-1245",
+      "text": "Roz went outside with her headlamp at about 12:45am on Friday night.",
+      "isTrue": true,
+      "about": ["roz"],
+      "concernsTheft": true
+    },
+    {
+      "id": "roz-on-lawn",
+      "text": "Roz stayed on the lawn and never went into the dome on Friday night.",
+      "isTrue": false,
+      "about": ["roz"],
+      "concernsTheft": true
+    },
+    {
+      "id": "battery-by-dome",
+      "text": "An AA battery was lying in the frost by the dome door on Saturday morning.",
+      "isTrue": true,
+      "about": [],
+      "concernsTheft": true
+    },
+    {
+      "id": "roz-coin-cells",
+      "text": "Roz's headlamp takes flat coin cells, not AA batteries.",
+      "isTrue": false,
+      "about": ["roz"],
+      "concernsTheft": true
+    },
+    {
+      "id": "desmond-gave-roz-aa",
+      "text": "Desmond gave Roz two AA batteries for her headlamp at dinner on Friday.",
+      "isTrue": true,
+      "about": ["desmond", "roz"],
+      "concernsTheft": true
+    },
+    {
+      "id": "roz-in-bed-n0",
+      "text": "Roz was in bed by 11:30pm on Friday and slept straight through.",
+      "isTrue": false,
+      "about": ["roz"],
+      "concernsTheft": true
+    },
+    {
+      "id": "roz-in-bed-n1",
+      "text": "Roz was in bed by 11pm on Saturday and never stirred.",
+      "isTrue": false,
+      "about": ["roz"],
+      "concernsTheft": true
+    },
+    {
+      "id": "roz-never-been",
+      "text": "Roz had never been to Kestrel Hill before this weekend.",
+      "isTrue": false,
+      "about": ["roz"],
+      "concernsTheft": false
+    },
+    {
+      "id": "roz-in-1986-log",
+      "text": "The club's logbook for the 1986 star party at Kestrel Hill lists 'R. Thackery, aged 6'.",
+      "isTrue": true,
+      "about": ["roz"],
+      "concernsTheft": false
+    },
+    {
+      "id": "roz-dad-found-it",
+      "text": "Roz's late father found the meteorite with Odette in August 1986, and Odette kept it.",
+      "isTrue": true,
+      "about": ["roz"],
+      "concernsTheft": true
+    },
+    {
+      "id": "roz-slept-n2",
+      "text": "Roz slept straight through Sunday night.",
+      "isTrue": false,
+      "about": ["roz"],
+      "concernsTheft": true
+    },
+    {
+      "id": "roz-in-barn-n2",
+      "text": "Roz's phone joined the barn Wi-Fi at 1:52am on Sunday night.",
+      "isTrue": true,
+      "about": ["roz"],
+      "concernsTheft": true
+    },
+    {
+      "id": "wren-hid-box",
+      "text": "Wren hid the meteorite's empty glass box under her camera bag in the barn.",
+      "isTrue": false,
+      "about": ["wren"],
+      "concernsTheft": true
+    },
+    {
+      "id": "wren-bag-in-barn",
+      "text": "Wren left her camera bag in the barn on Sunday afternoon.",
+      "isTrue": true,
+      "about": ["wren"],
+      "concernsTheft": false
+    },
+    {
+      "id": "back-door-0042",
+      "text": "Someone went out the farmhouse back door at 12:42am on Friday night, tapping a red torch to make it work.",
+      "isTrue": true,
+      "about": [],
+      "concernsTheft": true
+    },
+    {
+      "id": "roz-pocketed-battery",
+      "text": "Roz picked up the AA battery from by the dome door just before midnight on Saturday.",
+      "isTrue": true,
+      "about": ["roz"],
+      "concernsTheft": true
+    },
+    {
+      "id": "roz-planted-box",
+      "text": "Roz put the empty glass box under Wren's camera bag in the barn at 1:52am on Sunday night, lighting her way with her phone.",
+      "isTrue": true,
+      "about": ["roz"],
+      "concernsTheft": true
+    },
+    {
+      "id": "frost-scuffed-n1",
+      "text": "On Sunday morning the frost by the dome door was scuffed with footprints.",
+      "isTrue": true,
+      "about": [],
+      "concernsTheft": false
+    },
+    {
+      "id": "pip-asleep-n0",
+      "text": "Pip was asleep by midnight on Friday.",
+      "isTrue": false,
+      "about": ["pip"],
+      "concernsTheft": false
+    },
+    {
+      "id": "pip-kitchen-0031",
+      "text": "Pip's phone joined the kitchen Wi-Fi at 12:31am on Friday night.",
+      "isTrue": true,
+      "about": ["pip"],
+      "concernsTheft": false
+    },
+    {
+      "id": "pip-ate-cake",
+      "text": "Pip ate a slice of Odette's birthday cake in the kitchen at half past midnight on Friday.",
+      "isTrue": true,
+      "about": ["pip"],
+      "concernsTheft": false
+    },
+    {
+      "id": "pip-water-n2",
+      "text": "Pip went down to the kitchen for water at 12:20am on Sunday night.",
+      "isTrue": true,
+      "about": ["pip"],
+      "concernsTheft": false
+    },
+    {
+      "id": "desmond-in-room-n0",
+      "text": "Desmond stayed in his room all Friday night.",
+      "isTrue": false,
+      "about": ["desmond"],
+      "concernsTheft": false
+    },
+    {
+      "id": "desmond-dome-0138",
+      "text": "Desmond's phone joined the dome Wi-Fi at 1:38am on Friday night.",
+      "isTrue": true,
+      "about": ["desmond"],
+      "concernsTheft": false
+    },
+    {
+      "id": "desmond-fixed-finder",
+      "text": "Desmond went back to the dome at 1:38am on Friday night to re-align the finder scope he'd knocked during the session.",
+      "isTrue": true,
+      "about": ["desmond"],
+      "concernsTheft": false
+    },
+    {
+      "id": "box-empty-0140",
+      "text": "The meteorite's glass box was already empty at 1:40am on Friday night.",
+      "isTrue": true,
+      "about": [],
+      "concernsTheft": true
+    },
+    {
+      "id": "desmond-kitchen-n1",
+      "text": "Desmond made cocoa in the kitchen at 2am on Saturday night.",
+      "isTrue": true,
+      "about": ["desmond"],
+      "concernsTheft": false
+    },
+    {
+      "id": "wren-took-photo",
+      "text": "Wren took her Horsehead Nebula photo herself, from Kestrel Hill.",
+      "isTrue": false,
+      "about": ["wren"],
+      "concernsTheft": false
+    },
+    {
+      "id": "photo-credit-marco",
+      "text": "Wren's Horsehead Nebula photo ran in Sky Monthly credited to Marco Castellano.",
+      "isTrue": true,
+      "about": ["wren"],
+      "concernsTheft": false
+    },
+    {
+      "id": "wren-brother-photo",
+      "text": "Wren's brother Marco took the Horsehead Nebula photo, in Chile.",
+      "isTrue": true,
+      "about": ["wren"],
+      "concernsTheft": false
+    },
+    {
+      "id": "wren-in-barn-n0",
+      "text": "Wren was in the barn running a timelapse from 12:20am to 1:35am on Friday night.",
+      "isTrue": true,
+      "about": ["wren"],
+      "concernsTheft": false
+    },
+    {
+      "id": "wren-barn-n1",
+      "text": "Wren was in the barn photographing the moon from 11:50pm to 12:40am on Saturday night.",
+      "isTrue": true,
+      "about": ["wren"],
+      "concernsTheft": false
+    }
+  ],
+  "beats": [
+    {
+      "day": 1,
+      "part": "morning",
+      "lines": [
+        {
+          "guest": "desmond",
+          "text": "Good morning, all. I'm afraid Odette's meteorite has gone from the shelf in the dome.",
+          "factIds": []
+        },
+        {
+          "guest": "wren",
+          "text": "Wait, what?? It was there last night!",
+          "factIds": []
+        },
+        {
+          "guest": "roz",
+          "text": "Right. Nobody touch anything in the dome.",
+          "factIds": []
+        },
+        {
+          "guest": "pip",
+          "text": "this is so bad 😭",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 1,
+      "part": "afternoon",
+      "lines": [
+        {
+          "guest": "pip",
+          "text": "lunch is out!! soup",
+          "factIds": []
+        },
+        {
+          "guest": "wren",
+          "text": "Coming ✨",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 1,
+      "part": "evening",
+      "lines": [
+        {
+          "guest": "desmond",
+          "text": "Cloud tonight, I'm afraid. No session.",
+          "factIds": []
+        },
+        {
+          "guest": "roz",
+          "text": "Early night then. 👍",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "part": "morning",
+      "lines": [
+        {
+          "guest": "wren",
+          "text": "Someone's been out by the dome in the night, the frost's all scuffed",
+          "factIds": ["frost-scuffed-n1"]
+        },
+        {
+          "guest": "desmond",
+          "text": "Happy birthday to Odette tomorrow. The cake is in the pantry. Please don't look.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "part": "afternoon",
+      "lines": [
+        {
+          "guest": "pip",
+          "text": "roz and i are icing the cake. nobody come in 🙏",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "part": "evening",
+      "lines": [
+        {
+          "guest": "pip",
+          "text": "happy birthday eve auntie odette!!",
+          "factIds": []
+        },
+        {
+          "guest": "roz",
+          "text": "Cake at eight.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 3,
+      "part": "morning",
+      "lines": [
+        {
+          "guest": "desmond",
+          "text": "I've just found the meteorite's glass box in the barn, under Wren's camera bag. Empty.",
+          "factIds": ["wren-hid-box"]
+        },
+        {
+          "guest": "wren",
+          "text": "WHAT. I didn't put it there!",
+          "factIds": []
+        },
+        {
+          "guest": "roz",
+          "text": "Well.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 3,
+      "part": "afternoon",
+      "lines": [
+        {
+          "guest": "roz",
+          "text": "Last day. Lunch in ten.",
+          "factIds": []
+        }
+      ]
+    }
+  ],
+  "groupQuestions": [
+    {
+      "id": "group-after-1115",
+      "ask": "Did anyone see the meteorite after 11:15 on Friday?",
+      "from": 1,
+      "until": 1,
+      "unlock": [],
+      "replies": [
+        {
+          "guest": "desmond",
+          "text": "Not after Odette put it back, no.",
+          "factIds": []
+        },
+        {
+          "guest": "roz",
+          "text": "No.",
+          "factIds": []
+        },
+        {
+          "guest": "wren",
+          "text": "Nope!",
+          "factIds": []
+        },
+        {
+          "guest": "pip",
+          "text": "no 😭",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "id": "group-red-lights",
+      "ask": "Who brought a red headlamp this weekend?",
+      "from": 1,
+      "until": 2,
+      "unlock": [],
+      "replies": [
+        {
+          "guest": "desmond",
+          "text": "All of us, I should think. Red light keeps your night vision.",
+          "factIds": []
+        },
+        {
+          "guest": "roz",
+          "text": "Everyone. Club rules.",
+          "factIds": []
+        },
+        {
+          "guest": "wren",
+          "text": "Me! Red is standard for stargazing",
+          "factIds": []
+        },
+        {
+          "guest": "pip",
+          "text": "mine is pink lol",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "id": "group-dome-n1",
+      "ask": "Did anyone go out to the dome on Saturday night?",
+      "from": 2,
+      "until": 2,
+      "unlock": [],
+      "replies": [
+        {
+          "guest": "wren",
+          "text": "Not me, I was in the barn",
+          "factIds": []
+        },
+        {
+          "guest": "desmond",
+          "text": "Not I.",
+          "factIds": []
+        },
+        {
+          "guest": "roz",
+          "text": "No.",
+          "factIds": []
+        },
+        {
+          "guest": "pip",
+          "text": "nope",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "id": "group-bedtimes",
+      "ask": "What time did everyone go to bed on Saturday?",
+      "from": 2,
+      "until": 2,
+      "unlock": [],
+      "replies": [
+        {
+          "guest": "roz",
+          "text": "Eleven.",
+          "factIds": []
+        },
+        {
+          "guest": "desmond",
+          "text": "Eleven, and up again at two, sadly.",
+          "factIds": []
+        },
+        {
+          "guest": "pip",
+          "text": "like 10 lol",
+          "factIds": []
+        },
+        {
+          "guest": "wren",
+          "text": "After the moon, so about one",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "id": "group-barn-n2",
+      "ask": "Did anyone go into the barn on Sunday night?",
+      "from": 3,
+      "until": 3,
+      "unlock": [],
+      "replies": [
+        {
+          "guest": "wren",
+          "text": "Not me!!",
+          "factIds": []
+        },
+        {
+          "guest": "roz",
+          "text": "No.",
+          "factIds": []
+        },
+        {
+          "guest": "desmond",
+          "text": "I was asleep.",
+          "factIds": []
+        },
+        {
+          "guest": "pip",
+          "text": "no?",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "id": "group-search",
+      "ask": "Has anyone searched for the meteorite itself?",
+      "from": 3,
+      "until": 3,
+      "unlock": [],
+      "replies": [
+        {
+          "guest": "desmond",
+          "text": "I searched the dome twice.",
+          "factIds": []
+        },
+        {
+          "guest": "wren",
+          "text": "I went through the barn this morning, nothing",
+          "factIds": []
+        },
+        {
+          "guest": "roz",
+          "text": "It'll turn up.",
+          "factIds": []
+        },
+        {
+          "guest": "pip",
+          "text": "i checked under the cake lol",
+          "factIds": []
+        }
+      ]
+    }
+  ],
+  "nightMoves": [
+    {
+      "_tag": "Destroy",
+      "night": 1,
+      "fact": "battery-by-dome"
+    },
+    {
+      "_tag": "Plant",
+      "night": 2,
+      "fact": "wren-hid-box",
+      "disprovedBy": "roz-in-barn-n2"
+    }
+  ],
+  "contradictions": [
+    {
+      "id": "roz-headlamp",
+      "suspect": "roz",
+      "claimFact": "roz-lent-headlamp",
+      "proofFact": "pip-never-borrowed",
+      "concernsTheft": true
+    },
+    {
+      "id": "roz-lawn",
+      "suspect": "roz",
+      "claimFact": "roz-on-lawn",
+      "proofFact": "headlamp-in-dome",
+      "concernsTheft": true
+    },
+    {
+      "id": "roz-battery",
+      "suspect": "roz",
+      "claimFact": "roz-coin-cells",
+      "proofFact": "desmond-gave-roz-aa",
+      "concernsTheft": true
+    },
+    {
+      "id": "roz-sunday",
+      "suspect": "roz",
+      "claimFact": "roz-slept-n2",
+      "proofFact": "roz-in-barn-n2",
+      "concernsTheft": true
+    },
+    {
+      "id": "roz-visit",
+      "suspect": "roz",
+      "claimFact": "roz-never-been",
+      "proofFact": "roz-in-1986-log",
+      "concernsTheft": false
+    },
+    {
+      "id": "desmond-room",
+      "suspect": "desmond",
+      "claimFact": "desmond-in-room-n0",
+      "proofFact": "desmond-dome-0138",
+      "concernsTheft": false
+    },
+    {
+      "id": "pip-asleep",
+      "suspect": "pip",
+      "claimFact": "pip-asleep-n0",
+      "proofFact": "pip-kitchen-0031",
+      "concernsTheft": false
+    },
+    {
+      "id": "wren-photo",
+      "suspect": "wren",
+      "claimFact": "wren-took-photo",
+      "proofFact": "photo-credit-marco",
+      "concernsTheft": false
+    }
+  ],
+  "wifiLog": [
+    {
+      "id": "n0-desmond-in",
+      "night": 0,
+      "time": "11:30pm",
+      "guest": "desmond",
+      "event": "joined",
+      "accessPoint": "Farmhouse upstairs",
+      "factIds": []
+    },
+    {
+      "id": "n0-roz-in",
+      "night": 0,
+      "time": "11:31pm",
+      "guest": "roz",
+      "event": "joined",
+      "accessPoint": "Farmhouse upstairs",
+      "factIds": []
+    },
+    {
+      "id": "n0-pip-in",
+      "night": 0,
+      "time": "11:32pm",
+      "guest": "pip",
+      "event": "joined",
+      "accessPoint": "Farmhouse upstairs",
+      "factIds": []
+    },
+    {
+      "id": "n0-wren-barn",
+      "night": 0,
+      "time": "12:19am",
+      "guest": "wren",
+      "event": "joined",
+      "accessPoint": "Barn",
+      "factIds": ["wren-in-barn-n0"]
+    },
+    {
+      "id": "n0-pip-kitchen",
+      "night": 0,
+      "time": "12:31am",
+      "guest": "pip",
+      "event": "joined",
+      "accessPoint": "Farmhouse kitchen",
+      "factIds": ["pip-kitchen-0031"]
+    },
+    {
+      "id": "n0-pip-up",
+      "night": 0,
+      "time": "12:58am",
+      "guest": "pip",
+      "event": "joined",
+      "accessPoint": "Farmhouse upstairs",
+      "factIds": []
+    },
+    {
+      "id": "n0-wren-back",
+      "night": 0,
+      "time": "1:36am",
+      "guest": "wren",
+      "event": "joined",
+      "accessPoint": "Farmhouse upstairs",
+      "factIds": []
+    },
+    {
+      "id": "n0-desmond-dome",
+      "night": 0,
+      "time": "1:38am",
+      "guest": "desmond",
+      "event": "joined",
+      "accessPoint": "Dome",
+      "factIds": ["desmond-dome-0138"]
+    },
+    {
+      "id": "n0-desmond-back",
+      "night": 0,
+      "time": "1:56am",
+      "guest": "desmond",
+      "event": "joined",
+      "accessPoint": "Farmhouse upstairs",
+      "factIds": []
+    },
+    {
+      "id": "n1-wren-barn",
+      "night": 1,
+      "time": "11:50pm",
+      "guest": "wren",
+      "event": "joined",
+      "accessPoint": "Barn",
+      "factIds": ["wren-barn-n1"]
+    },
+    {
+      "id": "n1-wren-back",
+      "night": 1,
+      "time": "12:41am",
+      "guest": "wren",
+      "event": "joined",
+      "accessPoint": "Farmhouse upstairs",
+      "factIds": []
+    },
+    {
+      "id": "n1-desmond-kitchen",
+      "night": 1,
+      "time": "2:05am",
+      "guest": "desmond",
+      "event": "joined",
+      "accessPoint": "Farmhouse kitchen",
+      "factIds": ["desmond-kitchen-n1"]
+    },
+    {
+      "id": "n1-desmond-back",
+      "night": 1,
+      "time": "2:30am",
+      "guest": "desmond",
+      "event": "joined",
+      "accessPoint": "Farmhouse upstairs",
+      "factIds": []
+    },
+    {
+      "id": "n2-pip-kitchen",
+      "night": 2,
+      "time": "12:20am",
+      "guest": "pip",
+      "event": "joined",
+      "accessPoint": "Farmhouse kitchen",
+      "factIds": ["pip-water-n2"]
+    },
+    {
+      "id": "n2-pip-up",
+      "night": 2,
+      "time": "12:24am",
+      "guest": "pip",
+      "event": "joined",
+      "accessPoint": "Farmhouse upstairs",
+      "factIds": []
+    },
+    {
+      "id": "n2-roz-barn",
+      "night": 2,
+      "time": "1:52am",
+      "guest": "roz",
+      "event": "joined",
+      "accessPoint": "Barn",
+      "factIds": ["roz-in-barn-n2"]
+    },
+    {
+      "id": "n2-roz-back",
+      "night": 2,
+      "time": "2:01am",
+      "guest": "roz",
+      "event": "joined",
+      "accessPoint": "Farmhouse upstairs",
+      "factIds": []
+    }
+  ]
+}
