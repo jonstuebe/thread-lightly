@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "thread-lightly",
+  "name": "threadlightly",
   "main": "worker/index.ts",
   "compatibility_date": "2026-10-20",
 
