@@ -1,27 +1,34 @@
-import { Array, Option, pipe } from 'effect'
+import { Array, Option } from 'effect'
 import { type Html, type HtmlBuilder } from 'foldkit/html'
 
 import {
   type ChatMessage,
   type GuestProfile,
-  MAX_MESSAGE_LENGTH,
+  type QuestionChip,
   Thread,
 } from '../../shared/protocol'
 import {
+  PART_NAMES,
+  clockTitle,
   findGuest,
   firstName,
   guestName,
+  isAround,
+  isCaughtAnswer,
   isSameThread,
   isSaved,
+  maybeStatusLine,
+  menuChips,
   threadMessages,
+  ticksLabel,
 } from '../chat'
-import { COMPOSER_INPUT_ID, THREAD_END_ID } from '../command'
+import { THREAD_END_ID } from '../command'
 import { Message } from '../message'
-import type { Board, Model, PendingSend } from '../model'
-import { isPlaying } from '../update'
+import type { Board, Model } from '../model'
+import { isReadyToAsk } from '../update'
 import * as Icon from './icon'
-import { caseFileButton, connectionBanner, statusLine } from './list'
-import { avatar, groupAvatar, wifiAvatar } from './parts'
+import { caseFileButton, connectionBanner } from './list'
+import { avatar, clockLabel, groupAvatar, wifiAvatar } from './parts'
 
 // HEADER
 
@@ -49,10 +56,34 @@ const heading = (
         onSome: profile => ({
           avatarView: avatar(board, guest, h),
           title: profile.name,
-          subtitle: statusLine(board, profile),
+          subtitle: Option.getOrElse(
+            maybeStatusLine(board, profile),
+            () => profile.role,
+          ),
         }),
       }),
   })
+
+// NOTE: on phones the sidebar's day bar is out of sight inside a thread, so
+// the clock sits under the header. Wider screens hide it in CSS.
+const clockStrip = (
+  model: Model,
+  board: Board,
+  h: HtmlBuilder<Message>,
+): Html =>
+  h.button(
+    [
+      h.Type('button'),
+      h.Class(
+        model.playback._tag === 'Night' ? 'clock-strip night' : 'clock-strip',
+      ),
+      h.AriaLabel(
+        `Time: ${clockTitle(board.clock)}, ${ticksLabel(board.clock)}`,
+      ),
+      h.OnClick(Message.ClickedClock()),
+    ],
+    [...clockLabel(model, board, h), h.span([h.Class('strip-more')], ['›'])],
+  )
 
 const headerView = (
   board: Board,
@@ -122,6 +153,9 @@ const pinMark = (isPinned: boolean, h: HtmlBuilder<Message>): Html =>
       )
     : h.empty
 
+const caughtMark = (isCaught: boolean, h: HtmlBuilder<Message>): Html =>
+  isCaught ? h.span([h.Class('stamp')], ['✓ caught']) : h.empty
+
 // BUBBLES
 
 type Grouping = Readonly<{ isFirst: boolean; isLast: boolean }>
@@ -136,13 +170,15 @@ const isSameSpeaker = (
   Option.exists(
     maybeOther,
     other =>
-      speakerKey(other) === speakerKey(message) && other.day === message.day,
+      speakerKey(other) === speakerKey(message) &&
+      other.day === message.day &&
+      other.part === message.part,
   )
 
 const rowClass = (
   direction: 'in' | 'out',
   grouping: Grouping,
-  extra = '',
+  extra: string,
 ): string =>
   [
     'row',
@@ -164,6 +200,7 @@ const bubbleView = (
     model.maybePress,
     press => press.messageId === message.id,
   )
+  const isCaught = isCaughtAnswer(board, message)
   const saved = isSaved(board, message.id)
   const bubble = h.div(
     [
@@ -174,19 +211,44 @@ const bubbleView = (
     [text],
   )
   const sender = message.sender
+  if (sender._tag === 'Lodge') {
+    return h.keyed('div')(
+      message.id,
+      [h.Class('row lodge')],
+      [
+        h.div(
+          [h.Class('bubble-line')],
+          [
+            h.div(
+              [
+                h.Class(isPressed ? 'lodge-line pressed' : 'lodge-line'),
+                h.AriaLabel(`${withStop(text)} Press and hold for options.`),
+                ...pressable(message, h),
+              ],
+              [text],
+            ),
+            pinMark(saved, h),
+          ],
+        ),
+      ],
+    )
+  }
   if (sender._tag === 'Guest') {
     return h.keyed('div')(
       message.id,
-      [h.Class(rowClass('in', grouping))],
+      [h.Class(rowClass('in', grouping, isCaught ? 'caught' : ''))],
       [
         avatar(board, sender.guest, h),
         h.div(
           [h.Class('col')],
           [
-            isSameThread(message.thread, Thread.cases.Group.make({}))
+            message.thread._tag === 'Group'
               ? h.div([h.Class('name')], [guestName(board, sender.guest)])
               : h.empty,
-            h.div([h.Class('bubble-line')], [bubble, pinMark(saved, h)]),
+            h.div(
+              [h.Class('bubble-line')],
+              [bubble, pinMark(saved, h), caughtMark(isCaught, h)],
+            ),
           ],
         ),
       ],
@@ -194,7 +256,7 @@ const bubbleView = (
   }
   return h.keyed('div')(
     message.id,
-    [h.Class(rowClass('out', grouping))],
+    [h.Class(rowClass('out', grouping, ''))],
     [
       h.div(
         [h.Class('col')],
@@ -203,21 +265,6 @@ const bubbleView = (
     ],
   )
 }
-
-const pendingView = (pending: PendingSend, h: HtmlBuilder<Message>): Html =>
-  h.keyed('div')(
-    `pending-${pending.id}`,
-    [h.Class('row out first last pending')],
-    [
-      h.div(
-        [h.Class('col')],
-        [
-          h.div([h.Class('bubble')], [pending.text]),
-          h.span([h.Class('sending')], ['Sending…']),
-        ],
-      ),
-    ],
-  )
 
 const typingView = (
   board: Board,
@@ -244,43 +291,27 @@ const typingView = (
     ],
   )
 
-// NOTE: while the server is still working out a DM reply, the guest shows as
-// typing, the way a real chat would.
-const maybeTypist = (
-  model: Model,
-  board: Board,
-  thread: Thread,
-  pending: ReadonlyArray<PendingSend>,
-): Option.Option<string> => {
-  if (
-    model.playback._tag === 'Typing' &&
-    isSameThread(model.playback.message.thread, thread) &&
-    model.playback.message.sender._tag === 'Guest'
-  ) {
-    return Option.some(model.playback.message.sender.guest)
-  }
-  return thread._tag === 'Direct' && Array.isReadonlyArrayNonEmpty(pending)
-    ? pipe(
-        findGuest(board, thread.guest),
-        Option.filter(
-          guest => guest.status === 'available' || guest.status === 'annoyed',
-        ),
-        Option.map(guest => guest.id),
-      )
+const maybeTypist = (model: Model, thread: Thread): Option.Option<string> =>
+  model.playback._tag === 'Typing' &&
+  isSameThread(model.playback.message.thread, thread) &&
+  model.playback.message.sender._tag === 'Guest'
+    ? Option.some(model.playback.message.sender.guest)
     : Option.none()
-}
 
-const daySeparator = (
+const partSeparator = (
   message: ChatMessage,
   maybePrevious: Option.Option<ChatMessage>,
   h: HtmlBuilder<Message>,
 ): Html =>
-  Option.exists(maybePrevious, previous => previous.day === message.day)
+  Option.exists(
+    maybePrevious,
+    previous => previous.day === message.day && previous.part === message.part,
+  )
     ? h.empty
     : h.keyed('div')(
-        `day-${message.day}-${message.id}`,
+        `part-${message.id}`,
         [h.Class('sys')],
-        [h.b([], [`Day ${message.day}`])],
+        [h.b([], [`Day ${message.day}`]), ` · ${PART_NAMES[message.part]}`],
       )
 
 const chatView = (
@@ -290,15 +321,12 @@ const chatView = (
   h: HtmlBuilder<Message>,
 ): ReadonlyArray<Html> => {
   const messages = threadMessages(board, thread)
-  const pending = Array.filter(model.pendingSends, send =>
-    isSameThread(send.thread, thread),
-  )
   return [
     ...Array.flatMap(messages, (message, index) => {
       const maybePrevious = Array.get(messages, index - 1)
       const maybeNext = Array.get(messages, index + 1)
       return [
-        daySeparator(message, maybePrevious, h),
+        partSeparator(message, maybePrevious, h),
         bubbleView(
           model,
           board,
@@ -311,8 +339,7 @@ const chatView = (
         ),
       ]
     }),
-    ...Array.map(pending, send => pendingView(send, h)),
-    Option.match(maybeTypist(model, board, thread, pending), {
+    Option.match(maybeTypist(model, thread), {
       onNone: () => h.empty,
       onSome: guest => typingView(board, guest, h),
     }),
@@ -328,14 +355,14 @@ const emptyThreadView = (
     Group: () =>
       h.p(
         [h.Class('empty')],
-        ['Everyone’s in here. Guests are more careful in public.'],
+        ['Everyone’s in here. News from the house posts as the day goes on.'],
       ),
     WifiLog: () => h.empty,
     Direct: ({ guest }) =>
       h.p(
         [h.Class('empty')],
         [
-          `Ask ${firstName(guestName(board, guest))} anything. Long-press a reply to save it to your case file.`,
+          `Pick a question for ${firstName(guestName(board, guest))} below. Long-press a reply to save it, press them on it, or show proof it’s a lie.`,
         ],
       ),
   })
@@ -428,80 +455,162 @@ const wifiLogView = (
   ]
 }
 
-// COMPOSER
+// QUESTION MENU
 
-const maybeDirectGuest = (
+type MenuState =
+  | Readonly<{
+      _tag: 'Chips'
+      isEnabled: boolean
+      maybeNote: Option.Option<string>
+    }>
+  | Readonly<{
+      _tag: 'Note'
+      text: string
+      maybeAction: Option.Option<Readonly<{ text: string; message: Message }>>
+    }>
+
+const directGuest = (
   board: Board,
   thread: Thread,
 ): Option.Option<GuestProfile> =>
   thread._tag === 'Direct' ? findGuest(board, thread.guest) : Option.none()
 
-const composerBlock = (
-  model: Model,
-  board: Board,
-  thread: Thread,
-): Option.Option<string> => {
+const note = (
+  text: string,
+  maybeAction: Option.Option<Readonly<{ text: string; message: Message }>>,
+): MenuState => ({ _tag: 'Note', text, maybeAction })
+
+const menuState = (model: Model, board: Board, thread: Thread): MenuState => {
   if (Option.isSome(board.maybeResult)) {
-    return Option.some('The case is over')
+    return note(
+      'The case is closed.',
+      Option.some({
+        text: 'See what happened',
+        message: Message.ClickedShowResult(),
+      }),
+    )
   }
-  if (board.phase === 'arrest') {
-    return Option.some('Time to make your arrest')
+  if (model.playback._tag === 'Night') {
+    return note('Night falls… 🌙', Option.none())
   }
-  if (!isPlaying(model)) {
-    return Option.some('Everyone’s asleep')
+  if (board.clock.phase === 'arrest') {
+    return note(
+      `Day ${board.clock.day} is over. Time to make your arrest.`,
+      Option.some({
+        text: 'Make an arrest',
+        message: Message.ClickedStartArrest(),
+      }),
+    )
   }
-  return pipe(
-    maybeDirectGuest(board, thread),
-    Option.flatMap(guest =>
-      guest.status === 'asleep'
-        ? Option.some(`${firstName(guest.name)} is asleep`)
-        : guest.status === 'leftOnRead'
-          ? Option.some(`${firstName(guest.name)} isn’t replying today`)
-          : Option.none(),
-    ),
+  if (board.clock.phase === 'bedtime') {
+    return note(
+      'Everyone’s gone to bed 🌙',
+      Option.some({ text: 'Go to sleep', message: Message.ClickedGoToSleep() }),
+    )
+  }
+  const maybeAway = Option.flatMap(directGuest(board, thread), guest =>
+    isAround(guest) ? Option.none() : maybeStatusLine(board, guest),
   )
+  return {
+    _tag: 'Chips',
+    isEnabled: Option.isNone(maybeAway) && isReadyToAsk(model),
+    maybeNote: maybeAway,
+  }
 }
 
-const composerView = (
+const chipView = (
+  thread: Thread,
+  chip: QuestionChip,
+  isEnabled: boolean,
+  h: HtmlBuilder<Message>,
+): Html =>
+  h.keyed('li')(
+    chip.id,
+    [],
+    [
+      h.button(
+        [
+          h.Type('button'),
+          h.Class(chip.isNew ? 'chip new' : 'chip'),
+          h.Disabled(!isEnabled),
+          h.OnClick(Message.ClickedChip({ thread, chipId: chip.id })),
+        ],
+        [
+          chip.isNew
+            ? h.span([h.Class('chip-new'), h.AriaHidden(true)], ['new'])
+            : h.empty,
+          h.span([h.Class('chip-text')], [chip.text]),
+          chip.isNew
+            ? h.span([h.Class('visually-hidden')], [' (new)'])
+            : h.empty,
+        ],
+      ),
+    ],
+  )
+
+const emptyMenuText = (board: Board, thread: Thread): string =>
+  Thread.match(thread, {
+    Group: () =>
+      'Guests post here as the day goes on. Ask your questions in DMs.',
+    WifiLog: () => '',
+    Direct: ({ guest }) =>
+      `Nothing more to ask ${firstName(guestName(board, guest))} right now. Something you find may change that.`,
+  })
+
+const menuLabel = (board: Board, thread: Thread): string =>
+  Thread.match(thread, {
+    Group: () => 'Questions for everyone',
+    WifiLog: () => '',
+    Direct: ({ guest }) =>
+      `Questions for ${firstName(guestName(board, guest))}`,
+  })
+
+const menuView = (
   model: Model,
   board: Board,
   thread: Thread,
   h: HtmlBuilder<Message>,
 ): Html => {
-  const maybeBlock = composerBlock(model, board, thread)
-  const isOpen = Option.isNone(maybeBlock)
-  const canSend = isOpen && model.messageInput.trim() !== ''
-  return h.form(
-    [h.Class('composer'), h.OnSubmit(Message.SubmittedMessage())],
+  const state = menuState(model, board, thread)
+  if (state._tag === 'Note') {
+    return h.footer(
+      [h.Class('menu note'), h.Role('group'), h.AriaLabel('Your move')],
+      [
+        h.p([h.Class('menu-note'), h.Role('status')], [state.text]),
+        Option.match(state.maybeAction, {
+          onNone: () => h.empty,
+          onSome: action =>
+            h.button(
+              [h.Type('button'), h.Class('btn'), h.OnClick(action.message)],
+              [action.text],
+            ),
+        }),
+      ],
+    )
+  }
+  const chips = menuChips(board, thread)
+  return h.footer(
     [
-      h.div(
-        [h.Class('field')],
-        [
-          h.input([
-            h.Id(COMPOSER_INPUT_ID),
-            h.Type('text'),
-            h.Autocomplete('off'),
-            h.Maxlength(MAX_MESSAGE_LENGTH),
-            h.EnterKeyHint('send'),
-            h.AriaLabel('Message'),
-            h.Placeholder(Option.getOrElse(maybeBlock, () => 'Message')),
-            h.Disabled(!isOpen),
-            h.Value(model.messageInput),
-            h.OnInput(value => Message.UpdatedMessageInput({ value })),
-            h.OnFocus(Message.FocusedComposer()),
-            h.OnBlur(Message.BlurredComposer()),
-          ]),
-          h.button(
-            [
-              h.Type('submit'),
-              h.Class('send'),
-              h.AriaLabel('Send'),
-              h.Disabled(!canSend),
-            ],
-            [Icon.arrowUp()],
+      h.Class(state.isEnabled ? 'menu' : 'menu off'),
+      h.Role('group'),
+      h.AriaLabel('Your move'),
+    ],
+    [
+      Option.match(state.maybeNote, {
+        onNone: () => h.empty,
+        onSome: text => h.p([h.Class('menu-status'), h.Role('status')], [text]),
+      }),
+      Array.match(chips, {
+        onEmpty: () =>
+          h.p([h.Class('menu-note')], [emptyMenuText(board, thread)]),
+        onNonEmpty: nonEmpty =>
+          h.ul(
+            [h.Class('chips'), h.AriaLabel(menuLabel(board, thread))],
+            Array.map(nonEmpty, chip =>
+              chipView(thread, chip, state.isEnabled, h),
+            ),
           ),
-        ],
-      ),
+      }),
     ],
   )
 }
@@ -526,25 +635,25 @@ export const threadPaneView = (
     [h.Class('pane')],
     [
       headerView(board, thread, h),
+      Option.isSome(board.maybeResult) ? h.empty : clockStrip(model, board, h),
       connectionBanner(model, h),
       h.main(
         [
           h.Class(isWifi ? 'thread wifi-thread' : 'thread'),
           h.AriaLive('polite'),
-          h.OnClick(Message.ClickedThread()),
         ],
         [
           ...(isWifi
             ? wifiLogView(model, board, h)
             : Array.isReadonlyArrayEmpty(messages) &&
-                Array.isReadonlyArrayEmpty(model.pendingSends)
+                Option.isNone(maybeTypist(model, thread))
               ? [emptyThreadView(board, thread, h)]
               : chatView(model, board, thread, h)),
           h.keyed('div')('end', [h.Id(THREAD_END_ID), h.Class('thread-end')]),
         ],
       ),
       noticeView(model, h),
-      isWifi ? h.empty : composerView(model, board, thread, h),
+      isWifi ? h.empty : menuView(model, board, thread, h),
     ],
   )
 }

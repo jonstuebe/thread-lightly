@@ -4,10 +4,14 @@
 import { Array, Option, pipe } from 'effect'
 
 import {
+  type CaughtLie,
   type ChatMessage,
+  type Clock,
   type GuestId,
   type GuestProfile,
   type MessageId,
+  type Part,
+  type QuestionChip,
   Thread,
 } from '../shared/protocol'
 import type { Board } from './model'
@@ -52,6 +56,88 @@ export const savedMessages = (board: Board): ReadonlyArray<ChatMessage> =>
 export const isSaved = (board: Board, id: MessageId): boolean =>
   board.caseFile.includes(id)
 
+// MENUS
+
+export const menuChips = (
+  board: Board,
+  thread: Thread,
+): ReadonlyArray<QuestionChip> =>
+  pipe(
+    Array.findFirst(board.menus, menu => isSameThread(menu.thread, thread)),
+    Option.match({ onNone: () => [], onSome: menu => menu.chips }),
+  )
+
+// ANSWERS
+
+export const maybeAnswerId = (message: ChatMessage): Option.Option<string> =>
+  message.role._tag === 'Answer'
+    ? Option.some(message.role.answerId)
+    : Option.none()
+
+const isSameAnswer = (
+  board: Board,
+  messageId: MessageId,
+  other: ChatMessage,
+): boolean =>
+  other.id === messageId ||
+  Option.exists(
+    Option.flatMap(findMessage(board, messageId), maybeAnswerId),
+    answerId =>
+      Option.exists(maybeAnswerId(other), otherId => otherId === answerId),
+  )
+
+export const isPressedAnswer = (board: Board, message: ChatMessage): boolean =>
+  Option.exists(maybeAnswerId(message), answerId =>
+    board.pressed.includes(answerId),
+  )
+
+// NOTE: a lie is caught on one bubble, but the whole answer told it.
+export const caughtLieOf = (
+  board: Board,
+  message: ChatMessage,
+): Option.Option<CaughtLie> =>
+  Array.findFirst(
+    board.caught,
+    lie =>
+      lie.proofMessageId === message.id ||
+      isSameAnswer(board, lie.claimMessageId, message),
+  )
+
+export const isCaughtAnswer = (board: Board, message: ChatMessage): boolean =>
+  Array.some(board.caught, lie =>
+    isSameAnswer(board, lie.claimMessageId, message),
+  )
+
+export const caughtLiesAgainst = (
+  board: Board,
+  guest: GuestId,
+): ReadonlyArray<CaughtLie> =>
+  Array.filter(board.caught, lie => lie.guest === guest)
+
+// TIME
+
+export const PART_NAMES: Readonly<Record<Part, string>> = {
+  morning: 'Morning',
+  afternoon: 'Afternoon',
+  evening: 'Evening',
+}
+
+export const maybeNextPart = (part: Part): Option.Option<Part> =>
+  part === 'morning'
+    ? Option.some('afternoon')
+    : part === 'afternoon'
+      ? Option.some('evening')
+      : Option.none()
+
+export const clockTitle = (clock: Clock): string =>
+  `Day ${clock.day} · ${PART_NAMES[clock.part]}`
+
+export const ticksLabel = (clock: Clock): string =>
+  `${clock.ticksLeft} of ${clock.partBudget} ${clock.partBudget === 1 ? 'tick' : 'ticks'} left`
+
+export const isAsking = (board: Board): boolean =>
+  board.clock.phase === 'asking' && Option.isNone(board.maybeResult)
+
 // GUESTS
 
 export const findGuest = (
@@ -78,6 +164,28 @@ const AVATAR_COLORS: ReadonlyArray<string> = [
   '#2a8a9a',
   '#6b6f80',
 ]
+
+export const isAround = (guest: GuestProfile): boolean =>
+  guest.status._tag === 'Around'
+
+// NOTE: what a guest's row and header say when they can't be asked.
+export const maybeStatusLine = (
+  board: Board,
+  guest: GuestProfile,
+): Option.Option<string> => {
+  if (Option.isSome(board.maybeResult)) {
+    return Option.none()
+  }
+  const name = firstName(guest.name)
+  const status = guest.status
+  return status._tag === 'Away'
+    ? Option.some(status.status)
+    : status._tag === 'Quiet'
+      ? Option.some(`${name} isn’t answering right now`)
+      : status._tag === 'Asleep'
+        ? Option.some(`${name} is asleep`)
+        : Option.none()
+}
 
 export const avatarColor = (board: Board, id: GuestId): string =>
   pipe(
@@ -113,6 +221,13 @@ export const senderLabel = (board: Board, message: ChatMessage): string => {
       ? 'You'
       : 'Wi-Fi log'
 }
+
+export const whereLabel = (message: ChatMessage): string =>
+  message.thread._tag === 'Group'
+    ? 'group chat'
+    : message.thread._tag === 'WifiLog'
+      ? 'Wi-Fi log'
+      : 'DM'
 
 // PACING
 

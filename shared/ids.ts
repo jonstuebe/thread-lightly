@@ -11,8 +11,7 @@ export const Slug = Schema.String.check(
 export const GuestId = Slug
 export type GuestId = typeof GuestId.Type
 
-// NOTE: day 1 is Saturday, the morning after the theft. Day 3 ends with the
-// arrest.
+// NOTE: day 1 is the morning after the theft. Day 3 ends with the arrest.
 export const Day = Schema.Literals([1, 2, 3])
 export type Day = typeof Day.Type
 
@@ -25,3 +24,9 @@ export const Night = Schema.Literals([0, 1, 2])
 export type Night = typeof Night.Type
 
 export const NIGHTS: ReadonlyArray<Night> = [0, 1, 2]
+
+// NOTE: each day has three parts, each with its own question budget.
+export const Part = Schema.Literals(['morning', 'afternoon', 'evening'])
+export type Part = typeof Part.Type
+
+export const PARTS: ReadonlyArray<Part> = ['morning', 'afternoon', 'evening']

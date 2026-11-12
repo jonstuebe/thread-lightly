@@ -1,10 +1,16 @@
-import { Option } from 'effect'
+import { Array, Option } from 'effect'
 import { type Html, type HtmlBuilder } from 'foldkit/html'
 
-import type { GuestId } from '../../shared/protocol'
-import { avatarColor, guestName, initials } from '../chat'
+import type { Clock, GuestId } from '../../shared/protocol'
+import {
+  avatarColor,
+  clockTitle,
+  guestName,
+  initials,
+  ticksLabel,
+} from '../chat'
 import { Message } from '../message'
-import type { Board } from '../model'
+import type { Board, Model } from '../model'
 import * as Icon from './icon'
 
 // AVATARS
@@ -74,3 +80,26 @@ export const sheet = (
       ),
     ],
   )
+
+// CLOCK
+
+export const clockDots = (clock: Clock, h: HtmlBuilder<Message>): Html =>
+  h.span(
+    [h.Class('ticks'), h.Role('img'), h.AriaLabel(ticksLabel(clock))],
+    Array.makeBy(Math.max(clock.partBudget, clock.ticksLeft), index =>
+      h.i([h.Class(index < clock.ticksLeft ? 'tick on' : 'tick')]),
+    ),
+  )
+
+// NOTE: while the house sleeps the clock shows the night, not the stale part.
+export const clockLabel = (
+  model: Model,
+  board: Board,
+  h: HtmlBuilder<Message>,
+): ReadonlyArray<Html> =>
+  model.playback._tag === 'Night'
+    ? [Icon.moon(), h.span([], ['Night falls…'])]
+    : [
+        h.span([h.Class('clock-title')], [clockTitle(board.clock)]),
+        clockDots(board.clock, h),
+      ]

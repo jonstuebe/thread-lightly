@@ -3,17 +3,29 @@
 
 import { Schema } from 'effect'
 
-import { Day, GuestId, Night, Slug } from './ids'
+import { Day, GuestId, Night, Part, Slug } from './ids'
 
-export { DAYS, Day, GuestId, LAST_DAY, NIGHTS, Night } from './ids'
+export {
+  DAYS,
+  Day,
+  GuestId,
+  LAST_DAY,
+  NIGHTS,
+  Night,
+  PARTS,
+  Part,
+} from './ids'
 
 // IDS
 
 export const FactId = Slug
 export type FactId = typeof FactId.Type
 
-export const TopicId = Slug
-export type TopicId = typeof TopicId.Type
+export const QuestionId = Slug
+export type QuestionId = typeof QuestionId.Type
+
+export const ContradictionId = Slug
+export type ContradictionId = typeof ContradictionId.Type
 
 // TIME
 
@@ -22,10 +34,16 @@ export type MoveNight = typeof MoveNight.Type
 
 export const MOVE_NIGHTS: ReadonlyArray<MoveNight> = [1, 2]
 
-export const ClockTime = Schema.String.check(
-  Schema.isPattern(/^([01]\d|2[0-3]):[0-5]\d$/),
-)
-export type ClockTime = typeof ClockTime.Type
+const Ticks = Schema.Int.check(Schema.isBetween({ minimum: 1, maximum: 8 }))
+
+// NOTE: how many ticks each part of the day holds. The same budget applies to
+// all three days. Ticks never carry over from one part to the next.
+export const Budget = Schema.Struct({
+  morning: Ticks,
+  afternoon: Ticks,
+  evening: Ticks,
+})
+export type Budget = typeof Budget.Type
 
 // FACT
 
@@ -38,87 +56,116 @@ export const Fact = Schema.Struct({
 })
 export type Fact = typeof Fact.Type
 
-// REPLIES
+// LINES AND ANSWERS
 
-export const Reply = Schema.Struct({
+// NOTE: one chat bubble. The client gets `text` only, never `factIds`.
+export const Line = Schema.Struct({
   text: Schema.NonEmptyString,
   factIds: Schema.Array(FactId),
 })
-export type Reply = typeof Reply.Type
+export type Line = typeof Line.Type
 
-const Replies = Schema.NonEmptyArray(Reply)
+const Bubbles = Schema.NonEmptyArray(Line).check(Schema.isMaxLength(3))
 
-export const NightOverride = Schema.Struct({
-  night: MoveNight,
-  variants: Replies,
+// NOTE: a reply that carries no facts, one to three bubbles. Used for wrong
+// proof, where nothing the guest says may count as evidence.
+export const PlainReply = Schema.NonEmptyArray(Schema.NonEmptyString).check(
+  Schema.isMaxLength(3),
+)
+export type PlainReply = typeof PlainReply.Type
+
+// NOTE: what a guest says to one question, and to each follow-up on it.
+// `pressed` answers "Are you sure about that?". `caught` answers right proof,
+// so it exists exactly when the answer carries the claim of a contradiction
+// against this guest. `wrongProof` overrides the guest's own wrong-proof
+// replies for this answer.
+export const Answer = Schema.Struct({
+  lines: Bubbles,
+  pressed: Bubbles,
+  caught: Schema.optionalKey(Bubbles),
+  wrongProof: Schema.optionalKey(PlainReply),
 })
-export type NightOverride = typeof NightOverride.Type
+export type Answer = typeof Answer.Type
 
-const replySetFields = {
-  variants: Replies,
-  afterNight: Schema.optionalKey(Schema.Array(NightOverride)),
-  ifFactDestroyed: Schema.optionalKey(Replies),
-  lowPatience: Schema.optionalKey(Replies),
+export const NightAnswer = Schema.Struct({
+  night: MoveNight,
+  answer: Answer,
+})
+export type NightAnswer = typeof NightAnswer.Type
+
+// QUESTIONS
+
+// NOTE: every unlock on a question must hold before it reaches the menu.
+// `Seen` means a message carrying the fact was posted where the detective can
+// read it: any reply, Wi-Fi entry or beat. Saving isn't needed.
+export const Unlock = Schema.TaggedUnion({
+  Seen: { fact: FactId },
+  Caught: { contradiction: ContradictionId },
+  Asked: { question: QuestionId },
+  AfterNight: { night: MoveNight },
+})
+export type Unlock = typeof Unlock.Type
+
+const questionFields = {
+  id: QuestionId,
+  ask: Schema.NonEmptyString,
+  from: Day,
+  until: Schema.optionalKey(Day),
+  unlock: Schema.Array(Unlock),
 }
 
-export const ReplySet = Schema.Struct(replySetFields)
-export type ReplySet = typeof ReplySet.Type
-
-export const TopicSubject = Schema.TaggedUnion({
-  Whereabouts: { night: Night },
-  Item: {},
-  Guest: { guest: GuestId },
-  NightEvent: { night: MoveNight },
-  Secret: {},
-  Other: {},
+// NOTE: a question in one guest's DM thread. Its answer is fixed by the day
+// it's asked: the latest `afterNight` whose night has passed, else `answer`;
+// then `ifDestroyed` if that carries a fact the thief has destroyed.
+export const Question = Schema.Struct({
+  ...questionFields,
+  answer: Answer,
+  afterNight: Schema.optionalKey(Schema.Array(NightAnswer)),
+  ifDestroyed: Schema.optionalKey(Answer),
 })
-export type TopicSubject = typeof TopicSubject.Type
+export type Question = typeof Question.Type
 
-export const Visibility = Schema.Literals(['public', 'dmOnly'])
-export type Visibility = typeof Visibility.Type
-
-export const Topic = Schema.Struct({
-  id: TopicId,
-  description: Schema.NonEmptyString,
-  subject: TopicSubject,
-  visibility: Visibility,
-  ...replySetFields,
+export const GroupLine = Schema.Struct({
+  guest: GuestId,
+  text: Schema.NonEmptyString,
+  factIds: Schema.Array(FactId),
 })
-export type Topic = typeof Topic.Type
+export type GroupLine = typeof GroupLine.Type
 
-export const Dictionary = Schema.Struct({
-  topics: Schema.NonEmptyArray(Topic),
-  pressed: ReplySet,
-  dodges: Schema.NonEmptyArray(Schema.NonEmptyString),
-  greetings: Schema.NonEmptyArray(Schema.NonEmptyString),
-  thanks: Schema.NonEmptyArray(Schema.NonEmptyString),
-  goodnight: Schema.NonEmptyString,
+// NOTE: a question asked in the group chat (still undecided, see
+// docs/design.md; a case may have none). Guests reply in order, skipping any
+// who are away or quiet. Group replies can't be pressed or confronted.
+export const GroupQuestion = Schema.Struct({
+  ...questionFields,
+  replies: Schema.NonEmptyArray(GroupLine),
 })
-export type Dictionary = typeof Dictionary.Type
+export type GroupQuestion = typeof GroupQuestion.Type
 
 // GUEST
 
-export const Temperament = Schema.Literals([
-  'chatty',
-  'guarded',
-  'prickly',
-  'anxious',
-  'flattered',
-  'gossip',
-])
-export type Temperament = typeof Temperament.Type
+// NOTE: a part of a day the guest is out. Their thread shows `status` and
+// their menu greys out.
+export const AwaySlot = Schema.Struct({
+  day: Day,
+  part: Part,
+  status: Schema.NonEmptyString,
+})
+export type AwaySlot = typeof AwaySlot.Type
 
+// NOTE: `voice` is for the case writer. Temperament is voice only; nothing
+// mechanical reads it.
 export const Guest = Schema.Struct({
   id: GuestId,
   name: Schema.NonEmptyString,
   role: Schema.NonEmptyString,
   voice: Schema.NonEmptyString,
-  temperament: Temperament,
-  bedtime: ClockTime,
   knows: Schema.Array(FactId),
   claims: Schema.Array(FactId),
   secret: Schema.optionalKey(FactId),
-  dictionary: Dictionary,
+  away: Schema.Array(AwaySlot),
+  goodnight: Schema.NonEmptyString,
+  wrongProof: Schema.NonEmptyArray(PlainReply),
+  questions: Schema.Array(Question),
 })
 export type Guest = typeof Guest.Type
 
@@ -135,6 +182,7 @@ export type TimelineEvent = typeof TimelineEvent.Type
 export const WifiEvent = Schema.Literals(['joined', 'left'])
 export type WifiEvent = typeof WifiEvent.Type
 
+// NOTE: published the morning after its night.
 export const WifiEntry = Schema.Struct({
   id: Slug,
   night: Night,
@@ -146,26 +194,17 @@ export const WifiEntry = Schema.Struct({
 })
 export type WifiEntry = typeof WifiEntry.Type
 
-// GROUP CHAT
+// BEATS
 
-export const GroupLine = Schema.Struct({
-  guest: GuestId,
-  text: Schema.NonEmptyString,
-  factIds: Schema.Array(FactId),
-})
-export type GroupLine = typeof GroupLine.Type
-
-export const BeatTrigger = Schema.TaggedUnion({
-  Morning: { day: Day },
-  Idle: { day: Day },
-})
-export type BeatTrigger = typeof BeatTrigger.Type
-
-export const GroupBeat = Schema.Struct({
-  trigger: BeatTrigger,
+// NOTE: plays in the group chat when the part starts. A part that's never
+// reached (the detective went to sleep early) never plays its beat, so only
+// morning beats are certain to be seen.
+export const Beat = Schema.Struct({
+  day: Day,
+  part: Part,
   lines: Schema.NonEmptyArray(GroupLine),
 })
-export type GroupBeat = typeof GroupBeat.Type
+export type Beat = typeof Beat.Type
 
 // NIGHT MOVES
 
@@ -185,6 +224,7 @@ export type NightMove = typeof NightMove.Type
 // CONTRADICTION
 
 export const Contradiction = Schema.Struct({
+  id: ContradictionId,
   suspect: GuestId,
   claimFact: FactId,
   proofFact: FactId,
@@ -194,14 +234,9 @@ export type Contradiction = typeof Contradiction.Type
 
 // CASE
 
-// NOTE: `background` is what every guest knows and nobody disputes: the
-// layout of the place, the schedule, who is staying where, what the item
-// looks like. Any guest may say it, so it carries no facts and must hold
-// nothing a player could use as evidence.
 export const Setting = Schema.Struct({
   title: Schema.NonEmptyString,
   premise: Schema.NonEmptyString,
-  background: Schema.NonEmptyString,
   missingItem: Schema.NonEmptyString,
   accessPoints: Schema.NonEmptyArray(Schema.NonEmptyString),
 })
@@ -210,12 +245,14 @@ export type Setting = typeof Setting.Type
 export const Case = Schema.Struct({
   id: Slug,
   setting: Setting,
-  guests: Schema.Array(Guest).check(Schema.isBetweenLength(4, 8)),
+  budget: Budget,
+  guests: Schema.Array(Guest).check(Schema.isBetweenLength(4, 5)),
   thief: GuestId,
   theftFact: FactId,
   timeline: Schema.NonEmptyArray(TimelineEvent),
   facts: Schema.NonEmptyArray(Fact),
-  groupBeats: Schema.Array(GroupBeat),
+  beats: Schema.Array(Beat),
+  groupQuestions: Schema.Array(GroupQuestion),
   nightMoves: Schema.Array(NightMove),
   contradictions: Schema.Array(Contradiction),
   wifiLog: Schema.Array(WifiEntry),

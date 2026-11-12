@@ -4,6 +4,7 @@ import { type Html, type HtmlBuilder } from 'foldkit/html'
 import {
   type ChatMessage,
   type GuestProfile,
+  GuestStatus,
   LAST_DAY,
   type Thread,
 } from '../../shared/protocol'
@@ -11,8 +12,8 @@ import {
   GROUP,
   WIFI_LOG,
   direct,
-  firstName,
   isSameThread,
+  maybeStatusLine,
   messageText,
   threadKey,
   threadMessages,
@@ -20,64 +21,83 @@ import {
 import { Message } from '../message'
 import type { Board, Model } from '../model'
 import * as Icon from './icon'
-import { avatar, groupAvatar, wifiAvatar } from './parts'
+import { avatar, clockLabel, groupAvatar, wifiAvatar } from './parts'
 
 // DAY BAR
 
-type DayAction = Readonly<{
-  label: string
-  maybeButton: Option.Option<Readonly<{ text: string; message: Message }>>
-}>
+type DayAction = Readonly<{ text: string; label: string; message: Message }>
 
-const dayAction = (board: Board): DayAction =>
-  Option.match(board.maybeResult, {
-    onSome: () => ({
-      label: 'The case is over',
-      maybeButton: Option.some({
-        text: 'See what happened',
-        message: Message.ClickedShowResult(),
-      }),
-    }),
-    onNone: () =>
-      board.phase === 'arrest'
-        ? {
-            label: `Day ${LAST_DAY} is over`,
-            maybeButton: Option.some({
-              text: 'Make an arrest',
-              message: Message.ClickedStartArrest(),
-            }),
-          }
-        : board.phase === 'night'
-          ? { label: 'Night falls…', maybeButton: Option.none() }
-          : {
-              label: `Day ${board.day} of ${LAST_DAY}`,
-              maybeButton: Option.some({
-                text: board.day === LAST_DAY ? 'End the last day' : 'End day',
-                message: Message.ClickedEndDay(),
-              }),
-            },
-  })
+const maybeDayAction = (
+  model: Model,
+  board: Board,
+): Option.Option<DayAction> => {
+  if (Option.isSome(board.maybeResult)) {
+    return Option.some({
+      text: 'See what happened',
+      label: 'See what happened',
+      message: Message.ClickedShowResult(),
+    })
+  }
+  if (model.playback._tag === 'Night') {
+    return Option.none()
+  }
+  const phase = board.clock.phase
+  return phase === 'arrest'
+    ? Option.some({
+        text: 'Make an arrest',
+        label: 'Make an arrest',
+        message: Message.ClickedStartArrest(),
+      })
+    : phase === 'bedtime'
+      ? Option.some({
+          text: 'Go to sleep',
+          label: 'Go to sleep',
+          message: Message.ClickedGoToSleep(),
+        })
+      : Option.some({
+          text: 'Skip',
+          label: 'Skip ahead or go to sleep',
+          message: Message.ClickedClock(),
+        })
+}
 
-const dayBarView = (board: Board, h: HtmlBuilder<Message>): Html => {
-  const action = dayAction(board)
-  return h.div(
-    [h.Class(board.phase === 'night' ? 'daybar night' : 'daybar')],
+const isDark = (model: Model, board: Board): boolean =>
+  Option.isNone(board.maybeResult) &&
+  (model.playback._tag === 'Night' || board.clock.phase === 'bedtime')
+
+const dayBarView = (
+  model: Model,
+  board: Board,
+  h: HtmlBuilder<Message>,
+): Html =>
+  h.div(
+    [h.Class(isDark(model, board) ? 'daybar night' : 'daybar')],
     [
       h.span(
-        [],
-        [board.phase === 'night' ? Icon.moon() : h.empty, action.label],
+        [h.Class('daybar-clock')],
+        Option.isSome(board.maybeResult)
+          ? [h.span([], ['The case is closed'])]
+          : board.clock.phase === 'bedtime' && model.playback._tag !== 'Night'
+            ? [Icon.moon(), h.span([], ['Everyone’s gone to bed'])]
+            : board.clock.phase === 'arrest'
+              ? [h.span([], [`Day ${LAST_DAY} is over`])]
+              : clockLabel(model, board, h),
       ),
-      Option.match(action.maybeButton, {
+      Option.match(maybeDayAction(model, board), {
         onNone: () => h.empty,
-        onSome: button =>
+        onSome: action =>
           h.button(
-            [h.Type('button'), h.Class('btn small'), h.OnClick(button.message)],
-            [button.text],
+            [
+              h.Type('button'),
+              h.Class('btn small'),
+              h.AriaLabel(action.label),
+              h.OnClick(action.message),
+            ],
+            [action.text],
           ),
       }),
     ],
   )
-}
 
 // ROWS
 
@@ -102,8 +122,6 @@ const previewOf = (
   })
 }
 
-// NOTE: once the case is closed, statuses from the last night no longer mean
-// anything, so the badges go away.
 const statusBadge = (
   board: Board,
   guest: GuestProfile,
@@ -111,11 +129,26 @@ const statusBadge = (
 ): Html =>
   Option.isSome(board.maybeResult)
     ? h.empty
-    : guest.status === 'asleep'
-      ? h.span([h.Class('badge')], ['Asleep'])
-      : guest.status === 'leftOnRead'
-        ? h.span([h.Class('badge')], ['Not replying'])
-        : h.empty
+    : GuestStatus.match(guest.status, {
+        Around: () => h.empty,
+        Away: () => h.span([h.Class('badge')], ['Away']),
+        Quiet: () => h.span([h.Class('badge')], ['Quiet']),
+        Asleep: () => h.span([h.Class('badge')], ['Asleep']),
+      })
+
+// NOTE: an away or quiet guest's row says why, where the last line would be.
+const guestPreview = (
+  model: Model,
+  board: Board,
+  guest: GuestProfile,
+): string =>
+  Option.getOrElse(
+    Option.filter(
+      maybeStatusLine(board, guest),
+      () => guest.status._tag !== 'Asleep',
+    ),
+    () => previewOf(model, board, direct(guest.id), guest.role),
+  )
 
 const row = (
   model: Model,
@@ -183,7 +216,7 @@ export const listView = (
         ],
       ),
       h.h1([h.Class('sb-title')], [board.intro.title]),
-      dayBarView(board, h),
+      dayBarView(model, board, h),
       connectionBanner(model, h),
       h.ul(
         [h.Class('convos')],
@@ -212,7 +245,7 @@ export const listView = (
               direct(guest.id),
               avatar(board, guest.id, h),
               guest.name,
-              previewOf(model, board, direct(guest.id), guest.role),
+              guestPreview(model, board, guest),
               statusBadge(board, guest, h),
               h,
             ),
@@ -250,14 +283,3 @@ export const connectionBanner = (
   model.connection._tag === 'Lost' || model.connection._tag === 'Connecting'
     ? h.div([h.Class('banner'), h.Role('status')], ['Reconnecting…'])
     : h.empty
-
-export const statusLine = (board: Board, guest: GuestProfile): string =>
-  Option.isSome(board.maybeResult)
-    ? guest.role
-    : guest.status === 'asleep'
-      ? `${firstName(guest.name)} has gone to bed`
-      : guest.status === 'leftOnRead'
-        ? `${firstName(guest.name)} isn’t replying`
-        : guest.status === 'annoyed'
-          ? `${firstName(guest.name)} seems a bit short with you`
-          : guest.role

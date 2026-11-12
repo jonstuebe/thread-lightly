@@ -16,7 +16,6 @@ import { Flags } from './model'
 import { CaseSocket } from './socket'
 
 export const THREAD_END_ID = 'thread-end'
-export const COMPOSER_INPUT_ID = 'composer-input'
 
 const START_TIMEOUT = Duration.seconds(20)
 const STORAGE_KEY = 'pine-hollow'
@@ -128,15 +127,4 @@ export const ScrollToLatest = Command.define('ScrollToLatest', {
     Effect.ignore,
     Effect.as(Message.CompletedScrollToLatest()),
   ),
-})
-
-export const BlurComposer = Command.define('BlurComposer', {
-  messages: [Message.CompletedBlurComposer],
-  execute: Effect.sync(() => {
-    const input = document.getElementById(COMPOSER_INPUT_ID)
-    if (input instanceof HTMLElement) {
-      input.blur()
-    }
-    return Message.CompletedBlurComposer()
-  }),
 })

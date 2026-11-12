@@ -5,6 +5,8 @@ import { Option } from 'effect'
 
 import {
   type ChatMessage,
+  type Clock,
+  type QuestionChip,
   type ServerMessage,
   Thread,
 } from '../shared/protocol'
@@ -30,7 +32,20 @@ export const guestSays = (
   thread,
   sender: { _tag: 'Guest', guest },
   body: { _tag: 'Text', text },
+  role: { _tag: 'Plain' },
   day: 1,
+  part: 'morning',
+})
+
+export const guestAnswers = (
+  id: string,
+  answerId: string,
+  thread: Thread,
+  guest: string,
+  text: string,
+): ChatMessage => ({
+  ...guestSays(id, thread, guest, text),
+  role: { _tag: 'Answer', answerId },
 })
 
 export const detectiveSays = (
@@ -42,7 +57,9 @@ export const detectiveSays = (
   thread,
   sender: { _tag: 'Detective' },
   body: { _tag: 'Text', text },
+  role: { _tag: 'Plain' },
   day: 1,
+  part: 'morning',
 })
 
 export const wifiEntry: ChatMessage = {
@@ -56,15 +73,50 @@ export const wifiEntry: ChatMessage = {
     event: 'joined',
     accessPoint: 'kitchen',
   },
+  role: { _tag: 'Plain' },
   day: 1,
+  part: 'morning',
 }
 
-export const daleClaim = guestSays(
+export const daleQuestion = detectiveSays(
   'm2',
+  dmDale,
+  'Where were you last night?',
+)
+
+// NOTE: a two-bubble answer. Pressing or confronting either acts on both.
+export const daleClaim = guestAnswers(
+  'm3',
+  'a1',
   dmDale,
   'dale',
   'I was asleep by eleven fifteen, out like a light.',
 )
+export const daleClaimTail = guestAnswers(
+  'm4',
+  'a1',
+  dmDale,
+  'dale',
+  'didn’t hear a thing',
+)
+
+export const chip = (
+  id: string,
+  text: string,
+  isNew: boolean,
+): QuestionChip => ({
+  id,
+  text,
+  isNew,
+})
+
+export const morning = (ticksLeft: number): Clock => ({
+  day: 1,
+  part: 'morning',
+  phase: 'asking',
+  ticksLeft,
+  partBudget: 5,
+})
 
 export const board: Board = {
   intro: {
@@ -77,19 +129,31 @@ export const board: Board = {
       id: 'margot',
       name: 'Margot Hale',
       role: 'Your host',
-      status: 'available',
+      status: { _tag: 'Around' },
     },
     {
       id: 'dale',
       name: 'Dale Pruitt',
       role: 'Margot’s brother-in-law',
-      status: 'available',
+      status: { _tag: 'Around' },
     },
   ],
-  messages: [wifiEntry, daleClaim],
+  messages: [wifiEntry, daleQuestion, daleClaim, daleClaimTail],
+  menus: [
+    {
+      thread: dmDale,
+      chips: [
+        chip('c-kitchen', 'Why was your phone in the kitchen?', true),
+        chip('c-brooch', 'When did you last see the brooch?', false),
+      ],
+    },
+    { thread: dmMargot, chips: [chip('c-host', 'Who stayed up late?', false)] },
+    { thread: group, chips: [] },
+  ],
   caseFile: [],
-  day: 1,
-  phase: 'day',
+  pressed: [],
+  caught: [],
+  clock: morning(3),
   maybeResult: Option.none(),
 }
 
@@ -100,6 +164,11 @@ export const playingModel: Model = {
   connection: Connection.Open({ gameId: GAME_ID, attempt: 0 }),
   maybeBoard: Option.some(board),
 }
+
+export const withBoard = (change: Partial<Board>): Model => ({
+  ...playingModel,
+  maybeBoard: Option.some({ ...board, ...change }),
+})
 
 export const fromServer = (message: ServerMessage): Message =>
   Message.ReceivedServerMessage({ gameId: GAME_ID, attempt: 0, message })
