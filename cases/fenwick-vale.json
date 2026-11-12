@@ -1,0 +1,3900 @@
+{
+  "id": "fenwick-vale",
+  "setting": {
+    "title": "The Fenwick Vale Tastevin",
+    "premise": "Leonie Fenwick has gathered family and old friends at Fenwick Vale, her small family vineyard, to bring in the autumn harvest, with the first pressing on Monday. On Friday night the silver tastevin her late husband Malcolm wore at every harvest vanished from its hook above the tasting table in the cellar.",
+    "missingItem": "a silver tastevin, a shallow wine-tasting cup, on a faded green ribbon",
+    "accessPoints": ["Main house", "Cellar", "Crush pad", "Guest cottage"]
+  },
+  "budget": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": 4
+  },
+  "guests": [
+    {
+      "id": "nell",
+      "name": "Nell Fenwick",
+      "role": "Leonie's granddaughter, just out of a viticulture degree, who'll inherit Fenwick Vale",
+      "voice": "23. All lowercase, no full stops, quick short bursts. Says 'genuinely' and 'ok but'. Uses 😭 now and then, sometimes 🙏, no other emoji.",
+      "knows": [
+        "tastevin-seen-2245",
+        "jonah-wears-signet",
+        "nell-nz-job",
+        "nell-saw-jonah-0135",
+        "extra-bins",
+        "nell-out-n1",
+        "nell-out-n2",
+        "wall-scrubbed-n1"
+      ],
+      "claims": ["nell-asleep-n0"],
+      "secret": "nell-nz-job",
+      "away": [
+        {
+          "day": 2,
+          "part": "afternoon",
+          "status": "picking the bottom block with gran"
+        },
+        {
+          "day": 3,
+          "part": "morning",
+          "status": "asleep 😴"
+        }
+      ],
+      "goodnight": "night all 🙏",
+      "wrongProof": [
+        ["ok but that is genuinely not what i said"],
+        ["how is that about me??"],
+        ["i literally don't get what you're showing me"]
+      ],
+      "questions": [
+        {
+          "id": "nell-friday",
+          "ask": "Where were you after supper on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "helped gran with the dishes then bed",
+                "factIds": []
+              },
+              {
+                "text": "asleep by midnight. genuinely out cold",
+                "factIds": ["nell-asleep-n0"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "out cold. picking all day does that 🙏",
+                "factIds": ["nell-asleep-n0"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "ok fine. i wasn't asleep",
+                "factIds": []
+              },
+              {
+                "text": "i was up in the top rows on a video call. a winery in marlborough, new zealand. it's daytime there",
+                "factIds": ["nell-nz-job"]
+              },
+              {
+                "text": "please don't tell gran 😭",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "nell-last-saw",
+          "ask": "When did you last see the tastevin?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "at the toast. quarter to eleven. gran hung it back on its hook after",
+                "factIds": ["tastevin-seen-2245"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "quarter to eleven. everyone saw",
+                "factIds": ["tastevin-seen-2245"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "nell-heard",
+          "ask": "Did you see or hear anything on Friday night?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "not really",
+                "factIds": []
+              },
+              {
+                "text": "gran's dog barked at something once i think",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "just the dog. sorry",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "nell-who",
+          "ask": "Who do you think took it?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "genuinely no idea",
+                "factIds": []
+              },
+              {
+                "text": "ines asked about the cellar a LOT at supper though. just saying",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "i'm not accusing anyone!!",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "nell-jonah",
+          "ask": "What do you make of Jonah?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "uncle jonah's sweet. quiet since grandad died",
+                "factIds": []
+              },
+              {
+                "text": "wears grandad's signet ring on his little finger like it's glued on",
+                "factIds": ["jonah-wears-signet"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "he never takes it off. like ever",
+                "factIds": ["jonah-wears-signet"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "nell-oskar",
+          "ask": "What do you make of Oskar?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "oskar's basically family",
+                "factIds": []
+              },
+              {
+                "text": "taught me to drive the tractor when i was twelve",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "he's the best 🙏",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "nell-ines",
+          "ask": "What do you make of Ines?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "she's cool. very serious about wine",
+                "factIds": []
+              },
+              {
+                "text": "spent all supper asking gran about the 2019 reserve",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "like so many questions",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "nell-leonie",
+          "ask": "How do you know Leonie?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "she's my gran!!",
+                "factIds": []
+              },
+              {
+                "text": "i've picked here every autumn since i could walk",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "every single autumn",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "nell-picking",
+          "ask": "What were you picking on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "pinot on the bottom block with gran and ines",
+                "factIds": []
+              },
+              {
+                "text": "forty bins. my hands are purple",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "forty. gran counted",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "nell-supper",
+          "ask": "How was the harvest supper?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "so good. long table down in the cellar, gran's lamb",
+                "factIds": []
+              },
+              {
+                "text": "then the toast and then gran made her big announcement",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "best supper of the year every year",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "nell-takeover",
+          "ask": "How do you feel about taking over Fenwick Vale?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "honoured. genuinely",
+                "factIds": []
+              },
+              {
+                "text": "gran said it at supper and cried and then i cried 😭",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "it's a lot. but good. it's good",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "nell-tastevin",
+          "ask": "What does the tastevin mean to the family?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "grandad wore it round his neck every harvest. tasted every vat with it",
+                "factIds": []
+              },
+              {
+                "text": "gran says whoever runs the vineyard wears it next. so... me i guess",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "that's the tradition",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "nell-room",
+          "ask": "Where are you sleeping?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "my mum's old room at the top of the stairs",
+                "factIds": []
+              },
+              {
+                "text": "jonah's at the end of the landing, ines is next to him",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "top of the stairs",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "nell-key",
+          "ask": "Who has a key to the cellar?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "gran keeps it on the hook in the kitchen",
+                "factIds": []
+              },
+              {
+                "text": "everyone knows where it is tbh",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "the hook by the fridge",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "nell-odd-d1",
+          "ask": "Anything odd this morning?",
+          "from": 1,
+          "until": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "ok weird thing. there are three more full bins on the crush pad than when we stopped yesterday??",
+                "factIds": ["extra-bins"]
+              },
+              {
+                "text": "gran's thrilled",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "three. i counted twice",
+                "factIds": ["extra-bins"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "nell-came-in",
+          "ask": "Did you see anyone when you came back in on Friday night?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Caught",
+              "contradiction": "nell-asleep"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "yeah actually. jonah",
+                "factIds": []
+              },
+              {
+                "text": "at the kitchen sink at like 1:35, scrubbing his hands. purple to the wrists",
+                "factIds": ["nell-saw-jonah-0135"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "1:35. purple. like he'd been in the vats",
+                "factIds": ["nell-saw-jonah-0135"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "nell-marlborough",
+          "ask": "Tell me about the job in Marlborough.",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Caught",
+              "contradiction": "nell-asleep"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "assistant winemaker. they've called me back twice",
+                "factIds": ["nell-nz-job"]
+              },
+              {
+                "text": "i love this place. i just don't know if i want to be stuck here forever at 23 😭",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "please please don't tell gran",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "nell-sat-night",
+          "ask": "Where were you on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 1
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "went for a walk round midnight. couldn't sleep",
+                "factIds": []
+              },
+              {
+                "text": "back in by quarter to one",
+                "factIds": ["nell-out-n1"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "midnight till quarter to one. just walking",
+                "factIds": ["nell-out-n1"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "nell-odd-d2",
+          "ask": "Anything odd this morning?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "someone's scrubbed the cellar wall by the hook?? it's still wet",
+                "factIds": ["wall-scrubbed-n1"]
+              },
+              {
+                "text": "why would you do that",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "still wet. i touched it",
+                "factIds": ["wall-scrubbed-n1"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "nell-saturday",
+          "ask": "What did you do on Saturday?",
+          "from": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "picked the top block with oskar and ines",
+                "factIds": []
+              },
+              {
+                "text": "my back is destroyed 😭",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "destroyed",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "nell-heard-n1",
+          "ask": "Did you hear anything on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "nope. owls",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "just owls",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "nell-sun-night",
+          "ask": "Where were you on Sunday night?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 2
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "needed air. went out round midnight",
+                "factIds": []
+              },
+              {
+                "text": "back by one",
+                "factIds": ["nell-out-n2"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "midnight to one. walking",
+                "factIds": ["nell-out-n2"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "nell-odd-d3",
+          "ask": "Anything odd this morning?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "just everyone being weird at breakfast",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "so weird",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "nell-ribbon",
+          "ask": "What do you make of the ribbon turning up in Ines's car?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "ribbon-in-ines-car"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "ines?? no way",
+                "factIds": []
+              },
+              {
+                "text": "she'd never be that obvious. she's way too smart",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "i genuinely don't buy it",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "nell-pressing",
+          "ask": "What happens at the pressing today?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "everyone treads the first tub barefoot. gran's rule",
+                "factIds": []
+              },
+              {
+                "text": "then it all goes in grandad's old basket press",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "barefoot. no exceptions",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "nell-arrest",
+          "ask": "If you had to name someone today, who would it be?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "ugh. ines?",
+                "factIds": []
+              },
+              {
+                "text": "she was SO into that cellar",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "i don't want it to be anyone 😭",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "nell-monday",
+          "ask": "When are you heading home?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "i live here now apparently 😭",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "forever lol",
+                "factIds": []
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "jonah",
+      "name": "Jonah Fenwick",
+      "role": "Leonie's son, an accountant in the city, back for his first harvest since his father died",
+      "voice": "41. Easygoing on the surface: sentence case with full stops, short to medium sentences. Says 'to be fair' and 'look'. Laughs with 'haha', and once in a while adds 🍷; no other emoji.",
+      "knows": [
+        "tastevin-seen-2245",
+        "jonah-plunged-cap",
+        "jonah-asked-to-run",
+        "wall-scrubbed-n1",
+        "extra-bins"
+      ],
+      "claims": [
+        "jonah-slept-n0",
+        "jonah-rinsed-buckets",
+        "jonah-ring-off",
+        "jonah-glad-nell",
+        "jonah-slept-n1",
+        "jonah-slept-n2",
+        "ribbon-in-ines-car"
+      ],
+      "away": [
+        {
+          "day": 1,
+          "part": "afternoon",
+          "status": "picking the top block"
+        },
+        {
+          "day": 2,
+          "part": "morning",
+          "status": "driving the bins to the weighbridge"
+        }
+      ],
+      "goodnight": "Night, all. Big day tomorrow. 🍷",
+      "wrongProof": [
+        ["Look, that's got nothing to do with what I said."],
+        ["Not sure what you think that proves, to be fair."],
+        ["Haha. No. Try again."]
+      ],
+      "questions": [
+        {
+          "id": "jonah-friday",
+          "ask": "Where were you after supper on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Helped Mum lock up, then bed about half eleven.",
+                "factIds": []
+              },
+              {
+                "text": "Slept right through till seven, to be fair. Picking wears you out.",
+                "factIds": ["jonah-slept-n0"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Right through. Didn't stir till seven.",
+                "factIds": ["jonah-slept-n0"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "Alright. I was up for a bit. Couldn't sleep.",
+                "factIds": []
+              },
+              {
+                "text": "Came down and rinsed the picking buckets in the kitchen sink. That's all the purple was.",
+                "factIds": ["jonah-rinsed-buckets"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "jonah-last-saw",
+          "ask": "When did you last see the tastevin?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "At the toast. Mum hung it back on its hook at quarter to eleven.",
+                "factIds": ["tastevin-seen-2245"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Quarter to eleven. We all saw it.",
+                "factIds": ["tastevin-seen-2245"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "jonah-heard",
+          "ask": "Did you see or hear anything on Friday night?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Nothing I noticed, no.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Nothing. Sorry.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "jonah-who",
+          "ask": "Who do you think took it?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Look, I'd hate to say.",
+                "factIds": []
+              },
+              {
+                "text": "Ines buys wine for a living and she was all over that cellar at supper. Just saying.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "I'm not accusing her. Just saying.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "jonah-nell",
+          "ask": "What do you make of Nell?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Great kid. She'll do brilliantly with the place.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "She will. Honestly.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "jonah-oskar",
+          "ask": "What do you make of Oskar?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Oskar's been here longer than I have, haha.",
+                "factIds": []
+              },
+              {
+                "text": "Dad's best mate. Practically came with the vines.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Salt of the earth.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "jonah-ines",
+          "ask": "What do you make of Ines?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Sharp. Knows her wine.",
+                "factIds": []
+              },
+              {
+                "text": "Asked Mum about the 2019 reserve about six times at supper.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Six. I counted, haha.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "jonah-leonie",
+          "ask": "How do you know Leonie?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "She's my mum, haha. I grew up in these rows.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Forty-one years and counting.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "jonah-picking",
+          "ask": "What were you picking on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Chardonnay on the top block with Oskar.",
+                "factIds": []
+              },
+              {
+                "text": "Thirty bins. My back is not what it was.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Thirty. Oskar did most of them, to be fair.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "jonah-supper",
+          "ask": "How was the harvest supper?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Good. Lamb down in the cellar at the long table.",
+                "factIds": []
+              },
+              {
+                "text": "I gave the toast. To Dad. 🍷",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "It was a good night. Till it wasn't.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "jonah-takeover",
+          "ask": "How do you feel about Nell taking over Fenwick Vale?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Glad, honestly. I never wanted it. The city suits me.",
+                "factIds": ["jonah-glad-nell"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Never wanted it. Mum knows that.",
+                "factIds": ["jonah-glad-nell"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "Fine. I asked her.",
+                "factIds": []
+              },
+              {
+                "text": "In August. Asked if I could come home and run it. She'd already promised Nell.",
+                "factIds": ["jonah-asked-to-run"]
+              },
+              {
+                "text": "It's her call. Nell's good.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "jonah-tastevin",
+          "ask": "What does the tastevin mean to you?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Dad wore it every harvest. Tasted every vat with it.",
+                "factIds": []
+              },
+              {
+                "text": "Whoever runs the place wears it next. That's the tradition.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "It's just a cup, to be fair.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "jonah-room",
+          "ask": "Where are you sleeping?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "My old room, end of the landing. Ines is next door.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Same room since I was six, haha.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "jonah-key",
+          "ask": "Who has a key to the cellar?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "It hangs on a hook in the kitchen. Anyone could have taken it.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Anyone. Look, it's a farmhouse.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "jonah-odd-d1",
+          "ask": "Anything odd this morning?",
+          "from": 1,
+          "until": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Mum in the cellar in tears. That's odd enough.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "That's all.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "jonah-handprint",
+          "ask": "There's a handprint by the hook with a ring mark on the little finger. Is it yours?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "handprint-ring-mark"
+            },
+            {
+              "_tag": "Seen",
+              "fact": "jonah-wears-signet"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Can't be. I took Dad's ring off before picking on Friday and it's been in my washbag since.",
+                "factIds": ["jonah-ring-off"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Washbag. Didn't want it scratched on the secateurs.",
+                "factIds": ["jonah-ring-off"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "Fine. I had it on. It's my print.",
+                "factIds": []
+              },
+              {
+                "text": "I went down to the cellar in the night and punched down the cap by hand, like Dad taught me.",
+                "factIds": ["jonah-plunged-cap"]
+              },
+              {
+                "text": "I didn't touch the hook.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "jonah-washing",
+          "ask": "What were you washing off your hands at half one?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Caught",
+              "contradiction": "jonah-slept"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "The picking buckets. Rinsed the lot in the kitchen sink. Must everywhere.",
+                "factIds": ["jonah-rinsed-buckets"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Buckets. Sticky job.",
+                "factIds": ["jonah-rinsed-buckets"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "Alright. There weren't any buckets.",
+                "factIds": []
+              },
+              {
+                "text": "I went down to the cellar and punched down the cap by hand, like Dad used to.",
+                "factIds": ["jonah-plunged-cap"]
+              },
+              {
+                "text": "That's all. I didn't take it.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "jonah-sat-night",
+          "ask": "Where were you on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 1
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Bed by eleven. Slept fine.",
+                "factIds": ["jonah-slept-n1"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Bed. Slept.",
+                "factIds": ["jonah-slept-n1"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "jonah-odd-d2",
+          "ask": "Anything odd this morning?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Someone's been scrubbing the cellar wall by the hook, apparently.",
+                "factIds": ["wall-scrubbed-n1"]
+              },
+              {
+                "text": "Mum's on the warpath.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Ask Mum. She found it.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "jonah-saturday",
+          "ask": "What did you do on Saturday?",
+          "from": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Drove the bins to the weighbridge, then picked till dark.",
+                "factIds": []
+              },
+              {
+                "text": "Three more bins than we picked, Mum reckons. Lucky year.",
+                "factIds": ["extra-bins"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Busy day. Good day.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "jonah-heard-n1",
+          "ask": "Did you hear anything on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Nothing. Sorry.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Nothing.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "jonah-sun-night",
+          "ask": "Where were you on Sunday night?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 2
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Bed about eleven. Early start for the pressing.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Eleven. Ish.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "jonah-ribbon",
+          "ask": "What do you make of the ribbon turning up in Ines's car?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "ribbon-in-ines-car"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Seems fairly clear, to be fair. Her car, her glovebox.",
+                "factIds": ["ribbon-in-ines-car"]
+              },
+              {
+                "text": "I said she wanted that reserve.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Her glovebox. I'm only saying what it looks like.",
+                "factIds": ["ribbon-in-ines-car"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "jonah-cars",
+          "ask": "Ines's car was unlocked by the crush pad all night. Were you out there on Sunday night?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "ribbon-in-ines-car"
+            },
+            {
+              "_tag": "Seen",
+              "fact": "ines-car-unlocked"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "No. In bed by eleven and didn't stir.",
+                "factIds": ["jonah-slept-n2"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Bed. All night. Look, ask anyone.",
+                "factIds": ["jonah-slept-n2"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "Alright. I went out about quarter to two.",
+                "factIds": []
+              },
+              {
+                "text": "Couldn't sleep. Walked down to look at Dad's press in the dark.",
+                "factIds": []
+              },
+              {
+                "text": "I didn't go near her car.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "jonah-odd-d3",
+          "ask": "Anything odd this morning?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "No. Just want this sorted before the pressing.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Nothing.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "jonah-pressing",
+          "ask": "What happens at the pressing today?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "First tub trodden barefoot, then Dad's old basket press.",
+                "factIds": []
+              },
+              {
+                "text": "Dad always wore the tastevin for it.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "That's how he did it.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "jonah-arrest",
+          "ask": "If you had to name someone today, who would it be?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Ines. Sorry.",
+                "factIds": []
+              },
+              {
+                "text": "She wanted that reserve barrel more than anything.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Ines.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "jonah-monday",
+          "ask": "When are you heading home?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "After the pressing. Work on Tuesday.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Tonight. Late.",
+                "factIds": []
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "ines",
+      "name": "Ines Moreau",
+      "role": "Leonie's goddaughter, a wine buyer for a restaurant group",
+      "voice": "36. Dry and quick: sentence case, never a full stop at the end, ends a jab with 'lol'. Uses 🙃 now and then, no other emoji.",
+      "knows": [
+        "tastevin-seen-2245",
+        "ring-at-toast",
+        "handprint-by-hook",
+        "ines-hook-empty-0118",
+        "ines-tasted-reserve",
+        "ines-car-unlocked",
+        "wall-scrubbed-n1"
+      ],
+      "claims": ["ines-in-room-n0"],
+      "secret": "ines-tasted-reserve",
+      "away": [
+        {
+          "day": 1,
+          "part": "afternoon",
+          "status": "on a work call in the car"
+        },
+        {
+          "day": 2,
+          "part": "evening",
+          "status": "out for a run"
+        }
+      ],
+      "goodnight": "Night all. Earplugs in lol",
+      "wrongProof": [
+        ["That's not even close to what I said lol"],
+        ["Bold choice. Wrong, but bold 🙃"],
+        ["I don't see what that has to do with me"]
+      ],
+      "questions": [
+        {
+          "id": "ines-friday",
+          "ask": "Where were you after supper on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Bed by half eleven with a book",
+                "factIds": []
+              },
+              {
+                "text": "Didn't leave my room till eight lol",
+                "factIds": ["ines-in-room-n0"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "My room. All night. Riveting, I know",
+                "factIds": ["ines-in-room-n0"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "Ok. I went down to the cellar about quarter past one 🙃",
+                "factIds": []
+              },
+              {
+                "text": "I wanted a taste of Malcolm's 2019 reserve. My group wants to buy the barrel and Leonie won't let anyone near it",
+                "factIds": ["ines-tasted-reserve"]
+              },
+              {
+                "text": "Please don't tell her. She'd never forgive me",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ines-last-saw",
+          "ask": "When did you last see the tastevin?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "The toast, quarter to eleven. Leonie hung it back on its hook after",
+                "factIds": ["tastevin-seen-2245"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Quarter to eleven. On the hook",
+                "factIds": ["tastevin-seen-2245"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "ines-heard",
+          "ask": "Did you see or hear anything on Friday night?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Nothing. Earplugs. Creaky old house lol",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Earplugs. I can't hear a thing in them",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ines-who",
+          "ask": "Who do you think took it?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Not a clue",
+                "factIds": []
+              },
+              {
+                "text": "Oskar's always first up and last to bed though. Just an observation lol",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "I'm not saying it was him",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ines-nell",
+          "ask": "What do you make of Nell?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Lovely. Bit quiet since Leonie's big announcement",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Quiet. Thinking, maybe",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ines-jonah",
+          "ask": "What do you make of Jonah?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Nice. Sad, I think",
+                "factIds": []
+              },
+              {
+                "text": "He kept looking up at that hook all through supper",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Just an impression",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ines-oskar",
+          "ask": "What do you make of Oskar?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Proper old-school grower",
+                "factIds": []
+              },
+              {
+                "text": "Thinks I'm a city snob lol",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "He's not wrong 🙃",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ines-leonie",
+          "ask": "How do you know Leonie?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "She's my godmother. She and Mum were at school together",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Since forever",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ines-work",
+          "ask": "What brings you to the harvest?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Leonie asked me to pick",
+                "factIds": []
+              },
+              {
+                "text": "And I wanted to taste the new barrels for work",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Mostly the picking. Mostly lol",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ines-picking",
+          "ask": "What were you picking on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Pinot with Nell and Leonie",
+                "factIds": []
+              },
+              {
+                "text": "I have blisters in places I didn't know had skin",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Pinot. Bottom block",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ines-supper",
+          "ask": "How was the harvest supper?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Gorgeous. Long table in the cellar, lamb, Jonah gave the toast",
+                "factIds": []
+              },
+              {
+                "text": "His dad's signet ring clinked on the glass the whole way through. Leonie cried",
+                "factIds": ["ring-at-toast"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Clink clink, every sentence. Very sweet",
+                "factIds": ["ring-at-toast"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "ines-reserve",
+          "ask": "What's so special about the 2019 reserve?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Malcolm's last vintage. One barrel. Leonie won't sell it, won't even pour it",
+                "factIds": []
+              },
+              {
+                "text": "Which is a crime, professionally speaking 🙃",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "A crime",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ines-tastevin",
+          "ask": "What does the tastevin mean to the family?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Heirloom. Whoever runs the vineyard wears it at harvest",
+                "factIds": []
+              },
+              {
+                "text": "So Nell, now",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "That's the rule",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ines-room",
+          "ask": "Where are you sleeping?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Little room on the landing, next to Jonah's",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Next to Jonah",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ines-key",
+          "ask": "Who has a key to the cellar?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "There's one on a hook in the kitchen",
+                "factIds": []
+              },
+              {
+                "text": "Very secure lol",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "The hook. Everyone knows",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ines-odd-d1",
+          "ask": "Anything odd this morning?",
+          "from": 1,
+          "until": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "There's a purple handprint on the whitewash by the empty hook",
+                "factIds": ["handprint-by-hook"]
+              },
+              {
+                "text": "Creepy lol",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Purple. Must, I'd guess",
+                "factIds": ["handprint-by-hook"]
+              }
+            ]
+          },
+          "ifDestroyed": {
+            "lines": [
+              {
+                "text": "Just Leonie in tears in the cellar",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "That's all",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ines-hook",
+          "ask": "Was the tastevin on its hook when you were in the cellar?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Caught",
+              "contradiction": "ines-cellar"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "No. The key was already in the stair door and the hook was bare",
+                "factIds": ["ines-hook-empty-0118"]
+              },
+              {
+                "text": "So whoever it was beat me to it lol",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Bare. I looked. I always look at it",
+                "factIds": ["ines-hook-empty-0118"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "ines-sat-night",
+          "ask": "Where were you on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 1
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Bed by half eleven. Actually slept",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Out cold",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ines-odd-d2",
+          "ask": "Anything odd this morning?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Someone's scrubbed the cellar wall by the hook. Still wet",
+                "factIds": ["wall-scrubbed-n1"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Wet. Recently",
+                "factIds": ["wall-scrubbed-n1"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "ines-saturday",
+          "ask": "What did you do on Saturday?",
+          "from": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Picked. Tasted barrels with Leonie",
+                "factIds": []
+              },
+              {
+                "text": "Not the reserve, obviously 🙃",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Obviously",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ines-heard-n1",
+          "ask": "Did you hear anything on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Earplugs, remember lol",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Nothing",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ines-ribbon",
+          "ask": "What do you make of the ribbon turning up in your car?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "ribbon-in-ines-car"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "I didn't put it there. Obviously",
+                "factIds": []
+              },
+              {
+                "text": "And I never lock that car. The key lives on the sun visor, you've all seen me grab it",
+                "factIds": ["ines-car-unlocked"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Never locked. Key on the visor. Anyone could have lol",
+                "factIds": ["ines-car-unlocked"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "ines-sun-night",
+          "ask": "Where were you on Sunday night?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 2
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Bed by eleven. Earplugs in",
+                "factIds": []
+              },
+              {
+                "text": "Dead to the world till seven",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Out cold",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ines-odd-d3",
+          "ask": "Anything odd this morning?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Everyone's very keen on the pressing suddenly lol",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Very keen",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ines-pressing",
+          "ask": "What happens at the pressing today?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Barefoot in the first tub",
+                "factIds": []
+              },
+              {
+                "text": "I've been warned it's freezing",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Freezing, apparently",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ines-arrest",
+          "ask": "If you had to name someone today, who would it be?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Ugh. Don't make me",
+                "factIds": []
+              },
+              {
+                "text": "Oskar? He's always up at strange hours",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Not happily",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ines-monday",
+          "ask": "When are you heading home?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Train at four",
+                "factIds": []
+              },
+              {
+                "text": "With or without the reserve lol",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Four",
+                "factIds": []
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "oskar",
+      "name": "Oskar Lindqvist",
+      "role": "the neighbouring grower, who has helped at every Fenwick harvest for thirty years",
+      "voice": "68. Plain and slow: capitals and full stops, very short sentences, often drops the 'I'. Starts with 'Well.' when cornered. Uses 🍇 once in a while and no other emoji.",
+      "knows": [
+        "tastevin-seen-2245",
+        "oskar-saw-nell-0100",
+        "oskar-buckets-truck",
+        "handprint-by-hook",
+        "handprint-ring-mark",
+        "jonah-asked-to-run",
+        "oskar-added-grapes",
+        "oskar-early-n1",
+        "oskar-early-n2",
+        "wall-scrubbed-n1"
+      ],
+      "claims": ["oskar-up-at-seven"],
+      "secret": "oskar-added-grapes",
+      "away": [
+        {
+          "day": 1,
+          "part": "evening",
+          "status": "home to feed the dogs"
+        },
+        {
+          "day": 3,
+          "part": "afternoon",
+          "status": "loading the press"
+        }
+      ],
+      "goodnight": "Night. 🍇",
+      "wrongProof": [
+        ["That's not what I said."],
+        ["Well. No."],
+        ["Read it again."]
+      ],
+      "questions": [
+        {
+          "id": "oskar-friday",
+          "ask": "Where were you after supper on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Cottage. Bed by half eleven.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Half eleven. Old man.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "oskar-last-saw",
+          "ask": "When did you last see the tastevin?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "The toast. Quarter to eleven. Leonie hung it back up.",
+                "factIds": ["tastevin-seen-2245"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Quarter to eleven. On its hook.",
+                "factIds": ["tastevin-seen-2245"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "oskar-heard",
+          "ask": "Did you see or hear anything on Friday night?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Up once around one. Old man's bladder.",
+                "factIds": []
+              },
+              {
+                "text": "Saw Nell walking the top rows with her phone lit.",
+                "factIds": ["oskar-saw-nell-0100"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Nell. Top rows. Around one.",
+                "factIds": ["oskar-saw-nell-0100"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "oskar-who",
+          "ask": "Who do you think took it?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Don't know. Not my place to guess.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Well. Not my place.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "oskar-nell",
+          "ask": "What do you make of Nell?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Good hands. Good nose. She'll do.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "She'll do fine.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "oskar-jonah",
+          "ask": "What do you make of Jonah?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Good lad. Misses his dad.",
+                "factIds": []
+              },
+              {
+                "text": "Rang Leonie in August. Asked to come home and run the place. She'd already promised Nell.",
+                "factIds": ["jonah-asked-to-run"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Leonie told me herself. August.",
+                "factIds": ["jonah-asked-to-run"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "oskar-ines",
+          "ask": "What do you make of Ines?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Knows wine. Talks money.",
+                "factIds": []
+              },
+              {
+                "text": "Leonie's goddaughter. So.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "So I mind my tongue.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "oskar-leonie",
+          "ask": "How do you know Leonie?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Next farm over. Thirty harvests.",
+                "factIds": []
+              },
+              {
+                "text": "Malcolm was my best friend.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Thirty. Every one.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "oskar-clear-up",
+          "ask": "Did you help clear up after supper on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Loaded every picking bucket into my truck at ten. To hose out at mine.",
+                "factIds": []
+              },
+              {
+                "text": "Stayed in the truck all night. Every last one.",
+                "factIds": ["oskar-buckets-truck"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Every bucket. In the truck. Till Saturday.",
+                "factIds": ["oskar-buckets-truck"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "oskar-picking",
+          "ask": "What were you picking on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Chardonnay. Top block. With Jonah.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Chardonnay.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "oskar-room",
+          "ask": "Where are you sleeping?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Guest cottage. Same as every harvest.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Cottage.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "oskar-tastevin",
+          "ask": "What does the tastevin mean to the family?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Malcolm wore it every harvest.",
+                "factIds": []
+              },
+              {
+                "text": "Whoever runs the place wears it next.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "That's how it goes.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "oskar-key",
+          "ask": "Who has a key to the cellar?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Hook in the kitchen. Always has been.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "The hook.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "oskar-odd-d1",
+          "ask": "Anything odd this morning?",
+          "from": 1,
+          "until": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Leonie crying. Don't like that.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "That's all.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "oskar-cellar-d1",
+          "ask": "Have you been down to the cellar this morning?",
+          "from": 1,
+          "until": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Yes. With Leonie.",
+                "factIds": []
+              },
+              {
+                "text": "Purple handprint on the wall by the empty hook.",
+                "factIds": ["handprint-by-hook"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Handprint. Must, by the colour.",
+                "factIds": ["handprint-by-hook"]
+              }
+            ]
+          },
+          "ifDestroyed": {
+            "lines": [
+              {
+                "text": "Yes. With Leonie.",
+                "factIds": []
+              },
+              {
+                "text": "Hook's empty. That's all.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Empty hook.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "oskar-handprint",
+          "ask": "Did you get a good look at the handprint?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "handprint-by-hook"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "I did. Big hand.",
+                "factIds": []
+              },
+              {
+                "text": "Oval smudge on the little finger. Where a ring would sit.",
+                "factIds": ["handprint-ring-mark"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "A ring. I'd say so.",
+                "factIds": ["handprint-ring-mark"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "oskar-bins",
+          "ask": "Nell says there are three extra bins on the crush pad. Any idea how?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "extra-bins"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Bottom block came good. Lucky year.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Well. Lucky year.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "oskar-saturday-up",
+          "ask": "What time were you up on Saturday?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "extra-bins"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Seven. Same as always.",
+                "factIds": ["oskar-up-at-seven"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Seven. Ask anyone.",
+                "factIds": ["oskar-up-at-seven"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "Well. Five.",
+                "factIds": []
+              },
+              {
+                "text": "Tipped three bins of my own Pinot in with Leonie's. Frost took a third of her crop. She'd never take it if I offered.",
+                "factIds": ["oskar-added-grapes"]
+              },
+              {
+                "text": "Don't tell her. 🍇",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "oskar-sat-night",
+          "ask": "Where were you on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 1
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Cottage. Slept.",
+                "factIds": []
+              },
+              {
+                "text": "Out on the crush pad by quarter to six.",
+                "factIds": ["oskar-early-n1"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Quarter to six. Bins.",
+                "factIds": ["oskar-early-n1"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "oskar-odd-d2",
+          "ask": "Anything odd this morning?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Cellar wall's been scrubbed by the hook. Leonie's cross.",
+                "factIds": ["wall-scrubbed-n1"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Cross as a wasp.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "oskar-saturday",
+          "ask": "What did you do on Saturday?",
+          "from": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Picked. Mended the destemmer. Picked.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Picked.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "oskar-heard-n1",
+          "ask": "Did you hear anything on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Owls.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Owls. Two.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "oskar-sun-night",
+          "ask": "Where were you on Sunday night?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 2
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Cottage.",
+                "factIds": []
+              },
+              {
+                "text": "Up at twenty past five for the press.",
+                "factIds": ["oskar-early-n2"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Twenty past five.",
+                "factIds": ["oskar-early-n2"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "oskar-odd-d3",
+          "ask": "Anything odd this morning?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "No. Press is clean. Ready.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Ready.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "oskar-ribbon",
+          "ask": "Leonie found the ribbon in Ines's car. Does that fit?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "ribbon-in-ines-car"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Hm.",
+                "factIds": []
+              },
+              {
+                "text": "Ribbon was cut. Clean. Not torn off in a hurry.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Cut. With a knife.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "oskar-pressing",
+          "ask": "What happens at the pressing today?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "First tub trodden barefoot.",
+                "factIds": []
+              },
+              {
+                "text": "Then Malcolm's old basket press.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Same as always.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "oskar-arrest",
+          "ask": "If you had to name someone today, who would it be?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "I won't. Sorry.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Well. No.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "oskar-monday",
+          "ask": "When are you heading home?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "It's next door. 🍇",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Over the hedge.",
+                "factIds": []
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "thief": "jonah",
+  "theftFact": "jonah-took-tastevin",
+  "timeline": [
+    {
+      "night": 0,
+      "time": "10:00pm",
+      "text": "Oskar loads every picking bucket into his truck to hose out at his own farm.",
+      "factIds": ["oskar-buckets-truck"]
+    },
+    {
+      "night": 0,
+      "time": "10:45pm",
+      "text": "Jonah toasts his father, Malcolm's signet ring clinking on his glass. Leonie hangs the tastevin back on its hook and announces that Fenwick Vale will go to Nell.",
+      "factIds": ["tastevin-seen-2245", "ring-at-toast"]
+    },
+    {
+      "night": 0,
+      "time": "12:41am",
+      "text": "Nell slips out to the top rows for a video call with a winery in Marlborough, where it is daytime.",
+      "factIds": ["nell-nz-job", "nell-left-0041"]
+    },
+    {
+      "night": 0,
+      "time": "12:52am",
+      "text": "Jonah takes the key from the kitchen hook and goes down the cellar stair, leaving his phone charging upstairs. He punches down the fermenting cap by hand as his father taught him, then lifts the tastevin off its hook, steadying a purple hand on the whitewash. He leaves the key in the stair door.",
+      "factIds": [
+        "jonah-took-tastevin",
+        "jonah-plunged-cap",
+        "handprint-by-hook"
+      ]
+    },
+    {
+      "night": 0,
+      "time": "1:00am",
+      "text": "Oskar, up for the bathroom, sees Nell walking the top rows with her phone lit.",
+      "factIds": ["oskar-saw-nell-0100"]
+    },
+    {
+      "night": 0,
+      "time": "1:18am",
+      "text": "Ines finds the key in the stair door and creeps down for a taste of Malcolm's 2019 reserve. The hook is already empty. She hangs the key back on its hook on her way up.",
+      "factIds": [
+        "ines-tasted-reserve",
+        "ines-hook-empty-0118",
+        "ines-cellar-0118"
+      ]
+    },
+    {
+      "night": 0,
+      "time": "1:35am",
+      "text": "Nell comes in through the kitchen and finds Jonah at the sink, scrubbing must off his hands.",
+      "factIds": ["nell-saw-jonah-0135"]
+    },
+    {
+      "night": 0,
+      "time": "5:06am",
+      "text": "Oskar tips three bins of his own Pinot into Leonie's harvest on the crush pad.",
+      "factIds": ["oskar-added-grapes", "oskar-crushpad-0506", "extra-bins"]
+    },
+    {
+      "night": 1,
+      "time": "11:52pm",
+      "text": "Nell goes out for a second-round call with Marlborough and is back by quarter to one.",
+      "factIds": ["nell-out-n1"]
+    },
+    {
+      "night": 1,
+      "time": "12:30am",
+      "text": "Jonah slips down to the cellar, again without his phone, and scrubs his handprint off the wall.",
+      "factIds": ["jonah-scrubbed-wall", "wall-scrubbed-n1"]
+    },
+    {
+      "night": 1,
+      "time": "5:45am",
+      "text": "Oskar is out on the crush pad early, as always.",
+      "factIds": ["oskar-early-n1"]
+    },
+    {
+      "night": 2,
+      "time": "12:05am",
+      "text": "Nell takes a last call from Marlborough and turns the job down. She's staying.",
+      "factIds": ["nell-out-n2"]
+    },
+    {
+      "night": 2,
+      "time": "1:47am",
+      "text": "Out in the dark yard, Jonah lights his way with his phone. He cuts the green ribbon off the tastevin and tucks it into the glovebox of Ines's unlocked hire car by the crush pad.",
+      "factIds": ["jonah-planted-ribbon", "jonah-crushpad-n2"]
+    },
+    {
+      "night": 2,
+      "time": "5:20am",
+      "text": "Oskar readies Malcolm's old basket press. The tastevin is wrapped in a sock in Jonah's walking boot: the one thing of his father's he couldn't bear to see go to someone else.",
+      "factIds": ["oskar-early-n2"]
+    }
+  ],
+  "facts": [
+    {
+      "id": "jonah-took-tastevin",
+      "text": "Jonah took the tastevin from its hook in the cellar at about one on Friday night.",
+      "isTrue": true,
+      "about": ["jonah"],
+      "concernsTheft": true
+    },
+    {
+      "id": "tastevin-seen-2245",
+      "text": "Leonie hung the tastevin back on its hook above the tasting table at 10:45 on Friday, after the toast.",
+      "isTrue": true,
+      "about": [],
+      "concernsTheft": true
+    },
+    {
+      "id": "handprint-by-hook",
+      "text": "There is a purple must handprint on the whitewashed wall beside the empty hook.",
+      "isTrue": true,
+      "about": [],
+      "concernsTheft": true
+    },
+    {
+      "id": "handprint-ring-mark",
+      "text": "The handprint by the hook is a big hand, with an oval smudge on the little finger where a ring would sit.",
+      "isTrue": true,
+      "about": [],
+      "concernsTheft": true
+    },
+    {
+      "id": "jonah-wears-signet",
+      "text": "Jonah wears his late father's signet ring on his little finger.",
+      "isTrue": true,
+      "about": ["jonah"],
+      "concernsTheft": true
+    },
+    {
+      "id": "ring-at-toast",
+      "text": "Jonah was wearing his father's signet ring when he gave the toast at 10:45 on Friday; it clinked on his glass.",
+      "isTrue": true,
+      "about": ["jonah"],
+      "concernsTheft": true
+    },
+    {
+      "id": "jonah-ring-off",
+      "text": "Jonah took his ring off before picking on Friday afternoon and it stayed in his washbag.",
+      "isTrue": false,
+      "about": ["jonah"],
+      "concernsTheft": true
+    },
+    {
+      "id": "jonah-slept-n0",
+      "text": "Jonah was asleep from half eleven on Friday night until seven.",
+      "isTrue": false,
+      "about": ["jonah"],
+      "concernsTheft": true
+    },
+    {
+      "id": "nell-saw-jonah-0135",
+      "text": "At 1:35 on Friday night Nell saw Jonah at the kitchen sink, scrubbing purple off his hands.",
+      "isTrue": true,
+      "about": ["jonah", "nell"],
+      "concernsTheft": true
+    },
+    {
+      "id": "jonah-rinsed-buckets",
+      "text": "Jonah's hands were purple from rinsing the picking buckets in the kitchen sink on Friday night.",
+      "isTrue": false,
+      "about": ["jonah"],
+      "concernsTheft": true
+    },
+    {
+      "id": "oskar-buckets-truck",
+      "text": "Oskar loaded every picking bucket into his truck at ten on Friday, and they stayed there all night.",
+      "isTrue": true,
+      "about": ["oskar"],
+      "concernsTheft": true
+    },
+    {
+      "id": "jonah-plunged-cap",
+      "text": "Jonah went down to the cellar on Friday night and punched down the fermenting cap by hand, as his father taught him.",
+      "isTrue": true,
+      "about": ["jonah"],
+      "concernsTheft": true
+    },
+    {
+      "id": "ines-hook-empty-0118",
+      "text": "When Ines went down to the cellar at 1:18 on Friday night, the key was already in the stair door and the hook was empty.",
+      "isTrue": true,
+      "about": ["ines"],
+      "concernsTheft": true
+    },
+    {
+      "id": "wall-scrubbed-n1",
+      "text": "Someone scrubbed the cellar wall beside the hook clean on Saturday night.",
+      "isTrue": true,
+      "about": [],
+      "concernsTheft": true
+    },
+    {
+      "id": "jonah-scrubbed-wall",
+      "text": "Jonah scrubbed the handprint off the cellar wall at half twelve on Saturday night.",
+      "isTrue": true,
+      "about": ["jonah"],
+      "concernsTheft": true
+    },
+    {
+      "id": "jonah-slept-n1",
+      "text": "Jonah was asleep from eleven on Saturday night until morning.",
+      "isTrue": false,
+      "about": ["jonah"],
+      "concernsTheft": true
+    },
+    {
+      "id": "ribbon-in-ines-car",
+      "text": "Ines hid the tastevin's green ribbon in the glovebox of her hire car.",
+      "isTrue": false,
+      "about": ["ines"],
+      "concernsTheft": true
+    },
+    {
+      "id": "ines-car-unlocked",
+      "text": "Ines never locks her hire car; the key lives on the sun visor, and everyone has seen her fetch it.",
+      "isTrue": true,
+      "about": ["ines"],
+      "concernsTheft": true
+    },
+    {
+      "id": "jonah-slept-n2",
+      "text": "Jonah was in bed from eleven on Sunday night until morning.",
+      "isTrue": false,
+      "about": ["jonah"],
+      "concernsTheft": true
+    },
+    {
+      "id": "jonah-crushpad-n2",
+      "text": "Jonah's phone joined the crush pad Wi-Fi, where the cars are parked, at 1:47am on Sunday night.",
+      "isTrue": true,
+      "about": ["jonah"],
+      "concernsTheft": true
+    },
+    {
+      "id": "jonah-planted-ribbon",
+      "text": "Jonah cut the green ribbon off the tastevin and tucked it into the glovebox of Ines's hire car at 1:47am on Sunday night.",
+      "isTrue": true,
+      "about": ["jonah"],
+      "concernsTheft": true
+    },
+    {
+      "id": "jonah-glad-nell",
+      "text": "Jonah is glad Nell is getting the vineyard; he never wanted it.",
+      "isTrue": false,
+      "about": ["jonah"],
+      "concernsTheft": false
+    },
+    {
+      "id": "jonah-asked-to-run",
+      "text": "In August Jonah asked Leonie if he could come home and run the vineyard; she had already promised it to Nell.",
+      "isTrue": true,
+      "about": ["jonah"],
+      "concernsTheft": false
+    },
+    {
+      "id": "nell-asleep-n0",
+      "text": "Nell was asleep by midnight on Friday.",
+      "isTrue": false,
+      "about": ["nell"],
+      "concernsTheft": false
+    },
+    {
+      "id": "oskar-saw-nell-0100",
+      "text": "Around one on Friday night Oskar saw Nell walking the top rows with her phone lit.",
+      "isTrue": true,
+      "about": ["nell", "oskar"],
+      "concernsTheft": false
+    },
+    {
+      "id": "nell-nz-job",
+      "text": "Nell has been interviewing at night for a winemaking job in Marlborough, New Zealand, and hasn't told Leonie.",
+      "isTrue": true,
+      "about": ["nell"],
+      "concernsTheft": false
+    },
+    {
+      "id": "nell-left-0041",
+      "text": "Nell's phone left the house Wi-Fi at 12:41am on Friday night.",
+      "isTrue": true,
+      "about": ["nell"],
+      "concernsTheft": false
+    },
+    {
+      "id": "ines-in-room-n0",
+      "text": "Ines stayed in her room all Friday night.",
+      "isTrue": false,
+      "about": ["ines"],
+      "concernsTheft": false
+    },
+    {
+      "id": "ines-cellar-0118",
+      "text": "Ines's phone joined the cellar Wi-Fi at 1:18am on Friday night.",
+      "isTrue": true,
+      "about": ["ines"],
+      "concernsTheft": false
+    },
+    {
+      "id": "ines-tasted-reserve",
+      "text": "Ines crept down to taste Malcolm's 2019 reserve barrel, which Leonie won't let anyone touch, because her restaurant group wants to buy it.",
+      "isTrue": true,
+      "about": ["ines"],
+      "concernsTheft": false
+    },
+    {
+      "id": "oskar-up-at-seven",
+      "text": "Oskar didn't leave the cottage on Saturday until seven.",
+      "isTrue": false,
+      "about": ["oskar"],
+      "concernsTheft": false
+    },
+    {
+      "id": "oskar-crushpad-0506",
+      "text": "Oskar's phone joined the crush pad Wi-Fi at 5:06am on Saturday.",
+      "isTrue": true,
+      "about": ["oskar"],
+      "concernsTheft": false
+    },
+    {
+      "id": "oskar-added-grapes",
+      "text": "At five on Saturday Oskar tipped three bins of his own Pinot into Leonie's harvest, to make up for her frost losses.",
+      "isTrue": true,
+      "about": ["oskar"],
+      "concernsTheft": false
+    },
+    {
+      "id": "extra-bins",
+      "text": "There were three more full bins on the crush pad on Saturday morning than when picking stopped on Friday.",
+      "isTrue": true,
+      "about": [],
+      "concernsTheft": false
+    },
+    {
+      "id": "nell-out-n1",
+      "text": "Nell went out walking around midnight on Saturday night and was back by quarter to one.",
+      "isTrue": true,
+      "about": ["nell"],
+      "concernsTheft": false
+    },
+    {
+      "id": "nell-out-n2",
+      "text": "Nell went out walking around midnight on Sunday night and was back by one.",
+      "isTrue": true,
+      "about": ["nell"],
+      "concernsTheft": false
+    },
+    {
+      "id": "oskar-early-n1",
+      "text": "Oskar was out on the crush pad at quarter to six on Sunday morning.",
+      "isTrue": true,
+      "about": ["oskar"],
+      "concernsTheft": false
+    },
+    {
+      "id": "oskar-early-n2",
+      "text": "Oskar was out on the crush pad at twenty past five on Monday morning.",
+      "isTrue": true,
+      "about": ["oskar"],
+      "concernsTheft": false
+    }
+  ],
+  "beats": [
+    {
+      "day": 1,
+      "part": "morning",
+      "lines": [
+        {
+          "guest": "nell",
+          "text": "gran's tastevin is gone from the hook in the cellar 😭",
+          "factIds": []
+        },
+        {
+          "guest": "jonah",
+          "text": "Gone? It was there at the toast.",
+          "factIds": []
+        },
+        {
+          "guest": "ines",
+          "text": "Nobody touch anything down there",
+          "factIds": []
+        },
+        {
+          "guest": "oskar",
+          "text": "Leonie's in bits. Be kind.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 1,
+      "part": "afternoon",
+      "lines": [
+        {
+          "guest": "nell",
+          "text": "lunch on the crush pad!! gran made soup",
+          "factIds": []
+        },
+        {
+          "guest": "oskar",
+          "text": "Coming.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 1,
+      "part": "evening",
+      "lines": [
+        {
+          "guest": "jonah",
+          "text": "Mum says supper in the kitchen tonight, not the cellar.",
+          "factIds": []
+        },
+        {
+          "guest": "ines",
+          "text": "Understandable",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "part": "morning",
+      "lines": [
+        {
+          "guest": "ines",
+          "text": "Someone's scrubbed the cellar wall by the hook in the night. It's still wet",
+          "factIds": ["wall-scrubbed-n1"]
+        },
+        {
+          "guest": "oskar",
+          "text": "Picking the top block today. Gloves on.",
+          "factIds": []
+        },
+        {
+          "guest": "nell",
+          "text": "coming 🙏",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "part": "afternoon",
+      "lines": [
+        {
+          "guest": "jonah",
+          "text": "Bins weighed. Best year since 2019, apparently. 🍷",
+          "factIds": []
+        },
+        {
+          "guest": "ines",
+          "text": "Told you lol",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "part": "evening",
+      "lines": [
+        {
+          "guest": "nell",
+          "text": "pressing tomorrow!! gran says everyone barefoot",
+          "factIds": []
+        },
+        {
+          "guest": "oskar",
+          "text": "Feet washed first.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 3,
+      "part": "morning",
+      "lines": [
+        {
+          "guest": "oskar",
+          "text": "Leonie went to Ines's car for the jump leads. The tastevin's green ribbon was in the glovebox.",
+          "factIds": ["ribbon-in-ines-car"]
+        },
+        {
+          "guest": "ines",
+          "text": "What?? I did not put that there",
+          "factIds": []
+        },
+        {
+          "guest": "jonah",
+          "text": "Well.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 3,
+      "part": "afternoon",
+      "lines": [
+        {
+          "guest": "nell",
+          "text": "first tub done. my feet are purple forever 😭",
+          "factIds": []
+        },
+        {
+          "guest": "jonah",
+          "text": "Good work, all.",
+          "factIds": []
+        }
+      ]
+    }
+  ],
+  "groupQuestions": [
+    {
+      "id": "group-after-toast",
+      "ask": "Did anyone see the tastevin after the toast on Friday?",
+      "from": 1,
+      "until": 1,
+      "unlock": [],
+      "replies": [
+        {
+          "guest": "nell",
+          "text": "no 😭",
+          "factIds": []
+        },
+        {
+          "guest": "jonah",
+          "text": "No. Not after Mum hung it up.",
+          "factIds": []
+        },
+        {
+          "guest": "ines",
+          "text": "Nope",
+          "factIds": []
+        },
+        {
+          "guest": "oskar",
+          "text": "No.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "id": "group-cellar-key",
+      "ask": "Did anyone take the cellar key off its hook on Friday night?",
+      "from": 1,
+      "until": 2,
+      "unlock": [],
+      "replies": [
+        {
+          "guest": "nell",
+          "text": "no??",
+          "factIds": []
+        },
+        {
+          "guest": "jonah",
+          "text": "Not me.",
+          "factIds": []
+        },
+        {
+          "guest": "ines",
+          "text": "No",
+          "factIds": []
+        },
+        {
+          "guest": "oskar",
+          "text": "No.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "id": "group-cellar-n1",
+      "ask": "Did anyone go down to the cellar on Saturday night?",
+      "from": 2,
+      "until": 2,
+      "unlock": [],
+      "replies": [
+        {
+          "guest": "nell",
+          "text": "nope",
+          "factIds": []
+        },
+        {
+          "guest": "jonah",
+          "text": "No.",
+          "factIds": []
+        },
+        {
+          "guest": "ines",
+          "text": "Not me",
+          "factIds": []
+        },
+        {
+          "guest": "oskar",
+          "text": "No.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "id": "group-rows",
+      "ask": "Which rows is everyone picking today?",
+      "from": 2,
+      "until": 2,
+      "unlock": [],
+      "replies": [
+        {
+          "guest": "nell",
+          "text": "bottom block with gran",
+          "factIds": []
+        },
+        {
+          "guest": "jonah",
+          "text": "Top block, once I'm back from the weighbridge.",
+          "factIds": []
+        },
+        {
+          "guest": "ines",
+          "text": "Wherever Leonie points me lol",
+          "factIds": []
+        },
+        {
+          "guest": "oskar",
+          "text": "Top block.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "id": "group-cars",
+      "ask": "Has anyone searched the cars for the tastevin?",
+      "from": 3,
+      "until": 3,
+      "unlock": [],
+      "replies": [
+        {
+          "guest": "nell",
+          "text": "i checked gran's van",
+          "factIds": []
+        },
+        {
+          "guest": "jonah",
+          "text": "Checked mine. Nothing.",
+          "factIds": []
+        },
+        {
+          "guest": "ines",
+          "text": "Mine, apparently. Thanks for asking 🙃",
+          "factIds": []
+        },
+        {
+          "guest": "oskar",
+          "text": "Truck's full of buckets. Look if you like.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "id": "group-tastevin-pressing",
+      "ask": "Who wears the tastevin at the pressing if it turns up?",
+      "from": 3,
+      "until": 3,
+      "unlock": [],
+      "replies": [
+        {
+          "guest": "nell",
+          "text": "gran says me. i'm not ready 😭",
+          "factIds": []
+        },
+        {
+          "guest": "jonah",
+          "text": "Nell. That's the tradition.",
+          "factIds": []
+        },
+        {
+          "guest": "ines",
+          "text": "Nell, surely",
+          "factIds": []
+        },
+        {
+          "guest": "oskar",
+          "text": "Nell.",
+          "factIds": []
+        }
+      ]
+    }
+  ],
+  "nightMoves": [
+    {
+      "_tag": "Destroy",
+      "night": 1,
+      "fact": "handprint-by-hook"
+    },
+    {
+      "_tag": "Plant",
+      "night": 2,
+      "fact": "ribbon-in-ines-car",
+      "disprovedBy": "jonah-crushpad-n2"
+    }
+  ],
+  "contradictions": [
+    {
+      "id": "jonah-slept",
+      "suspect": "jonah",
+      "claimFact": "jonah-slept-n0",
+      "proofFact": "nell-saw-jonah-0135",
+      "concernsTheft": true
+    },
+    {
+      "id": "jonah-buckets",
+      "suspect": "jonah",
+      "claimFact": "jonah-rinsed-buckets",
+      "proofFact": "oskar-buckets-truck",
+      "concernsTheft": true
+    },
+    {
+      "id": "jonah-ring",
+      "suspect": "jonah",
+      "claimFact": "jonah-ring-off",
+      "proofFact": "ring-at-toast",
+      "concernsTheft": true
+    },
+    {
+      "id": "jonah-sunday",
+      "suspect": "jonah",
+      "claimFact": "jonah-slept-n2",
+      "proofFact": "jonah-crushpad-n2",
+      "concernsTheft": true
+    },
+    {
+      "id": "jonah-takeover",
+      "suspect": "jonah",
+      "claimFact": "jonah-glad-nell",
+      "proofFact": "jonah-asked-to-run",
+      "concernsTheft": false
+    },
+    {
+      "id": "nell-asleep",
+      "suspect": "nell",
+      "claimFact": "nell-asleep-n0",
+      "proofFact": "oskar-saw-nell-0100",
+      "concernsTheft": false
+    },
+    {
+      "id": "ines-cellar",
+      "suspect": "ines",
+      "claimFact": "ines-in-room-n0",
+      "proofFact": "ines-cellar-0118",
+      "concernsTheft": false
+    },
+    {
+      "id": "oskar-early",
+      "suspect": "oskar",
+      "claimFact": "oskar-up-at-seven",
+      "proofFact": "oskar-crushpad-0506",
+      "concernsTheft": false
+    }
+  ],
+  "wifiLog": [
+    {
+      "id": "n0-oskar-in",
+      "night": 0,
+      "time": "11:22pm",
+      "guest": "oskar",
+      "event": "joined",
+      "accessPoint": "Guest cottage",
+      "factIds": []
+    },
+    {
+      "id": "n0-jonah-in",
+      "night": 0,
+      "time": "11:25pm",
+      "guest": "jonah",
+      "event": "joined",
+      "accessPoint": "Main house",
+      "factIds": []
+    },
+    {
+      "id": "n0-ines-in",
+      "night": 0,
+      "time": "11:26pm",
+      "guest": "ines",
+      "event": "joined",
+      "accessPoint": "Main house",
+      "factIds": []
+    },
+    {
+      "id": "n0-nell-in",
+      "night": 0,
+      "time": "11:28pm",
+      "guest": "nell",
+      "event": "joined",
+      "accessPoint": "Main house",
+      "factIds": []
+    },
+    {
+      "id": "n0-nell-out",
+      "night": 0,
+      "time": "12:41am",
+      "guest": "nell",
+      "event": "left",
+      "accessPoint": "Main house",
+      "factIds": ["nell-left-0041"]
+    },
+    {
+      "id": "n0-ines-cellar",
+      "night": 0,
+      "time": "1:18am",
+      "guest": "ines",
+      "event": "joined",
+      "accessPoint": "Cellar",
+      "factIds": ["ines-cellar-0118"]
+    },
+    {
+      "id": "n0-ines-back",
+      "night": 0,
+      "time": "1:31am",
+      "guest": "ines",
+      "event": "joined",
+      "accessPoint": "Main house",
+      "factIds": []
+    },
+    {
+      "id": "n0-nell-back",
+      "night": 0,
+      "time": "1:33am",
+      "guest": "nell",
+      "event": "joined",
+      "accessPoint": "Main house",
+      "factIds": []
+    },
+    {
+      "id": "n0-oskar-crushpad",
+      "night": 0,
+      "time": "5:06am",
+      "guest": "oskar",
+      "event": "joined",
+      "accessPoint": "Crush pad",
+      "factIds": ["oskar-crushpad-0506"]
+    },
+    {
+      "id": "n0-oskar-back",
+      "night": 0,
+      "time": "5:41am",
+      "guest": "oskar",
+      "event": "joined",
+      "accessPoint": "Guest cottage",
+      "factIds": []
+    },
+    {
+      "id": "n1-oskar-in",
+      "night": 1,
+      "time": "11:10pm",
+      "guest": "oskar",
+      "event": "joined",
+      "accessPoint": "Guest cottage",
+      "factIds": []
+    },
+    {
+      "id": "n1-jonah-in",
+      "night": 1,
+      "time": "11:18pm",
+      "guest": "jonah",
+      "event": "joined",
+      "accessPoint": "Main house",
+      "factIds": []
+    },
+    {
+      "id": "n1-ines-in",
+      "night": 1,
+      "time": "11:24pm",
+      "guest": "ines",
+      "event": "joined",
+      "accessPoint": "Main house",
+      "factIds": []
+    },
+    {
+      "id": "n1-nell-in",
+      "night": 1,
+      "time": "11:30pm",
+      "guest": "nell",
+      "event": "joined",
+      "accessPoint": "Main house",
+      "factIds": []
+    },
+    {
+      "id": "n1-nell-out",
+      "night": 1,
+      "time": "11:52pm",
+      "guest": "nell",
+      "event": "left",
+      "accessPoint": "Main house",
+      "factIds": ["nell-out-n1"]
+    },
+    {
+      "id": "n1-nell-back",
+      "night": 1,
+      "time": "12:44am",
+      "guest": "nell",
+      "event": "joined",
+      "accessPoint": "Main house",
+      "factIds": []
+    },
+    {
+      "id": "n1-oskar-crushpad",
+      "night": 1,
+      "time": "5:45am",
+      "guest": "oskar",
+      "event": "joined",
+      "accessPoint": "Crush pad",
+      "factIds": ["oskar-early-n1"]
+    },
+    {
+      "id": "n2-oskar-in",
+      "night": 2,
+      "time": "10:58pm",
+      "guest": "oskar",
+      "event": "joined",
+      "accessPoint": "Guest cottage",
+      "factIds": []
+    },
+    {
+      "id": "n2-jonah-in",
+      "night": 2,
+      "time": "11:04pm",
+      "guest": "jonah",
+      "event": "joined",
+      "accessPoint": "Main house",
+      "factIds": []
+    },
+    {
+      "id": "n2-ines-in",
+      "night": 2,
+      "time": "11:12pm",
+      "guest": "ines",
+      "event": "joined",
+      "accessPoint": "Main house",
+      "factIds": []
+    },
+    {
+      "id": "n2-nell-in",
+      "night": 2,
+      "time": "11:40pm",
+      "guest": "nell",
+      "event": "joined",
+      "accessPoint": "Main house",
+      "factIds": []
+    },
+    {
+      "id": "n2-nell-out",
+      "night": 2,
+      "time": "12:05am",
+      "guest": "nell",
+      "event": "left",
+      "accessPoint": "Main house",
+      "factIds": ["nell-out-n2"]
+    },
+    {
+      "id": "n2-nell-back",
+      "night": 2,
+      "time": "12:58am",
+      "guest": "nell",
+      "event": "joined",
+      "accessPoint": "Main house",
+      "factIds": []
+    },
+    {
+      "id": "n2-jonah-crushpad",
+      "night": 2,
+      "time": "1:47am",
+      "guest": "jonah",
+      "event": "joined",
+      "accessPoint": "Crush pad",
+      "factIds": ["jonah-crushpad-n2"]
+    },
+    {
+      "id": "n2-jonah-back",
+      "night": 2,
+      "time": "1:58am",
+      "guest": "jonah",
+      "event": "joined",
+      "accessPoint": "Main house",
+      "factIds": []
+    },
+    {
+      "id": "n2-oskar-crushpad",
+      "night": 2,
+      "time": "5:20am",
+      "guest": "oskar",
+      "event": "joined",
+      "accessPoint": "Crush pad",
+      "factIds": ["oskar-early-n2"]
+    }
+  ]
+}

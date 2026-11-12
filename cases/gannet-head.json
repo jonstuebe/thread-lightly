@@ -1,0 +1,3696 @@
+{
+  "id": "gannet-head",
+  "setting": {
+    "title": "The Gannet Head Prism",
+    "premise": "Hester Gwynn grew up in the keeper's cottage at Gannet Head, and she has rented the decommissioned lighthouse back as a holiday let for the light's 150th anniversary weekend, with four guests and a relighting on Sunday night. On Friday night, in the first gale of the autumn, the glass prism her father saved from the old lens vanished from its oak cradle in the lantern room.",
+    "missingItem": "a fist-sized cut-glass prism from the old lighthouse lens, kept under velvet in an oak cradle",
+    "accessPoints": [
+      "Cottage upstairs",
+      "Cottage kitchen",
+      "Tower",
+      "Fog-signal house"
+    ]
+  },
+  "budget": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": 4
+  },
+  "guests": [
+    {
+      "id": "agnes",
+      "name": "Agnes Trevail",
+      "role": "Hester's oldest friend from school, a retired district nurse",
+      "voice": "68. Warm and proper: full sentences, capitals and full stops, calls people 'dear'. Trails off with '...' when she's unsure. Now and then one literal emoji, ☕ or 🌊, never a face.",
+      "knows": [
+        "prism-seen-1045",
+        "rail-wet-paint",
+        "cass-paint-fingers",
+        "gil-owns-yellow-oilskin",
+        "agnes-foghouse-n0",
+        "agnes-cat",
+        "torch-tower-1245",
+        "agnes-saw-bram",
+        "gil-asked-agnes",
+        "gil-agnes-cocoa-n2"
+      ],
+      "claims": ["agnes-in-bed-n0", "agnes-heard-snoring"],
+      "secret": "agnes-cat",
+      "away": [
+        {
+          "day": 1,
+          "part": "evening",
+          "status": "early night with a book ☕"
+        },
+        {
+          "day": 2,
+          "part": "afternoon",
+          "status": "at the chapel in the village"
+        }
+      ],
+      "goodnight": "Goodnight, dear. Sleep well. ☕",
+      "wrongProof": [
+        ["I'm sorry, dear, I don't see what that has to do with me."],
+        ["That has nothing to do with what I told you."],
+        ["Now you're muddling me..."]
+      ],
+      "questions": [
+        {
+          "id": "ag-friday",
+          "ask": "Where were you after Hester's show on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Straight to bed at eleven, dear. I took my sleeping tablet.",
+                "factIds": ["agnes-in-bed-n0"]
+              },
+              {
+                "text": "Didn't stir till six.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Dead to the world. Those tablets are strong.",
+                "factIds": ["agnes-in-bed-n0"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "Oh dear. Yes, all right. I went out to the fog-signal house about half past twelve.",
+                "factIds": ["agnes-foghouse-n0"]
+              },
+              {
+                "text": "There's a ginger cat living in there and I've been feeding him Hester's smoked salmon. She's allergic, she'd have a fit.",
+                "factIds": ["agnes-cat"]
+              },
+              {
+                "text": "Please don't tell her.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-last-saw",
+          "ask": "When did you last see the prism?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "A quarter to eleven on Friday. Hester took us up the tower to show it off, then tucked it back in its cradle under the velvet.",
+                "factIds": ["prism-seen-1045"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "A quarter to eleven. I'm quite sure.",
+                "factIds": ["prism-seen-1045"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-show",
+          "ask": "How was Hester's show in the lantern room?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Lovely. She told us about her father polishing that lens every morning for thirty years.",
+                "factIds": []
+              },
+              {
+                "text": "We had to keep to the wall side, mind. The caretaker painted the handrail that afternoon and it was still tacky.",
+                "factIds": ["rail-wet-paint"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Red paint, still wet. Nobody touched it, as far as I saw.",
+                "factIds": ["rail-wet-paint"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-storm",
+          "ask": "When did the storm come in on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Half past eleven, near enough. The rain came in sideways.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Half eleven. I heard it start before my tablet took.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-heard",
+          "ask": "Did you see or hear anything on Friday night?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Only that wind. It howls round the tower like a kettle on the boil.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Just the wind, dear.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-who",
+          "ask": "Who do you think took it?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "I hate to say it. Cass had red paint on her fingers at breakfast.",
+                "factIds": ["cass-paint-fingers"]
+              },
+              {
+                "text": "And that paint's only on the tower rail...",
+                "factIds": ["rail-wet-paint"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "I'm only saying what I saw. She's a lovely girl.",
+                "factIds": ["cass-paint-fingers"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-bram",
+          "ask": "What do you make of Bram?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Hester's nephew. He's been glued to that laptop all weekend. Something's up with that boy.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Call it a nurse's instinct.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-cass",
+          "ask": "What do you make of Cass?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "A sweetheart. Always drawing. She'd draw the kettle if it sat still long enough.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "That's all, really.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-gil",
+          "ask": "What do you make of Gil?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "He knows everything there is to know about lighthouses. And he tells you.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "He means well, dear.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-hester",
+          "ask": "How do you know Hester?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "We were at school together in Porthcarrow. Sixty years of friendship, near enough.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Sixty years. I was her bridesmaid.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-room",
+          "ask": "Where are you sleeping?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "The front bedroom upstairs, next to Gil. The walls are like paper.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Next to Gil. Paper walls, dear.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-work",
+          "ask": "What did you do before you retired?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "District nurse, forty-one years. Nothing surprises me, dear.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Forty-one years of other people's secrets.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-supper",
+          "ask": "How was supper on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Fish pie, and Hester's father's old stories. Then the show at a quarter to eleven.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "A very good fish pie.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-odd-d1",
+          "ask": "Anything odd this morning?",
+          "from": 1,
+          "until": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Hester up the tower at six in her dressing gown, poor thing. The cradle was empty.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "That's all I saw.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-whose-oilskin",
+          "ask": "Whose is the yellow oilskin in the porch?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "paint-on-oilskin"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Gil's. He's had that oilskin since about 1985, I should think.",
+                "factIds": ["gil-owns-yellow-oilskin"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Oh, it's Gil's. Nobody else would be seen in it.",
+                "factIds": ["gil-owns-yellow-oilskin"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-foghouse-saw",
+          "ask": "Did you see anything from the fog-signal house on Friday night?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Caught",
+              "contradiction": "agnes-bed"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Now you mention it. Someone's torch went up the tower stairs, a quarter to one or thereabouts.",
+                "factIds": ["torch-tower-1245"]
+              },
+              {
+                "text": "It came down again a few minutes before one. You can see the little windows light up as it climbs.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Up at a quarter to, down just before one. I watched it while the cat ate.",
+                "factIds": ["torch-tower-1245"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-came-back",
+          "ask": "Did you see anyone when you came back in on Friday night?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Caught",
+              "contradiction": "agnes-bed"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Only Bram, through the kitchen hatch. Five to one, sat at the table with his laptop and those big headphones.",
+                "factIds": ["agnes-saw-bram"]
+              },
+              {
+                "text": "He didn't see me, I'm sure.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Bram, in the kitchen, at five to one. I looked at the hall clock.",
+                "factIds": ["agnes-saw-bram"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-sat-night",
+          "ask": "Where were you on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 1
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Bed by ten. Up at half six for a walk round the headland.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Up with the lark. Always am.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-odd-d2",
+          "ask": "Anything odd this morning?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "The porch smells of turpentine. Somebody's been cleaning something.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Turps. You can't miss it.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-hester-now",
+          "ask": "How is Hester holding up?",
+          "from": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Better today. She keeps saying her father would have known exactly what to do.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "She's tougher than she looks, dear.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-cove",
+          "ask": "Have you been down to the cove this weekend?",
+          "from": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Too steep for my knees now. I watch the seals from up by the fog-signal house instead. 🌊",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "The knees, dear. They're seventy if they're a day.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-sat",
+          "ask": "What did you do on Saturday?",
+          "from": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Sat with Hester most of the day. She's taken it very hard.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Tea and sympathy, dear.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-heard-n1",
+          "ask": "Did you hear anything on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Someone clinking about in the kitchen at two. Bram, I'd guess. That boy never sleeps.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Two o'clock. I looked at my clock.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-lighting",
+          "ask": "Are you going up for the lighting tonight?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Wouldn't miss it. A hundred and fifty years since the first light. Her father would be so proud. 🌊",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Eight o'clock sharp.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-sun-night",
+          "ask": "Where were you on Sunday night?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 2
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "I had a cocoa in the kitchen with Gil about half past eleven, then bed.",
+                "factIds": ["gil-agnes-cocoa-n2"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Just cocoa, dear. Gil makes it far too sweet.",
+                "factIds": ["gil-agnes-cocoa-n2"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-gil-alibi",
+          "ask": "In the group you said Gil had nothing to do with it. Why do you say that?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 2
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Because I heard him snoring through the wall at a quarter to one on Friday. Like a foghorn.",
+                "factIds": ["agnes-heard-snoring"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Oh... dear. He asked me to say that. Over cocoa last night.",
+                "factIds": ["gil-asked-agnes"]
+              },
+              {
+                "text": "He said it would save everyone a lot of bother.",
+                "factIds": []
+              }
+            ],
+            "caught": [
+              {
+                "text": "Yes. I wasn't even in my room at a quarter to one, was I.",
+                "factIds": []
+              },
+              {
+                "text": "Gil asked me to say it, over cocoa last night. I'm sorry, dear.",
+                "factIds": ["gil-asked-agnes"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-sunday",
+          "ask": "What did you do on Sunday?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Helped Hester get the tower ready for the lighting. It was beautiful, wasn't it?",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Beautiful. I had a little cry.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-odd-d3",
+          "ask": "Anything odd this morning?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Someone's torch up the tower again, gone one in the morning. I saw it from my window.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Gone one. I never sleep well the last night anywhere.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-name",
+          "ask": "If you had to name someone today, who would it be?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Not Gil. Beyond that... I couldn't say.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "I couldn't say, dear.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ag-home",
+          "ask": "When are you heading home?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Hester's driving me to the station after lunch. ☕",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "After lunch.",
+                "factIds": []
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "bram",
+      "name": "Bram Gwynn",
+      "role": "Hester's nephew, a sound engineer from Bristol",
+      "voice": "31. Easy-going: mostly lowercase but capitalises names, commas instead of full stops, says 'haha' and 'mate'. A ✨ once in a while, half ironic. Never 😂.",
+      "knows": [
+        "prism-seen-1045",
+        "gil-skipped-tour",
+        "gil-on-committee",
+        "hester-refused-gil",
+        "bram-kitchen-n0",
+        "bram-interview",
+        "bram-saw-gil-room-empty",
+        "bram-alone-kitchen"
+      ],
+      "claims": ["bram-asleep-n0"],
+      "secret": "bram-interview",
+      "away": [
+        {
+          "day": 2,
+          "part": "morning",
+          "status": "recording the wind on the cliffs"
+        },
+        {
+          "day": 3,
+          "part": "evening",
+          "status": "packing the car"
+        }
+      ],
+      "goodnight": "night all, don't let the foghorn bite haha",
+      "wrongProof": [
+        ["mate that's got nothing to do with what I said"],
+        ["not sure what that proves haha"],
+        ["wrong guy, wrong message"]
+      ],
+      "questions": [
+        {
+          "id": "br-friday",
+          "ask": "Where were you after Hester's show on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "bed by half eleven, slept like a log haha",
+                "factIds": ["bram-asleep-n0"]
+              },
+              {
+                "text": "sea air knocks me out",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "honestly, out cold till eight",
+                "factIds": ["bram-asleep-n0"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "ok yeah, I was in the kitchen, from about twenty to one till nearly half one",
+                "factIds": ["bram-kitchen-n0"]
+              },
+              {
+                "text": "job interview on video, a studio in Auckland, the time difference is brutal. please don't tell Aunt Hester, she doesn't know I might move",
+                "factIds": ["bram-interview"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "br-last-saw",
+          "ask": "When did you last see the prism?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "on the tour, quarter to eleven, she put it back in its little cradle and threw the velvet over it",
+                "factIds": ["prism-seen-1045"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "quarter to eleven, def",
+                "factIds": ["prism-seen-1045"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "br-tour",
+          "ask": "Who went up for Hester's show on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "me, Cass and Agnes, Gil stayed by the fire, said he'd seen it a hundred times",
+                "factIds": ["gil-skipped-tour"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "yeah Gil didn't come up, he had his feet up with a whisky",
+                "factIds": ["gil-skipped-tour"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "br-storm",
+          "ask": "When did the storm come in on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "about half eleven, it went from nothing to sideways rain in like ten minutes",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "half eleven-ish",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "br-heard",
+          "ask": "Did you see or hear anything on Friday night?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "just the storm mate, it was biblical",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "wind, rain, more wind",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "br-who",
+          "ask": "Who do you think took it?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "honestly no clue, the whole place was dark by half eleven",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "dunno mate, I'm a sound guy not a detective haha",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "br-gil",
+          "ask": "What do you make of Gil?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "proper lighthouse nerd haha, I looked him up, he's on the committee rebuilding the old Gannet Head lens at the Porthcarrow museum",
+                "factIds": ["gil-on-committee"]
+              },
+              {
+                "text": "bet he'd love that prism",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "it's on the museum website, he's in the photo and everything",
+                "factIds": ["gil-on-committee"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "br-agnes",
+          "ask": "What do you make of Agnes?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Agnes is great, basically my second aunt, she sneaks off a lot tho haha",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "always disappearing with a saucer of something",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "br-cass",
+          "ask": "What do you make of Cass?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Cass is cool, very arty, guards her sketchbook like state secrets ✨",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "won't show anyone a single page",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "br-hester",
+          "ask": "How do you know Hester?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "she's my aunt, my mum's big sister, I spent every summer here as a kid",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "every summer till I was fourteen, I know every creaky stair",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "br-room",
+          "ask": "Where are you sleeping?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "back bedroom, across the landing from Gil",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "across from Gil, next to the bathroom",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "br-recording",
+          "ask": "What are you recording up here?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "the wind mostly, it does mad things round the tower, it's for a sample pack",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "you would not believe the low end on a gale haha",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "br-supper",
+          "ask": "How was supper on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "fish pie and Aunt Hester doing the keeper stories, the good ones",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "the one about the seal is a classic haha",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "br-hester-gil",
+          "ask": "Did Gil ever ask Hester about the prism?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "gil-on-committee"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "yeah, at supper, he asked if the museum could borrow it for the lens and she said no, nicely",
+                "factIds": ["hester-refused-gil"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "she said it stays in the family, he went a bit quiet",
+                "factIds": ["hester-refused-gil"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "br-odd-d1",
+          "ask": "Anything odd this morning?",
+          "from": 1,
+          "until": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "the tower door was banging open when I got up, someone didn't latch it",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "door was open, that's all I noticed",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "br-passed-room",
+          "ask": "Did you pass anyone's room on your way down on Friday night?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Caught",
+              "contradiction": "bram-asleep"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "yeah actually, Gil's, door wide open and bed empty, about twenty to one",
+                "factIds": ["bram-saw-gil-room-empty"]
+              },
+              {
+                "text": "figured he'd gone to the loo",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "definitely empty, his phone was on charge by the bed, screen lit up the whole room",
+                "factIds": ["bram-saw-gil-room-empty"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "br-kitchen-visitors",
+          "ask": "Did anyone come into the kitchen while you were on your call?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Caught",
+              "contradiction": "bram-asleep"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "nope, nobody, I was facing the door the whole time",
+                "factIds": ["bram-alone-kitchen"]
+              },
+              {
+                "text": "twenty to one till nearly half one, just me and a very patient recruiter",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "nobody, I'd have died of embarrassment haha",
+                "factIds": ["bram-alone-kitchen"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "br-sat-night",
+          "ask": "Where were you on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 1
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "bed, mostly, up for a bit around two, couldn't sleep",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "just restless haha",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "br-odd-d2",
+          "ask": "Anything odd this morning?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "someone's been scrubbing something in the porch, it stinks of turps",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "turps, like a school art room",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "br-sat",
+          "ask": "What did you do on Saturday?",
+          "from": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "walked to the cove, then helped Aunt Hester look under literally every rug",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "a lot of rugs",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "br-heard-n1",
+          "ask": "Did you hear anything on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "only the wind, and a seal barking down on the rocks, honestly",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "that's it, quiet night",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "br-lighting",
+          "ask": "Are you going up for the lighting tonight?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "obviously, I'm recording it for her ✨",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "got the good mic out and everything",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "br-sun-night",
+          "ask": "Where were you on Sunday night?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 2
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "bed straight after the lighting, I was wrecked",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "out cold",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "br-sunday",
+          "ask": "What did you do on Sunday?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "recorded the wind on the cliffs, then the lighting, it was really something",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "goosebumps, mate",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "br-agnes-alibi",
+          "ask": "Agnes says she heard Gil snoring on Friday night. Does that fit?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "agnes-heard-snoring"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Agnes would know, she's next door to him, I was dead to the world haha",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "can't help you there",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "br-odd-d3",
+          "ask": "Anything odd this morning?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Agnes being weirdly loud about Gil in the group? that's about it",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "just struck me, nobody said he did",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "br-name",
+          "ask": "If you had to name someone today, who would it be?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Gil, if I'm honest, he wanted that prism more than anyone",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "gut feeling",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "br-home",
+          "ask": "When are you heading home?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "tonight, long drive back to Bristol",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "after tea",
+                "factIds": []
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "cass",
+      "name": "Cass Lowe",
+      "role": "Hester's goddaughter, a second-year art student",
+      "voice": "21. all lowercase, no full stops, short bursts, doubles her question marks '??'. says 'ngl' and 'ok so'. 😭 or 🙏 now and then, never anything else, never 😂.",
+      "knows": [
+        "prism-seen-1045",
+        "gil-skipped-tour",
+        "rail-wet-paint",
+        "paint-on-oilskin",
+        "cass-tower-n0",
+        "cass-painting",
+        "prism-there-1220",
+        "gil-light-on-1220"
+      ],
+      "claims": ["cass-in-room-n0"],
+      "secret": "cass-painting",
+      "away": [
+        {
+          "day": 1,
+          "part": "afternoon",
+          "status": "sketching down at the cove"
+        },
+        {
+          "day": 3,
+          "part": "morning",
+          "status": "asleep 😴"
+        }
+      ],
+      "goodnight": "night night 🙏",
+      "wrongProof": [
+        ["that's literally not what i said??"],
+        ["ok and?? how is that about me"],
+        ["wrong message ngl"]
+      ],
+      "questions": [
+        {
+          "id": "ca-friday",
+          "ask": "Where were you after Hester's show on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "in my room on my laptop till like 1 then sleep",
+                "factIds": ["cass-in-room-n0"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "literally in my room?? watching stuff",
+                "factIds": ["cass-in-room-n0"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "ok fine i was up the tower from like quarter to 12 till 20 past",
+                "factIds": ["cass-tower-n0"]
+              },
+              {
+                "text": "i'm painting the lantern room at night for auntie hester, it's a surprise for the anniversary. pls don't tell her 😭",
+                "factIds": ["cass-painting"]
+              },
+              {
+                "text": "and the prism was literally still in its cradle when i left",
+                "factIds": ["prism-there-1220"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "ca-last-saw",
+          "ask": "When did you last see the prism?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "on the tour at quarter to 11, she let me hold it and it threw rainbows everywhere",
+                "factIds": ["prism-seen-1045"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "quarter to 11 ngl",
+                "factIds": ["prism-seen-1045"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "ca-show",
+          "ask": "How was Hester's show in the lantern room?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "so pretty. gil didn't come up tho, he stayed by the fire",
+                "factIds": ["gil-skipped-tour"]
+              },
+              {
+                "text": "and we had to dodge the rail bc the paint was still wet",
+                "factIds": ["rail-wet-paint"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "yeah it was just me bram and agnes",
+                "factIds": ["gil-skipped-tour"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "ca-storm",
+          "ask": "When did the storm come in on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "like half 11?? it was so loud",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "half 11 ish",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ca-heard",
+          "ask": "Did you see or hear anything on Friday night?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "nope 🙏",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "headphones in, sorry",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ca-who",
+          "ask": "Who do you think took it?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "idk?? the tower door doesn't even lock, could've been anyone",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "i'm just saying",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ca-agnes",
+          "ask": "What do you make of Agnes?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "agnes is the sweetest, she smells like lavender and always has biscuits",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "a national treasure",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ca-bram",
+          "ask": "What do you make of Bram?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "bram's on his laptop 24/7 ngl, something's going on with him",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "very secretive for a sound guy",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ca-gil",
+          "ask": "What do you make of Gil?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "ok so gil is a lot. he told me the whole history of the foghorn unprompted",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "it was 40 mins",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ca-hester",
+          "ask": "How do you know Hester?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "she's my godmother, she was best friends with my gran",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "she taught me to draw actually",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ca-room",
+          "ask": "Where are you sleeping?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "the tiny room at the top of the stairs, it has a porthole window 😭",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "it's so cute",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ca-supper",
+          "ask": "How was supper on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "fish pie!! and hester's stories about her dad keeping the light",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "10/10 pie",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ca-odd-d1",
+          "ask": "Anything odd this morning?",
+          "from": 1,
+          "until": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "someone's yellow oilskin in the porch has red paint all down the sleeve",
+                "factIds": ["paint-on-oilskin"]
+              },
+              {
+                "text": "that rail got someone",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "bright red, the whole cuff",
+                "factIds": ["paint-on-oilskin"]
+              }
+            ]
+          },
+          "ifDestroyed": {
+            "lines": [
+              {
+                "text": "not really, just hester being sad",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "that's it",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ca-paint-fingers",
+          "ask": "Agnes says you had red paint on your fingers. How?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "cass-paint-fingers"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "from my paints?? i'm an art student",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "i literally paint all day",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ca-way-back",
+          "ask": "Did you see anyone on your way back from the tower on Friday?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Caught",
+              "contradiction": "cass-room"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "no but gil's light was on under his door when i went past, like 20 past 12",
+                "factIds": ["gil-light-on-1220"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "def his light, his room is right by the stairs",
+                "factIds": ["gil-light-on-1220"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "ca-see-painting",
+          "ask": "Can I see the painting?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Caught",
+              "contradiction": "cass-room"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "NO 😭 ok maybe after hester sees it",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "it's almost done i promise",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ca-sat-night",
+          "ask": "Where were you on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 1
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "in my room doing art stuff, made toast at like half 12",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "toast is not a crime",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ca-odd-d2",
+          "ask": "Anything odd this morning?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "the porch reeks of turps?? someone's been scrubbing in there",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "and it wasnt me, i use water based",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ca-sat",
+          "ask": "What did you do on Saturday?",
+          "from": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "sketched at the cove till my hands went numb",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "it's freezing down there",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ca-heard-n1",
+          "ask": "Did you hear anything on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "bram on a call in the kitchen at 2am?? who calls at 2am",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "he was whispering, very sus",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ca-lighting",
+          "ask": "Are you going up for the lighting tonight?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "yes!! i've been waiting all weekend 🙏",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "front row",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ca-sun-night",
+          "ask": "Where were you on Sunday night?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 2
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "went back up the tower after everyone was in bed, the light looked so good",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "just looking!!",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ca-sunday",
+          "ask": "What did you do on Sunday?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "the lighting!! it was literally magic",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "i cried ngl",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ca-agnes-alibi",
+          "ask": "Agnes says she heard Gil snoring on Friday night. Does that fit?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "agnes-heard-snoring"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "agnes takes sleeping tablets tho?? how would she hear anything",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "she told me herself, she says they knock her out",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ca-odd-d3",
+          "ask": "Anything odd this morning?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "agnes randomly defending gil in the group??",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "nobody even said his name",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ca-name",
+          "ask": "If you had to name someone today, who would it be?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "gil?? sorry gil",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "he really wanted it",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "ca-home",
+          "ask": "When are you heading home?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "train at 4, uni tomorrow 😭",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "4pm",
+                "factIds": []
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "gil",
+      "name": "Gil Ashdown",
+      "role": "the Gannet Head Lighthouse Society historian, writing the anniversary booklet",
+      "voice": "57. Dry and wordy: full sentences, semicolons, the odd nautical aside. Calls people by their first names and the young ones 'young lady' or 'lad'. Uses '...' between thoughts and a ⚓ now and then; no faces.",
+      "knows": [
+        "rail-wet-paint",
+        "gil-owns-yellow-oilskin",
+        "gil-in-tower-n0",
+        "gil-on-committee",
+        "hester-refused-gil",
+        "cass-paint-fingers",
+        "gil-agnes-cocoa-n2",
+        "gil-asked-agnes"
+      ],
+      "claims": [
+        "gil-in-bed-n0",
+        "gil-kitchen-n0",
+        "gil-paint-on-tour",
+        "gil-never-asked-agnes",
+        "gil-not-on-committee",
+        "gil-in-bed-n1"
+      ],
+      "away": [
+        {
+          "day": 2,
+          "part": "afternoon",
+          "status": "at the maritime museum in Porthcarrow"
+        },
+        {
+          "day": 3,
+          "part": "evening",
+          "status": "loading the car"
+        }
+      ],
+      "goodnight": "Goodnight, all. Fair winds. ⚓",
+      "wrongProof": [
+        ["I fail to see what that has to do with anything I've said."],
+        ["A fine piece of evidence... for something else entirely."],
+        ["No. Try again."]
+      ],
+      "questions": [
+        {
+          "id": "gi-friday",
+          "ask": "Where were you after Hester's show on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Bed by a quarter past eleven. A chapter of Conrad, then lights out.",
+                "factIds": ["gil-in-bed-n0"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Lights out by half past. I'm no night owl.",
+                "factIds": ["gil-in-bed-n0"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "Ah. Very well; I couldn't sleep for the wind.",
+                "factIds": []
+              },
+              {
+                "text": "I went down about half twelve and made myself a cocoa in the kitchen. Nothing more sinister than that.",
+                "factIds": ["gil-kitchen-n0"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-last-saw",
+          "ask": "When did you last see the prism?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Friday afternoon, when Hester showed me on arrival. A beautiful piece of glass... Chance Brothers, 1898.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Friday afternoon. I didn't see it after.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-storm",
+          "ask": "When did the storm come in on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Eleven thirty-two by my watch. Force eight by one, I should think.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Half eleven, give or take a minute.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-heard",
+          "ask": "Did you see or hear anything on Friday night?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Rain on the window like gravel. I slept through the rest.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "The rain, and nothing else.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-who",
+          "ask": "Who do you think took it?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "I'd ask the young lady with the sketchbook. Red paint on her fingers at breakfast.",
+                "factIds": ["cass-paint-fingers"]
+              },
+              {
+                "text": "And that paint is only on the tower rail; the caretaker did it Friday afternoon.",
+                "factIds": ["rail-wet-paint"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Merely an observation.",
+                "factIds": ["cass-paint-fingers"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-agnes",
+          "ask": "What do you make of Agnes?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "A thoroughly decent woman. Next door to me; thin walls, so I apologise in advance for the snoring.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Decent to the bone.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-bram",
+          "ask": "What do you make of Bram?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Pleasant lad. Lives in those headphones... the foghorn would be wasted on him.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Pleasant enough.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-cass",
+          "ask": "What do you make of Cass?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Talented. Secretive. Guards that sketchbook like a ship's log.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Make of that what you will.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-hester",
+          "ask": "How do you know Hester?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Through the Gannet Head Lighthouse Society. I'm writing the booklet for the hundred and fiftieth. ⚓",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Forty pages, with photographs.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-room",
+          "ask": "Where are you sleeping?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Front bedroom, top of the stairs, next to Agnes.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Top of the stairs.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-supper",
+          "ask": "How was supper on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Excellent fish pie. Hester told the story of her father and the seal, which I've now heard nine times.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Ten, possibly.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-worth",
+          "ask": "Is the prism worth much?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "To a collector, a few hundred pounds. To the old lens... everything.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "A lens with a gap in it isn't a lens.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-lens",
+          "ask": "Are you involved with the old lens at all?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Not really my department. I write the booklets; others do the glass.",
+                "factIds": ["gil-not-on-committee"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Booklets. That's me.",
+                "factIds": ["gil-not-on-committee"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "Very well, I'm on the restoration committee.",
+                "factIds": ["gil-on-committee"]
+              },
+              {
+                "text": "The old lens is being rebuilt at the Porthcarrow museum and it's one prism short. That's no crime.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-hester-asked",
+          "ask": "Did you ask Hester to lend the prism to the museum?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Caught",
+              "contradiction": "gil-lens"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "I asked at supper. She said no, kindly. It stays in the family.",
+                "factIds": ["hester-refused-gil"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "That was the end of it.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-odd-d1",
+          "ask": "Anything odd this morning?",
+          "from": 1,
+          "until": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Hester at the breakfast table in her dressing gown, white as a sheet. Poor woman.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "That's all.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-paint",
+          "ask": "How did you get red paint on your oilskin sleeve?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "paint-on-oilskin"
+            },
+            {
+              "_tag": "Seen",
+              "fact": "gil-owns-yellow-oilskin"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Paint? Is there? It's an old coat; it's seen worse.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Ah... it'll be from Hester's show at a quarter to eleven. That rail was still tacky.",
+                "factIds": ["gil-paint-on-tour"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "Very well. I went across to the tower later on, after midnight, for the storm.",
+                "factIds": ["gil-in-tower-n0"]
+              },
+              {
+                "text": "I must have caught the rail in the dark. That's all it was.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-kitchen",
+          "ask": "What did you do in the kitchen on Friday night?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Caught",
+              "contradiction": "gil-bed"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Cocoa and the crossword, half twelve until one or so.",
+                "factIds": ["gil-kitchen-n0"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Seven across was 'lantern'. Fitting.",
+                "factIds": ["gil-kitchen-n0"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "All right. I wasn't in the kitchen.",
+                "factIds": []
+              },
+              {
+                "text": "I went across to the tower to watch the storm from the lantern room. A sight like that comes once a decade.",
+                "factIds": ["gil-in-tower-n0"]
+              },
+              {
+                "text": "I never laid a finger on the prism.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-sat-night",
+          "ask": "Where were you on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 1
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "In bed by eleven. Nothing to report.",
+                "factIds": ["gil-in-bed-n1"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Eleven. I sleep like a stone.",
+                "factIds": ["gil-in-bed-n1"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-odd-d2",
+          "ask": "Anything odd this morning?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Someone has been at the turpentine in the porch. Very house-proud, whoever it was.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Turps. Unmistakable.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-sat",
+          "ask": "What did you do on Saturday?",
+          "from": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Searched the tower top to bottom with Hester, then worked on the booklet.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Chapter four. The automation years.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-heard-n1",
+          "ask": "Did you hear anything on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Bram on the telephone at two in the morning. The young keep strange hours.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Two, or near it.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-lighting",
+          "ask": "Are you going up for the lighting tonight?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "I've waited forty years to see her lit again. ⚓",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Eight o'clock. I'll be first up the stairs.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-sun-night",
+          "ask": "Where were you on Sunday night?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 2
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "A cocoa with Agnes in the kitchen at half eleven, then bed.",
+                "factIds": ["gil-agnes-cocoa-n2"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Cocoa. We talked about the old days.",
+                "factIds": ["gil-agnes-cocoa-n2"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-sunday",
+          "ask": "What did you do on Sunday?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Drove into Porthcarrow to drop the booklet proofs at the museum, then the lighting.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "The proofs had to go in.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-agnes-snoring",
+          "ask": "Agnes says she heard you snoring on Friday night.",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "agnes-heard-snoring"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "There you are, then. Paper walls.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "I'm told I could wake the dead.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-asked-agnes",
+          "ask": "Did you ask Agnes to say she heard you snoring?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "gil-asked-agnes"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Certainly not. Why would I need to? I was asleep.",
+                "factIds": ["gil-never-asked-agnes"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "I never said a word to her about Friday.",
+                "factIds": ["gil-never-asked-agnes"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "All right. I asked her. I knew how it looked, me up and about that night.",
+                "factIds": ["gil-asked-agnes"]
+              },
+              {
+                "text": "I was over in the tower watching the storm; that's the truth of it. I never touched the prism.",
+                "factIds": ["gil-in-tower-n0"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-odd-d3",
+          "ask": "Anything odd this morning?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Someone up the tower again in the small hours. Cass, I'd wager.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "I mention it only in passing.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-name",
+          "ask": "If you had to name someone today, who would it be?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "I'm afraid it would have to be Cass.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "The paint, you see.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "gi-home",
+          "ask": "When are you heading home?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "This evening, once the car is loaded.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Before dark, I hope.",
+                "factIds": []
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "thief": "gil",
+  "theftFact": "gil-took-prism",
+  "timeline": [
+    {
+      "night": 0,
+      "time": "10:45pm",
+      "text": "Hester shows the prism in the lantern room and puts it back in its cradle. Gil stays by the fire.",
+      "factIds": ["prism-seen-1045", "gil-skipped-tour"]
+    },
+    {
+      "night": 0,
+      "time": "11:46pm",
+      "text": "Cass slips up the tower to paint the lantern room for Hester, and gets red paint from the rail on her fingers.",
+      "factIds": ["cass-tower-n0", "cass-painting"]
+    },
+    {
+      "night": 0,
+      "time": "12:20am",
+      "text": "Cass leaves the tower with the prism still in its cradle. Gil's light is on as she passes.",
+      "factIds": ["prism-there-1220", "gil-light-on-1220"]
+    },
+    {
+      "night": 0,
+      "time": "12:31am",
+      "text": "Agnes goes out to the fog-signal house to feed her secret ginger cat.",
+      "factIds": ["agnes-foghouse-n0", "agnes-cat"]
+    },
+    {
+      "night": 0,
+      "time": "12:40am",
+      "text": "Gil has left his phone charging and gone out in his oilskin. Bram, heading down, sees his empty room.",
+      "factIds": ["bram-saw-gil-room-empty"]
+    },
+    {
+      "night": 0,
+      "time": "12:41am",
+      "text": "Bram starts a video job interview at the kitchen table. Nobody comes in until he goes up at 1:25.",
+      "factIds": ["bram-kitchen-n0", "bram-interview", "bram-alone-kitchen"]
+    },
+    {
+      "night": 0,
+      "time": "12:45am",
+      "text": "Gil climbs the tower by torchlight, brushes the wet rail with his sleeve, and takes the prism. Agnes sees the torch from the fog-signal house.",
+      "factIds": [
+        "gil-took-prism",
+        "gil-in-tower-n0",
+        "torch-tower-1245",
+        "paint-on-oilskin"
+      ]
+    },
+    {
+      "night": 0,
+      "time": "12:55am",
+      "text": "Gil has hidden the prism in his car and hung his oilskin in the porch. Agnes, coming back in, sees Bram through the kitchen hatch.",
+      "factIds": ["agnes-saw-bram"]
+    },
+    {
+      "night": 1,
+      "time": "1:30am",
+      "text": "Gil scrubs the red paint off his oilskin sleeve with turpentine.",
+      "factIds": ["gil-scrubbed-oilskin"]
+    },
+    {
+      "night": 2,
+      "time": "Sunday 2pm",
+      "text": "Gil drives the prism to the lens workshop at the Porthcarrow museum, where the old lens is being rebuilt one prism short.",
+      "factIds": [
+        "gil-prism-to-museum",
+        "gil-on-committee",
+        "hester-refused-gil"
+      ]
+    },
+    {
+      "night": 2,
+      "time": "11:30pm",
+      "text": "Over cocoa, Gil asks Agnes to say she heard him snoring on Friday night, and promises to keep quiet about her cat.",
+      "factIds": ["gil-agnes-cocoa-n2", "gil-asked-agnes"]
+    }
+  ],
+  "facts": [
+    {
+      "id": "gil-took-prism",
+      "text": "Gil took the prism from the lantern room at about 12:45am on Friday night.",
+      "isTrue": true,
+      "about": ["gil"],
+      "concernsTheft": true
+    },
+    {
+      "id": "prism-seen-1045",
+      "text": "Hester showed the prism in the lantern room at 10:45pm on Friday and put it back in its cradle.",
+      "isTrue": true,
+      "about": [],
+      "concernsTheft": true
+    },
+    {
+      "id": "rail-wet-paint",
+      "text": "The tower handrail was painted red on Friday afternoon and was still tacky all night.",
+      "isTrue": true,
+      "about": [],
+      "concernsTheft": true
+    },
+    {
+      "id": "gil-skipped-tour",
+      "text": "Gil stayed by the fire in the cottage during Hester's 10:45pm show in the lantern room.",
+      "isTrue": true,
+      "about": ["gil"],
+      "concernsTheft": true
+    },
+    {
+      "id": "gil-in-bed-n0",
+      "text": "Gil was in bed by 11:15pm on Friday and slept through.",
+      "isTrue": false,
+      "about": ["gil"],
+      "concernsTheft": true
+    },
+    {
+      "id": "bram-saw-gil-room-empty",
+      "text": "At 12:40am on Friday night Gil's door was open, his bed empty and his phone charging by it.",
+      "isTrue": true,
+      "about": ["gil", "bram"],
+      "concernsTheft": true
+    },
+    {
+      "id": "gil-kitchen-n0",
+      "text": "Gil was making cocoa in the kitchen from 12:30 to 1am on Friday night.",
+      "isTrue": false,
+      "about": ["gil"],
+      "concernsTheft": true
+    },
+    {
+      "id": "bram-alone-kitchen",
+      "text": "Nobody came into the kitchen between 12:41 and 1:25am on Friday night while Bram was there.",
+      "isTrue": true,
+      "about": ["bram", "gil"],
+      "concernsTheft": true
+    },
+    {
+      "id": "gil-in-tower-n0",
+      "text": "Gil was in the tower after midnight on Friday.",
+      "isTrue": true,
+      "about": ["gil"],
+      "concernsTheft": true
+    },
+    {
+      "id": "paint-on-oilskin",
+      "text": "On Saturday morning the yellow oilskin in the porch had red handrail paint down its sleeve.",
+      "isTrue": true,
+      "about": [],
+      "concernsTheft": true
+    },
+    {
+      "id": "gil-owns-yellow-oilskin",
+      "text": "The yellow oilskin in the porch is Gil's.",
+      "isTrue": true,
+      "about": ["gil"],
+      "concernsTheft": true
+    },
+    {
+      "id": "gil-paint-on-tour",
+      "text": "Gil got the paint on his sleeve on Hester's 10:45pm show in the tower.",
+      "isTrue": false,
+      "about": ["gil"],
+      "concernsTheft": true
+    },
+    {
+      "id": "torch-tower-1245",
+      "text": "A torch went up the tower stairs at about 12:45am on Friday night and came down a few minutes before 1.",
+      "isTrue": true,
+      "about": [],
+      "concernsTheft": true
+    },
+    {
+      "id": "prism-there-1220",
+      "text": "The prism was still in its cradle at 12:20am on Friday night.",
+      "isTrue": true,
+      "about": [],
+      "concernsTheft": true
+    },
+    {
+      "id": "gil-light-on-1220",
+      "text": "Gil's light was on under his door at 12:20am on Friday night.",
+      "isTrue": true,
+      "about": ["gil"],
+      "concernsTheft": true
+    },
+    {
+      "id": "agnes-heard-snoring",
+      "text": "Agnes heard Gil snoring through the wall at 12:45am on Friday night.",
+      "isTrue": false,
+      "about": ["agnes", "gil"],
+      "concernsTheft": true
+    },
+    {
+      "id": "gil-asked-agnes",
+      "text": "Gil asked Agnes to say she heard him snoring on Friday night.",
+      "isTrue": true,
+      "about": ["gil", "agnes"],
+      "concernsTheft": true
+    },
+    {
+      "id": "gil-never-asked-agnes",
+      "text": "Gil never asked Agnes to vouch for him.",
+      "isTrue": false,
+      "about": ["gil"],
+      "concernsTheft": true
+    },
+    {
+      "id": "gil-agnes-cocoa-n2",
+      "text": "Gil and Agnes had cocoa together in the kitchen at 11:30pm on Sunday.",
+      "isTrue": true,
+      "about": ["gil", "agnes"],
+      "concernsTheft": true
+    },
+    {
+      "id": "gil-in-bed-n1",
+      "text": "Gil was in bed by 11pm on Saturday and slept through.",
+      "isTrue": false,
+      "about": ["gil"],
+      "concernsTheft": true
+    },
+    {
+      "id": "gil-scrubbed-oilskin",
+      "text": "Gil scrubbed the paint off his oilskin with turpentine in the porch at 1:30am on Saturday night.",
+      "isTrue": true,
+      "about": ["gil"],
+      "concernsTheft": true
+    },
+    {
+      "id": "gil-prism-to-museum",
+      "text": "Gil took the prism to the lens workshop at the Porthcarrow maritime museum on Sunday afternoon.",
+      "isTrue": true,
+      "about": ["gil"],
+      "concernsTheft": true
+    },
+    {
+      "id": "cass-paint-fingers",
+      "text": "Cass had red paint on her fingers at breakfast on Saturday.",
+      "isTrue": true,
+      "about": ["cass"],
+      "concernsTheft": false
+    },
+    {
+      "id": "hester-refused-gil",
+      "text": "At supper on Friday Hester refused to lend the prism to the museum when Gil asked.",
+      "isTrue": true,
+      "about": ["gil"],
+      "concernsTheft": true
+    },
+    {
+      "id": "gil-not-on-committee",
+      "text": "Gil has nothing to do with restoring the old Gannet Head lens.",
+      "isTrue": false,
+      "about": ["gil"],
+      "concernsTheft": false
+    },
+    {
+      "id": "gil-on-committee",
+      "text": "Gil sits on the committee rebuilding the old Gannet Head lens at the Porthcarrow museum.",
+      "isTrue": true,
+      "about": ["gil"],
+      "concernsTheft": false
+    },
+    {
+      "id": "cass-in-room-n0",
+      "text": "Cass stayed in her room on Friday night.",
+      "isTrue": false,
+      "about": ["cass"],
+      "concernsTheft": false
+    },
+    {
+      "id": "cass-tower-n0",
+      "text": "Cass was in the tower from 11:46pm to 12:20am on Friday night.",
+      "isTrue": true,
+      "about": ["cass"],
+      "concernsTheft": false
+    },
+    {
+      "id": "cass-painting",
+      "text": "Cass is secretly painting the lantern room at night as an anniversary present for Hester.",
+      "isTrue": true,
+      "about": ["cass"],
+      "concernsTheft": false
+    },
+    {
+      "id": "agnes-in-bed-n0",
+      "text": "Agnes took a sleeping tablet and stayed in bed from 11pm on Friday.",
+      "isTrue": false,
+      "about": ["agnes"],
+      "concernsTheft": false
+    },
+    {
+      "id": "agnes-foghouse-n0",
+      "text": "Agnes was in the fog-signal house from 12:31 to 12:57am on Friday night.",
+      "isTrue": true,
+      "about": ["agnes"],
+      "concernsTheft": false
+    },
+    {
+      "id": "agnes-cat",
+      "text": "Agnes has been secretly feeding a stray ginger cat in the fog-signal house, though Hester is allergic.",
+      "isTrue": true,
+      "about": ["agnes"],
+      "concernsTheft": false
+    },
+    {
+      "id": "bram-asleep-n0",
+      "text": "Bram was asleep from 11:30pm on Friday.",
+      "isTrue": false,
+      "about": ["bram"],
+      "concernsTheft": false
+    },
+    {
+      "id": "agnes-saw-bram",
+      "text": "At 12:55am on Friday night Bram was at the kitchen table with his laptop and headphones.",
+      "isTrue": true,
+      "about": ["bram", "agnes"],
+      "concernsTheft": false
+    },
+    {
+      "id": "bram-kitchen-n0",
+      "text": "Bram was in the kitchen from 12:41 to 1:25am on Friday night.",
+      "isTrue": true,
+      "about": ["bram"],
+      "concernsTheft": false
+    },
+    {
+      "id": "bram-interview",
+      "text": "Bram had a video job interview with a firm in Auckland and has not told Hester he might move.",
+      "isTrue": true,
+      "about": ["bram"],
+      "concernsTheft": false
+    }
+  ],
+  "beats": [
+    {
+      "day": 1,
+      "part": "morning",
+      "lines": [
+        {
+          "guest": "agnes",
+          "text": "Good morning, all. I'm afraid Hester's prism has gone from the lantern room. The cradle's empty.",
+          "factIds": []
+        },
+        {
+          "guest": "bram",
+          "text": "she's in bits, everyone come down for tea",
+          "factIds": []
+        },
+        {
+          "guest": "cass",
+          "text": "wait WHAT 😭",
+          "factIds": []
+        },
+        {
+          "guest": "gil",
+          "text": "Nobody touch anything in the tower, please.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 1,
+      "part": "afternoon",
+      "lines": [
+        {
+          "guest": "bram",
+          "text": "soup's on, the wind's nicked the bins again haha",
+          "factIds": []
+        },
+        {
+          "guest": "agnes",
+          "text": "Coming, dear. ☕",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 1,
+      "part": "evening",
+      "lines": [
+        {
+          "guest": "gil",
+          "text": "Gale warning again tonight. Keep the tower door latched, please.",
+          "factIds": []
+        },
+        {
+          "guest": "bram",
+          "text": "on it",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "part": "morning",
+      "lines": [
+        {
+          "guest": "cass",
+          "text": "ok who's been at the turps?? the whole porch stinks 😭",
+          "factIds": []
+        },
+        {
+          "guest": "agnes",
+          "text": "The lighting is at eight tonight, everyone. Hester's beside herself.",
+          "factIds": []
+        },
+        {
+          "guest": "gil",
+          "text": "The weather is clearing for it, at least.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "part": "afternoon",
+      "lines": [
+        {
+          "guest": "cass",
+          "text": "scones in the kitchen if anyone wants",
+          "factIds": []
+        },
+        {
+          "guest": "bram",
+          "text": "on my way haha",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "part": "evening",
+      "lines": [
+        {
+          "guest": "bram",
+          "text": "lighting in ten, everyone up the tower ✨",
+          "factIds": []
+        },
+        {
+          "guest": "agnes",
+          "text": "Coats on, it's blowy.",
+          "factIds": []
+        },
+        {
+          "guest": "cass",
+          "text": "coming!!",
+          "factIds": []
+        },
+        {
+          "guest": "gil",
+          "text": "A hundred and fifty years. ⚓",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 3,
+      "part": "morning",
+      "lines": [
+        {
+          "guest": "agnes",
+          "text": "I'd just like to say, whatever anyone thinks, Gil had nothing to do with it.",
+          "factIds": []
+        },
+        {
+          "guest": "bram",
+          "text": "ok?? nobody said he did haha",
+          "factIds": []
+        },
+        {
+          "guest": "gil",
+          "text": "Kind of you, Agnes.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 3,
+      "part": "afternoon",
+      "lines": [
+        {
+          "guest": "gil",
+          "text": "Last lunch, everyone. Pasties.",
+          "factIds": []
+        },
+        {
+          "guest": "cass",
+          "text": "🙏",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 3,
+      "part": "evening",
+      "lines": [
+        {
+          "guest": "agnes",
+          "text": "Safe travels, everyone.",
+          "factIds": []
+        },
+        {
+          "guest": "cass",
+          "text": "byeee",
+          "factIds": []
+        }
+      ]
+    }
+  ],
+  "groupQuestions": [
+    {
+      "id": "g-tower-after",
+      "ask": "Did anyone go up the tower after Hester's show on Friday?",
+      "from": 1,
+      "until": 1,
+      "unlock": [],
+      "replies": [
+        {
+          "guest": "agnes",
+          "text": "Not I, dear.",
+          "factIds": []
+        },
+        {
+          "guest": "bram",
+          "text": "nope",
+          "factIds": []
+        },
+        {
+          "guest": "cass",
+          "text": "no??",
+          "factIds": []
+        },
+        {
+          "guest": "gil",
+          "text": "Not I.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "id": "g-storm",
+      "ask": "Did the storm wake anyone on Friday night?",
+      "from": 1,
+      "until": 1,
+      "unlock": [],
+      "replies": [
+        {
+          "guest": "agnes",
+          "text": "Not with my tablet, dear.",
+          "factIds": []
+        },
+        {
+          "guest": "bram",
+          "text": "slept through it haha",
+          "factIds": []
+        },
+        {
+          "guest": "cass",
+          "text": "nope",
+          "factIds": []
+        },
+        {
+          "guest": "gil",
+          "text": "I sleep like a stone.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "id": "g-turps",
+      "ask": "Who's been using the turps in the porch?",
+      "from": 2,
+      "until": 2,
+      "unlock": [],
+      "replies": [
+        {
+          "guest": "agnes",
+          "text": "Not I, dear.",
+          "factIds": []
+        },
+        {
+          "guest": "bram",
+          "text": "not me",
+          "factIds": []
+        },
+        {
+          "guest": "cass",
+          "text": "not me, i use water based 🙏",
+          "factIds": []
+        },
+        {
+          "guest": "gil",
+          "text": "I couldn't say.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "id": "g-lighting",
+      "ask": "Is everyone coming up for the lighting tonight?",
+      "from": 2,
+      "until": 2,
+      "unlock": [],
+      "replies": [
+        {
+          "guest": "agnes",
+          "text": "Of course.",
+          "factIds": []
+        },
+        {
+          "guest": "bram",
+          "text": "recording it, so yes",
+          "factIds": []
+        },
+        {
+          "guest": "cass",
+          "text": "yes!!",
+          "factIds": []
+        },
+        {
+          "guest": "gil",
+          "text": "Wild horses, etc.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "id": "g-search",
+      "ask": "Has anyone searched the fog-signal house?",
+      "from": 3,
+      "until": 3,
+      "unlock": [],
+      "replies": [
+        {
+          "guest": "agnes",
+          "text": "I'd leave the fog-signal house alone, dear. It's full of old junk.",
+          "factIds": []
+        },
+        {
+          "guest": "bram",
+          "text": "had a quick look, nothing but rust",
+          "factIds": []
+        },
+        {
+          "guest": "cass",
+          "text": "it's creepy in there",
+          "factIds": []
+        },
+        {
+          "guest": "gil",
+          "text": "I went through it on Saturday. Nothing.",
+          "factIds": []
+        }
+      ]
+    }
+  ],
+  "nightMoves": [
+    {
+      "_tag": "Destroy",
+      "night": 1,
+      "fact": "paint-on-oilskin"
+    },
+    {
+      "_tag": "Coach",
+      "night": 2,
+      "guest": "agnes",
+      "fact": "agnes-heard-snoring",
+      "tellFact": "gil-asked-agnes",
+      "disprovedBy": "agnes-foghouse-n0"
+    }
+  ],
+  "contradictions": [
+    {
+      "id": "gil-bed",
+      "suspect": "gil",
+      "claimFact": "gil-in-bed-n0",
+      "proofFact": "bram-saw-gil-room-empty",
+      "concernsTheft": true
+    },
+    {
+      "id": "gil-cocoa",
+      "suspect": "gil",
+      "claimFact": "gil-kitchen-n0",
+      "proofFact": "bram-alone-kitchen",
+      "concernsTheft": true
+    },
+    {
+      "id": "gil-paint",
+      "suspect": "gil",
+      "claimFact": "gil-paint-on-tour",
+      "proofFact": "gil-skipped-tour",
+      "concernsTheft": true
+    },
+    {
+      "id": "gil-asked",
+      "suspect": "gil",
+      "claimFact": "gil-never-asked-agnes",
+      "proofFact": "gil-asked-agnes",
+      "concernsTheft": true
+    },
+    {
+      "id": "gil-lens",
+      "suspect": "gil",
+      "claimFact": "gil-not-on-committee",
+      "proofFact": "gil-on-committee",
+      "concernsTheft": false
+    },
+    {
+      "id": "cass-room",
+      "suspect": "cass",
+      "claimFact": "cass-in-room-n0",
+      "proofFact": "cass-tower-n0",
+      "concernsTheft": false
+    },
+    {
+      "id": "agnes-bed",
+      "suspect": "agnes",
+      "claimFact": "agnes-in-bed-n0",
+      "proofFact": "agnes-foghouse-n0",
+      "concernsTheft": false
+    },
+    {
+      "id": "agnes-snoring",
+      "suspect": "agnes",
+      "claimFact": "agnes-heard-snoring",
+      "proofFact": "agnes-foghouse-n0",
+      "concernsTheft": true
+    },
+    {
+      "id": "bram-asleep",
+      "suspect": "bram",
+      "claimFact": "bram-asleep-n0",
+      "proofFact": "agnes-saw-bram",
+      "concernsTheft": false
+    }
+  ],
+  "wifiLog": [
+    {
+      "id": "n0-agnes-in",
+      "night": 0,
+      "time": "11:04pm",
+      "guest": "agnes",
+      "event": "joined",
+      "accessPoint": "Cottage upstairs",
+      "factIds": []
+    },
+    {
+      "id": "n0-cass-in",
+      "night": 0,
+      "time": "11:05pm",
+      "guest": "cass",
+      "event": "joined",
+      "accessPoint": "Cottage upstairs",
+      "factIds": []
+    },
+    {
+      "id": "n0-bram-in",
+      "night": 0,
+      "time": "11:06pm",
+      "guest": "bram",
+      "event": "joined",
+      "accessPoint": "Cottage upstairs",
+      "factIds": []
+    },
+    {
+      "id": "n0-gil-in",
+      "night": 0,
+      "time": "11:09pm",
+      "guest": "gil",
+      "event": "joined",
+      "accessPoint": "Cottage upstairs",
+      "factIds": []
+    },
+    {
+      "id": "n0-cass-tower",
+      "night": 0,
+      "time": "11:46pm",
+      "guest": "cass",
+      "event": "joined",
+      "accessPoint": "Tower",
+      "factIds": ["cass-tower-n0"]
+    },
+    {
+      "id": "n0-cass-back",
+      "night": 0,
+      "time": "12:21am",
+      "guest": "cass",
+      "event": "joined",
+      "accessPoint": "Cottage upstairs",
+      "factIds": ["cass-tower-n0"]
+    },
+    {
+      "id": "n0-agnes-fog",
+      "night": 0,
+      "time": "12:31am",
+      "guest": "agnes",
+      "event": "joined",
+      "accessPoint": "Fog-signal house",
+      "factIds": ["agnes-foghouse-n0"]
+    },
+    {
+      "id": "n0-agnes-back",
+      "night": 0,
+      "time": "12:58am",
+      "guest": "agnes",
+      "event": "joined",
+      "accessPoint": "Cottage upstairs",
+      "factIds": ["agnes-foghouse-n0"]
+    },
+    {
+      "id": "n1-cass-kitchen",
+      "night": 1,
+      "time": "12:29am",
+      "guest": "cass",
+      "event": "joined",
+      "accessPoint": "Cottage kitchen",
+      "factIds": []
+    },
+    {
+      "id": "n1-cass-up",
+      "night": 1,
+      "time": "12:44am",
+      "guest": "cass",
+      "event": "joined",
+      "accessPoint": "Cottage upstairs",
+      "factIds": []
+    },
+    {
+      "id": "n1-bram-kitchen",
+      "night": 1,
+      "time": "1:58am",
+      "guest": "bram",
+      "event": "joined",
+      "accessPoint": "Cottage kitchen",
+      "factIds": []
+    },
+    {
+      "id": "n1-bram-up",
+      "night": 1,
+      "time": "2:41am",
+      "guest": "bram",
+      "event": "joined",
+      "accessPoint": "Cottage upstairs",
+      "factIds": []
+    },
+    {
+      "id": "n1-agnes-fog",
+      "night": 1,
+      "time": "6:42am",
+      "guest": "agnes",
+      "event": "joined",
+      "accessPoint": "Fog-signal house",
+      "factIds": []
+    },
+    {
+      "id": "n1-agnes-kitchen",
+      "night": 1,
+      "time": "7:05am",
+      "guest": "agnes",
+      "event": "joined",
+      "accessPoint": "Cottage kitchen",
+      "factIds": []
+    },
+    {
+      "id": "n2-gil-kitchen",
+      "night": 2,
+      "time": "11:28pm",
+      "guest": "gil",
+      "event": "joined",
+      "accessPoint": "Cottage kitchen",
+      "factIds": ["gil-agnes-cocoa-n2"]
+    },
+    {
+      "id": "n2-agnes-kitchen",
+      "night": 2,
+      "time": "11:31pm",
+      "guest": "agnes",
+      "event": "joined",
+      "accessPoint": "Cottage kitchen",
+      "factIds": ["gil-agnes-cocoa-n2"]
+    },
+    {
+      "id": "n2-agnes-up",
+      "night": 2,
+      "time": "11:56pm",
+      "guest": "agnes",
+      "event": "joined",
+      "accessPoint": "Cottage upstairs",
+      "factIds": []
+    },
+    {
+      "id": "n2-gil-up",
+      "night": 2,
+      "time": "11:59pm",
+      "guest": "gil",
+      "event": "joined",
+      "accessPoint": "Cottage upstairs",
+      "factIds": []
+    },
+    {
+      "id": "n2-cass-tower",
+      "night": 2,
+      "time": "1:14am",
+      "guest": "cass",
+      "event": "joined",
+      "accessPoint": "Tower",
+      "factIds": []
+    },
+    {
+      "id": "n2-cass-up",
+      "night": 2,
+      "time": "1:49am",
+      "guest": "cass",
+      "event": "joined",
+      "accessPoint": "Cottage upstairs",
+      "factIds": []
+    }
+  ]
+}
