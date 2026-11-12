@@ -627,29 +627,29 @@
           }
         },
         {
-          "id": "nell-snoring",
-          "ask": "Ines says she heard Jonah snoring all Friday night. Does that fit?",
+          "id": "nell-ribbon",
+          "ask": "What do you make of the ribbon turning up in Ines's car?",
           "from": 3,
           "unlock": [
             {
               "_tag": "Seen",
-              "fact": "ines-heard-snoring"
+              "fact": "ribbon-in-ines-car"
             }
           ],
           "answer": {
             "lines": [
               {
-                "text": "i mean her room is next to his",
+                "text": "ines?? no way",
                 "factIds": []
               },
               {
-                "text": "she'd know better than me",
+                "text": "she'd never be that obvious. she's way too smart",
                 "factIds": []
               }
             ],
             "pressed": [
               {
-                "text": "ask her not me",
+                "text": "i genuinely don't buy it",
                 "factIds": []
               }
             ]
@@ -734,7 +734,6 @@
         "tastevin-seen-2245",
         "jonah-plunged-cap",
         "jonah-asked-to-run",
-        "jonah-asked-ines",
         "wall-scrubbed-n1",
         "extra-bins"
       ],
@@ -742,9 +741,10 @@
         "jonah-slept-n0",
         "jonah-rinsed-buckets",
         "jonah-ring-off",
-        "jonah-never-asked",
         "jonah-glad-nell",
-        "jonah-slept-n1"
+        "jonah-slept-n1",
+        "jonah-slept-n2",
+        "ribbon-in-ines-car"
       ],
       "away": [
         {
@@ -1322,64 +1322,72 @@
           }
         },
         {
-          "id": "jonah-snoring",
-          "ask": "Ines says she heard you snoring on Friday night.",
+          "id": "jonah-ribbon",
+          "ask": "What do you make of the ribbon turning up in Ines's car?",
           "from": 3,
           "unlock": [
             {
               "_tag": "Seen",
-              "fact": "ines-heard-snoring"
+              "fact": "ribbon-in-ines-car"
             }
           ],
           "answer": {
             "lines": [
               {
-                "text": "There you go then, haha.",
-                "factIds": []
+                "text": "Seems fairly clear, to be fair. Her car, her glovebox.",
+                "factIds": ["ribbon-in-ines-car"]
               },
               {
-                "text": "Thin walls in this house.",
+                "text": "I said she wanted that reserve.",
                 "factIds": []
               }
             ],
             "pressed": [
               {
-                "text": "Thin walls.",
-                "factIds": []
+                "text": "Her glovebox. I'm only saying what it looks like.",
+                "factIds": ["ribbon-in-ines-car"]
               }
             ]
           }
         },
         {
-          "id": "jonah-vouch",
-          "ask": "Ines says you asked her to back up your story. Did you?",
-          "from": 1,
+          "id": "jonah-cars",
+          "ask": "Ines's car was unlocked by the crush pad all night. Were you out there on Sunday night?",
+          "from": 3,
           "unlock": [
             {
               "_tag": "Seen",
-              "fact": "jonah-asked-ines"
+              "fact": "ribbon-in-ines-car"
+            },
+            {
+              "_tag": "Seen",
+              "fact": "ines-car-unlocked"
             }
           ],
           "answer": {
             "lines": [
               {
-                "text": "No. Why would I need anyone to vouch for me?",
-                "factIds": ["jonah-never-asked"]
+                "text": "No. In bed by eleven and didn't stir.",
+                "factIds": ["jonah-slept-n2"]
               }
             ],
             "pressed": [
               {
-                "text": "No. I didn't ask her anything.",
-                "factIds": ["jonah-never-asked"]
+                "text": "Bed. All night. Look, ask anyone.",
+                "factIds": ["jonah-slept-n2"]
               }
             ],
             "caught": [
               {
-                "text": "Alright. I asked her. Sunday night, on the landing.",
-                "factIds": ["jonah-asked-ines"]
+                "text": "Alright. I went out about quarter to two.",
+                "factIds": []
               },
               {
-                "text": "I knew how it'd look, me being up on Friday. That's all it was.",
+                "text": "Couldn't sleep. Walked down to look at Dad's press in the dark.",
+                "factIds": []
+              },
+              {
+                "text": "I didn't go near her car.",
                 "factIds": []
               }
             ]
@@ -1486,10 +1494,10 @@
         "handprint-by-hook",
         "ines-hook-empty-0118",
         "ines-tasted-reserve",
-        "jonah-asked-ines",
+        "ines-car-unlocked",
         "wall-scrubbed-n1"
       ],
-      "claims": ["ines-in-room-n0", "ines-heard-snoring"],
+      "claims": ["ines-in-room-n0"],
       "secret": "ines-tasted-reserve",
       "away": [
         {
@@ -2025,34 +2033,30 @@
           }
         },
         {
-          "id": "ines-remembered",
-          "ask": "Have you remembered anything more about Friday night?",
+          "id": "ines-ribbon",
+          "ask": "What do you make of the ribbon turning up in your car?",
           "from": 3,
           "unlock": [
             {
-              "_tag": "AfterNight",
-              "night": 2
+              "_tag": "Seen",
+              "fact": "ribbon-in-ines-car"
             }
           ],
           "answer": {
             "lines": [
               {
-                "text": "Actually yes",
+                "text": "I didn't put it there. Obviously",
                 "factIds": []
               },
               {
-                "text": "I heard Jonah snoring through the wall from midnight till I dropped off about two. So not him lol",
-                "factIds": ["ines-heard-snoring"]
+                "text": "And I never lock that car. The key lives on the sun visor, you've all seen me grab it",
+                "factIds": ["ines-car-unlocked"]
               }
             ],
             "pressed": [
               {
-                "text": "...Ok. Jonah asked me last night to say that",
-                "factIds": ["jonah-asked-ines"]
-              },
-              {
-                "text": "I didn't hear him at all 🙃",
-                "factIds": []
+                "text": "Never locked. Key on the visor. Anyone could have lol",
+                "factIds": ["ines-car-unlocked"]
               }
             ]
           }
@@ -2070,17 +2074,17 @@
           "answer": {
             "lines": [
               {
-                "text": "Bed by eleven",
+                "text": "Bed by eleven. Earplugs in",
                 "factIds": []
               },
               {
-                "text": "Jonah caught me on the landing for a chat first",
+                "text": "Dead to the world till seven",
                 "factIds": []
               }
             ],
             "pressed": [
               {
-                "text": "Just a chat",
+                "text": "Out cold",
                 "factIds": []
               }
             ]
@@ -2801,13 +2805,13 @@
           }
         },
         {
-          "id": "oskar-snoring",
-          "ask": "Ines says she heard Jonah snoring all Friday night. Does that fit?",
+          "id": "oskar-ribbon",
+          "ask": "Leonie found the ribbon in Ines's car. Does that fit?",
           "from": 3,
           "unlock": [
             {
               "_tag": "Seen",
-              "fact": "ines-heard-snoring"
+              "fact": "ribbon-in-ines-car"
             }
           ],
           "answer": {
@@ -2817,13 +2821,13 @@
                 "factIds": []
               },
               {
-                "text": "Told me Saturday she sleeps in earplugs.",
+                "text": "Ribbon was cut. Clean. Not torn off in a hurry.",
                 "factIds": []
               }
             ],
             "pressed": [
               {
-                "text": "Earplugs. Her words.",
+                "text": "Cut. With a knife.",
                 "factIds": []
               }
             ]
@@ -2975,15 +2979,15 @@
     },
     {
       "night": 2,
-      "time": "11:00pm",
-      "text": "Jonah catches Ines on the landing and asks her to say she heard him snoring on Friday night. Glad to keep her own cellar visit quiet, she agrees.",
-      "factIds": ["jonah-asked-ines"]
-    },
-    {
-      "night": 2,
       "time": "12:05am",
       "text": "Nell takes a last call from Marlborough and turns the job down. She's staying.",
       "factIds": ["nell-out-n2"]
+    },
+    {
+      "night": 2,
+      "time": "1:47am",
+      "text": "Out in the dark yard, Jonah lights his way with his phone. He cuts the green ribbon off the tastevin and tucks it into the glovebox of Ines's unlocked hire car by the crush pad.",
+      "factIds": ["jonah-planted-ribbon", "jonah-crushpad-n2"]
     },
     {
       "night": 2,
@@ -3106,23 +3110,37 @@
       "concernsTheft": true
     },
     {
-      "id": "ines-heard-snoring",
-      "text": "Ines heard Jonah snoring through the wall from midnight until two on Friday night.",
+      "id": "ribbon-in-ines-car",
+      "text": "Ines hid the tastevin's green ribbon in the glovebox of her hire car.",
       "isTrue": false,
-      "about": ["jonah", "ines"],
+      "about": ["ines"],
       "concernsTheft": true
     },
     {
-      "id": "jonah-asked-ines",
-      "text": "On Sunday night Jonah asked Ines to say she'd heard him snoring on Friday night.",
+      "id": "ines-car-unlocked",
+      "text": "Ines never locks her hire car; the key lives on the sun visor, and everyone has seen her fetch it.",
       "isTrue": true,
-      "about": ["jonah", "ines"],
+      "about": ["ines"],
       "concernsTheft": true
     },
     {
-      "id": "jonah-never-asked",
-      "text": "Jonah never asked anyone to vouch for him.",
+      "id": "jonah-slept-n2",
+      "text": "Jonah was in bed from eleven on Sunday night until morning.",
       "isTrue": false,
+      "about": ["jonah"],
+      "concernsTheft": true
+    },
+    {
+      "id": "jonah-crushpad-n2",
+      "text": "Jonah's phone joined the crush pad Wi-Fi, where the cars are parked, at 1:47am on Sunday night.",
+      "isTrue": true,
+      "about": ["jonah"],
+      "concernsTheft": true
+    },
+    {
+      "id": "jonah-planted-ribbon",
+      "text": "Jonah cut the green ribbon off the tastevin and tucked it into the glovebox of Ines's hire car at 1:47am on Sunday night.",
+      "isTrue": true,
       "about": ["jonah"],
       "concernsTheft": true
     },
@@ -3364,17 +3382,17 @@
       "lines": [
         {
           "guest": "oskar",
-          "text": "Press is ready. We start at ten.",
+          "text": "Leonie went to Ines's car for the jump leads. The tastevin's green ribbon was in the glovebox.",
+          "factIds": ["ribbon-in-ines-car"]
+        },
+        {
+          "guest": "ines",
+          "text": "What?? I did not put that there",
           "factIds": []
         },
         {
           "guest": "jonah",
-          "text": "Mum's still hoping it turns up before we start.",
-          "factIds": []
-        },
-        {
-          "guest": "ines",
-          "text": "Fingers crossed",
+          "text": "Well.",
           "factIds": []
         }
       ]
@@ -3532,7 +3550,7 @@
         },
         {
           "guest": "ines",
-          "text": "Mine's a hire car. Very empty lol",
+          "text": "Mine, apparently. Thanks for asking 🙃",
           "factIds": []
         },
         {
@@ -3579,12 +3597,10 @@
       "fact": "handprint-by-hook"
     },
     {
-      "_tag": "Coach",
+      "_tag": "Plant",
       "night": 2,
-      "guest": "ines",
-      "fact": "ines-heard-snoring",
-      "tellFact": "jonah-asked-ines",
-      "disprovedBy": "ines-cellar-0118"
+      "fact": "ribbon-in-ines-car",
+      "disprovedBy": "jonah-crushpad-n2"
     }
   ],
   "contradictions": [
@@ -3610,10 +3626,10 @@
       "concernsTheft": true
     },
     {
-      "id": "jonah-vouch",
+      "id": "jonah-sunday",
       "suspect": "jonah",
-      "claimFact": "jonah-never-asked",
-      "proofFact": "jonah-asked-ines",
+      "claimFact": "jonah-slept-n2",
+      "proofFact": "jonah-crushpad-n2",
       "concernsTheft": true
     },
     {
@@ -3849,6 +3865,24 @@
       "night": 2,
       "time": "12:58am",
       "guest": "nell",
+      "event": "joined",
+      "accessPoint": "Main house",
+      "factIds": []
+    },
+    {
+      "id": "n2-jonah-crushpad",
+      "night": 2,
+      "time": "1:47am",
+      "guest": "jonah",
+      "event": "joined",
+      "accessPoint": "Crush pad",
+      "factIds": ["jonah-crushpad-n2"]
+    },
+    {
+      "id": "n2-jonah-back",
+      "night": 2,
+      "time": "1:58am",
+      "guest": "jonah",
       "event": "joined",
       "accessPoint": "Main house",
       "factIds": []
