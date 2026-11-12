@@ -125,7 +125,7 @@ Long-press a guest's reply to a question, as you do to save it, and you get two 
 
 The group chat carries **beats**: authored lines that post at the start of a part. Every day has a morning beat, which announces the night's events vaguely ("someone tidied the garden at dawn").
 
-**Open question: does the group chat get its own question menu?** The options are a small menu of group questions with no confronting, or beats only. The schema supports both: a case's `groupQuestions` may be empty, and the checker works either way. If group questions stay:
+The group chat also has **its own question menu**, a small one with no confronting:
 
 - **A group question costs one tick,** like a DM.
 - **Guests reply in a fixed order,** skipping any who are away or quiet.
@@ -188,7 +188,7 @@ Case {
   timeline: TimelineEvent[]                   // the truth, revealed at the end
   facts: Fact[]                               // { id, text, isTrue, about, concernsTheft }
   beats: Beat[]                               // { day, part, lines: GroupLine[] }
-  groupQuestions: GroupQuestion[]             // may be empty (section 5)
+  groupQuestions: GroupQuestion[]             // section 5
   nightMoves: NightMove[]                     // one per night, nights 1 and 2
   contradictions: Contradiction[]             // { id, suspect, claimFact, proofFact, concernsTheft }
   wifiLog: WifiEntry[]                        // { id, night, time, guest, event, accessPoint, factIds }
@@ -328,7 +328,6 @@ All on the `choice-redesign` branch.
 
 ## 14. Open questions
 
-- **The group chat:** a small menu of group questions with no confronting, or beats only? (Section 5.)
 - **Budgets:** the default is 5/5/4 (raised from 4/4/3 after the first playtest). Keep tuning; the target is that a careful player can ask roughly half of what's on offer.
 
 ## Decided
@@ -342,6 +341,7 @@ All on the `choice-redesign` branch.
 - **Arrest** on a suspect plus one caught lie against them.
 - **No hints** or intuition points.
 - **Cast:** four or five guests, about 25–35 questions each.
+- **The group chat has its own question menu** (section 5).
 - **The Wi-Fi log stays.** Night moves stay fixed in the case, one each on nights 1 and 2.
 - **Cases are written by a local Claude Code skill** and committed. The five free-typing cases were deleted.
 - **The engine is rewritten fresh,** not reshaped.

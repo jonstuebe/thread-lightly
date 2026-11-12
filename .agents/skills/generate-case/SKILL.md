@@ -64,7 +64,7 @@ Around 120 questions is too much JSON to hand-type safely. Write a small builder
 
 **Menu order is the order you write the questions in.** New chips are marked _new_ but stay where you put them, so order each guest's questions as a natural conversation, and never put a solve step first just because it unlocks late.
 
-**Group questions** are optional (undecided in the design); include 1–2 per day so they can be tried. Replies run in the guests' order, carry no contradiction claims and no secrets, and are best kept fact-free.
+**Group questions:** include 1–2 per day. Replies run in the guests' order, carry no contradiction claims and no secrets, and are best kept fact-free.
 
 **`goodnight`** and 2–3 **`wrongProof`** replies per guest, fact-free and in voice ("that's literally not what i said??").
 
