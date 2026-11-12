@@ -1,0 +1,3425 @@
+{
+  "id": "wharf-lane-atlas",
+  "setting": {
+    "title": "The Wharf Lane Atlas",
+    "premise": "Ursula Fenn has gathered four old friends in the flat above her canal-side secondhand bookshop for the shop's fortieth birthday weekend. On Friday night, hours after she announced it would go to auction to pay for a new roof, the shop's hand-coloured 1831 canal atlas vanished from its locked cabinet on the shop floor below.",
+    "missingItem": "a hand-coloured 1831 atlas of the county canals",
+    "accessPoints": ["Flat upstairs", "Flat kitchen", "Shop floor", "Towpath"]
+  },
+  "budget": {
+    "morning": 5,
+    "afternoon": 5,
+    "evening": 4
+  },
+  "guests": [
+    {
+      "id": "quentin",
+      "name": "Quentin Achterberg",
+      "role": "a retired lock-keeper who lives on the narrowboat moored under the shop window",
+      "voice": "68. Measured and old-fashioned. Capitals and full stops, sentences a touch long, says 'I dare say' and 'mind you'. Uses ⚓ now and then and no other emoji.",
+      "knows": [
+        "atlas-at-viewing",
+        "ursula-gave-key",
+        "key-in-tamsin-pocket",
+        "key-back-on-hook",
+        "tamsin-in-shop-0120",
+        "quentin-pipe-0100",
+        "tamsin-fundraiser",
+        "saoirse-towpath-n1",
+        "quentin-in-flat-n2",
+        "boat-step-print"
+      ],
+      "claims": ["quentin-asleep-n0"],
+      "secret": "quentin-pipe-0100",
+      "away": [
+        {
+          "day": 2,
+          "part": "morning",
+          "status": "at the chandlery for a stove part"
+        },
+        {
+          "day": 3,
+          "part": "afternoon",
+          "status": "taking Patience up to the winding hole ⚓"
+        }
+      ],
+      "goodnight": "Goodnight, all. Mind the step on the stairs.",
+      "wrongProof": [
+        ["I'm not sure what that has to do with me."],
+        ["That is not what I said, and I dare say you know it."],
+        ["I think you have the wrong end of the rope there."]
+      ],
+      "questions": [
+        {
+          "id": "q-friday",
+          "ask": "Where were you after the quiz on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Back down to the boat about twenty to twelve.",
+                "factIds": []
+              },
+              {
+                "text": "Asleep by midnight, I dare say. The canal rocks you off.",
+                "factIds": ["quentin-asleep-n0"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Asleep by midnight. Nothing wakes me on Patience.",
+                "factIds": ["quentin-asleep-n0"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "All right. I was out on the towpath with my pipe at one o'clock.",
+                "factIds": ["quentin-pipe-0100"]
+              },
+              {
+                "text": "I promised Ursula I'd given it up after the heart business. One pipe a night. Please don't tell her.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "q-last-saw",
+          "ask": "When did you last see the atlas?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Ten o'clock. Ursula took us all down to the shop to look at it, then locked it back in the cabinet.",
+                "factIds": ["atlas-at-viewing"]
+              },
+              {
+                "text": "She gave Tamsin the key to hang in the kitchen, as she always does.",
+                "factIds": ["ursula-gave-key"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Ten o'clock, in the cabinet, locked. I watched her turn the key.",
+                "factIds": ["atlas-at-viewing"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "q-heard",
+          "ask": "Did you see or hear anything on Friday night?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Nothing worth repeating. The boat is a world of its own at night.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Nothing worth repeating, I said.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "q-who",
+          "ask": "Who do you think took it?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "I'd sooner not guess about friends.",
+                "factIds": []
+              },
+              {
+                "text": "Mind you, young Yusuf couldn't keep his phone off it at the viewing.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "That's all I'll say. He was very taken with it.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "q-saoirse",
+          "ask": "What do you make of Saoirse?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "She was Ursula's Saturday girl at fifteen. Draws like an angel. Up half the night, that one.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Always on her phone after dark. Young people.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "q-tamsin",
+          "ask": "What do you make of Tamsin?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Salt of the earth. Nineteen years behind that till and never a book out of place.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "She'd give you her last biscuit.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "q-yusuf",
+          "ask": "What do you make of Yusuf?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Ursula's great-nephew. A good lad under all that phone.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "A good lad. Talks to his phone more than to people.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "q-ursula",
+          "ask": "How do you know Ursula?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "I kept Wharf Lane lock for thirty years. She brought me tea and a paperback every Tuesday. ⚓",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Thirty years of Tuesdays.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "q-sleeping",
+          "ask": "Where are you sleeping?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "On Patience, my boat. Moored right under the shop window.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "On the boat. I wouldn't sleep anywhere else.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "q-quiz",
+          "ask": "How was the quiz on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Tamsin read the questions. Saoirse's team won. I carried the canal round, naturally.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Naturally.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "q-odd-d1",
+          "ask": "Anything odd this morning?",
+          "from": 1,
+          "until": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "The cabinet still locked and the atlas gone.",
+                "factIds": []
+              },
+              {
+                "text": "And the key back on its hook in the kitchen, Saoirse says. Make of that what you will.",
+                "factIds": ["key-back-on-hook"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Back on its hook. Somebody tidy.",
+                "factIds": ["key-back-on-hook"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "q-key",
+          "ask": "Who had the cabinet key after the viewing?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "key-hook-empty"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Tamsin. Ursula gave it to her to hang up.",
+                "factIds": ["ursula-gave-key"]
+              },
+              {
+                "text": "But it was still in her cardigan pocket at twenty to twelve. The brass fish fob was hanging out when she walked me down.",
+                "factIds": ["key-in-tamsin-pocket"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "The fish fob. Plain as day, in her pocket.",
+                "factIds": ["key-in-tamsin-pocket"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "q-towpath",
+          "ask": "Did you see anything from the towpath on Friday night?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Caught",
+              "contradiction": "quentin-boat"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "The shop lamp came on at twenty past one. Tamsin was at the atlas cabinet, glasses on their chain.",
+                "factIds": ["tamsin-in-shop-0120"]
+              },
+              {
+                "text": "I thought Ursula must have sent her down. And I could hardly mention it without mentioning the pipe.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "It was Tamsin. Nobody else wears that long green cardigan.",
+                "factIds": ["tamsin-in-shop-0120"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "q-auction",
+          "ask": "What do you make of the auction?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "It breaks my heart. My lock is on page nine of that atlas.",
+                "factIds": []
+              },
+              {
+                "text": "But a roof is a roof.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "A roof is a roof. Ursula knows her own mind.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "q-boat",
+          "ask": "Tell me about your boat.",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Patience. Thirty-two foot, older than Yusuf's father, and leaks only when it rains.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Only when it rains. ⚓",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "q-sat-night",
+          "ask": "Where were you on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 1
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "On the boat by eleven after all that party food.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Eleven. Patience and I keep early hours.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "q-odd-d2",
+          "ask": "Anything odd this morning?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Two cocoa mugs left in the sink. Somebody had a late chat.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Two mugs. That's all.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "q-saturday",
+          "ask": "What did you do on Saturday?",
+          "from": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "The party. I made a speech about the lock. Too long, Saoirse says.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Twenty minutes is not long for forty years.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "q-heard-n1",
+          "ask": "Did you hear anything on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "A young woman on the towpath on her phone after midnight. Saoirse, I should think.",
+                "factIds": ["saoirse-towpath-n1"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Saoirse, on the phone. Again.",
+                "factIds": ["saoirse-towpath-n1"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "q-roof",
+          "ask": "Has anyone tried to save the atlas from the auction?",
+          "from": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Tamsin has. She's been ringing round the regulars for money for the roof. Quietly.",
+                "factIds": ["tamsin-fundraiser"]
+              },
+              {
+                "text": "She had me down for fifty pounds on Thursday.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "She has. Every regular in the book.",
+                "factIds": ["tamsin-fundraiser"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "q-sunday",
+          "ask": "What did you do on Sunday?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Took everyone up to the Lock Inn on Patience. Yusuf steered us into the reeds.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Only the once.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "q-sun-night",
+          "ask": "Where were you on Sunday night?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 2
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "In the flat, in Ursula's armchair. The boat stove packed in.",
+                "factIds": ["quentin-in-flat-n2"]
+              },
+              {
+                "text": "Didn't go down to Patience till eight this morning.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "The armchair, all night. My back will tell you.",
+                "factIds": ["quentin-in-flat-n2"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "q-odd-d3",
+          "ask": "Anything odd this morning?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "My hatch was unbolted when I went down at eight. And a small wet footprint on the step.",
+                "factIds": ["boat-step-print"]
+              },
+              {
+                "text": "Not my size, I can tell you.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "A small foot. Wet. On my step.",
+                "factIds": ["boat-step-print"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "q-slipcase",
+          "ask": "Did you put the atlas's slipcase in your boat locker?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "quentin-hid-slipcase"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "I did not. I was in Ursula's armchair all Sunday night. Ask Yusuf, he complained about my snoring.",
+                "factIds": ["quentin-in-flat-n2"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Not I. I never left the flat.",
+                "factIds": ["quentin-in-flat-n2"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "q-arrest",
+          "ask": "If you had to name someone today, who would it be?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "I won't. Not my friends.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "I said I won't.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "q-monday",
+          "ask": "When are you heading off?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Taking Patience up to the winding hole this afternoon. Then home, which is here.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "This afternoon.",
+                "factIds": []
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "saoirse",
+      "name": "Saoirse Kavanagh",
+      "role": "an illustrator, and Ursula's Saturday girl at fifteen",
+      "voice": "34. Mostly lowercase with the odd capital for emphasis, double question marks, says 'honestly' and 'haha'. Uses ✨ sparingly and no other emoji.",
+      "knows": [
+        "atlas-at-viewing",
+        "ursula-gave-key",
+        "key-hook-empty",
+        "key-back-on-hook",
+        "saoirse-kitchen-1240",
+        "saoirse-london-call",
+        "quentin-pipe-0100",
+        "yusuf-alone-0105",
+        "tamsin-yusuf-kitchen-n1",
+        "saoirse-towpath-n1",
+        "saoirse-towpath-n2",
+        "quentin-in-flat-n2"
+      ],
+      "claims": ["saoirse-asleep-n0"],
+      "secret": "saoirse-london-call",
+      "away": [
+        {
+          "day": 1,
+          "part": "evening",
+          "status": "out sketching the lock at dusk ✨"
+        },
+        {
+          "day": 3,
+          "part": "evening",
+          "status": "on the train home"
+        }
+      ],
+      "goodnight": "night all ✨",
+      "wrongProof": [
+        ["that's honestly not what i said??"],
+        ["what does that have to do with me haha"],
+        ["ok i think you mixed me up with someone"]
+      ],
+      "questions": [
+        {
+          "id": "s-friday",
+          "ask": "Where were you after the quiz on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "bed by midnight honestly, i was wiped",
+                "factIds": ["saoirse-asleep-n0"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "asleep! by midnight!! haha",
+                "factIds": ["saoirse-asleep-n0"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "ok yes i was in the kitchen. video call with a studio in london, they want me for a job ✨",
+                "factIds": ["saoirse-london-call"]
+              },
+              {
+                "text": "please don't tell ursula yet, not on the anniversary weekend",
+                "factIds": []
+              },
+              {
+                "text": "also weird thing, the key hook was empty when i was down there. like 12:50. the fish fob is ALWAYS on it",
+                "factIds": ["key-hook-empty"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "s-last-saw",
+          "ask": "When did you last see the atlas?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "at the viewing, 10ish. ursula locked it up again",
+                "factIds": ["atlas-at-viewing"]
+              },
+              {
+                "text": "and gave tamsin the key to hang up",
+                "factIds": ["ursula-gave-key"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "10ish, locked in the cabinet",
+                "factIds": ["atlas-at-viewing"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "s-heard",
+          "ask": "Did you see or hear anything on Friday night?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "nothing i'd call suspicious? this building creaks like a ship",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "honestly just creaks",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "s-who",
+          "ask": "Who do you think took it?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "no idea. not quentin, he can barely work his phone haha",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "i really don't know",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "s-quentin",
+          "ask": "What do you make of Quentin?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "quentin is a treasure. he and ursula should just get married already",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "a TREASURE",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "s-tamsin",
+          "ask": "What do you make of Tamsin?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "tamsin taught me to price books in pencil when i was 15. she loves that shop more than anyone",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "more than anyone, honestly",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "s-yusuf",
+          "ask": "What do you make of Yusuf?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "sweet kid. films literally everything haha",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "everything. the kettle. the cat next door",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "s-ursula",
+          "ask": "How do you know Ursula?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "i was her saturday girl at 15!! she basically raised me on secondhand paperbacks ✨",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "every saturday for four years",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "s-room",
+          "ask": "Where are you sleeping?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "the little room next to the sitting room. walls are paper thin haha",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "paper. thin.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "s-quiz",
+          "ask": "How was the quiz on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "my team won obviously. tamsin read the questions in a newsreader voice",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "we won, that's all that matters",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "s-portfolio",
+          "ask": "What's in your portfolio?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "sketches of the shop for ursula, it's her anniversary present. no peeking",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "no peeking!!",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "s-odd-d1",
+          "ask": "Anything odd this morning?",
+          "from": 1,
+          "until": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "the cabinet key is back on its hook?? so whoever it was put it back",
+                "factIds": ["key-back-on-hook"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "back on the hook at breakfast, i checked",
+                "factIds": ["key-back-on-hook"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "s-window",
+          "ask": "Did you see anything from the kitchen window on Friday night?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Caught",
+              "contradiction": "saoirse-sleep"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "quentin on the towpath with his pipe, about 1am haha",
+                "factIds": ["quentin-pipe-0100"]
+              },
+              {
+                "text": "he's meant to have quit. i didn't see him, he didn't see me",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "definitely him. the little glow and the flat cap",
+                "factIds": ["quentin-pipe-0100"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "s-london",
+          "ask": "Are you really moving to London?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Caught",
+              "contradiction": "saoirse-sleep"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "maybe? it's a dream job",
+                "factIds": []
+              },
+              {
+                "text": "i just can't tell ursula this weekend of all weekends",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "maybe. probably. ugh",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "s-auction",
+          "ask": "What do you make of the auction?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "i cried a bit tbh. that atlas is the first thing i ever drew from life",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "a bit. a lot",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "s-sat-night",
+          "ask": "Where were you on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 1
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "out on the towpath on the phone for a bit, like 12:15. then bed",
+                "factIds": ["saoirse-towpath-n1"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "towpath, phone, bed",
+                "factIds": ["saoirse-towpath-n1"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "s-odd-d2",
+          "ask": "Anything odd this morning?",
+          "from": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "two cocoa mugs in the sink?? someone had a midnight heart to heart haha",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "two mugs. very cosy",
+                "factIds": []
+              }
+            ]
+          },
+          "until": 2
+        },
+        {
+          "id": "s-saturday",
+          "ask": "What did you do on Saturday?",
+          "from": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "the party! gave ursula her portrait, she cried, i cried",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "everyone cried tbh",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "s-heard-n1",
+          "ask": "Did you hear anything on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "low voices in the kitchen around 11:30. tamsin and yusuf i think",
+                "factIds": ["tamsin-yusuf-kitchen-n1"]
+              },
+              {
+                "text": "very serious whispering",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "tamsin and yusuf. kitchen. whispering",
+                "factIds": ["tamsin-yusuf-kitchen-n1"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "s-film",
+          "ask": "Yusuf says he and Tamsin watched a film on Friday night. Did you see them?",
+          "from": 2,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "yusuf-film-with-tamsin"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "a film?? yusuf was asleep on the sofa on his own at 1, i could hear him snoring through the wall",
+                "factIds": ["yusuf-alone-0105"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "on his OWN. snoring. no film",
+                "factIds": ["yusuf-alone-0105"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "s-sunday",
+          "ask": "What did you do on Sunday?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "boat trip to the lock inn! yusuf steered us into the reeds haha",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "the reeds. twice",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "s-sun-night",
+          "ask": "Where were you on Sunday night?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 2
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "on the towpath calling my sister at like 12:20, ten mins, then bed",
+                "factIds": ["saoirse-towpath-n2"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "towpath, sister, bed",
+                "factIds": ["saoirse-towpath-n2"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "s-odd-d3",
+          "ask": "Anything odd this morning?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "apart from the slipcase on quentin's boat??",
+                "factIds": []
+              },
+              {
+                "text": "quentin was snoring in ursula's armchair all night, so how",
+                "factIds": ["quentin-in-flat-n2"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "the armchair. all night. i heard him",
+                "factIds": ["quentin-in-flat-n2"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "s-slipcase",
+          "ask": "What do you make of the slipcase turning up on Quentin's boat?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "quentin-hid-slipcase"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "quentin did NOT do that. he'd sooner sink the boat",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "not quentin. never",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "s-arrest",
+          "ask": "If you had to name someone today, who would it be?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "i really don't want to. ask me after coffee",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "still no haha",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "s-monday",
+          "ask": "When are you heading home?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "train at 6. i'm going to tell ursula about london before i go. i think",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "i think!!",
+                "factIds": []
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "tamsin",
+      "name": "Tamsin Pryce",
+      "role": "Ursula's assistant at the shop for nineteen years",
+      "voice": "52. Warm and a little formal. Capitals and full stops, medium sentences, calls things 'silly' and says 'I'm afraid'. Uses 📚 now and then and no other emoji.",
+      "knows": [
+        "atlas-at-viewing",
+        "ursula-gave-key",
+        "key-in-tamsin-pocket",
+        "key-back-on-hook",
+        "tamsin-in-shop-0120",
+        "tamsin-asked-yusuf",
+        "tamsin-yusuf-kitchen-n1",
+        "saoirse-towpath-n1",
+        "tamsin-fundraiser"
+      ],
+      "claims": [
+        "tamsin-hung-key",
+        "tamsin-not-in-shop-n0",
+        "tamsin-film-n0",
+        "tamsin-in-bed-n2",
+        "tamsin-fine-with-auction"
+      ],
+      "away": [
+        {
+          "day": 2,
+          "part": "afternoon",
+          "status": "visiting her mum at the care home"
+        },
+        {
+          "day": 3,
+          "part": "evening",
+          "status": "driving home"
+        }
+      ],
+      "goodnight": "Goodnight, all. Lights off in the shop, please. 📚",
+      "wrongProof": [
+        ["I'm afraid I don't follow."],
+        ["That's not what I said at all."],
+        ["I think you have me confused with someone else."]
+      ],
+      "questions": [
+        {
+          "id": "t-friday",
+          "ask": "Where were you after the quiz on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "I walked Quentin down to his boat at twenty to twelve, then went up to bed.",
+                "factIds": []
+              },
+              {
+                "text": "Earplugs in by midnight. The geese on this canal are merciless.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Bed. Earplugs. Geese.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "t-last-saw",
+          "ask": "When did you last see the atlas?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Ten o'clock. Ursula showed it to everyone, then locked it back in the cabinet.",
+                "factIds": ["atlas-at-viewing"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Ten. Locked away, safe as houses.",
+                "factIds": ["atlas-at-viewing"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "t-key",
+          "ask": "What happened to the cabinet key after the viewing?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Ursula gave it to me, and I hung it on the hook in the kitchen straight away. Half past ten.",
+                "factIds": ["ursula-gave-key", "tamsin-hung-key"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Straight on the hook. I've done it a thousand times.",
+                "factIds": ["tamsin-hung-key"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "Oh. Yes. You're right, it was in my cardigan pocket. I forgot all about it.",
+                "factIds": ["key-in-tamsin-pocket"]
+              },
+              {
+                "text": "I found it at seven on Saturday and hung it up then. I never went near the shop, if that's what you're thinking.",
+                "factIds": ["tamsin-not-in-shop-n0"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "t-shop",
+          "ask": "Did you go down to the shop on Friday night?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Caught",
+              "contradiction": "tamsin-key"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "No. Straight to bed with that silly key in my pocket.",
+                "factIds": ["tamsin-not-in-shop-n0"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "I didn't set foot in the shop. Not once.",
+                "factIds": ["tamsin-not-in-shop-n0"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "All right. I went down at twenty past one. I opened the cabinet.",
+                "factIds": ["tamsin-in-shop-0120"]
+              },
+              {
+                "text": "I wanted one last look at it before Tuesday. Page nine, Quentin's lock. Then I locked it again and went up.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "t-heard",
+          "ask": "Did you see or hear anything on Friday night?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Nothing, I'm afraid. Earplugs.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Earplugs, I'm afraid.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "t-who",
+          "ask": "Who do you think took it?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "I hate this.",
+                "factIds": []
+              },
+              {
+                "text": "If I had to say, Yusuf was very taken with it. He filmed it all evening.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "He did. All evening.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "t-quentin",
+          "ask": "What do you make of Quentin?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "A dear. He has loved Ursula for thirty years and thinks nobody has noticed.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Everybody has noticed.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "t-saoirse",
+          "ask": "What do you make of Saoirse?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Clever girl. I taught her to price in pencil. She has something on her mind this weekend.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Something. She'll tell us when she's ready.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "t-yusuf",
+          "ask": "What do you make of Yusuf?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Lovely boy. Never off that phone, mind.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Never.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "t-ursula",
+          "ask": "How do you know Ursula?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "I answered her card in the window for Saturday help nineteen years ago and never left. 📚",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Nineteen years.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "t-room",
+          "ask": "Where are you sleeping?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "The little front room, looking over the canal.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Over the shop window. It smells of old paper. Heaven.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "t-quiz",
+          "ask": "How was the quiz on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "I was quizmaster. Saoirse's team cheated, but beautifully.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Beautifully.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "t-odd-d1",
+          "ask": "Anything odd this morning?",
+          "from": 1,
+          "until": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "The key was back on its hook this morning and the cabinet still locked.",
+                "factIds": ["key-back-on-hook"]
+              },
+              {
+                "text": "Whoever it was, they're tidy.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "On its hook. I saw it at breakfast.",
+                "factIds": ["key-back-on-hook"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "t-auction",
+          "ask": "How do you feel about the auction?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "It's Ursula's atlas and Ursula's roof. I've made my peace with it.",
+                "factIds": ["tamsin-fine-with-auction"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Made my peace. Truly.",
+                "factIds": ["tamsin-fine-with-auction"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "Fine. I've been ringing round the regulars for money for the roof. Four thousand so far.",
+                "factIds": ["tamsin-fundraiser"]
+              },
+              {
+                "text": "I wanted to hand it to her before Tuesday so she wouldn't have to sell. Please don't spoil it.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "t-sat-night",
+          "ask": "Where were you on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 1
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "A cocoa with Yusuf in the kitchen around half eleven, then bed.",
+                "factIds": ["tamsin-yusuf-kitchen-n1"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Just cocoa. He looked like he needed one.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "t-odd-d2",
+          "ask": "Anything odd this morning?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Only my two cocoa mugs still in the sink. Sorry, Ursula.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "I've washed them now.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "t-saturday",
+          "ask": "What did you do on Saturday?",
+          "from": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "The party. Forty years of Fenn's. I sold eleven books between speeches. 📚",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Eleven!",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "t-heard-n1",
+          "ask": "Did you hear anything on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Saoirse on the towpath under my window, on her phone after midnight. Again.",
+                "factIds": ["saoirse-towpath-n1"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Saoirse. Phone. Towpath.",
+                "factIds": ["saoirse-towpath-n1"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "t-film",
+          "ask": "Yusuf says you two watched a film on Friday night. Is that right?",
+          "from": 2,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "yusuf-film-with-tamsin"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Yes. Some old black-and-white thing. I couldn't sleep, so I sat up with him till two.",
+                "factIds": ["tamsin-film-n0"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Till two. I dozed through the ending.",
+                "factIds": ["tamsin-film-n0"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "He told you, did he. Fine. I asked him to say it.",
+                "factIds": ["tamsin-asked-yusuf"]
+              },
+              {
+                "text": "I didn't want anyone thinking I'd been wandering about at night. I hadn't been.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "t-sunday",
+          "ask": "What did you do on Sunday?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Boat trip to the Lock Inn, then my mum. A long day.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "A very long day.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "t-sun-night",
+          "ask": "Where were you on Sunday night?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 2
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "Early night. That boat trip finished me off.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Early. I was shattered.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "t-odd-d3",
+          "ask": "Anything odd this morning?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "The slipcase. On Quentin's boat. I don't know what to think.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "I just don't.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "t-boat",
+          "ask": "Did you go down to Quentin's boat on Sunday night?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "boat-step-print"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "No. I was in bed from eleven and didn't stir till seven.",
+                "factIds": ["tamsin-in-bed-n2"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "In bed from eleven. I didn't go out.",
+                "factIds": ["tamsin-in-bed-n2"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "I went out for some air. That's all.",
+                "factIds": []
+              },
+              {
+                "text": "I didn't go near the boat. Why would I?",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "t-slipcase",
+          "ask": "What do you make of the slipcase turning up on Quentin's boat?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "quentin-hid-slipcase"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "I'm afraid it looks rather clear, doesn't it. Poor old Quentin.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Poor Quentin.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "t-arrest",
+          "ask": "If you had to name someone today, who would it be?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Don't make me.",
+                "factIds": []
+              },
+              {
+                "text": "Quentin. I'm sorry. The slipcase.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "I'm sorry. Quentin.",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "t-monday",
+          "ask": "When are you heading home?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "Late this afternoon. The shop opens again on Wednesday.",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "Wednesday, nine sharp.",
+                "factIds": []
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "yusuf",
+      "name": "Yusuf Demir",
+      "role": "Ursula's great-nephew, sleeping on the sofa",
+      "voice": "22. all lowercase, no full stops, says 'ngl', 'lowkey' and 'like'. uses 😭 or 🙏 now and then, never 😂.",
+      "knows": [
+        "atlas-at-viewing",
+        "ursula-gave-key",
+        "yusuf-filming",
+        "yusuf-shop-0012",
+        "atlas-there-1235",
+        "saoirse-kitchen-1240",
+        "tamsin-asked-yusuf",
+        "tamsin-yusuf-kitchen-n1",
+        "yusuf-shop-n2",
+        "quentin-in-flat-n2"
+      ],
+      "claims": ["yusuf-on-sofa-n0", "yusuf-film-with-tamsin"],
+      "secret": "yusuf-filming",
+      "away": [
+        {
+          "day": 2,
+          "part": "morning",
+          "status": "asleep 😴"
+        },
+        {
+          "day": 2,
+          "part": "evening",
+          "status": "at the pub with the canal crew"
+        }
+      ],
+      "goodnight": "night 🙏",
+      "wrongProof": [
+        ["that's literally not what i said??"],
+        ["ok that has nothing to do with me ngl"],
+        ["wait what"]
+      ],
+      "questions": [
+        {
+          "id": "y-friday",
+          "ask": "Where were you after the quiz on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "on the sofa all night tbh, out cold",
+                "factIds": ["yusuf-on-sofa-n0"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "i literally did not move",
+                "factIds": ["yusuf-on-sofa-n0"]
+              }
+            ],
+            "caught": [
+              {
+                "text": "ok fine. i was down in the shop filming. i run a booktok from here, it's kind of big now",
+                "factIds": ["yusuf-filming"]
+              },
+              {
+                "text": "please don't tell aunt ursula 😭 she thinks phones are ruining reading",
+                "factIds": []
+              },
+              {
+                "text": "the atlas was still in the cabinet when i left btw, like 12:35. and saoirse was in the kitchen on her laptop when i came up",
+                "factIds": ["atlas-there-1235", "saoirse-kitchen-1240"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "y-last-saw",
+          "ask": "When did you last see the atlas?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "the viewing at 10. aunt ursula locked it back up after",
+                "factIds": ["atlas-at-viewing"]
+              },
+              {
+                "text": "i got it on video ngl it looks unreal",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "10, at the viewing",
+                "factIds": ["atlas-at-viewing"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "y-key",
+          "ask": "Did you see what happened to the cabinet key?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "aunt ursula gave it to tamsin to hang up. that's all i saw",
+                "factIds": ["ursula-gave-key"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "tamsin had it. that's it",
+                "factIds": ["ursula-gave-key"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "y-heard",
+          "ask": "Did you see or hear anything on Friday night?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "nothing i noticed tbh",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "like nothing nothing",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "y-others-up",
+          "ask": "Was anyone else up on Friday night?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "no idea tbh, i had my headphones in",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "genuinely no idea",
+                "factIds": []
+              }
+            ]
+          },
+          "afterNight": [
+            {
+              "night": 1,
+              "answer": {
+                "lines": [
+                  {
+                    "text": "yeah tamsin was. she couldn't sleep so we watched a film on the sofa, like 12:45 till 2",
+                    "factIds": ["yusuf-film-with-tamsin"]
+                  }
+                ],
+                "pressed": [
+                  {
+                    "text": "ok. tamsin asked me to say that 😭 in the kitchen on saturday night",
+                    "factIds": ["tamsin-asked-yusuf"]
+                  },
+                  {
+                    "text": "she said it'd keep us both out of trouble. i don't actually know where she was",
+                    "factIds": []
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "y-who",
+          "ask": "Who do you think took it?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "not to be dramatic but quentin knows every inch of this canal",
+                "factIds": []
+              },
+              {
+                "text": "where better to hide a book than a boat",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "i said what i said",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "y-quentin",
+          "ask": "What do you make of Quentin?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "quentin is lowkey iconic. he's been in love with aunt ursula since before i was born",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "iconic",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "y-saoirse",
+          "ask": "What do you make of Saoirse?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "saoirse is cool. she's been weird and secretive all weekend tho",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "like whispering into her laptop weird",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "y-tamsin",
+          "ask": "What do you make of Tamsin?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "tamsin basically is the shop. she knows where every book is without looking",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "every single one",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "y-ursula",
+          "ask": "How do you know Ursula?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "she's my great aunt. i've spent every summer in this shop since i was 6",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "every single summer",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "y-room",
+          "ask": "Where are you sleeping?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "the sofa in the sitting room. it's fine. it's not fine 😭",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "it has a spring in it",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "y-quiz",
+          "ask": "How was the quiz on Friday?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "i got zero on the canal round. quentin was so disappointed",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "zero. out of ten",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "y-odd-d1",
+          "ask": "Anything odd this morning?",
+          "from": 1,
+          "until": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "the cabinet's locked but the atlas is gone?? like how",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "like actually how",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "y-booktok",
+          "ask": "How big is your BookTok account?",
+          "from": 1,
+          "unlock": [
+            {
+              "_tag": "Caught",
+              "contradiction": "yusuf-sofa"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "like 40k?? the shop at night does numbers 🙏",
+                "factIds": []
+              },
+              {
+                "text": "aunt ursula would kill me",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "40k and counting",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "y-auction",
+          "ask": "What do you make of the auction?",
+          "from": 1,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "so sad. i made a whole video about it. unposted obviously",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "unposted!!",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "y-sat-night",
+          "ask": "Where were you on Saturday night?",
+          "from": 2,
+          "until": 2,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 1
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "kitchen with tamsin for a bit at like 11:30, then sofa",
+                "factIds": ["tamsin-yusuf-kitchen-n1"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "she wanted a chat. that's all",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "y-odd-d2",
+          "ask": "Anything odd this morning?",
+          "from": 2,
+          "until": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "nothing?? i slept till 11 🙏",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "i was asleep. genuinely",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "y-saturday",
+          "ask": "What did you do on Saturday?",
+          "from": 2,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "the party! i did the playlist. quentin did a 20 min speech about a lock",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "20 minutes. about a lock",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "y-kitchen-chat",
+          "ask": "What did you and Tamsin talk about on Saturday night?",
+          "from": 2,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "tamsin-yusuf-kitchen-n1"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "just stuff. the atlas. aunt ursula. she was sad",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "honestly just sad stuff",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "y-sunday",
+          "ask": "What did you do on Sunday?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "boat trip. i steered us into the reeds. twice. we don't talk about it",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "we do not talk about it",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "y-sun-night",
+          "ask": "Where were you on Sunday night?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "AfterNight",
+              "night": 2
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "sofa, but i nipped down to the shop at like 12:40 to film one last thing 🙏",
+                "factIds": ["yusuf-shop-n2"]
+              },
+              {
+                "text": "quentin was in the armchair all night snoring like a boat engine",
+                "factIds": ["quentin-in-flat-n2"]
+              }
+            ],
+            "pressed": [
+              {
+                "text": "quentin did not leave that armchair. trust me",
+                "factIds": ["quentin-in-flat-n2"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "y-odd-d3",
+          "ask": "Anything odd this morning?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "the SLIPCASE. on quentin's boat. i'm still processing 😭",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "still processing",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "y-slipcase",
+          "ask": "What were you doing on Quentin's boat this morning?",
+          "from": 3,
+          "unlock": [
+            {
+              "_tag": "Seen",
+              "fact": "quentin-hid-slipcase"
+            }
+          ],
+          "answer": {
+            "lines": [
+              {
+                "text": "he asked me to grab his charger from the bench locker and the slipcase was just. there",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "just there. under his charger",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "y-arrest",
+          "ask": "If you had to name someone today, who would it be?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "idk but not quentin. he was snoring next to me all night",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "not quentin",
+                "factIds": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "y-monday",
+          "ask": "When are you heading home?",
+          "from": 3,
+          "unlock": [],
+          "answer": {
+            "lines": [
+              {
+                "text": "uni tomorrow. sadly",
+                "factIds": []
+              }
+            ],
+            "pressed": [
+              {
+                "text": "sadly",
+                "factIds": []
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "thief": "tamsin",
+  "theftFact": "tamsin-took-atlas",
+  "timeline": [
+    {
+      "night": 0,
+      "time": "10:00pm",
+      "text": "Ursula shows everyone the atlas in the shop and locks it back in its cabinet.",
+      "factIds": ["atlas-at-viewing"]
+    },
+    {
+      "night": 0,
+      "time": "10:30pm",
+      "text": "Ursula gives Tamsin the cabinet key to hang up. Tamsin keeps it in her cardigan pocket.",
+      "factIds": ["ursula-gave-key"]
+    },
+    {
+      "night": 0,
+      "time": "11:40pm",
+      "text": "Tamsin walks Quentin down to his boat. The key's fish fob hangs out of her pocket.",
+      "factIds": ["key-in-tamsin-pocket"]
+    },
+    {
+      "night": 0,
+      "time": "12:12am",
+      "text": "Yusuf creeps down to the shop to film a BookTok video. The atlas is still in its cabinet when he leaves at 12:35.",
+      "factIds": ["yusuf-filming", "atlas-there-1235"]
+    },
+    {
+      "night": 0,
+      "time": "12:40am",
+      "text": "Saoirse takes a video call about a London job in the kitchen, and notices the key hook empty at 12:50.",
+      "factIds": ["saoirse-london-call", "key-hook-empty"]
+    },
+    {
+      "night": 0,
+      "time": "1:00am",
+      "text": "Quentin smokes his secret pipe on the towpath. Saoirse sees him from the kitchen window.",
+      "factIds": ["quentin-pipe-0100"]
+    },
+    {
+      "night": 0,
+      "time": "1:05am",
+      "text": "Saoirse goes up to bed. Yusuf is asleep on the sofa on his own.",
+      "factIds": ["yusuf-alone-0105"]
+    },
+    {
+      "night": 0,
+      "time": "1:20am",
+      "text": "Leaving her phone charging upstairs, Tamsin unlocks the cabinet and takes the atlas, to stop Tuesday's auction while her roof fund catches up. Quentin sees her from the towpath.",
+      "factIds": ["tamsin-took-atlas", "tamsin-in-shop-0120"]
+    },
+    {
+      "night": 0,
+      "time": "7:00am",
+      "text": "Tamsin hangs the key back on its hook.",
+      "factIds": ["key-back-on-hook"]
+    },
+    {
+      "night": 1,
+      "time": "11:25pm",
+      "text": "Over cocoa in the kitchen, Tamsin asks Yusuf to say they watched a film together on Friday night, and promises to keep his filming quiet.",
+      "factIds": ["tamsin-yusuf-kitchen-n1", "tamsin-asked-yusuf"]
+    },
+    {
+      "night": 1,
+      "time": "12:15am",
+      "text": "Saoirse phones London from the towpath.",
+      "factIds": ["saoirse-towpath-n1"]
+    },
+    {
+      "night": 2,
+      "time": "11:50pm",
+      "text": "Quentin's boat stove has failed, so he sleeps in Ursula's armchair.",
+      "factIds": ["quentin-in-flat-n2"]
+    },
+    {
+      "night": 2,
+      "time": "12:20am",
+      "text": "Saoirse phones her sister from the towpath.",
+      "factIds": ["saoirse-towpath-n2"]
+    },
+    {
+      "night": 2,
+      "time": "12:40am",
+      "text": "Yusuf films one last video in the shop.",
+      "factIds": ["yusuf-shop-n2"]
+    },
+    {
+      "night": 2,
+      "time": "1:02am",
+      "text": "Lighting her way with her phone, Tamsin slips the atlas's empty slipcase into the bench locker on Quentin's boat, leaving a wet footprint on the step.",
+      "factIds": ["tamsin-towpath-n2", "boat-step-print"]
+    }
+  ],
+  "facts": [
+    {
+      "id": "tamsin-took-atlas",
+      "text": "Tamsin took the atlas from the cabinet at 1:20am on Friday night.",
+      "isTrue": true,
+      "about": ["tamsin"],
+      "concernsTheft": true
+    },
+    {
+      "id": "atlas-at-viewing",
+      "text": "Ursula showed everyone the atlas in the shop at 10pm on Friday and locked it back in its cabinet.",
+      "isTrue": true,
+      "about": [],
+      "concernsTheft": true
+    },
+    {
+      "id": "ursula-gave-key",
+      "text": "Ursula gave Tamsin the cabinet key to hang up in the kitchen at 10:30pm on Friday.",
+      "isTrue": true,
+      "about": ["tamsin"],
+      "concernsTheft": true
+    },
+    {
+      "id": "tamsin-hung-key",
+      "text": "Tamsin hung the cabinet key on its kitchen hook at 10:30pm on Friday.",
+      "isTrue": false,
+      "about": ["tamsin"],
+      "concernsTheft": true
+    },
+    {
+      "id": "key-in-tamsin-pocket",
+      "text": "The cabinet key's brass fish fob was hanging out of Tamsin's cardigan pocket at 11:40pm on Friday.",
+      "isTrue": true,
+      "about": ["tamsin"],
+      "concernsTheft": true
+    },
+    {
+      "id": "key-hook-empty",
+      "text": "The cabinet key was not on its kitchen hook at 12:50am on Friday night.",
+      "isTrue": true,
+      "about": [],
+      "concernsTheft": true
+    },
+    {
+      "id": "key-back-on-hook",
+      "text": "The cabinet key was back on its hook on Saturday morning.",
+      "isTrue": true,
+      "about": [],
+      "concernsTheft": true
+    },
+    {
+      "id": "atlas-there-1235",
+      "text": "The atlas was still in its cabinet at 12:35am on Friday night.",
+      "isTrue": true,
+      "about": [],
+      "concernsTheft": true
+    },
+    {
+      "id": "tamsin-not-in-shop-n0",
+      "text": "Tamsin didn't go down to the shop on Friday night after the viewing.",
+      "isTrue": false,
+      "about": ["tamsin"],
+      "concernsTheft": true
+    },
+    {
+      "id": "tamsin-in-shop-0120",
+      "text": "Tamsin was at the atlas cabinet in the shop at 1:20am on Friday night.",
+      "isTrue": true,
+      "about": ["tamsin"],
+      "concernsTheft": true
+    },
+    {
+      "id": "yusuf-film-with-tamsin",
+      "text": "Yusuf and Tamsin watched a film on the sofa from 12:45am to 2am on Friday night.",
+      "isTrue": false,
+      "about": ["yusuf", "tamsin"],
+      "concernsTheft": true
+    },
+    {
+      "id": "tamsin-film-n0",
+      "text": "Tamsin sat up watching a film with Yusuf on Friday night.",
+      "isTrue": false,
+      "about": ["tamsin"],
+      "concernsTheft": true
+    },
+    {
+      "id": "tamsin-asked-yusuf",
+      "text": "Tamsin asked Yusuf to say they had watched a film together on Friday night.",
+      "isTrue": true,
+      "about": ["tamsin", "yusuf"],
+      "concernsTheft": true
+    },
+    {
+      "id": "yusuf-alone-0105",
+      "text": "Yusuf was asleep on the sofa on his own at 1:05am on Friday night.",
+      "isTrue": true,
+      "about": ["yusuf"],
+      "concernsTheft": true
+    },
+    {
+      "id": "tamsin-yusuf-kitchen-n1",
+      "text": "Tamsin and Yusuf were in the kitchen together at 11:25pm on Saturday.",
+      "isTrue": true,
+      "about": ["tamsin", "yusuf"],
+      "concernsTheft": true
+    },
+    {
+      "id": "quentin-hid-slipcase",
+      "text": "Quentin hid the atlas's slipcase in his boat's bench locker on Sunday night.",
+      "isTrue": false,
+      "about": ["quentin"],
+      "concernsTheft": true
+    },
+    {
+      "id": "quentin-in-flat-n2",
+      "text": "Quentin slept in the flat on Sunday night and never went down to his boat.",
+      "isTrue": true,
+      "about": ["quentin"],
+      "concernsTheft": true
+    },
+    {
+      "id": "tamsin-towpath-n2",
+      "text": "Tamsin was on the towpath by the boat at 1:02am on Sunday night.",
+      "isTrue": true,
+      "about": ["tamsin"],
+      "concernsTheft": true
+    },
+    {
+      "id": "boat-step-print",
+      "text": "There was a small wet footprint on the boat's step on Monday morning.",
+      "isTrue": true,
+      "about": [],
+      "concernsTheft": true
+    },
+    {
+      "id": "tamsin-in-bed-n2",
+      "text": "Tamsin was in bed from eleven on Sunday night and never went out.",
+      "isTrue": false,
+      "about": ["tamsin"],
+      "concernsTheft": true
+    },
+    {
+      "id": "tamsin-fine-with-auction",
+      "text": "Tamsin has made her peace with the atlas going to auction.",
+      "isTrue": false,
+      "about": ["tamsin"],
+      "concernsTheft": false
+    },
+    {
+      "id": "tamsin-fundraiser",
+      "text": "Tamsin has been quietly raising money from the regulars to pay for the roof.",
+      "isTrue": true,
+      "about": ["tamsin"],
+      "concernsTheft": false
+    },
+    {
+      "id": "yusuf-on-sofa-n0",
+      "text": "Yusuf stayed on the sofa all Friday night.",
+      "isTrue": false,
+      "about": ["yusuf"],
+      "concernsTheft": false
+    },
+    {
+      "id": "yusuf-shop-0012",
+      "text": "Yusuf's phone was in the shop from 12:12am to 12:38am on Friday night.",
+      "isTrue": true,
+      "about": ["yusuf"],
+      "concernsTheft": false
+    },
+    {
+      "id": "yusuf-filming",
+      "text": "Yusuf was filming a BookTok video in the shop after midnight on Friday.",
+      "isTrue": true,
+      "about": ["yusuf"],
+      "concernsTheft": false
+    },
+    {
+      "id": "yusuf-shop-n2",
+      "text": "Yusuf was in the shop at 12:40am on Sunday night.",
+      "isTrue": true,
+      "about": ["yusuf"],
+      "concernsTheft": false
+    },
+    {
+      "id": "saoirse-asleep-n0",
+      "text": "Saoirse was asleep by midnight on Friday.",
+      "isTrue": false,
+      "about": ["saoirse"],
+      "concernsTheft": false
+    },
+    {
+      "id": "saoirse-kitchen-1240",
+      "text": "Saoirse was in the kitchen on her laptop at 12:40am on Friday night.",
+      "isTrue": true,
+      "about": ["saoirse"],
+      "concernsTheft": false
+    },
+    {
+      "id": "saoirse-london-call",
+      "text": "Saoirse was on a video call about a job in London in the kitchen on Friday night.",
+      "isTrue": true,
+      "about": ["saoirse"],
+      "concernsTheft": false
+    },
+    {
+      "id": "saoirse-towpath-n1",
+      "text": "Saoirse was on the towpath on her phone at 12:15am on Saturday night.",
+      "isTrue": true,
+      "about": ["saoirse"],
+      "concernsTheft": false
+    },
+    {
+      "id": "saoirse-towpath-n2",
+      "text": "Saoirse was on the towpath phoning her sister at 12:20am on Sunday night.",
+      "isTrue": true,
+      "about": ["saoirse"],
+      "concernsTheft": false
+    },
+    {
+      "id": "quentin-asleep-n0",
+      "text": "Quentin was asleep on his boat by midnight on Friday.",
+      "isTrue": false,
+      "about": ["quentin"],
+      "concernsTheft": false
+    },
+    {
+      "id": "quentin-pipe-0100",
+      "text": "Quentin was smoking his pipe on the towpath at 1am on Friday night.",
+      "isTrue": true,
+      "about": ["quentin"],
+      "concernsTheft": false
+    }
+  ],
+  "beats": [
+    {
+      "day": 1,
+      "part": "morning",
+      "lines": [
+        {
+          "guest": "tamsin",
+          "text": "Ursula's just come down. The atlas has gone from the cabinet, and the cabinet is still locked.",
+          "factIds": []
+        },
+        {
+          "guest": "yusuf",
+          "text": "wait what 😭",
+          "factIds": []
+        },
+        {
+          "guest": "quentin",
+          "text": "Nobody touch that cabinet.",
+          "factIds": []
+        },
+        {
+          "guest": "saoirse",
+          "text": "oh no. poor ursula",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 1,
+      "part": "afternoon",
+      "lines": [
+        {
+          "guest": "yusuf",
+          "text": "party's starting downstairs at 3!! 🙏",
+          "factIds": []
+        },
+        {
+          "guest": "tamsin",
+          "text": "Cake on the counter. Not on the books, please. 📚",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 1,
+      "part": "evening",
+      "lines": [
+        {
+          "guest": "quentin",
+          "text": "Fish and chips on the roof of Patience, if it stays dry.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "part": "morning",
+      "lines": [
+        {
+          "guest": "saoirse",
+          "text": "someone had a midnight cocoa summit in the kitchen. two mugs in the sink haha",
+          "factIds": []
+        },
+        {
+          "guest": "tamsin",
+          "text": "Mine, sorry. Washing them now.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "part": "afternoon",
+      "lines": [
+        {
+          "guest": "quentin",
+          "text": "Patience leaves for the Lock Inn at two. Life jackets on the roof.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "part": "evening",
+      "lines": [
+        {
+          "guest": "tamsin",
+          "text": "Leftover cake in the tin. Help yourselves.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 3,
+      "part": "morning",
+      "lines": [
+        {
+          "guest": "yusuf",
+          "text": "um. quentin asked me to grab his charger off the boat and the atlas's slipcase was hidden in his bench locker?? 😭",
+          "factIds": ["quentin-hid-slipcase"]
+        },
+        {
+          "guest": "quentin",
+          "text": "I did not put it there.",
+          "factIds": []
+        },
+        {
+          "guest": "tamsin",
+          "text": "Oh, Quentin.",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "day": 3,
+      "part": "afternoon",
+      "lines": [
+        {
+          "guest": "saoirse",
+          "text": "last lunch together ✨",
+          "factIds": []
+        }
+      ]
+    }
+  ],
+  "groupQuestions": [
+    {
+      "id": "g-after-viewing",
+      "ask": "Did anyone go back down to the shop after the viewing on Friday?",
+      "from": 1,
+      "until": 1,
+      "unlock": [],
+      "replies": [
+        {
+          "guest": "quentin",
+          "text": "Not I. Straight to the boat.",
+          "factIds": []
+        },
+        {
+          "guest": "saoirse",
+          "text": "nope",
+          "factIds": []
+        },
+        {
+          "guest": "tamsin",
+          "text": "No.",
+          "factIds": []
+        },
+        {
+          "guest": "yusuf",
+          "text": "nope",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "id": "g-keyholders",
+      "ask": "Who knows where the cabinet key lives?",
+      "from": 1,
+      "until": 2,
+      "unlock": [],
+      "replies": [
+        {
+          "guest": "quentin",
+          "text": "Everyone who has ever had a cup of tea in that kitchen.",
+          "factIds": []
+        },
+        {
+          "guest": "saoirse",
+          "text": "literally everyone haha",
+          "factIds": []
+        },
+        {
+          "guest": "tamsin",
+          "text": "All of us, I'm afraid.",
+          "factIds": []
+        },
+        {
+          "guest": "yusuf",
+          "text": "the fish hook thing? everyone",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "id": "g-bedtimes",
+      "ask": "What time did everyone go to bed on Saturday?",
+      "from": 2,
+      "until": 2,
+      "unlock": [],
+      "replies": [
+        {
+          "guest": "quentin",
+          "text": "Eleven.",
+          "factIds": []
+        },
+        {
+          "guest": "saoirse",
+          "text": "after midnight haha",
+          "factIds": []
+        },
+        {
+          "guest": "tamsin",
+          "text": "Around midnight.",
+          "factIds": []
+        },
+        {
+          "guest": "yusuf",
+          "text": "idk like 12",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "id": "g-boat-n2",
+      "ask": "Did anyone go down to Quentin's boat on Sunday night?",
+      "from": 3,
+      "until": 3,
+      "unlock": [],
+      "replies": [
+        {
+          "guest": "quentin",
+          "text": "Not even me.",
+          "factIds": []
+        },
+        {
+          "guest": "saoirse",
+          "text": "no?",
+          "factIds": []
+        },
+        {
+          "guest": "tamsin",
+          "text": "No.",
+          "factIds": []
+        },
+        {
+          "guest": "yusuf",
+          "text": "nope",
+          "factIds": []
+        }
+      ]
+    },
+    {
+      "id": "g-search",
+      "ask": "Has anyone searched the shelves for the atlas?",
+      "from": 3,
+      "until": 3,
+      "unlock": [],
+      "replies": [
+        {
+          "guest": "quentin",
+          "text": "I did the canal section twice.",
+          "factIds": []
+        },
+        {
+          "guest": "saoirse",
+          "text": "i did art and maps",
+          "factIds": []
+        },
+        {
+          "guest": "tamsin",
+          "text": "Every shelf, twice.",
+          "factIds": []
+        },
+        {
+          "guest": "yusuf",
+          "text": "i checked behind the sofa lol",
+          "factIds": []
+        }
+      ]
+    }
+  ],
+  "nightMoves": [
+    {
+      "_tag": "Coach",
+      "night": 1,
+      "guest": "yusuf",
+      "fact": "yusuf-film-with-tamsin",
+      "tellFact": "tamsin-asked-yusuf",
+      "disprovedBy": "yusuf-alone-0105"
+    },
+    {
+      "_tag": "Plant",
+      "night": 2,
+      "fact": "quentin-hid-slipcase",
+      "disprovedBy": "quentin-in-flat-n2"
+    }
+  ],
+  "contradictions": [
+    {
+      "id": "tamsin-key",
+      "suspect": "tamsin",
+      "claimFact": "tamsin-hung-key",
+      "proofFact": "key-in-tamsin-pocket",
+      "concernsTheft": true
+    },
+    {
+      "id": "tamsin-shop",
+      "suspect": "tamsin",
+      "claimFact": "tamsin-not-in-shop-n0",
+      "proofFact": "tamsin-in-shop-0120",
+      "concernsTheft": true
+    },
+    {
+      "id": "tamsin-film",
+      "suspect": "tamsin",
+      "claimFact": "tamsin-film-n0",
+      "proofFact": "tamsin-asked-yusuf",
+      "concernsTheft": true
+    },
+    {
+      "id": "tamsin-sunday",
+      "suspect": "tamsin",
+      "claimFact": "tamsin-in-bed-n2",
+      "proofFact": "tamsin-towpath-n2",
+      "concernsTheft": true
+    },
+    {
+      "id": "tamsin-auction",
+      "suspect": "tamsin",
+      "claimFact": "tamsin-fine-with-auction",
+      "proofFact": "tamsin-fundraiser",
+      "concernsTheft": false
+    },
+    {
+      "id": "yusuf-sofa",
+      "suspect": "yusuf",
+      "claimFact": "yusuf-on-sofa-n0",
+      "proofFact": "yusuf-shop-0012",
+      "concernsTheft": false
+    },
+    {
+      "id": "saoirse-sleep",
+      "suspect": "saoirse",
+      "claimFact": "saoirse-asleep-n0",
+      "proofFact": "saoirse-kitchen-1240",
+      "concernsTheft": false
+    },
+    {
+      "id": "quentin-boat",
+      "suspect": "quentin",
+      "claimFact": "quentin-asleep-n0",
+      "proofFact": "quentin-pipe-0100",
+      "concernsTheft": false
+    }
+  ],
+  "wifiLog": [
+    {
+      "id": "n0-saoirse-up",
+      "night": 0,
+      "time": "11:30pm",
+      "guest": "saoirse",
+      "event": "joined",
+      "accessPoint": "Flat upstairs",
+      "factIds": []
+    },
+    {
+      "id": "n0-yusuf-up",
+      "night": 0,
+      "time": "11:31pm",
+      "guest": "yusuf",
+      "event": "joined",
+      "accessPoint": "Flat upstairs",
+      "factIds": []
+    },
+    {
+      "id": "n0-quentin-boat",
+      "night": 0,
+      "time": "11:41pm",
+      "guest": "quentin",
+      "event": "joined",
+      "accessPoint": "Towpath",
+      "factIds": []
+    },
+    {
+      "id": "n0-tamsin-up",
+      "night": 0,
+      "time": "11:46pm",
+      "guest": "tamsin",
+      "event": "joined",
+      "accessPoint": "Flat upstairs",
+      "factIds": []
+    },
+    {
+      "id": "n0-yusuf-shop",
+      "night": 0,
+      "time": "12:12am",
+      "guest": "yusuf",
+      "event": "joined",
+      "accessPoint": "Shop floor",
+      "factIds": ["yusuf-shop-0012"]
+    },
+    {
+      "id": "n0-yusuf-back",
+      "night": 0,
+      "time": "12:38am",
+      "guest": "yusuf",
+      "event": "joined",
+      "accessPoint": "Flat upstairs",
+      "factIds": ["yusuf-shop-0012"]
+    },
+    {
+      "id": "n1-tamsin-kitchen",
+      "night": 1,
+      "time": "11:25pm",
+      "guest": "tamsin",
+      "event": "joined",
+      "accessPoint": "Flat kitchen",
+      "factIds": ["tamsin-yusuf-kitchen-n1"]
+    },
+    {
+      "id": "n1-yusuf-kitchen",
+      "night": 1,
+      "time": "11:27pm",
+      "guest": "yusuf",
+      "event": "joined",
+      "accessPoint": "Flat kitchen",
+      "factIds": ["tamsin-yusuf-kitchen-n1"]
+    },
+    {
+      "id": "n1-quentin-boat",
+      "night": 1,
+      "time": "11:30pm",
+      "guest": "quentin",
+      "event": "joined",
+      "accessPoint": "Towpath",
+      "factIds": []
+    },
+    {
+      "id": "n1-tamsin-up",
+      "night": 1,
+      "time": "11:52pm",
+      "guest": "tamsin",
+      "event": "joined",
+      "accessPoint": "Flat upstairs",
+      "factIds": []
+    },
+    {
+      "id": "n1-yusuf-up",
+      "night": 1,
+      "time": "11:54pm",
+      "guest": "yusuf",
+      "event": "joined",
+      "accessPoint": "Flat upstairs",
+      "factIds": []
+    },
+    {
+      "id": "n1-saoirse-towpath",
+      "night": 1,
+      "time": "12:15am",
+      "guest": "saoirse",
+      "event": "joined",
+      "accessPoint": "Towpath",
+      "factIds": ["saoirse-towpath-n1"]
+    },
+    {
+      "id": "n1-saoirse-up",
+      "night": 1,
+      "time": "12:41am",
+      "guest": "saoirse",
+      "event": "joined",
+      "accessPoint": "Flat upstairs",
+      "factIds": []
+    },
+    {
+      "id": "n2-quentin-flat",
+      "night": 2,
+      "time": "11:50pm",
+      "guest": "quentin",
+      "event": "joined",
+      "accessPoint": "Flat upstairs",
+      "factIds": ["quentin-in-flat-n2"]
+    },
+    {
+      "id": "n2-saoirse-towpath",
+      "night": 2,
+      "time": "12:20am",
+      "guest": "saoirse",
+      "event": "joined",
+      "accessPoint": "Towpath",
+      "factIds": ["saoirse-towpath-n2"]
+    },
+    {
+      "id": "n2-saoirse-up",
+      "night": 2,
+      "time": "12:31am",
+      "guest": "saoirse",
+      "event": "joined",
+      "accessPoint": "Flat upstairs",
+      "factIds": []
+    },
+    {
+      "id": "n2-yusuf-shop",
+      "night": 2,
+      "time": "12:40am",
+      "guest": "yusuf",
+      "event": "joined",
+      "accessPoint": "Shop floor",
+      "factIds": ["yusuf-shop-n2"]
+    },
+    {
+      "id": "n2-yusuf-up",
+      "night": 2,
+      "time": "12:52am",
+      "guest": "yusuf",
+      "event": "joined",
+      "accessPoint": "Flat upstairs",
+      "factIds": []
+    },
+    {
+      "id": "n2-tamsin-towpath",
+      "night": 2,
+      "time": "1:02am",
+      "guest": "tamsin",
+      "event": "joined",
+      "accessPoint": "Towpath",
+      "factIds": ["tamsin-towpath-n2"]
+    },
+    {
+      "id": "n2-tamsin-up",
+      "night": 2,
+      "time": "1:09am",
+      "guest": "tamsin",
+      "event": "joined",
+      "accessPoint": "Flat upstairs",
+      "factIds": []
+    }
+  ]
+}
